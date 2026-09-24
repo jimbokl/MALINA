@@ -1,6 +1,6 @@
 # Внутренняя библиотека MALINA
 
-Восемь предоставленных владельцем книг хранятся локально в `knowledge/private/library/originals/`. Их Markdown-копии и изображения находятся в `knowledge/private/library/markdown/`, исходные имена и SHA-256 — в закрытом `knowledge/private/library/manifest.json`. Вся папка `knowledge/private/` исключена из Git и публичного сайта.
+Восемь предоставленных владельцем книг хранятся локально в `knowledge/private/library/originals/`. Их Markdown-копии и изображения находятся в `knowledge/private/library/markdown/`, исходные имена и SHA-256 — в закрытом `knowledge/private/library/manifest.json`. Там же сохранён предоставленный каталог Клубничной фермы Борисовых «Осень 2026» как отдельный тип `vendor_catalog`; досье кандидата поставщика — в `knowledge/private/suppliers/borisovy-2026.md`. Вся папка `knowledge/private/` исключена из Git и публичного сайта.
 
 | ID | Источник | Формат | Назначение |
 | --- | --- | --- | --- |

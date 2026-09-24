@@ -13,6 +13,15 @@
     {"from": "trait:disease-resistance", "type": "related", "to": "health:disease", "evidence": ["govorova_strawberry_2016"]},
     {"from": "health:grey-mold", "type": "broader", "to": "health:disease", "evidence": ["govorova_strawberry_2016"]},
     {"from": "health:disease", "type": "not_same_as", "to": "health:pest"},
-    {"from": "trait:berry-mass-mean", "type": "related", "to": "plant:cultivar", "evidence": ["kazakov_remontant_russia", "govorova_strawberry_2016"]}
+    {"from": "trait:berry-mass-mean", "type": "related", "to": "plant:cultivar", "evidence": ["kazakov_remontant_russia", "govorova_strawberry_2016"]},
+    {"from": "method:meristem-culture", "type": "broader", "to": "method:in-vitro", "note": "Меристемная культура — частный протокол культуры тканей."},
+    {"from": "method:micropropagation", "type": "related", "to": "method:in-vitro", "note": "Размножение в культуре тканей."},
+    {"from": "material:explant", "type": "related", "to": "method:meristem-culture", "note": "Эксплант вводят в культуру."},
+    {"from": "material:microplant", "type": "related", "to": "process:ex-vitro-acclimatization", "note": "Перед выращиванием вне сосуда требуется этап адаптации."},
+    {"from": "material:mother-plant", "type": "related", "to": "material:explant", "note": "Маточное растение — происхождение экспланта."},
+    {"from": "material:microplant", "type": "related", "to": "material:planting-batch", "note": "Микрорастения принадлежат конкретной партии."},
+    {"from": "quality:phytosanitary-testing", "type": "related", "to": "material:planting-batch", "note": "Результат теста должен относиться к определённой партии и патогенам."},
+    {"from": "method:in-vitro", "type": "not_same_as", "to": "quality:phytosanitary-testing", "note": "Технология не подтверждает отсутствие патогенов."},
+    {"from": "designation:super-super-elite", "type": "not_same_as", "to": "method:in-vitro", "note": "Обозначение качества требует отдельного документального основания."}
   ]
 }

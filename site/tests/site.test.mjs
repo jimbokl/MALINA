@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
-const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/podbor/', '/guide/', '/about/',
+const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/podbor/', '/guide/', '/in-vitro/', '/about/',
   '/sorta/polka/', '/sorta/joan-j/', '/sorta/cambridge-favourite/', '/sorta/elan/'];
 
 test('каждая публичная страница содержит самостоятельный HTML и рабочие внутренние ссылки', async () => {
@@ -29,6 +29,13 @@ test('каждая публичная страница содержит само
       await assert.doesNotReject(access(file), `битая ссылка ${href} на ${route}`);
     }
   }
+});
+
+test('страница In Vitro объясняет проверку партии без обещания оздоровления', async () => {
+  const html = await readFile(join(root, 'in-vitro', 'index.html'), 'utf8');
+  assert.match(html, /фитосанитарного тестирования/);
+  assert.match(html, /Само слово In Vitro не подтверждает/);
+  assert.match(html, /scielo\.cl\/pdf\/bres/);
 });
 
 test('карточки показывают источник и границы применимости данных', async () => {

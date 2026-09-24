@@ -27,6 +27,16 @@
     {"term_id": "trait:frost-tolerance", "preferred_label_ru": "морозостойкость", "scope": "cultivar_trait", "aliases_ru": []},
     {"term_id": "trait:disease-resistance", "preferred_label_ru": "устойчивость к болезни", "scope": "cultivar_trait", "aliases_ru": ["устойчивость к болезням"]},
     {"term_id": "trait:taste-score", "preferred_label_ru": "вкусовая оценка", "scope": "cultivar_trait", "aliases_ru": ["дегустационная оценка"]},
-    {"term_id": "health:grey-mold", "preferred_label_ru": "серая гниль", "scope": "plant_disease", "aliases_ru": []}
+    {"term_id": "health:grey-mold", "preferred_label_ru": "серая гниль", "scope": "plant_disease", "aliases_ru": []},
+    {"term_id": "method:in-vitro", "preferred_label_ru": "культура тканей In Vitro", "scope": "propagation_method", "aliases_ru": ["инвитро", "культура in vitro"]},
+    {"term_id": "method:meristem-culture", "preferred_label_ru": "меристемная культура", "scope": "propagation_method", "aliases_ru": ["меристемное размножение"]},
+    {"term_id": "material:explant", "preferred_label_ru": "эксплант", "scope": "plant_material", "aliases_ru": []},
+    {"term_id": "material:microplant", "preferred_label_ru": "микрорастение", "scope": "plant_material", "aliases_ru": ["растение in vitro"]},
+    {"term_id": "method:micropropagation", "preferred_label_ru": "микроклональное размножение", "scope": "propagation_method", "aliases_ru": ["микроразмножение"]},
+    {"term_id": "process:ex-vitro-acclimatization", "preferred_label_ru": "адаптация Ex Vitro", "scope": "propagation_stage", "aliases_ru": ["акклиматизация ex vitro"]},
+    {"term_id": "material:mother-plant", "preferred_label_ru": "маточное растение", "scope": "plant_material", "aliases_ru": []},
+    {"term_id": "quality:phytosanitary-testing", "preferred_label_ru": "фитосанитарное тестирование партии", "scope": "quality_evidence", "aliases_ru": []},
+    {"term_id": "material:planting-batch", "preferred_label_ru": "партия посадочного материала", "scope": "plant_material", "aliases_ru": []},
+    {"term_id": "designation:super-super-elite", "preferred_label_ru": "супер-суперэлита", "scope": "commercial_designation", "aliases_ru": []}
   ]
 }
