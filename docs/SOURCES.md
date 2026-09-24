@@ -4,12 +4,14 @@
 
 | Сорт | Исходное описание | Что взято для карточки |
 | --- | --- | --- |
-| Polka | [RHS Plant Profile](https://www.rhs.org.uk/plants/226503/rubus-idaeus-polka-f/details) | Плодоношение на побегах текущего года, осенний период, особенности побегов. |
-| Joan J | [RHS Plant Profile](https://www.rhs.org.uk/plants/195937/rubus-idaeus-joan-j-f/details) | Осеннее плодоношение и отсутствие шипов. |
-| Cambridge Favourite | [RHS Plant Profile](https://www.rhs.org.uk/plants/69875/fragaria-%C3%97-ananassa-cambridge-favourite-f/details) | Летнее плодоношение и указанный в источнике период. |
-| Elan | [RHS Plant Profile](https://www.rhs.org.uk/plants/191614/fragaria-%C3%97-ananassa-elan-f/details) | Повторное плодоношение и возможность выращивания в контейнере. |
+| Полька (Polka) | [RHS Plant Profile](https://www.rhs.org.uk/plants/226503/rubus-idaeus-polka-f/details) | Плодоношение на побегах текущего года, осенний период, особенности побегов. |
+| Джоан Джей (Joan J) | [RHS Plant Profile](https://www.rhs.org.uk/plants/195937/rubus-idaeus-joan-j-f/details) | Осеннее плодоношение и отсутствие шипов. |
+| Кембридж Фаворит (Cambridge Favourite) | [RHS Plant Profile](https://www.rhs.org.uk/plants/69875/fragaria-%C3%97-ananassa-cambridge-favourite-f/details) | Летнее плодоношение и указанный в источнике период. |
+| Элан (Elan) | [RHS Plant Profile](https://www.rhs.org.uk/plants/191614/fragaria-%C3%97-ananassa-elan-f/details) | Повторное плодоношение и возможность выращивания в контейнере. |
 
 Общие материалы для руководства: [выращивание малины](https://www.rhs.org.uk/fruit/raspberries/grow-your-own) и [выращивание земляники](https://www.rhs.org.uk/fruit/strawberries/grow-your-own) на RHS. Тексты на сайте написаны заново, длинные фрагменты из источников не воспроизводятся.
+
+Публичные названия сортов даны кириллицей. Исходные международные написания сохранены рядом с первоисточником для идентификации сорта. В переданной владельцем [выгрузке запросов по сортам](../research/keyword-variety-queries-2026-09-24.tsv) есть запросы «малина полька» и «клубника элан»; для «Джоан Джей» и «Кембридж Фаворит» частоты в этой выгрузке не подтверждены. Выгрузка помогает выбрать темы, но не доказывает свойства сортов или пригодность для региона.
 
 ## Изображения
 

@@ -39,6 +39,23 @@ test('карточки показывают источник и границы �
   }
 });
 
+test('названия сортов в публичном каталоге и данных даны по-русски', async () => {
+  const expected = new Map([
+    ['polka', 'Полька'],
+    ['joan-j', 'Джоан Джей'],
+    ['cambridge-favourite', 'Кембридж Фаворит'],
+    ['elan', 'Элан']
+  ]);
+  const catalogHtml = await readFile(join(root, '/sorta/', 'index.html'), 'utf8');
+  const publicCatalog = JSON.parse(await readFile(join(root, '/data/catalog.json'), 'utf8'));
+  for (const [slug, name] of expected) {
+    const html = await readFile(join(root, '/sorta/', slug, 'index.html'), 'utf8');
+    assert.match(html, new RegExp(`<h1>${name}<`));
+    assert.match(catalogHtml, new RegExp(`<h3><a href="/sorta/${slug}/">${name}</a></h3>`));
+    assert.equal(publicCatalog.cultivars.find(item => item.slug === slug)?.canonical_name, name);
+  }
+});
+
 test('подбор запрашивает регион и честно отмечает отсутствие региональных правил', async () => {
   const html = await readFile(join(root, '/podbor/', 'index.html'), 'utf8');
   const js = await readFile(join(root, '/assets/site.js'), 'utf8');

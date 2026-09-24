@@ -12,13 +12,15 @@ if (catalogForm) {
   const cards = [...document.querySelectorAll('#catalog-results .variety-card')];
   const count = document.querySelector('#catalog-count');
   const empty = document.querySelector('#catalog-empty');
+  const requestedFruiting = new URLSearchParams(location.search).get('fruiting');
+  if (['remontant', 'summer'].includes(requestedFruiting)) catalogForm.elements.fruiting.value = requestedFruiting;
   const filter = () => {
     const data = new FormData(catalogForm);
-    const crop = data.get('crop'); const setting = data.get('setting');
+    const crop = data.get('crop'); const setting = data.get('setting'); const fruiting = data.get('fruiting');
     const query = String(data.get('query') || '').trim().toLocaleLowerCase('ru');
     let visible = 0;
     for (const card of cards) {
-      const show = (crop === 'all' || card.dataset.crop === crop) && (setting === 'all' || card.dataset.setting === setting) && card.dataset.name.includes(query);
+      const show = (crop === 'all' || card.dataset.crop === crop) && (setting === 'all' || card.dataset.setting === setting) && (fruiting === 'all' || card.dataset.fruiting === fruiting) && card.dataset.name.includes(query);
       card.hidden = !show;
       if (show) visible++;
     }
@@ -27,6 +29,7 @@ if (catalogForm) {
   };
   catalogForm.addEventListener('input', filter);
   catalogForm.addEventListener('change', filter);
+  filter();
 }
 
 const pickerForm = document.querySelector('#picker-form');
@@ -35,12 +38,12 @@ if (pickerForm) pickerForm.addEventListener('submit', event => {
   const data = new FormData(pickerForm);
   const region = String(data.get('region') || '').trim();
   if (!region) { pickerForm.querySelector('#picker-region').focus(); return; }
-  const crop = data.get('crop'); const setting = data.get('setting'); const light = data.get('light');
+  const crop = data.get('crop'); const setting = data.get('setting'); const light = data.get('light'); const fruiting = data.get('fruiting');
   const output = document.querySelector('#picker-output');
   const cards = [...document.querySelectorAll('#picker-results .variety-card')];
   let visible = 0;
   for (const card of cards) {
-    const show = light === 'sun' && (crop === 'all' || card.dataset.crop === crop) && (setting === 'all' || card.dataset.setting === setting);
+    const show = light === 'sun' && (crop === 'all' || card.dataset.crop === crop) && (setting === 'all' || card.dataset.setting === setting) && (fruiting === 'all' || card.dataset.fruiting === fruiting);
     card.hidden = !show;
     if (show) visible++;
   }

@@ -55,3 +55,7 @@
 .picker-marks img{width:82px;height:82px;object-fit:contain}
 .picker-marks img+img{margin-left:-20px;margin-top:14px}
 @media(max-width:700px){.brand-marks{width:43px;height:40px}.brand-mark{width:29px;height:29px}.brand-mark.strawberry{margin-left:-13px;margin-top:10px}.variety-glyph{height:108px;padding:0}.variety-mark{width:98px;height:98px}.crop-card .crop-mark{width:76px;height:76px}.crop-title-mark{width:80px;height:80px}}
+
+.catalog-tools{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1000px){.catalog-tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.catalog-tools{grid-template-columns:1fr}}
