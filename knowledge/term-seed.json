@@ -18,6 +18,15 @@
     {"term_id": "practice:mulching", "preferred_label_ru": "мульчирование", "scope": "practice", "aliases_ru": []},
     {"term_id": "practice:feeding", "preferred_label_ru": "подкормка", "scope": "practice", "aliases_ru": []},
     {"term_id": "health:disease", "preferred_label_ru": "болезнь растения", "scope": "plant_health", "aliases_ru": ["болезни"]},
-    {"term_id": "health:pest", "preferred_label_ru": "вредитель", "scope": "plant_health", "aliases_ru": ["вредители"]}
+    {"term_id": "health:pest", "preferred_label_ru": "вредитель", "scope": "plant_health", "aliases_ru": ["вредители"]},
+    {"term_id": "name:strawberry-common", "preferred_label_ru": "клубника", "scope": "common_name", "aliases_ru": []},
+    {"term_id": "plant:runner", "preferred_label_ru": "ус земляники", "scope": "plant_part", "aliases_ru": ["усы земляники"]},
+    {"term_id": "plant:rosette", "preferred_label_ru": "розетка земляники", "scope": "plant_part", "aliases_ru": ["розетка"]},
+    {"term_id": "plant:root-sucker", "preferred_label_ru": "корневой отпрыск", "scope": "plant_part", "aliases_ru": ["корневые отпрыски"]},
+    {"term_id": "trait:berry-mass-mean", "preferred_label_ru": "средняя масса ягоды", "scope": "cultivar_trait", "aliases_ru": ["средний вес ягоды"]},
+    {"term_id": "trait:frost-tolerance", "preferred_label_ru": "морозостойкость", "scope": "cultivar_trait", "aliases_ru": []},
+    {"term_id": "trait:disease-resistance", "preferred_label_ru": "устойчивость к болезни", "scope": "cultivar_trait", "aliases_ru": ["устойчивость к болезням"]},
+    {"term_id": "trait:taste-score", "preferred_label_ru": "вкусовая оценка", "scope": "cultivar_trait", "aliases_ru": ["дегустационная оценка"]},
+    {"term_id": "health:grey-mold", "preferred_label_ru": "серая гниль", "scope": "plant_disease", "aliases_ru": []}
   ]
 }

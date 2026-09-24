@@ -27,11 +27,19 @@ def main() -> None:
             if not path.exists():
                 continue
             page: int | None = None
+            epub_item: str | None = None
             heading = ""
+            source_hits = 0
             for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
                 match = re.fullmatch(r"## Страница файла (\d+)", line)
                 if match:
                     page = int(match.group(1))
+                    epub_item = None
+                    continue
+                match = re.fullmatch(r"## Раздел EPUB: (.+)", line)
+                if match:
+                    epub_item = match.group(1)
+                    page = None
                     continue
                 if line.startswith("#"):
                     heading = line.lstrip("# ")[:120]
@@ -41,10 +49,12 @@ def main() -> None:
                     occurrences.append({
                         "source_id": source["id"],
                         "page_in_file": page,
+                        "epub_item": epub_item,
                         "markdown_line": number,
                         "section": heading,
                     })
-                    if sum(item["source_id"] == source["id"] for item in occurrences) >= 8:
+                    source_hits += 1
+                    if source_hits >= 8:
                         break
         index["entries"].append({"term_id": term["term_id"], "occurrences": occurrences})
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)

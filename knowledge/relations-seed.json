@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "status": "candidate",
+  "relations": [
+    {"from": "name:strawberry-common", "type": "related", "to": "crop:garden-strawberry", "evidence": ["govorova_strawberry_2016"]},
+    {"from": "name:strawberry-common", "type": "not_same_as", "to": "crop:garden-strawberry", "note": "Не считать безусловным научным синонимом без контекста."},
+    {"from": "phenology:remontant", "type": "related", "to": "phenology:current-year-shoot", "evidence": ["kazakov_remontant_russia"]},
+    {"from": "phenology:replacement-shoot", "type": "related", "to": "crop:raspberry", "evidence": ["kazakov_remontant_russia"]},
+    {"from": "plant:runner", "type": "related", "to": "plant:rosette", "evidence": ["govorova_strawberry_2016", "gavrilova_agisheva_strawberry_2013"]},
+    {"from": "plant:root-sucker", "type": "related", "to": "crop:raspberry", "evidence": ["kazakov_remontant_russia"]},
+    {"from": "plant:runner", "type": "not_same_as", "to": "plant:root-sucker"},
+    {"from": "trait:winter-hardiness", "type": "not_same_as", "to": "trait:frost-tolerance"},
+    {"from": "trait:disease-resistance", "type": "related", "to": "health:disease", "evidence": ["govorova_strawberry_2016"]},
+    {"from": "health:grey-mold", "type": "broader", "to": "health:disease", "evidence": ["govorova_strawberry_2016"]},
+    {"from": "health:disease", "type": "not_same_as", "to": "health:pest"},
+    {"from": "trait:berry-mass-mean", "type": "related", "to": "plant:cultivar", "evidence": ["kazakov_remontant_russia", "govorova_strawberry_2016"]}
+  ]
+}

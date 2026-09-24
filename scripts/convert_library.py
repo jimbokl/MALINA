@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
 """Convert local research copies to Markdown without publishing source material.
 
-Requires python-docx for DOCX; FB2 uses the standard library. Legacy DOC and
-DjVu/PDF need conversion or OCR before this script can handle them.
+Requires python-docx for DOCX and pdftotext for searchable PDFs. FB2 and EPUB
+use the standard library. Legacy DOC and DjVu need conversion or OCR first.
 """
 
 from __future__ import annotations
 
 import argparse
 import base64
+import posixpath
 import re
+import subprocess
+from html import unescape
 from pathlib import Path
+from urllib.parse import unquote
 from xml.etree import ElementTree as ET
+from zipfile import ZipFile
 
 
 def compact(value: str) -> str:
@@ -156,6 +161,97 @@ def convert_fb2(source: Path, destination: Path, title: str) -> dict[str, int]:
     return counts
 
 
+def convert_epub(source: Path, destination: Path, title: str) -> dict[str, int]:
+    def ancestors(node: ET.Element | None, parents: dict[ET.Element, ET.Element]):
+        while node is not None:
+            yield node
+            node = parents.get(node)
+
+    body: list[str] = []
+    sections = 0
+    paragraphs = 0
+    with ZipFile(source) as archive:
+        container = ET.fromstring(archive.read("META-INF/container.xml"))
+        rootfile = next(node for node in container.iter() if tag(node) == "rootfile")
+        package_path = rootfile.attrib["full-path"]
+        package = ET.fromstring(archive.read(package_path))
+        base = posixpath.dirname(package_path)
+        manifest = {
+            node.attrib["id"]: node.attrib["href"]
+            for node in package.iter() if tag(node) == "item"
+        }
+        spine = [node.attrib["idref"] for node in package.iter() if tag(node) == "itemref"]
+        for item_id in spine:
+            item_path = posixpath.normpath(posixpath.join(base, unquote(manifest[item_id])))
+            if not item_path.lower().endswith((".xhtml", ".html", ".htm")):
+                continue
+            raw_page = archive.read(item_path)
+            raw_page = re.sub(
+                rb"&([A-Za-z][A-Za-z0-9]+);",
+                lambda match: match.group(0) if match.group(1).decode("ascii") in
+                {"amp", "lt", "gt", "quot", "apos"} else
+                unescape(match.group(0).decode("ascii")).encode("utf-8"),
+                raw_page,
+            )
+            page = ET.fromstring(raw_page)
+            document_body = next((node for node in page.iter() if tag(node) == "body"), None)
+            if document_body is None:
+                continue
+            body.extend((f"## Раздел EPUB: {item_path}", ""))
+            sections += 1
+            parents = {child: parent for parent in document_body.iter() for child in parent}
+            blocks = {"p", "li", "tr", "h1", "h2", "h3", "h4", "h5", "h6"}
+            extracted = 0
+            for node in document_body.iter():
+                kind = tag(node).lower()
+                if kind not in blocks:
+                    continue
+                parent = parents.get(node)
+                if any(tag(ancestor).lower() in blocks for ancestor in
+                       ancestors(parent, parents)):
+                    continue
+                value = compact(" ".join(node.itertext()))
+                if not value:
+                    continue
+                if kind.startswith("h") and len(kind) == 2 and kind[1].isdigit():
+                    value = "#" * min(6, max(3, int(kind[1]) + 2)) + " " + value
+                body.extend((value, ""))
+                paragraphs += 1
+                extracted += len(value)
+            if extracted == 0:
+                fallback = compact(" ".join(document_body.itertext()))
+                if fallback:
+                    body.extend((fallback, ""))
+                    paragraphs += 1
+    write_markdown(
+        destination, title, body,
+        "Внутренняя исследовательская копия. Автоматическое извлечение EPUB; "
+        "разделы указаны по файлам внутри EPUB. Изображения и расположение таблиц "
+        "проверяйте в оригинале. Не публиковать полный текст.",
+    )
+    return {"sections": sections, "paragraphs": paragraphs,
+            "characters": len(destination.read_text(encoding="utf-8"))}
+
+
+def convert_pdf(source: Path, destination: Path, title: str) -> dict[str, int]:
+    result = subprocess.run(
+        ["pdftotext", "-layout", str(source), "-"],
+        check=True, capture_output=True, text=True,
+    )
+    body: list[str] = []
+    pages = [page for page in result.stdout.split("\f") if page.strip()]
+    for number, page in enumerate(pages, 1):
+        body.extend((f"## Страница файла {number}", "", page.strip(), ""))
+    write_markdown(
+        destination, title, body,
+        "Внутренняя исследовательская копия. Автоматическое извлечение PDF; "
+        "таблицы, формулы и номера печатных страниц сверяйте с оригиналом. "
+        "Не публиковать полный текст.",
+    )
+    return {"pages": len(pages),
+            "characters": len(destination.read_text(encoding="utf-8"))}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", type=Path)
@@ -166,8 +262,12 @@ def main() -> None:
         stats = convert_docx(args.source, args.destination, args.title)
     elif args.source.suffix.lower() == ".fb2":
         stats = convert_fb2(args.source, args.destination, args.title)
+    elif args.source.suffix.lower() == ".epub":
+        stats = convert_epub(args.source, args.destination, args.title)
+    elif args.source.suffix.lower() == ".pdf":
+        stats = convert_pdf(args.source, args.destination, args.title)
     else:
-        parser.error("Supported inputs: .docx and .fb2")
+        parser.error("Supported inputs: .docx, .fb2, .epub and .pdf")
     print(stats)
 
 

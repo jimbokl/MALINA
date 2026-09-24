@@ -17,3 +17,4 @@ db/local/
 target/
 crates/selector/pkg/
 knowledge/private/
+.codegraph/
