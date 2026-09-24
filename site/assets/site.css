@@ -35,3 +35,23 @@
 .verified-output li p{font-size:13px;margin:8px 0}
 .verified-output small{color:#586a5b}
 @media(max-width:700px){.verified-section{grid-template-columns:1fr}.verified-form{padding:24px}.verified-output{grid-column:auto;padding:20px}}
+
+/* Отзывы: опубликованный опыт и простая форма без контактов. */
+.reviews-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);align-items:start;gap:clamp(32px,6vw,96px)}
+.reviews-main h2{margin:18px 0 14px}.reviews-compose{background:#e5eadb;padding:38px;position:relative}.reviews-compose h2{font-family:var(--serif);font-size:42px;letter-spacing:-.05em;margin:16px 0}.reviews-note{font-size:13px;line-height:1.7;margin-bottom:28px}.reviews-filter{color:var(--wine);font-weight:800;margin:0 0 22px}.reviews-list{display:grid;gap:16px}.reviews-empty{border-top:1px solid #bfcbbb;padding:28px 0;color:#657464}.review-card{background:var(--paper);border:1px solid #dbe1d5;padding:28px 30px}.review-card-meta,.review-card-footer{display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:space-between;align-items:center}.review-card-meta{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#638268}.review-card-body{white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink);font-family:var(--serif);font-size:clamp(20px,2vw,27px);line-height:1.45;margin:25px 0}.review-card-footer{border-top:1px solid #e1e8db;padding-top:15px;font-size:12px;color:#647365}.review-card-footer strong{color:var(--wine)}.reviews-compose fieldset{border:0;padding:0;margin:0;min-width:0;display:grid;gap:10px}.reviews-compose fieldset>label{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#48634c;margin-top:9px}.reviews-compose input:not([type=checkbox]),.reviews-compose textarea{width:100%;border:1px solid #bfcdbb;background:#fffdf8;border-radius:2px;padding:14px 15px;color:var(--ink);font:inherit}.reviews-compose textarea{resize:vertical;min-height:145px}.reviews-compose input:focus-visible,.reviews-compose textarea:focus-visible{outline:3px solid var(--berry);outline-offset:2px}.reviews-consents{display:grid;gap:14px;margin:12px 0}.reviews-consents label{display:block;font-size:11px;line-height:1.5;color:#536957}.reviews-consents input{vertical-align:middle;margin:0 6px 0 0}.reviews-consents a{text-decoration:underline;text-underline-offset:2px;color:var(--wine)}.reviews-compose .btn{margin-top:8px;justify-content:center}.reviews-compose .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}.review-status{font-size:13px;font-weight:700;color:var(--wine);margin:18px 0 0}.review-status:empty{display:none}.review-withdrawal{background:#fffdf8;border-left:4px solid var(--berry);padding:18px 20px;margin-top:18px;overflow-wrap:anywhere}.review-withdrawal[hidden]{display:none}.review-withdrawal strong{font-size:13px}.review-withdrawal p{font-size:12px;margin:7px 0 12px}.review-withdrawal code{display:block;font-size:12px;line-height:1.5;word-break:break-all}.review-withdrawal button{margin-top:12px;background:transparent;border:0;border-bottom:1px solid var(--wine);padding:0 0 3px;color:var(--wine);font-size:12px;font-weight:800}
+@media(max-width:900px){.reviews-layout{grid-template-columns:1fr}.reviews-compose{max-width:660px}}
+@media(max-width:700px){.reviews-layout{gap:40px}.reviews-compose{padding:25px}.reviews-compose h2{font-size:36px}.review-card{padding:22px}}
+
+/* Individual botanical marks for raspberry and strawberry. */
+.brand-marks{display:flex;align-items:center;justify-content:center;flex:none;width:56px;height:48px}
+.brand-mark{width:37px;height:37px;object-fit:contain;flex:none}
+.brand-mark.strawberry{margin-left:-17px;margin-top:14px}
+.variety-glyph{display:grid;place-items:center;height:146px;padding:4px 0 8px}
+.variety-mark{width:128px;height:128px;object-fit:contain}
+.crop-card .crop-mark{position:static;width:90px;height:90px;object-fit:contain;margin:0 0 8px;padding:6px;border-radius:50%;background:rgba(255,253,248,.94);filter:drop-shadow(0 5px 13px rgba(24,20,19,.22))}
+.crop-card:hover .crop-mark{transform:none}
+.crop-title-mark{width:94px;height:94px;object-fit:contain;margin:0 0 14px}
+.picker-marks{display:flex;align-items:center;height:95px;margin-bottom:10px}
+.picker-marks img{width:82px;height:82px;object-fit:contain}
+.picker-marks img+img{margin-left:-20px;margin-top:14px}
+@media(max-width:700px){.brand-marks{width:43px;height:40px}.brand-mark{width:29px;height:29px}.brand-mark.strawberry{margin-left:-13px;margin-top:10px}.variety-glyph{height:108px;padding:0}.variety-mark{width:98px;height:98px}.crop-card .crop-mark{width:76px;height:76px}.crop-title-mark{width:80px;height:80px}}
