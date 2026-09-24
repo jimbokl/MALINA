@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "status": "candidate",
+  "terms": [
+    {"term_id": "crop:raspberry", "preferred_label_ru": "малина", "scope": "culture", "aliases_ru": []},
+    {"term_id": "crop:garden-strawberry", "preferred_label_ru": "земляника садовая", "scope": "culture", "aliases_ru": ["садовая земляника"]},
+    {"term_id": "plant:cultivar", "preferred_label_ru": "сорт", "scope": "plant_identity", "aliases_ru": []},
+    {"term_id": "plant:seedling", "preferred_label_ru": "саженец", "scope": "plant_material", "aliases_ru": ["посадочный материал"]},
+    {"term_id": "phenology:remontant", "preferred_label_ru": "ремонтантность", "scope": "fruiting", "aliases_ru": ["ремонтантная малина", "ремонтантное плодоношение"]},
+    {"term_id": "phenology:current-year-shoot", "preferred_label_ru": "побег текущего года", "scope": "plant_part", "aliases_ru": ["однолетний побег"]},
+    {"term_id": "phenology:replacement-shoot", "preferred_label_ru": "побег замещения", "scope": "plant_part", "aliases_ru": []},
+    {"term_id": "trait:maturity-period", "preferred_label_ru": "срок созревания", "scope": "cultivar_trait", "aliases_ru": []},
+    {"term_id": "trait:yield", "preferred_label_ru": "урожайность", "scope": "cultivar_trait", "aliases_ru": []},
+    {"term_id": "trait:winter-hardiness", "preferred_label_ru": "зимостойкость", "scope": "cultivar_trait", "aliases_ru": []},
+    {"term_id": "practice:planting", "preferred_label_ru": "посадка", "scope": "practice", "aliases_ru": []},
+    {"term_id": "practice:pruning", "preferred_label_ru": "обрезка", "scope": "practice", "aliases_ru": []},
+    {"term_id": "practice:propagation", "preferred_label_ru": "размножение", "scope": "practice", "aliases_ru": []},
+    {"term_id": "practice:mulching", "preferred_label_ru": "мульчирование", "scope": "practice", "aliases_ru": []},
+    {"term_id": "practice:feeding", "preferred_label_ru": "подкормка", "scope": "practice", "aliases_ru": []},
+    {"term_id": "health:disease", "preferred_label_ru": "болезнь растения", "scope": "plant_health", "aliases_ru": ["болезни"]},
+    {"term_id": "health:pest", "preferred_label_ru": "вредитель", "scope": "plant_health", "aliases_ru": ["вредители"]}
+  ]
+}
