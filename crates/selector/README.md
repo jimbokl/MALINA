@@ -1,7 +1,7 @@
 # MALINA selector
 
 Small Rust engine compiled to WebAssembly for the static site. It accepts the
-`schema_version: 1` JSON produced by `db/catalog.py export-public`. The selector
+`schema_version: 1` JSON produced by `cargo run --manifest-path crates/catalog_tool/Cargo.toml -- export-public`. The selector
 only returns a cultivar when that public snapshot contains a reviewed
 recommendation for the exact selected region. Rules with nonempty or unknown
 `conditions_json` are ignored until a typed evaluator exists.

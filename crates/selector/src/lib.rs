@@ -82,7 +82,7 @@ impl ApiError {
     }
 }
 
-/// Select cultivars from the `db/catalog.py export-public` schema v1 snapshot.
+/// Select cultivars from the Rust catalog tool's `export-public` schema v1 snapshot.
 ///
 /// Query: `{ "region_code": "kaliningrad-oblast", "crop_slug": "raspberry" }`.
 /// `crop_slug` is optional. The output is JSON both on success and error, so it

@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
-const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/podbor/', '/guide/', '/in-vitro/', '/about/',
+const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/podbor/', '/otzyvy/', '/guide/', '/in-vitro/', '/about/',
   '/sorta/polka/', '/sorta/joan-j/', '/sorta/cambridge-favourite/', '/sorta/elan/'];
 
 test('каждая публичная страница содержит самостоятельный HTML и рабочие внутренние ссылки', async () => {
@@ -88,4 +88,32 @@ test('публичный JSON подключается к собранному W
   assert.equal(result.total, 0);
   assert.deepEqual(result.matches, []);
   assert.equal(result.error, undefined);
+});
+
+test('страница отзывов содержит простую форму и публичный снимок без служебных данных', async () => {
+  const html = await readFile(join(root, '/otzyvy/', 'index.html'), 'utf8');
+  const js = await readFile(join(root, '/assets/reviews.js'), 'utf8');
+  for (const name of ['display_name', 'region', 'cultivar_name', 'body']) {
+    assert.match(html, new RegExp(`name="${name}"`));
+  }
+  assert.match(html, /data-reviews-enabled="false"/);
+  assert.match(html, /<fieldset disabled>/);
+  assert.doesNotMatch(html, /Приём отзывов откроется|локальной базой данных в России/);
+  assert.doesNotMatch(html, /name="consent_/);
+  assert.doesNotMatch(html, /name="(?:email|phone|address)"/);
+  assert.doesNotMatch(html, /Код для удаления|review-withdrawal|withdrawal_token|Удалить свой отзыв/);
+  assert.match(js, /textContent = review\.body/);
+  assert.match(js, /parent_id: review\.id/);
+  assert.match(js, /document\.createElement\('details'\)/);
+  assert.match(js, /Ответы · /);
+  assert.doesNotMatch(js, /localStorage|sessionStorage|github\.com|api\.github\.com/);
+  assert.doesNotMatch(js, /withdrawal_token|review-withdrawal|review-delete/);
+  const snapshot = JSON.parse(await readFile(join(root, '/data/reviews.json'), 'utf8'));
+  assert.equal(snapshot.schema_version, 1);
+  assert.ok(Array.isArray(snapshot.reviews));
+  for (const review of snapshot.reviews) {
+    assert.deepEqual(Object.keys(review).sort(), [
+      'body', 'created_at', 'cultivar_name', 'display_name', 'id', 'parent_id', 'published_at', 'region'
+    ]);
+  }
 });

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import json
 import sqlite3
 import sys
 import tempfile
@@ -122,6 +123,124 @@ class CatalogTests(unittest.TestCase):
         self.connection.commit()
         with self.assertRaisesRegex(ValueError, "foreign_keys"):
             catalog.check(self.connection)
+
+    def test_review_requires_consent_and_approval_before_export(self) -> None:
+        body = 'Ягоды "вкусные" \\ тест\n</script><script>alert(1)</script>'
+        self.connection.execute(
+            "INSERT INTO reviews(display_name, region, cultivar_name, body, "
+            "consent_processing, processing_consented_at) "
+            "VALUES (?, ?, ?, ?, 1, '2026-09-24 12:00:00')",
+            ("Посетитель", "Калининградская область", "Мой сорт", body),
+        )
+        review_id = self.connection.execute("SELECT id FROM reviews").fetchone()[0]
+        self.assertEqual(self.connection.execute("SELECT * FROM public_reviews").fetchall(), [])
+        self.assertEqual(catalog.public_reviews_snapshot(self.connection)["reviews"], [])
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "UPDATE reviews SET status='approved', "
+                "moderation_model='test-model', moderation_verdict='not_spam', "
+                "moderation_reason='No spam signals', moderation_version='v1', "
+                "moderated_at='2026-09-24 12:01:00', "
+                "published_at='2026-09-24 12:01:00' WHERE id=?", (review_id,)
+            )
+        self.connection.execute(
+            "UPDATE reviews SET consent_publication=1, "
+            "publication_consented_at='2026-09-24 12:00:00' WHERE id=?",
+            (review_id,),
+        )
+        self.connection.execute(
+            "UPDATE reviews SET status='approved', "
+            "moderation_model='test-model', moderation_verdict='not_spam', "
+            "moderation_reason='No spam signals', moderation_version='v1', "
+            "moderated_at='2026-09-24 12:01:00', "
+            "published_at='2026-09-24 12:01:00' WHERE id=?",
+            (review_id,),
+        )
+        rows = [dict(row) for row in self.connection.execute("SELECT * FROM public_reviews")]
+        self.assertEqual(len(rows), 1)
+        encoded = json.dumps(rows, ensure_ascii=False)
+        decoded = json.loads(encoded)
+        self.assertEqual(decoded[0]["body"], body)
+        self.assertNotIn("processing_consented_at", decoded[0])
+        self.assertNotIn("moderation_reason", decoded[0])
+        public_review = catalog.public_reviews_snapshot(self.connection)["reviews"][0]
+        self.assertEqual(public_review["body"], body)
+        self.assertNotIn("moderation_reason", public_review)
+        catalog_json = json.dumps(catalog.public_snapshot(self.connection), ensure_ascii=False)
+        self.assertNotIn("reviews", json.loads(catalog_json))
+        self.assertNotIn("Посетитель", catalog_json)
+        self.assertNotIn("Ягоды", catalog_json)
+        self.connection.execute(
+            "DELETE FROM reviews WHERE id=?", (review_id,)
+        )
+        self.assertEqual(self.connection.execute("SELECT * FROM public_reviews").fetchall(), [])
+        self.assertEqual(catalog.public_reviews_snapshot(self.connection)["reviews"], [])
+
+    def test_review_rejects_blank_fields(self) -> None:
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "INSERT INTO reviews(display_name, region, cultivar_name, body, "
+                "consent_processing, processing_consented_at) "
+                "VALUES (' ', 'Калининградская область', 'Сорт', 'Текст', 1, '2026-09-24 12:00:00')",
+            )
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "INSERT INTO reviews(display_name, region, cultivar_name, body, "
+                "consent_processing, processing_consented_at) "
+                "VALUES ('Автор', 'Калининградская область', 'Сорт', 'Текст', 0, '2026-09-24 12:00:00')",
+            )
+
+    def test_low_value_review_cannot_be_approved(self) -> None:
+        self.connection.execute(
+            "INSERT INTO reviews(display_name, region, cultivar_name, body, "
+            "consent_processing, processing_consented_at, consent_publication, publication_consented_at, "
+            "moderation_model, moderation_verdict, moderation_reason, moderation_version, moderated_at) "
+            "VALUES ('Автор', 'Область', 'Сорт', 'Бред, всё это полный бред', "
+            "1, '2026-09-24 12:00:00', 1, '2026-09-24 12:00:00', "
+            "'jev', 'low_value', 'Нет наблюдения', 'v2', '2026-09-24 12:01:00')"
+        )
+        self.assertEqual(catalog.public_reviews_snapshot(self.connection)["reviews"], [])
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "UPDATE reviews SET status='approved', published_at='2026-09-24 12:02:00' WHERE id=1"
+            )
+
+    def test_reply_publication_snapshot_and_parent_visibility(self) -> None:
+        def insert_approved(parent_id: int | None, name: str, body: str) -> int:
+            cursor = self.connection.execute(
+                "INSERT INTO reviews(parent_id, display_name, region, cultivar_name, body, "
+                "consent_processing, processing_consented_at, consent_publication, "
+                "publication_consented_at, status, moderation_model, moderation_verdict, "
+                "moderation_reason, moderation_version, moderated_at, published_at) "
+                "VALUES (?, ?, 'Калининградская область', 'Полка', ?, "
+                "1, '2026-09-25 12:00:00', 1, '2026-09-25 12:00:00', 'approved', "
+                "'jev', 'not_spam', 'classified_useful', 'v3', "
+                "'2026-09-25 12:01:00', '2026-09-25 12:01:00')",
+                (parent_id, name, body),
+            )
+            return cursor.lastrowid
+
+        root_id = insert_approved(None, "Автор", "Полка дала ягоды в августе.")
+        child_id = insert_approved(root_id, "Сосед", "В каком месяце началось цветение?")
+        grandchild_id = insert_approved(child_id, "Автор 2", "У меня цветение началось в июне.")
+        snapshot = catalog.public_reviews_snapshot(self.connection)["reviews"]
+        self.assertEqual({row["id"] for row in snapshot}, {root_id, child_id, grandchild_id})
+        self.assertEqual({row["parent_id"] for row in snapshot}, {None, root_id, child_id})
+        self.assertEqual(set(snapshot[0]), {
+            "id", "parent_id", "display_name", "region", "cultivar_name",
+            "body", "created_at", "published_at",
+        })
+
+        with self.assertRaises(sqlite3.IntegrityError):
+            insert_approved(9999, "Чужой", "Ответ без родителя")
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "UPDATE reviews SET parent_id=? WHERE id=?", (child_id, root_id)
+            )
+        self.connection.execute(
+            "UPDATE reviews SET status='rejected' WHERE id=?", (root_id,)
+        )
+        self.assertEqual(catalog.public_reviews_snapshot(self.connection)["reviews"], [])
 
 
 if __name__ == "__main__":

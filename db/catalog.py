@@ -237,8 +237,18 @@ def public_snapshot(connection: sqlite3.Connection) -> dict[str, object]:
             "SELECT code, name_ru FROM regions ORDER BY id"
         )],
         "cultivars": cultivars,
+    }
+
+
+def public_reviews_snapshot(connection: sqlite3.Connection) -> dict[str, object]:
+    """Only published review fields may leave the shared SQLite database."""
+    check(connection)
+    return {
+        "schema_version": 1,
         "reviews": [dict(row) for row in connection.execute(
-            "SELECT * FROM public_reviews ORDER BY submitted_at DESC, id DESC"
+            "SELECT id, parent_id, display_name, region, cultivar_name, body, "
+            "created_at, published_at FROM public_reviews "
+            "ORDER BY published_at DESC, id DESC"
         )],
     }
 
@@ -259,7 +269,7 @@ def write_output(text: str, output: str) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("init", "check", "import-drafts", "export-public"))
+    parser.add_argument("command", choices=("init", "check", "import-drafts", "export-public", "export-reviews"))
     parser.add_argument("--db", type=Path, default=DEFAULT_DB)
     parser.add_argument("--sources", type=Path)
     parser.add_argument("--cultivars", type=Path)
@@ -278,9 +288,13 @@ def main(argv: list[str] | None = None) -> int:
                 print(json.dumps(import_drafts(
                     connection, args.sources, args.cultivars, args.observations
                 ), ensure_ascii=False))
-            else:
+            elif args.command == "export-public":
                 write_output(json.dumps(
                     public_snapshot(connection), ensure_ascii=False, indent=2
+                ), args.out)
+            else:
+                write_output(json.dumps(
+                    public_reviews_snapshot(connection), ensure_ascii=False, indent=2
                 ), args.out)
         return 0
     except (ValueError, OSError, sqlite3.Error) as error:

@@ -35,6 +35,7 @@ jobs:
         env:
           SITE_URL: https://jimbokl.github.io/MALINA
           SITE_BASE: /MALINA
+          REVIEW_API_URL: ${{ vars.REVIEW_API_URL }}
         run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

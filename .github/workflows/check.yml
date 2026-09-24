@@ -22,6 +22,7 @@ jobs:
         run: |
           cargo test --manifest-path crates/catalog_tool/Cargo.toml
           cargo test --manifest-path crates/selector/Cargo.toml
+          cargo test --manifest-path crates/review_api/Cargo.toml
           python3 -m unittest discover -s db/tests -v
       - run: npm run build
       - run: npm test

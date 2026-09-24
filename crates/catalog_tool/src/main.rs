@@ -624,4 +624,39 @@ mod tests {
             .unwrap();
         assert!(check(&connection, &migrations_dir).is_err());
     }
+
+    #[test]
+    fn approved_reviews_are_only_in_private_view_not_pages_snapshot() {
+        let (_temp, connection) = setup();
+        let body = "Ягоды \"вкусные\" \\ тест\n</script><script>alert(1)</script>";
+        connection.execute(
+            "INSERT INTO reviews(display_name, region, cultivar_name, body, consent_processing, processing_consented_at) VALUES (?1, ?2, ?3, ?4, 1, '2026-09-24 12:00:00')",
+            params!["Посетитель-X", "Калининградская область", "Мой сорт", body],
+        ).unwrap();
+        let review_id = connection.last_insert_rowid();
+        assert!(query_objects(&connection, "SELECT * FROM public_reviews")
+            .unwrap()
+            .is_empty());
+        let approved_update = "UPDATE reviews SET status='approved', moderation_model='test-model', moderation_verdict='not_spam', moderation_reason='No spam signals', moderation_version='v1', moderated_at='2026-09-24 12:01:00', published_at='2026-09-24 12:01:00' WHERE id=?1";
+        assert!(connection.execute(approved_update, [review_id]).is_err());
+        connection.execute("UPDATE reviews SET consent_publication=1, publication_consented_at='2026-09-24 12:00:00' WHERE id=?1", [review_id]).unwrap();
+        connection.execute(approved_update, [review_id]).unwrap();
+        let reviews = query_objects(&connection, "SELECT * FROM public_reviews").unwrap();
+        assert_eq!(reviews.len(), 1);
+        let review_json = serde_json::to_string(&reviews).unwrap();
+        let parsed: Value = serde_json::from_str(&review_json).unwrap();
+        assert_eq!(parsed[0]["body"], body);
+        assert!(parsed[0].get("moderation_reason").is_none());
+        let snapshot = public_snapshot(&connection, Path::new(MIGRATIONS_DIR)).unwrap();
+        let json_text = serde_json::to_string(&snapshot).unwrap();
+        assert!(snapshot.get("reviews").is_none());
+        assert!(!json_text.contains("Посетитель-X"));
+        assert!(!json_text.contains("Ягоды"));
+        connection
+            .execute("DELETE FROM reviews WHERE id=?1", [review_id])
+            .unwrap();
+        assert!(query_objects(&connection, "SELECT * FROM public_reviews")
+            .unwrap()
+            .is_empty());
+    }
 }

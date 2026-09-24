@@ -1,6 +1,6 @@
 # Catalog tool
 
-Build-time Rust CLI for the SQLite catalog. The database and unpublished records stay local; the only deployable output is a JSON snapshot assembled from the `public_*` views. This crate does not run on GitHub Pages.
+Build-time Rust CLI for the SQLite catalog. The database and unpublished records stay local; the catalog JSON snapshot is assembled from approved catalog views. Reviews are excluded from the catalog snapshot. Published reviews have their own export: `python3 db/catalog.py export-reviews --out db/public/reviews.json`. This crate does not run on GitHub Pages.
 
 Run from the repository root:
 
