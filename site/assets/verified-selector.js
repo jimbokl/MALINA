@@ -1,65 +1,60 @@
-const form = document.querySelector('#verified-form');
+const form = document.querySelector('#picker-form');
 
 if (form) {
   const base = document.documentElement.dataset.siteBase || '';
-  const regionSelect = form.querySelector('#verified-region');
-  const submitButton = form.querySelector('button[type="submit"]');
-  const output = document.querySelector('#verified-output');
   const status = document.querySelector('#verified-status');
   const results = document.querySelector('#verified-results');
-  let catalogText;
+  let catalogPromise;
   let engine;
 
   const showStatus = message => {
-    output.hidden = false;
     status.textContent = message;
     results.replaceChildren();
   };
 
-  async function loadCatalog() {
-    try {
-      const response = await fetch(`${base}/data/catalog.json`);
-      if (!response.ok) throw new Error('catalog fetch failed');
-      catalogText = await response.text();
-      const catalog = JSON.parse(catalogText);
-      if (catalog.schema_version !== 1 || !Array.isArray(catalog.regions) || !catalog.regions.length) {
-        throw new Error('catalog schema is unavailable');
-      }
-      regionSelect.replaceChildren();
-      for (const region of catalog.regions) {
-        if (typeof region.code !== 'string' || typeof region.name_ru !== 'string') {
-          throw new Error('catalog region is incomplete');
-        }
-        regionSelect.add(new Option(region.name_ru, region.code));
-      }
-      regionSelect.disabled = false;
-      submitButton.disabled = false;
-    } catch {
-      showStatus('Список проверенных регионов сейчас недоступен. Справочные карточки выше можно просмотреть отдельно.');
+  const loadCatalog = async () => {
+    const response = await fetch(`${base}/data/catalog.json`);
+    if (!response.ok) throw new Error('catalog fetch failed');
+    const text = await response.text();
+    const catalog = JSON.parse(text);
+    if (catalog.schema_version !== 1 || !Array.isArray(catalog.regions)) {
+      throw new Error('catalog schema is unavailable');
     }
-  }
+    return { text, catalog };
+  };
+
+  const normalized = value => value.trim().toLocaleLowerCase('ru-RU').replace(/\s+/g, ' ');
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
-    if (!catalogText || !regionSelect.value) return;
-    submitButton.disabled = true;
-    showStatus('Проверяем опубликованные правила для выбранного региона…');
+    const fields = new FormData(form);
+    const regionName = String(fields.get('region') || '').trim();
+    if (!regionName) return;
+    const crop = String(fields.get('crop') || 'all');
+    showStatus(`Проверяем опубликованные правила для региона «${regionName}»…`);
+
     try {
+      catalogPromise ||= loadCatalog();
+      const { text, catalog } = await catalogPromise;
+      const region = catalog.regions.find(item => normalized(item.name_ru || '') === normalized(regionName));
+      if (!region) {
+        showStatus(`Для региона «${regionName}» пока нет проверенных рекомендаций. Сорта выше — справочное сравнение по признакам, а не региональный вывод.`);
+        return;
+      }
       if (!engine) {
         const module = await import(`${base}/assets/selector/malina_selector.js`);
         await module.default();
         engine = module.select_varieties;
       }
-      const crop = form.querySelector('#verified-crop').value;
-      const query = { region_code: regionSelect.value };
-      if (crop) query.crop_slug = crop;
-      const selection = JSON.parse(engine(catalogText, JSON.stringify(query)));
+      const query = { region_code: region.code };
+      if (crop !== 'all') query.crop_slug = crop;
+      const selection = JSON.parse(engine(text, JSON.stringify(query)));
       if (selection.error) throw new Error(selection.error.message);
       if (selection.total === 0) {
-        showStatus('Для выбранного региона пока нет проверенных рекомендаций. Это не означает, что перечисленные выше сорта непригодны: региональных данных для них ещё нет.');
+        showStatus(`Для региона «${regionName}» пока нет проверенных рекомендаций. Это не означает, что сорта выше непригодны: региональных данных для них ещё нет.`);
         return;
       }
-      status.textContent = `${selection.total} ${selection.total === 1 ? 'сорт с проверенным региональным правилом' : 'сорта с проверенными региональными правилами'}. Читайте основания и ограничения каждого правила.`;
+      status.textContent = `${selection.total} ${selection.total === 1 ? 'сорт с проверенным региональным правилом' : 'сорта с проверенными региональными правилами'} для региона «${regionName}». Читайте основания и ограничения каждого правила.`;
       results.replaceChildren();
       for (const match of selection.matches) {
         const item = document.createElement('li');
@@ -78,11 +73,8 @@ if (form) {
         results.append(item);
       }
     } catch {
+      catalogPromise = undefined;
       showStatus('Не удалось проверить региональные рекомендации. Попробуйте обновить страницу позже; справочный каталог доступен отдельно.');
-    } finally {
-      submitButton.disabled = false;
     }
   });
-
-  loadCatalog();
 }

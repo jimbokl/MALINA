@@ -66,11 +66,13 @@ test('названия сортов в публичном каталоге и д
 test('подбор запрашивает регион и честно отмечает отсутствие региональных правил', async () => {
   const html = await readFile(join(root, '/podbor/', 'index.html'), 'utf8');
   const js = await readFile(join(root, '/assets/site.js'), 'utf8');
+  const verifiedJs = await readFile(join(root, '/assets/verified-selector.js'), 'utf8');
   assert.match(html, /name="region"[^>]*required/);
   assert.match(html, /региональные правила подбора ещё не опубликованы/);
   assert.match(js, /не региональная рекомендация/);
-  assert.match(html, /id="verified-form"/);
-  assert.match(html, /id="verified-region"/);
+  assert.match(html, /id="verified-status"/);
+  assert.doesNotMatch(html, /id="verified-region"/);
+  assert.match(verifiedJs, /querySelector\('#picker-form'\)/);
   assert.match(html, /assets\/verified-selector\.js/);
 });
 

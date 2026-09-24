@@ -58,15 +58,8 @@ const picker = layout({ title: 'Подобрать сорт по условия�
 
 const verifiedPanel = `<section class="section wrap verified-section" id="verified-section" aria-labelledby="verified-title">
   <div class="verified-intro"><span class="eyebrow">ОТДЕЛЬНАЯ ПРОВЕРКА / RUST + WASM</span><h2 id="verified-title">Что подтверждено для региона?</h2>
-  <p>Здесь учитываются только опубликованные и проверенные региональные правила. Справочные совпадения по признакам выше не превращаются в рекомендации для вашего региона.</p></div>
-  <form id="verified-form" class="verified-form">
-    <label for="verified-region">Регион из базы подтверждённых правил</label>
-    <select id="verified-region" name="region_code" required disabled><option value="">Загружаем регионы…</option></select>
-    <label for="verified-crop">Культура</label>
-    <select id="verified-crop" name="crop_slug"><option value="">Малина и клубника</option><option value="raspberry">Малина</option><option value="strawberry">Клубника</option></select>
-    <button class="btn btn-dark" type="submit" disabled>Проверить регион ${arrow}</button>
-  </form>
-  <div class="verified-output" id="verified-output" hidden aria-live="polite"><p id="verified-status"></p><ul id="verified-results"></ul></div>
+  <p>После подбора мы отдельно проверяем выбранный вами регион по опубликованным правилам. Справочные совпадения по признакам выше не превращаются в региональные рекомендации.</p></div>
+  <div class="verified-output" id="verified-output" aria-live="polite"><p id="verified-status">Укажите регион и нажмите «Показать варианты» выше.</p><ul id="verified-results"></ul></div>
 </section>`;
 const pickerPage = picker.replace('</head>', '<script type="module" src="/assets/verified-selector.js"></script></head>')
   .replace('</main>', `${verifiedPanel}</main>`);
