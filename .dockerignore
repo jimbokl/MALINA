@@ -1,0 +1,12 @@
+# The review API image has a deliberately narrow build context.
+*
+!crates/
+!crates/review_api/
+!crates/review_api/Cargo.toml
+!crates/review_api/Cargo.lock
+!crates/review_api/src/
+!crates/review_api/src/**
+!db/
+!db/catalog.py
+!db/migrations/
+!db/migrations/*.sql

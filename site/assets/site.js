@@ -1,4 +1,53 @@
 const menuButton = document.querySelector('.menu-toggle');
+// Goals are inert until a real Yandex Metrica counter is configured in the page.
+const ymCounter = Number(document.documentElement.dataset.ymCounter || 0);
+if (Number.isSafeInteger(ymCounter) && ymCounter > 0) {
+  window.ym = window.ym || function () { (window.ym.a = window.ym.a || []).push(arguments); };
+  const metrika = document.createElement('script');
+  metrika.async = true;
+  metrika.src = 'https://mc.yandex.ru/metrika/tag.js';
+  document.head.append(metrika);
+  window.ym(ymCounter, 'init', { clickmap: false, webvisor: false, trackLinks: false, sendTitle: false });
+}
+function trackGoal(goal, params = {}) {
+  if (Number.isSafeInteger(ymCounter) && ymCounter > 0 && typeof window.ym === 'function') {
+    window.ym(ymCounter, 'reachGoal', goal, params);
+  }
+}
+
+document.addEventListener('click', async event => {
+  const cultivarLink = event.target.closest('[data-article-to-cultivar]');
+  if (cultivarLink) trackGoal('article_to_cultivar', { article: cultivarLink.dataset.articleToCultivar, cultivar_url: cultivarLink.getAttribute('href') });
+  const offerLink = event.target.closest('[data-affiliate-offer]');
+  if (offerLink) trackGoal('affiliate_click', { offer_id: offerLink.dataset.affiliateOffer, cultivar: offerLink.dataset.cultivar });
+
+  const shareButton = event.target.closest('[data-share-article]');
+  if (!shareButton) return;
+  const article = shareButton.closest('.media-article');
+  if (!article) return;
+  const title = article.querySelector('h1')?.textContent.trim() || document.title;
+  const teaser = article.querySelector('.media-share-summary')?.textContent.trim() || '';
+  const url = document.querySelector('link[rel="canonical"]')?.href || location.href;
+  const status = article.querySelector('.media-share-status');
+  const kind = shareButton.dataset.shareArticle;
+  if (kind === 'copy') {
+    try {
+      await navigator.clipboard.writeText(`${title}\n\n${teaser}\n\n${url}`);
+      if (status) status.textContent = 'Анонс и ссылка скопированы.';
+    } catch {
+      if (status) status.textContent = 'Не удалось скопировать. Скопируйте адрес страницы из браузера.';
+    }
+    return;
+  }
+  const hero = article.querySelector('.media-hero-image img');
+  const imageUrl = hero ? new URL(hero.getAttribute('src'), location.origin).href : '';
+  const target = kind === 'vk'
+    ? `https://vk.com/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&description=${encodeURIComponent(teaser)}`
+    : kind === 'pinterest' && imageUrl
+      ? `https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${encodeURIComponent(imageUrl)}&description=${encodeURIComponent(`${title}. ${teaser}`)}`
+      : null;
+  if (target) window.open(target, '_blank', 'noopener,noreferrer,width=780,height=650');
+});
 const mobileNav = document.querySelector('#mobile-nav');
 menuButton?.addEventListener('click', () => {
   const open = menuButton.getAttribute('aria-expanded') !== 'true';
@@ -54,4 +103,5 @@ if (pickerForm) pickerForm.addEventListener('submit', event => {
   output.hidden = false;
   output.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
   output.focus({ preventScroll: true });
+  trackGoal('selector_complete', { crop: String(crop), region, matches: visible });
 });

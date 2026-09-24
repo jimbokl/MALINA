@@ -3,10 +3,51 @@ import assert from 'node:assert/strict';
 import { readFile, access } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { articles } from '../editorial.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
 const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/podbor/', '/otzyvy/', '/guide/', '/in-vitro/', '/about/',
-  '/sorta/polka/', '/sorta/joan-j/', '/sorta/cambridge-favourite/', '/sorta/elan/'];
+  '/sorta/polka/', '/sorta/joan-j/', '/sorta/cambridge-favourite/', '/sorta/elan/',
+  '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
+
+test('журнал содержит проверяемые статьи, авторство, ссылки и права на изображения', async () => {
+  assert.ok(articles.length >= 10);
+  const slugs = new Set();
+  for (const article of articles) {
+    assert.ok(!slugs.has(article.slug), `повтор статьи: ${article.slug}`);
+    slugs.add(article.slug);
+    assert.ok(article.sources.length > 0);
+    assert.ok(article.sections.every(section => section.sources.length && section.sources.every(index => article.sources[index])));
+    const html = await readFile(join(root, 'zhurnal', article.slug, 'index.html'), 'utf8');
+    assert.match(html, /<article class="media-article">/);
+    assert.match(html, /Материал: Редакция МАЛИНА — КЛУБНИКА/);
+    assert.match(html, /<time datetime="2026-09-25">/);
+    assert.match(html, /Иллюстрация культуры, созданная для сайта генератором изображений/);
+    assert.match(html, /<section class="media-sources"/);
+    assert.match(html, /data-share-article="vk"/);
+    assert.match(html, /data-share-article="pinterest"/);
+    assert.match(html, /data-share-article="copy"/);
+    for (const source of article.sources) assert.ok(html.includes(source.url.replaceAll('&', '&amp;')));
+  }
+  const home = await readFile(join(root, 'index.html'), 'utf8');
+  assert.match(home, /home-editorial/);
+  const homeHtml = await readFile(join(root, 'index.html'), 'utf8');
+  if (homeHtml.includes('type="application/rss+xml"')) {
+    const feed = await readFile(join(root, 'feed.xml'), 'utf8');
+    assert.equal((feed.match(/<item>/g) || []).length, articles.length);
+    assert.match(feed, /<media:content /);
+  }
+});
+
+test('карточки без подтверждённых предложений не обещают цену или наличие', async () => {
+  const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
+  for (const cultivar of catalog.cultivars) {
+    if (cultivar.offers.length || cultivar.own_batches.length) continue;
+    const html = await readFile(join(root, 'sorta', cultivar.slug, 'index.html'), 'utf8');
+    assert.doesNotMatch(html, /data-affiliate-offer=/);
+    assert.doesNotMatch(html, /class="commerce-card"/);
+  }
+});
 
 test('каждая публичная страница содержит самостоятельный HTML и рабочие внутренние ссылки', async () => {
   const titles = new Set();

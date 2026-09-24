@@ -60,8 +60,11 @@
       if (!response.ok) throw new Error(data.error || 'Не удалось отправить сообщение.');
       feedback.textContent = data.status === 'published'
         ? 'Спасибо! Сообщение опубликовано.'
-        : 'Спасибо! Сообщение получено. Если оно поможет другим садоводам, оно появится на сайте.';
+        : data.status === 'pending_human_review'
+          ? 'Спасибо! Сообщение передано на дополнительную проверку.'
+          : 'Спасибо! Сообщение получено.';
       sendingForm.reset();
+      if (sendingForm === form && sort) form.elements.cultivar_name.value = sort;
       if (data.status === 'published') await loadReviews(payload.parent_id ?? null);
     } catch (error) {
       feedback.textContent = error instanceof Error ? error.message : 'Не удалось отправить сообщение.';

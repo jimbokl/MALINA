@@ -79,24 +79,77 @@ class CatalogTests(unittest.TestCase):
         self.add_source_and_cultivar()
         self.publish_identity()
         self.connection.execute(
-            "INSERT INTO sellers(display_name, review_status, reviewed_by, reviewed_at) "
-            "VALUES ('Test Seller', 'verified', 'editor', '2026-09-24 12:00:00')"
+            "INSERT INTO sellers(display_name, website_url, review_status, reviewed_by, reviewed_at) "
+            "VALUES ('Test Seller', 'https://seller.example', 'verified', 'editor', '2026-09-24 12:00:00')"
         )
-        for expiry in ("2000-01-01 00:00:00", "2999-01-01 00:00:00"):
+        for expiry, url in (
+            ("2000-01-01 00:00:00", "https://seller.example/plants/polka"),
+            ("2999-01-01 00:00:00", "https://seller.example/plants/polka"),
+            ("2999-01-01 00:00:00", "https://seller.example.evil.test/plants/polka"),
+            ("2999-01-01 00:00:00", "http://seller.example/plants/polka"),
+            ("2999-01-01 00:00:00", None),
+        ):
             self.connection.execute(
                 "INSERT INTO offers(seller_id, cultivar_id, product_name, kind, "
-                "checked_at, expires_at, editorial_status, reviewed_by, reviewed_at) "
-                "VALUES (1, 1, 'Test offer', 'affiliate', '2026-09-24 12:00:00', ?, "
+                "destination_url, checked_at, expires_at, editorial_status, reviewed_by, reviewed_at) "
+                "VALUES (1, 1, 'Test offer', 'affiliate', ?, '2026-09-24 12:00:00', ?, "
                 "'published', 'editor', '2026-09-24 12:00:00')",
-                (expiry,),
+                (url, expiry),
             )
         self.connection.execute(
-            "INSERT INTO offers(seller_id, product_name, kind, checked_at, expires_at, "
+            "INSERT INTO offers(seller_id, product_name, kind, destination_url, checked_at, expires_at, "
             "editorial_status, reviewed_by, reviewed_at) "
-            "VALUES (1, 'Unlinked offer', 'affiliate', '2026-09-24 12:00:00', "
+            "VALUES (1, 'Unlinked offer', 'affiliate', 'https://seller.example/plants/unknown', '2026-09-24 12:00:00', "
             "'2999-01-01 00:00:00', 'published', 'editor', '2026-09-24 12:00:00')"
         )
-        self.assertEqual(len(catalog.public_snapshot(self.connection)["cultivars"][0]["offers"]), 1)
+        offers = catalog.public_snapshot(self.connection)["cultivars"][0]["offers"]
+        self.assertEqual(len(offers), 1)
+        self.assertEqual(offers[0]["destination_url"], "https://seller.example/plants/polka")
+        self.assertIn("Партнёрская ссылка", offers[0]["disclosure"])
+        self.assertIsNone(offers[0]["price_minor"])
+        self.connection.execute("UPDATE sellers SET review_status='suspended' WHERE id=1")
+        self.assertEqual(catalog.public_snapshot(self.connection)["cultivars"][0]["offers"], [])
+        self.connection.execute("UPDATE sellers SET review_status='verified' WHERE id=1")
+        self.connection.execute("UPDATE cultivars SET editorial_status='withdrawn' WHERE id=1")
+        self.assertEqual(catalog.public_snapshot(self.connection)["cultivars"], [])
+
+    def test_own_batch_requires_real_ready_stock_and_hides_internal_document(self) -> None:
+        self.add_source_and_cultivar()
+        self.publish_identity()
+        self.connection.execute(
+            "INSERT INTO own_batches(cultivar_id, batch_code, origin_method, origin_document_ref, "
+            "provenance_summary, received_on, plant_stage, pickup_region_id, pickup_locality, pickup_terms) "
+            "VALUES (1, 'B-001', 'in_vitro', 'private/invoice-001', "
+            "'Посадочный материал из учтённой партии', '2026-03-01', 'growing', 1, "
+            "'Калининград', 'Самовывоз по согласованию')"
+        )
+        self.assertEqual(catalog.public_snapshot(self.connection)["cultivars"][0]["own_batches"], [])
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "UPDATE own_batches SET editorial_status='published', reviewed_by='editor', "
+                "reviewed_at='2026-09-24 12:00:00', checked_at='2026-09-24 12:00:00', "
+                "expires_at='2999-01-01 00:00:00' WHERE batch_code='B-001'"
+            )
+        self.connection.execute(
+            "UPDATE own_batches SET plant_stage='sale_ready', quantity_available=12, "
+            "editorial_status='published', reviewed_by='editor', reviewed_at='2026-09-24 12:00:00', "
+            "checked_at='2026-09-24 12:00:00', expires_at='2999-01-01 00:00:00' "
+            "WHERE batch_code='B-001'"
+        )
+        batches = catalog.public_snapshot(self.connection)["cultivars"][0]["own_batches"]
+        self.assertEqual(len(batches), 1)
+        self.assertEqual(batches[0]["pickup_region_code"], "kaliningrad-oblast")
+        self.assertEqual(batches[0]["quantity_available"], 12)
+        self.assertNotIn("origin_document_ref", batches[0])
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "UPDATE own_batches SET quantity_available=0 WHERE batch_code='B-001'"
+            )
+        self.connection.execute(
+            "UPDATE own_batches SET editorial_status='withdrawn', quantity_available=0 "
+            "WHERE batch_code='B-001'"
+        )
+        self.assertEqual(catalog.public_snapshot(self.connection)["cultivars"][0]["own_batches"], [])
 
     def test_import_rolls_back_all_rows_after_invalid_reference(self) -> None:
         source_path = self.root / "sources.csv"

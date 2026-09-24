@@ -243,6 +243,7 @@ fn public_snapshot(connection: &Connection, dir: &Path) -> Result<Value> {
             "media",
             "recommendations",
             "offers",
+            "own_batches",
         ] {
             cultivar.insert(key.into(), Value::Array(Vec::new()));
         }
@@ -253,6 +254,7 @@ fn public_snapshot(connection: &Connection, dir: &Path) -> Result<Value> {
         ("public_media", "media"),
         ("public_recommendations", "recommendations"),
         ("public_offers", "offers"),
+        ("public_own_batches", "own_batches"),
     ] {
         // The identifiers are fixed here; none come from external input.
         for mut item in query_objects(connection, &format!("SELECT * FROM {view} ORDER BY id"))? {
@@ -482,6 +484,49 @@ mod tests {
         assert_eq!(snapshot["schema_version"], 1);
         assert!(snapshot["cultivars"].is_array());
         assert_eq!(snapshot["crops"].as_array().unwrap().len(), 2);
+        assert!(snapshot["cultivars"][0]["offers"]
+            .as_array()
+            .unwrap()
+            .is_empty());
+        assert!(snapshot["cultivars"][0]["own_batches"]
+            .as_array()
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn commercial_export_contains_only_vetted_merchant_link_and_ready_batch() {
+        let (_temp, connection) = setup();
+        let cultivar_id: i64 = connection
+            .query_row("SELECT id FROM cultivars WHERE slug='polka'", [], |row| {
+                row.get(0)
+            })
+            .unwrap();
+        connection.execute("INSERT INTO sellers(display_name, website_url, review_status, reviewed_by, reviewed_at) VALUES ('Seller', 'https://seller.example', 'verified', 'editor', '2026-09-24 12:00:00')", []).unwrap();
+        connection.execute("INSERT INTO offers(seller_id, cultivar_id, product_name, kind, destination_url, checked_at, expires_at, editorial_status, reviewed_by, reviewed_at) VALUES (1, ?1, 'Test plant', 'affiliate', 'https://seller.example/plants/polka', '2026-09-24 12:00:00', '2999-01-01 00:00:00', 'published', 'editor', '2026-09-24 12:00:00')", [cultivar_id]).unwrap();
+        connection.execute("INSERT INTO offers(seller_id, cultivar_id, product_name, kind, destination_url, checked_at, expires_at, editorial_status, reviewed_by, reviewed_at) VALUES (1, ?1, 'Untrusted link', 'affiliate', 'https://other.example/plants/polka', '2026-09-24 12:00:00', '2999-01-01 00:00:00', 'published', 'editor', '2026-09-24 12:00:00')", [cultivar_id]).unwrap();
+        connection.execute("INSERT INTO own_batches(cultivar_id, batch_code, origin_method, origin_document_ref, provenance_summary, received_on, plant_stage, quantity_available, pickup_region_id, pickup_locality, pickup_terms, checked_at, expires_at, editorial_status, reviewed_by, reviewed_at) VALUES (?1, 'TEST-1', 'in_vitro', 'private/document', 'Verified batch summary', '2026-03-01', 'sale_ready', 12, 1, 'Калининград', 'Самовывоз', '2026-09-24 12:00:00', '2999-01-01 00:00:00', 'published', 'editor', '2026-09-24 12:00:00')", [cultivar_id]).unwrap();
+        let snapshot = public_snapshot(&connection, Path::new(MIGRATIONS_DIR)).unwrap();
+        let cultivar = snapshot["cultivars"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|item| item["slug"] == "polka")
+            .unwrap();
+        assert_eq!(cultivar["offers"].as_array().unwrap().len(), 1);
+        assert_eq!(cultivar["offers"][0]["seller_name"], "Seller");
+        assert!(cultivar["offers"][0]["disclosure"]
+            .as_str()
+            .unwrap()
+            .contains("Партнёрская"));
+        assert_eq!(cultivar["own_batches"].as_array().unwrap().len(), 1);
+        assert_eq!(
+            cultivar["own_batches"][0]["pickup_region_code"],
+            "kaliningrad-oblast"
+        );
+        assert!(cultivar["own_batches"][0]
+            .get("origin_document_ref")
+            .is_none());
     }
 
     #[test]

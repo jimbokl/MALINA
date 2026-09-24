@@ -214,13 +214,14 @@ def public_snapshot(connection: sqlite3.Connection) -> dict[str, object]:
     )]
     by_id = {row["id"]: row for row in cultivars}
     for cultivar in cultivars:
-        cultivar.update(aliases=[], observations=[], media=[], recommendations=[], offers=[])
+        cultivar.update(aliases=[], observations=[], media=[], recommendations=[], offers=[], own_batches=[])
     for view, key in (
         ("public_aliases", "aliases"),
         ("public_observations", "observations"),
         ("public_media", "media"),
         ("public_recommendations", "recommendations"),
         ("public_offers", "offers"),
+        ("public_own_batches", "own_batches"),
     ):
         for row in connection.execute(f"SELECT * FROM {view} ORDER BY id"):
             item = dict(row)
@@ -253,6 +254,52 @@ def public_reviews_snapshot(connection: sqlite3.Connection) -> dict[str, object]
     }
 
 
+def review_queue(connection: sqlite3.Connection) -> dict[str, object]:
+    """Local-only moderation queue; never included in public exports."""
+    check(connection)
+    rows = [dict(row) for row in connection.execute(
+        "SELECT id, parent_id, display_name, region, cultivar_name, body, "
+        "created_at, moderation_verdict, moderation_reason "
+        "FROM reviews WHERE status = 'pending_human_review' "
+        "ORDER BY created_at, id"
+    )]
+    return {"status": "pending_human_review", "count": len(rows), "reviews": rows}
+
+
+def decide_review(
+    connection: sqlite3.Connection, review_id: int, decision: str, reviewer: str
+) -> dict[str, object]:
+    """Record a human decision without pretending it came from JEV."""
+    check(connection)
+    reviewer = reviewer.strip()
+    if not 1 <= len(reviewer) <= 60 or any(ch.isspace() or ord(ch) < 32 for ch in reviewer):
+        raise ValueError("--reviewer must be a short identifier without spaces")
+    if review_id < 1 or decision not in ("approved", "rejected"):
+        raise ValueError("Provide a valid --id and --decision")
+    with connection:
+        row = connection.execute(
+            "SELECT parent_id FROM reviews WHERE id = ? AND status = 'pending_human_review'",
+            (review_id,),
+        ).fetchone()
+        if row is None:
+            raise ValueError("Review is absent or no longer pending human review")
+        if decision == "approved" and row["parent_id"] is not None:
+            parent = connection.execute(
+                "SELECT 1 FROM public_reviews WHERE id = ?", (row["parent_id"],)
+            ).fetchone()
+            if parent is None:
+                raise ValueError("Approve the parent discussion first")
+        connection.execute(
+            "UPDATE reviews SET status = ?, reviewed_by = ?, "
+            "reviewed_at = strftime('%Y-%m-%d %H:%M:%S', 'now'), "
+            "published_at = CASE WHEN ? = 'approved' "
+            "THEN strftime('%Y-%m-%d %H:%M:%S', 'now') ELSE NULL END "
+            "WHERE id = ? AND status = 'pending_human_review'",
+            (decision, f"human:{reviewer}", decision, review_id),
+        )
+    return {"id": review_id, "status": decision}
+
+
 def write_output(text: str, output: str) -> None:
     if output == "-":
         print(text)
@@ -269,12 +316,18 @@ def write_output(text: str, output: str) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("init", "check", "import-drafts", "export-public", "export-reviews"))
+    parser.add_argument("command", choices=(
+        "init", "check", "import-drafts", "export-public", "export-reviews",
+        "review-queue", "review-decide",
+    ))
     parser.add_argument("--db", type=Path, default=DEFAULT_DB)
     parser.add_argument("--sources", type=Path)
     parser.add_argument("--cultivars", type=Path)
     parser.add_argument("--observations", type=Path)
     parser.add_argument("--out", default="-")
+    parser.add_argument("--id", type=int)
+    parser.add_argument("--decision", choices=("approved", "rejected"))
+    parser.add_argument("--reviewer")
     args = parser.parse_args(argv)
     try:
         with connect(args.db, create=args.command == "init") as connection:
@@ -292,10 +345,18 @@ def main(argv: list[str] | None = None) -> int:
                 write_output(json.dumps(
                     public_snapshot(connection), ensure_ascii=False, indent=2
                 ), args.out)
-            else:
+            elif args.command == "export-reviews":
                 write_output(json.dumps(
                     public_reviews_snapshot(connection), ensure_ascii=False, indent=2
                 ), args.out)
+            elif args.command == "review-queue":
+                print(json.dumps(review_queue(connection), ensure_ascii=False, indent=2))
+            else:
+                if args.id is None or args.decision is None or args.reviewer is None:
+                    raise ValueError("review-decide requires --id, --decision and --reviewer")
+                print(json.dumps(decide_review(
+                    connection, args.id, args.decision, args.reviewer
+                ), ensure_ascii=False))
         return 0
     except (ValueError, OSError, sqlite3.Error) as error:
         print(f"catalog: {error}", file=sys.stderr)

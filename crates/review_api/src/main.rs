@@ -367,26 +367,41 @@ async fn list_reviews(
     State(state): State<AppState>,
     Query(query): Query<ListQuery>,
 ) -> Result<Json<Value>, (StatusCode, Json<Value>)> {
-    let cultivar = query.cultivar.and_then(|v| validated_field(&v, 120));
+    let cultivar = query
+        .cultivar
+        .map(|value| {
+            validated_field(&value, 120).ok_or_else(|| {
+                (
+                    StatusCode::BAD_REQUEST,
+                    Json(json!({"error": "Укажите название сорта для фильтра."})),
+                )
+            })
+        })
+        .transpose()?;
     let db_path = state.db_path.clone();
     let rows = tokio::task::spawn_blocking(move || -> Result<Vec<PublicReview>> {
         let conn = open_db(&db_path)?;
         let mut stmt = conn.prepare(
-            "WITH RECURSIVE roots(id) AS ( \
-                 SELECT id FROM public_reviews WHERE parent_id IS NULL \
-                   AND (?1 IS NULL OR cultivar_name = ?1) \
-                 ORDER BY published_at DESC, id DESC LIMIT 50 \
-             ), thread(id, parent_id, display_name, region, cultivar_name, body, created_at, published_at) AS ( \
-                 SELECT p.id, p.parent_id, p.display_name, p.region, p.cultivar_name, \
+            "WITH RECURSIVE activity(id, root_id, published_at) AS ( \
+                 SELECT id, id, published_at FROM public_reviews \
+                 WHERE parent_id IS NULL AND (?1 IS NULL OR cultivar_name = ?1) \
+                 UNION ALL \
+                 SELECT p.id, a.root_id, p.published_at \
+                 FROM public_reviews p JOIN activity a ON p.parent_id = a.id \
+             ), roots(id, activity_at) AS ( \
+                 SELECT root_id, MAX(published_at) FROM activity \
+                 GROUP BY root_id ORDER BY MAX(published_at) DESC, root_id DESC LIMIT 50 \
+             ), thread(root_id, activity_at, id, parent_id, display_name, region, cultivar_name, body, created_at, published_at) AS ( \
+                 SELECT p.id, roots.activity_at, p.id, p.parent_id, p.display_name, p.region, p.cultivar_name, \
                         p.body, p.created_at, p.published_at \
                  FROM public_reviews p JOIN roots ON p.id = roots.id \
                  UNION ALL \
-                 SELECT p.id, p.parent_id, p.display_name, p.region, p.cultivar_name, \
+                 SELECT t.root_id, t.activity_at, p.id, p.parent_id, p.display_name, p.region, p.cultivar_name, \
                         p.body, p.created_at, p.published_at \
                  FROM public_reviews p JOIN thread t ON p.parent_id = t.id \
              ) \
              SELECT id, parent_id, display_name, region, cultivar_name, body, created_at, published_at \
-             FROM thread ORDER BY published_at DESC, id DESC",
+             FROM thread ORDER BY activity_at DESC, root_id DESC, published_at ASC, id ASC",
         )?;
         let reviews = stmt
             .query_map(params![cultivar], |r| {
@@ -490,7 +505,7 @@ async fn submit_review(
     let published =
         matches!(decision.as_ref(), Some(d) if d.consistent() && d.verdict == Verdict::NotSpam);
     let rejected = matches!(decision.as_ref(), Some(d) if d.consistent() && matches!(d.verdict, Verdict::Spam | Verdict::LowValue));
-    let inserted = tokio::task::spawn_blocking(move || -> Result<Option<bool>> {
+    let inserted = tokio::task::spawn_blocking(move || -> Result<Option<(bool, bool)>> {
         let mut conn = open_db(&db_path)?;
         let tx = conn.transaction()?;
         if let Some(parent_id) = submission.parent_id {
@@ -516,7 +531,7 @@ async fn submit_review(
         } else if rejected {
             "rejected"
         } else {
-            "pending"
+            "pending_human_review"
         };
         tx.execute(
             "INSERT INTO reviews (parent_id, display_name, region, cultivar_name, body, \
@@ -547,12 +562,18 @@ async fn submit_review(
             |r| r.get(0),
         )?;
         tx.commit()?;
-        Ok(Some(visible == 1))
+        Ok(Some((visible == 1, status == "pending_human_review")))
     })
     .await;
     match inserted {
-        Ok(Ok(Some(true))) => Ok((StatusCode::CREATED, Json(json!({"status": "published"})))),
-        Ok(Ok(Some(false))) => Ok((StatusCode::ACCEPTED, Json(json!({"status": "pending"})))),
+        Ok(Ok(Some((true, _)))) => Ok((StatusCode::CREATED, Json(json!({"status": "published"})))),
+        Ok(Ok(Some((false, true)))) => Ok((
+            StatusCode::ACCEPTED,
+            Json(json!({"status": "pending_human_review"})),
+        )),
+        Ok(Ok(Some((false, false)))) => {
+            Ok((StatusCode::ACCEPTED, Json(json!({"status": "received"}))))
+        }
         Ok(Ok(None)) => Err((
             StatusCode::CONFLICT,
             Json(json!({"error": "Родительский отзыв недоступен."})),
@@ -594,7 +615,17 @@ async fn main() -> Result<()> {
         PathBuf::from(std::env::var("MALINA_DB_PATH").context("MALINA_DB_PATH is required")?);
     let conn = open_db(&db_path).context("review database unavailable")?;
     conn.prepare("SELECT id, parent_id FROM public_reviews LIMIT 1")
-        .context("apply db/migrations/0006_review_replies.sql before starting")?;
+        .context("apply db/migrations/0007_review_human_queue.sql before starting")?;
+    let migration_applied: i64 = conn
+        .query_row(
+            "SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE version = '0007_review_human_queue')",
+            [],
+            |row| row.get(0),
+        )
+        .context("apply db/migrations/0007_review_human_queue.sql before starting")?;
+    if migration_applied != 1 {
+        bail!("apply db/migrations/0007_review_human_queue.sql before starting");
+    }
     drop(conn);
     let api_key = std::env::var("JEV_API_KEY").context("JEV_API_KEY is required")?;
     let bind_addr: SocketAddr = std::env::var("MALINA_BIND_ADDR")
@@ -665,6 +696,10 @@ mod tests {
         .unwrap();
         conn.execute_batch(include_str!(
             "../../../db/migrations/0006_review_replies.sql"
+        ))
+        .unwrap();
+        conn.execute_batch(include_str!(
+            "../../../db/migrations/0007_review_human_queue.sql"
         ))
         .unwrap();
         drop(conn);
@@ -827,13 +862,15 @@ mod tests {
     #[tokio::test]
     async fn model_failure_stays_pending() {
         let (_dir, router, path) = setup(None);
-        assert_eq!(post(&router, input()).await.0, StatusCode::ACCEPTED);
+        let (code, receipt) = post(&router, input()).await;
+        assert_eq!(code, StatusCode::ACCEPTED);
+        assert_eq!(receipt, json!({"status":"pending_human_review"}));
         assert_eq!(get(&router).await["reviews"].as_array().unwrap().len(), 0);
         let conn = open_db(&path).unwrap();
         let status: String = conn
             .query_row("SELECT status FROM reviews", [], |r| r.get(0))
             .unwrap();
-        assert_eq!(status, "pending");
+        assert_eq!(status, "pending_human_review");
     }
 
     #[tokio::test]
@@ -1001,7 +1038,120 @@ mod tests {
             .unwrap()
             .collect::<rusqlite::Result<_>>()
             .unwrap();
-        assert_eq!(statuses, ["rejected", "pending"]);
+        assert_eq!(statuses, ["rejected", "pending_human_review"]);
+    }
+
+    #[tokio::test]
+    async fn anna_and_elena_can_discuss_a_cultivar_with_useful_criticism() {
+        let (_dir, router, _path) = setup(Some(normal()));
+        let mut anna = input();
+        anna["body"] = json!("У меня Полка в Калининграде второй год даёт кислые ягоды даже на солнечной грядке; урожай заметно ниже, чем у соседнего сорта.");
+        assert_eq!(post(&router, anna).await.0, StatusCode::CREATED);
+        let root_id = get(&router).await["reviews"][0]["id"].as_i64().unwrap();
+        let elena = json!({
+            "parent_id": root_id,
+            "display_name": "Елена",
+            "region": "Кишинёв",
+            "body": "В Кишинёве на солнечном участке та же Полка слаще, но в жару ягода мельчает. Вы мульчировали грядку?"
+        });
+        assert_eq!(post(&router, elena).await.0, StatusCode::CREATED);
+        let listed = get(&router).await;
+        let reviews = listed["reviews"].as_array().unwrap();
+        assert_eq!(reviews.len(), 2);
+        assert_eq!(reviews[0]["display_name"], "Анна");
+        assert_eq!(reviews[1]["display_name"], "Елена");
+        assert_eq!(reviews[1]["region"], "Кишинёв");
+        assert_eq!(reviews[1]["parent_id"], root_id);
+        assert_eq!(reviews[1]["cultivar_name"], "Полка");
+        let moderator = JevModerator::new("test-only-key".to_owned()).unwrap();
+        let root_prompt = moderator.request_body("Кислые ягоды второй год.", None);
+        let reply_prompt =
+            moderator.request_body("У меня тоже ягоды кислые.", Some("Полка плодоносит."));
+        assert!(root_prompt["questions"]["review_quality"]["instructions"]
+            .as_str()
+            .unwrap()
+            .contains("Criticism is welcome"));
+        assert!(reply_prompt["questions"]["review_quality"]["instructions"]
+            .as_str()
+            .unwrap()
+            .contains("reasoned disagreement"));
+    }
+
+    #[tokio::test]
+    async fn cultivar_filter_rejects_blank_and_limits_to_requested_cultivar() {
+        let (_dir, router, _path) = setup(Some(normal()));
+        assert_eq!(post(&router, input()).await.0, StatusCode::CREATED);
+        let mut other = input();
+        other["cultivar_name"] = json!("Альбион");
+        assert_eq!(post(&router, other).await.0, StatusCode::CREATED);
+        for (uri, expected_status, expected_count) in [
+            ("/api/reviews?cultivar=", StatusCode::BAD_REQUEST, 0),
+            (
+                "/api/reviews?cultivar=%D0%9F%D0%BE%D0%BB%D0%BA%D0%B0",
+                StatusCode::OK,
+                1,
+            ),
+        ] {
+            let response = router
+                .clone()
+                .oneshot(Request::builder().uri(uri).body(Body::empty()).unwrap())
+                .await
+                .unwrap();
+            assert_eq!(response.status(), expected_status);
+            if expected_status == StatusCode::OK {
+                let bytes = response.into_body().collect().await.unwrap().to_bytes();
+                let body: Value = serde_json::from_slice(&bytes).unwrap();
+                assert_eq!(body["reviews"].as_array().unwrap().len(), expected_count);
+                assert_eq!(body["reviews"][0]["cultivar_name"], "Полка");
+            }
+        }
+    }
+
+    #[tokio::test]
+    async fn active_old_thread_resurfaces_above_fifty_newer_roots() {
+        let (_dir, router, path) = setup(Some(normal()));
+        let conn = open_db(&path).unwrap();
+        let mut first_root = 0;
+        let mut excluded_root = 0;
+        for second in 1..=51 {
+            conn.execute(
+                "INSERT INTO reviews (display_name, region, cultivar_name, body, \
+                 consent_processing, processing_consented_at, consent_publication, \
+                 publication_consented_at, status, moderation_model, moderation_verdict, \
+                 moderation_reason, moderation_version, moderated_at, published_at) \
+                 VALUES ('Анна', 'Калининградская область', 'Полка', \
+                 'Ягоды выросли на солнечном участке и поспели в августе.', \
+                 1, '2026-09-24 12:00:00', 1, '2026-09-24 12:00:00', 'approved', \
+                 'test', 'not_spam', 'classified_useful', 'review-publication-v3', \
+                 '2026-09-24 12:00:00', ?1)",
+                params![format!("2026-09-24 12:00:{second:02}")],
+            )
+            .unwrap();
+            if second == 1 {
+                first_root = conn.last_insert_rowid();
+            }
+            if second == 2 {
+                excluded_root = conn.last_insert_rowid();
+            }
+        }
+        conn.execute(
+            "INSERT INTO reviews (parent_id, display_name, region, cultivar_name, body, \
+             consent_processing, processing_consented_at, consent_publication, \
+             publication_consented_at, status, moderation_model, moderation_verdict, \
+             moderation_reason, moderation_version, moderated_at, published_at) \
+             VALUES (?1, 'Елена', 'Кишинёв', 'Полка', \
+             'Как сорт перенёс засушливый август в вашем регионе?', \
+             1, '2026-09-24 12:00:00', 1, '2026-09-24 12:00:00', 'approved', \
+             'test', 'not_spam', 'classified_useful', 'review-publication-v3', \
+             '2026-09-24 12:00:00', '2026-09-24 12:02:00')",
+            params![first_root],
+        )
+        .unwrap();
+        let reviews = get(&router).await["reviews"].as_array().unwrap().clone();
+        assert_eq!(reviews.len(), 51);
+        assert_eq!(reviews[0]["id"], first_root);
+        assert_eq!(reviews[1]["parent_id"], first_root);
+        assert!(!reviews.iter().any(|review| review["id"] == excluded_root));
     }
 
     struct DemotingModerator(PathBuf);
