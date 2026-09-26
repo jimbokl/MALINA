@@ -104,15 +104,15 @@ const pickerForm = document.querySelector('#picker-form');
 if (pickerForm) {
   const params = new URLSearchParams(location.search);
   const city = (pickerForm.dataset.city || params.get('city') || '').trim();
-  const region = (pickerForm.dataset.region || params.get('region') || '').trim();
+  const cityRegion = (pickerForm.dataset.region || params.get('region') || '').trim();
   const regionInput = pickerForm.querySelector('#picker-region');
   const cityContext = pickerForm.querySelector('#picker-city-context');
   const normalizeRegion = value => value.trim().toLocaleLowerCase('ru-RU').replace(/ё/g, 'е');
-  if (region) regionInput.value = region;
-  if (city && region && cityContext) {
+  if (cityRegion) regionInput.value = cityRegion;
+  if (city && cityRegion && cityContext) {
     cityContext.textContent = `Город: ${city}. Выберите условия участка для сравнения сортов.`;
     const updateCityContext = () => {
-      cityContext.hidden = normalizeRegion(regionInput.value) !== normalizeRegion(region);
+      cityContext.hidden = normalizeRegion(regionInput.value) !== normalizeRegion(cityRegion);
     };
     regionInput.addEventListener('input', updateCityContext);
     regionInput.addEventListener('change', updateCityContext);
@@ -120,7 +120,7 @@ if (pickerForm) {
   }
   pickerForm.addEventListener('submit', async event => {
     event.preventDefault();
-    const { classifyPickerCard } = await import('./picker-filter.mjs');
+    const { classifyPickerCard, cityForPickerContext } = await import('./picker-filter.mjs');
     const data = new FormData(pickerForm);
     const region = String(data.get('region') || '').trim();
     if (!region) { regionInput.focus(); return; }
@@ -133,7 +133,7 @@ if (pickerForm) {
     const drainage = data.get('drainage');
     const output = document.querySelector('#picker-output');
     const cards = [...document.querySelectorAll('#picker-results .variety-card')];
-    const activeCity = city && normalizeRegion(region) === normalizeRegion(regionInput.value) ? city : '';
+    const activeCity = cityForPickerContext(city, cityRegion, region);
     for (const link of output.querySelectorAll('.variety-card a[href]')) {
       const target = new URL(link.href);
       if (target.origin !== location.origin || !/\/sorta\/[a-z0-9-]+\/$/.test(target.pathname)) continue;
@@ -154,6 +154,7 @@ if (pickerForm) {
         harvestTiming: card.dataset.harvestTiming
       }, { crop, light, setting, fruiting, harvestTiming });
       card.hidden = result.status === 'exclude';
+      card.dataset.pickerVisible = result.status === 'exclude' ? 'false' : 'true';
       if (result.status === 'exclude') { excluded.push(card); continue; }
       if (result.status === 'match') matches.push(card);
       else needsEvidence.push(card);

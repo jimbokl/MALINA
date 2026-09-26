@@ -6,12 +6,12 @@ export const editorialAuthor = 'Редакция МАЛИНА — КЛУБНИК
 
 const russianRaspberry = { label: 'Россельхозцентр · Уход за малиной весной', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/severo-kavkazskiy/respublika-ingushetiya/ukhod-za-malinoy-vesnoy/' };
 const russianRaspberryPruning = { label: 'Россельхозцентр · Обрезка малины осенью', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/tsentralnyy-okrug/tulskaya-oblast/obrezka-maliny-osenyu/' };
-const russianStrawberry = { label: 'Россельхозцентр · Сажаем землянику садовую', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/severo-zapadnyy/novgorodskaya-oblast/sazhaem-zemlyaniku-sadovuyu-klubniku/' };
-const russianStrawberryCare = { label: 'Россельхозцентр · Сажаем ремонтантную землянику', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/privolzhskiy/kirovskaya-oblast/sazhaem-remontantnuyu-zemlyaniku/' };
-const umnStrawberry = { label: 'University of Minnesota Extension · выращивание земляники', url: 'https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/growing-strawberries-in-the-home-garden' };
+const russianStrawberry = { label: 'Россельхозцентр · посадка клубники', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/severo-zapadnyy/novgorodskaya-oblast/sazhaem-zemlyaniku-sadovuyu-klubniku/' };
+const russianStrawberryCare = { label: 'Россельхозцентр · уход за ремонтантной клубникой', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/privolzhskiy/kirovskaya-oblast/sazhaem-remontantnuyu-zemlyaniku/' };
+const umnStrawberry = { label: 'University of Minnesota Extension · выращивание клубники', url: 'https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/growing-strawberries-in-the-home-garden' };
 const umnPlants = { label: 'University of Minnesota Extension · выбор посадочного материала', url: 'https://extension.umn.edu/agriculture/specialty-crops/commercial-fruit-production/strawberry-farming/strawberry-varieties-and-purchasing-plants' };
 const umnPlanting = { label: 'University of Minnesota Extension · посадка и форматы рассады', url: 'https://extension.umn.edu/agriculture/specialty-crops/commercial-fruit-production/strawberry-farming/planting-a-new-strawberry-field' };
-const strawberryMicropropagation = { label: 'Borkowska · сравнение укоренения микроклонов земляники in vitro и ex vitro, 2001', url: 'https://doi.org/10.1016/S0304-4238(00)00230-2' };
+const strawberryMicropropagation = { label: 'Borkowska · укоренение микроклонов клубники in vitro и ex vitro, 2001', url: 'https://doi.org/10.1016/S0304-4238(00)00230-2' };
 const pennStateStrawberry = { label: 'Penn State Extension · сорта клубники для домашнего сада', url: 'https://extension.psu.edu/strawberry-varieties-for-home-gardens' };
 const illinoisRaspberry = { label: 'University of Illinois Extension · Growing Raspberries, раздел Planting', url: 'https://extension.illinois.edu/small-fruits/growing-raspberries' };
 const maineStrawberry = { label: 'David T. Handley · Bulletin #2067: Growing Strawberries · University of Maine Cooperative Extension', url: 'https://extension.umaine.edu/publications/2067e/' };

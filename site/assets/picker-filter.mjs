@@ -19,3 +19,8 @@ export function classifyPickerCard(card, selected) {
   }
   return { status: missing.length ? 'needs-evidence' : 'match', missing };
 }
+
+export function cityForPickerContext(city, cityRegion, selectedRegion) {
+  const normalize = value => String(value || '').trim().toLocaleLowerCase('ru-RU').replace(/ё/g, 'е').replace(/\s+/g, ' ');
+  return city && normalize(cityRegion) && normalize(cityRegion) === normalize(selectedRegion) ? city : '';
+}

@@ -1,6 +1,6 @@
 export const calendarSources = Object.freeze({
   raspberry: { label: 'Россельхозцентр · обрезка малины', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/tsentralnyy-okrug/tulskaya-oblast/obrezka-maliny-osenyu/' },
-  strawberry: { label: 'Россельхозцентр · посадка земляники', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/sibirskiy/omskaya-oblast/osennyaya-posadka-sadovoy-zemlyaniki/' },
+  strawberry: { label: 'Россельхозцентр · посадка клубники', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/sibirskiy/omskaya-oblast/osennyaya-posadka-sadovoy-zemlyaniki/' },
   systems: { label: 'University of Minnesota Extension · системы выращивания клубники', url: 'https://extension.umn.edu/agriculture/specialty-crops/commercial-fruit-production/strawberry-farming/choosing-a-strawberry-production-system' }
 });
 

@@ -11,7 +11,7 @@ import { raspberryFacets, raspberryFacetVarieties } from '../catalog-facets.mjs'
 import { additionalRaspberryVarieties } from '../raspberry-varieties.mjs';
 import { additionalStrawberryVarieties } from '../strawberry-varieties.mjs';
 import { depthAdvice } from '../assets/depth-model.mjs';
-import { classifyPickerCard } from '../assets/picker-filter.mjs';
+import { classifyPickerCard, cityForPickerContext } from '../assets/picker-filter.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
 const routes = ['/', '/malina/', '/klubnika/', '/sorta/', ...raspberryFacets.map(facet => facet.path), '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/raschet-kapelnogo-poliva/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/instrumenty/kalendar-uhoda/', '/instrumenty/proverka-rasteniya/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
@@ -598,7 +598,7 @@ test('город передаёт регион в подбор и показыв
   assert.match(picker, /id="picker-city-context" hidden/);
   assert.match(js, /params\.get\('city'\)/);
   assert.match(js, /params\.get\('region'\)/);
-  assert.match(js, /regionInput\.value = region/);
+  assert.match(js, /regionInput\.value = cityRegion/);
   assert.match(js, /Выберите условия участка для сравнения сортов/);
   assert.match(picker, /name="shelter" value="unknown" checked/);
   assert.match(picker, /name="drainage" value="unknown" checked/);
@@ -614,6 +614,13 @@ test('город сохраняется в переходе к сорту и е�
   assert.ok(tula.includes(`href="/sorta/abrikosovaya/?${query}#otzyvy"`));
   assert.ok(tula.includes(`href="/sorta/festivalnaya/?${query}#otzyvy"`));
   assert.doesNotMatch(tula, /href="\/sorta\/gusar\/#otzyvy"/);
+});
+
+test('смена региона в городском подборе убирает прежний город из перехода к отзывам', () => {
+  assert.equal(cityForPickerContext('Тула', 'Тульская область', 'Тульская область'), 'Тула');
+  assert.equal(cityForPickerContext('Тула', 'Тульская область', 'Московская область'), '');
+  assert.equal(cityForPickerContext('Орёл', 'Орловская область', 'орловская область'), 'Орёл');
+  assert.equal(cityForPickerContext('Орёл', 'Орловская область', ''), '');
 });
 
 test('городской отзыв связывает место и обсуждение с карточкой сорта', async () => {
@@ -654,6 +661,7 @@ test('подбор запрашивает регион и честно отме�
   assert.match(html, /id="picker-form"/);
   assert.match(js, /Выберите условия участка для сравнения сортов/);
   assert.match(html, /id="verified-status"/);
+  assert.match(html, /id="picker-admission-status"/);
   assert.doesNotMatch(html, /id="verified-region"/);
   assert.match(verifiedJs, /querySelector\('#picker-form'\)/);
   assert.match(html, /assets\/verified-selector\.js/);

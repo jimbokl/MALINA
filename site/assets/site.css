@@ -189,6 +189,8 @@
 /* The selector keeps the source and the remaining question beside each candidate. */
 #picker-results{grid-template-columns:repeat(2,minmax(0,1fr))}
 .picker-group-heading{grid-column:1/-1;margin:28px 0 0;padding:12px 0;border-bottom:1px solid #d6d8c9;color:#304b37;font-size:18px;line-height:1.35}
+.picker-admission-status{padding:12px 16px;background:#eef2e8;border-left:3px solid #527657}
+.picker-admission-status[hidden]{display:none}
 #picker-results .variety-card[hidden]{display:none}
 .picker-compare-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:26px 0;padding:18px 22px;background:#f1f0e6;border-left:3px solid var(--wine)}
 .picker-compare-bar[hidden],.picker-compare-bar [hidden],.picker-compare-option[hidden]{display:none}

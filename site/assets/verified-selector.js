@@ -8,8 +8,38 @@ if (form) {
   let engine;
   let requestId = 0;
   const pickerCards = [...document.querySelectorAll('#picker-results .variety-card[data-cultivar-slug]')];
+  const pickerResults = document.querySelector('#picker-results');
+  const admissionStatus = document.querySelector('#picker-admission-status');
+  let admittedSlugs = new Set();
+  let resultsReady = false;
+  let selectedRegionName = '';
+
+  const updatePickerAdmissions = () => {
+    admissionStatus.hidden = true;
+    if (!resultsReady || !admittedSlugs.size) return;
+    const visible = pickerCards.filter(card => card.dataset.pickerVisible === 'true');
+    const admitted = visible.filter(card => admittedSlugs.has(card.dataset.cultivarSlug));
+    if (!admitted.length) return;
+    admissionStatus.textContent = `Запись Госреестра для региона «${selectedRegionName}»: ${admitted.length} из ${visible.length} показанных сортов. Они стоят первыми в каждой группе; источник — на карточке.`;
+    admissionStatus.hidden = false;
+    for (const heading of pickerResults.querySelectorAll('.picker-group-heading')) {
+      const cards = [];
+      for (let sibling = heading.nextElementSibling; sibling && sibling.classList.contains('variety-card'); sibling = sibling.nextElementSibling) {
+        if (sibling.dataset.pickerVisible === 'true') cards.push(sibling);
+      }
+      cards.sort((left, right) => Number(admittedSlugs.has(right.dataset.cultivarSlug)) - Number(admittedSlugs.has(left.dataset.cultivarSlug)));
+      heading.after(...cards);
+    }
+  };
+
+  document.querySelector('#picker-output').addEventListener('picker:results', () => {
+    resultsReady = true;
+    updatePickerAdmissions();
+  });
 
   const clearCardAdmissions = () => {
+    admittedSlugs = new Set();
+    admissionStatus.hidden = true;
     for (const card of pickerCards) {
       const badge = card.querySelector('.picker-admission');
       badge.replaceChildren();
@@ -59,6 +89,7 @@ if (form) {
       item.admissions?.some(entry => entry.admission_region_number === region.admission_region_number)
     );
     if (!admitted.length) return;
+    admittedSlugs = new Set(admitted.map(cultivar => cultivar.slug));
     for (const cultivar of admitted) {
       const admission = cultivar.admissions.find(entry => entry.admission_region_number === region.admission_region_number);
       showCardAdmission(cultivar, admission, region);
@@ -74,14 +105,17 @@ if (form) {
       item.append(heading, explanation, cultivarLink);
       results.append(item);
     }
+    updatePickerAdmissions();
   };
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
     const currentRequest = ++requestId;
+    resultsReady = false;
     clearCardAdmissions();
     const fields = new FormData(form);
     const regionName = String(fields.get('region') || '').trim();
+    selectedRegionName = regionName;
     if (!regionName) return;
     const crop = String(fields.get('crop') || 'all');
     showStatus(`Проверяем опубликованные правила для региона «${regionName}»…`);
