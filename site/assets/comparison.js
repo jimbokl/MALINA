@@ -20,6 +20,10 @@ if (root) {
   let notice = '';
   const city = (params.get('city') || '').trim();
   const region = (params.get('region') || '').trim();
+  for (const input of choices) {
+    const link = input.closest('.comparison-choice')?.querySelector('a');
+    if (link) link.href = cultivarHref(input.value, { city, region, siteBase });
+  }
   if (city || region) {
     context.hidden = false;
     context.textContent = `Место сравнения: ${[city, region].filter(Boolean).join(', ')}. Сверьте условия участка в карточках сортов.`;
