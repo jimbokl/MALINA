@@ -27,6 +27,14 @@ test('все жёлтоплодные сорта малины использую
   }
 });
 
+test('Абрикосовая классифицирована по источнику как жёлтоплодная', () => {
+  const apricot = varieties.find((variety) => variety.slug === 'abrikosovaya' && variety.cropKey === 'raspberry');
+  assert.ok(apricot);
+  assert.equal(apricot.fruitColor, 'yellow');
+  assert.equal(cultivarImage(apricot).src, '/assets/raspberry-yellow-garden.webp');
+  assert.match(apricot.source, /vniispk\.ru\/pages\/activities\/science-activities\/conference-2008\/publ-2008-13/);
+});
+
 test('красная малина не получает жёлтую общую иллюстрацию', () => {
   for (const variety of varieties.filter((item) => item.cropKey === 'raspberry' && item.fruitColor === 'red')) {
     assert.notEqual(cultivarImage(variety).src, '/assets/raspberry-yellow-garden.webp', variety.slug);
@@ -34,7 +42,7 @@ test('красная малина не получает жёлтую общую 
 });
 
 test('отдельные иллюстрации красных сортов существуют и не используются для жёлтых', () => {
-  for (const slug of ['gusar', 'meteor', 'peresvet', 'polana']) {
+  for (const slug of ['gusar', 'meteor', 'peresvet', 'polana', 'atlant', 'gerakl']) {
     const variety = varieties.find((item) => item.slug === slug && item.cropKey === 'raspberry');
     assert.ok(variety, slug);
     assert.equal(variety.fruitColor, 'red', slug);

@@ -6,6 +6,16 @@ const sources = {
     label: 'ФНЦ Садоводства · генетика и селекция',
     context: 'ФНЦ Садоводства относит сорт к ремонтантной малине.'
   },
+  fncAtlant: {
+    url: 'https://vstisp.org/vstisp/index.php/11-icetheme/sample-news/1450-atlant',
+    label: 'ФНЦ Садоводства · Атлант',
+    context: 'В описании ФНЦ сорт назван ремонтантным, ягоды — ярко-красными.'
+  },
+  vniispkRemontant: {
+    url: 'https://vniispk.ru/pages/activities/science-activities/conference-2008/publ-2008-13',
+    label: 'ВНИИСПК · исследование ремонтантной малины',
+    context: 'Исследование И. В. Казакова и С. Н. Евдокименко описывает окраску и ремонтантное плодоношение сорта.'
+  },
   fncYellow: {
     url: 'https://vstisp.org/vstisp/index.php/2-icetheme/sample-news/uncategorized/1542-ivan-kupala-i-salyut-dva-novykh-konkurentosposobnykh-sorta-maliny',
     label: 'ФНЦ Садоводства · желтоплодные сорта',
@@ -58,10 +68,10 @@ const rows = [
   ['krasa-rossii', 'Краса России', 'unknown', 'summer', 'fncNursery2026', 'В каталоге питомника 2026 года указан среди обычной малины; окраска ягод в источнике не указана.'],
   ['balzam', 'Бальзам', 'unknown', 'unknown', 'fncSeminar', 'ФНЦ называет сорт в числе селекции Кокинского пункта; сорт упомянут на семинаре ФНЦ.'],
   ['zheltyy-gigant', 'Жёлтый гигант', 'yellow', 'unknown', 'fncSeminar', 'ФНЦ прямо называет сорт жёлтоплодным; сорт упомянут на семинаре ФНЦ.'],
-  ['atlant', 'Атлант', 'unknown', 'remontant', 'fncBreeding', 'В перечне селекционных достижений ФНЦ указан среди ремонтантных сортов.'],
-  ['abrikosovaya', 'Абрикосовая', 'unknown', 'remontant', 'fncBreeding', 'В перечне селекционных достижений ФНЦ указан среди ремонтантных сортов; окраска в источнике не указана.'],
+  ['atlant', 'Атлант', 'red', 'remontant', 'fncAtlant', 'ФНЦ Садоводства описывает сорт как ремонтантный с ярко-красными ягодами.'],
+  ['abrikosovaya', 'Абрикосовая', 'yellow', 'remontant', 'vniispkRemontant', 'Селекционеры описывают сорт как ремонтантный желтоплодный, с золотисто-абрикосовой окраской ягод.'],
   ['bryanskoe-divo', 'Брянское диво', 'unknown', 'remontant', 'fncBreeding', 'ФНЦ относит сорт к ремонтантной группе.'],
-  ['gerakl', 'Геракл', 'unknown', 'remontant', 'fncBreeding', 'ФНЦ относит сорт к ремонтантной группе.'],
+  ['gerakl', 'Геракл', 'red', 'remontant', 'vniispkRemontant', 'Селекционеры описывают сорт как ремонтантный, с ягодами рубинового цвета.'],
   ['evraziya', 'Евразия', 'unknown', 'remontant', 'fncBreeding', 'ФНЦ относит сорт к ремонтантной группе.'],
   ['zhar-ptitsa', 'Жар-птица', 'unknown', 'remontant', 'fncBreeding', 'ФНЦ относит сорт к ремонтантной группе.'],
   ['oranzhevoe-chudo', 'Оранжевое чудо', 'yellow', 'remontant', 'fncBreeding', 'ФНЦ относит сорт к жёлтоплодной группе; в селекционном перечне он указан как ремонтантный.'],

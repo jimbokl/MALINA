@@ -2,6 +2,8 @@
 // Provenance and publication scope: docs/SOURCES.md, «Иллюстрации карточек сортов».
 export const varietyMedia = Object.freeze({
   gusar: { file: 'variety-gusar.webp', crop: 'raspberry', fruitColor: 'red' },
+  atlant: { file: 'variety-atlant.webp', crop: 'raspberry', fruitColor: 'red' },
+  gerakl: { file: 'variety-gerakl.webp', crop: 'raspberry', fruitColor: 'red' },
   meteor: { file: 'variety-meteor.webp', crop: 'raspberry', fruitColor: 'red' },
   peresvet: { file: 'variety-peresvet.webp', crop: 'raspberry', fruitColor: 'red' },
   polana: { file: 'variety-polana.webp', crop: 'raspberry', fruitColor: 'red' },
