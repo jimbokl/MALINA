@@ -9,7 +9,7 @@ import { cities } from '../cities.mjs';
 import { varieties } from '../data.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
-const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/raschet-sazhencev/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
+const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/raschet-sazhencev/', '/instrumenty/obrezka-maliny/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
   ...varieties.map(variety => `/sorta/${variety.slug}/`),
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
@@ -26,6 +26,21 @@ test('расчёт саженцев доступен с главной, объя
   assert.match(html, /href="\/podbor\/"/);
   assert.match(html, /src="\/assets\/planting\.js\?v=[a-f0-9]+"/);
   await access(join(root, 'assets', 'planting-model.mjs'));
+});
+
+test('помощник по обрезке связан с малиной и показывает источник и границы', async () => {
+  const home = await readFile(join(root, 'index.html'), 'utf8');
+  const raspberry = await readFile(join(root, 'malina', 'index.html'), 'utf8');
+  const html = await readFile(join(root, 'instrumenty', 'obrezka-maliny', 'index.html'), 'utf8');
+  assert.match(home, /href="\/instrumenty\/obrezka-maliny\/"/);
+  assert.match(raspberry, /href="\/instrumenty\/obrezka-maliny\/"/);
+  assert.match(html, /<h1>Какие побеги/);
+  assert.match(html, /value="unknown" checked/);
+  assert.match(html, /value="summer"/);
+  assert.match(html, /value="primocane"/);
+  assert.match(html, /Сроки RHS относятся к условиям Великобритании/);
+  assert.match(html, /src="\/assets\/pruning\.js\?v=[a-f0-9]+"/);
+  await access(join(root, 'assets', 'pruning-model.mjs'));
 });
 
 test('карточки сортов показывают только проверенные паспорта фактов', async () => {
