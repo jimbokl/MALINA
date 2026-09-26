@@ -38,6 +38,24 @@ export const varieties = [
     fruiting: 'unknown', fruitingLabel: 'Тип плодоношения не проверен'
   },
   {
+    slug: 'murano', name: 'Мурано', latin: 'Fragaria × ananassa · Murano', crop: 'Земляника садовая', cropKey: 'strawberry', reviewedAt: '26.09.2026',
+    type: 'Повторное плодоношение', period: 'Продолжительный период сбора в описании оригинатора', place: 'Условия выращивания для России не подтверждены',
+    note: 'Оригинатор CIV описывает «Мурано» как сорт с повторным плодоношением и высокими требованиями к холодному периоду. Это описание для условий источника: сроки, урожайность и пригодность для регионов России пока не проверены.',
+    traits: ['Повторное плодоношение по данным оригинатора', 'Требования к холодному периоду отмечены в описании CIV', 'Региональные испытания в России не подтверждены'],
+    source: 'https://civ.it/wp-content/uploads/2025/01/Murano_EN.pdf',
+    sourceLabel: 'CIV · техническое описание Murano', season: 'long', setting: 'unknown', light: 'unknown',
+    fruiting: 'remontant', fruitingLabel: 'Повторное плодоношение'
+  },
+  {
+    slug: 'alba', name: 'Альба', latin: 'Fragaria × ananassa · Alba NF311', crop: 'Земляника садовая', cropKey: 'strawberry', reviewedAt: '26.09.2026',
+    type: 'Тип плодоношения не подтверждён', period: 'Ранний сбор в условиях итальянского питомника', place: 'Грядка; требуется хорошо дренированная почва',
+    note: 'Питомник Geoplant Vivai описывает ранний сбор «Альбы» в своих условиях и отмечает восприимчивость к отдельным заболеваниям. Сроки, урожайность и пригодность для регионов России пока не проверены.',
+    traits: ['Ранний сбор в условиях источника', 'Хорошо дренированная почва по рекомендации питомника', 'Региональные испытания в России не подтверждены'],
+    source: 'https://geoplantvivai.com/en/alba-strawberry-plants/',
+    sourceLabel: 'Geoplant Vivai · Alba NF311', season: 'unknown', setting: 'ground', light: 'unknown',
+    fruiting: 'unknown', fruitingLabel: 'Тип плодоношения не проверен'
+  },
+  {
     slug: 'cambridge-favourite', name: 'Кембридж Фаворит', latin: "Fragaria × ananassa ‘Cambridge Favourite’", crop: 'Земляника садовая', cropKey: 'strawberry',
     type: 'Летнее плодоношение', period: 'Средний срок в исходном описании', place: 'Грядка',
     note: 'Исходное описание относит сорт к летнему плодоношению. Срок созревания для регионов России не проверен.',

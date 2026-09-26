@@ -34,7 +34,7 @@ class VoteTests(unittest.TestCase):
         result = json.loads(destination.read_text())
         self.assertEqual(set(result), {"votes", "as_of"})
         self.assertEqual([v["cultivar_slug"] for v in result["votes"]], [
-            "aziya", "cambridge-favourite", "elan", "gusar", "joan-j", "polka"
+            "alba", "aziya", "cambridge-favourite", "elan", "gusar", "joan-j", "murano", "polka"
         ])
         self.assertTrue(all(v["count"] == 0 for v in result["votes"]))
         as_of = datetime.fromisoformat(result["as_of"].replace("Z", "+00:00"))

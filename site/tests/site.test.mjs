@@ -10,7 +10,7 @@ import { varieties } from '../data.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
 const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
-  '/sorta/polka/', '/sorta/joan-j/', '/sorta/gusar/', '/sorta/aziya/', '/sorta/cambridge-favourite/', '/sorta/elan/',
+  ...varieties.map(variety => `/sorta/${variety.slug}/`),
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
 test('карточки сортов показывают только проверенные паспорта фактов', async () => {
@@ -216,7 +216,8 @@ test('карточки показывают источник и границы �
     assert.match(html, /<title>[^<]+: описание сорта (малины|клубники), фото, урожайность и отзывы садоводов/);
     assert.match(html, /Проверенных данных для России нет/);
     assert.match(html, /Фото сорта пока не проверено/);
-    assert.match(html, route === '/sorta/gusar/' ? /https:\/\/gossortrf\.ru\/upload\// : route === '/sorta/aziya/' ? /https:\/\/geoplantvivai\.com\/fragola-asia-nf421\// : /https:\/\/www\.rhs\.org\.uk\/plants\//);
+    const variety = varieties.find(item => route === `/sorta/${item.slug}/`);
+    assert.ok(html.includes(variety.source));
     assert.match(html, /Региональная пригодность в России пока не проверена|Региональные испытания в России для этой записи пока не подтверждены/);
     assert.match(html, /id="reviews-root"[^>]*data-cultivar=/);
     assert.match(html, /Отзывы о сорте/);
@@ -233,6 +234,20 @@ test('Азия опубликована с ограничением италья
   assert.match(html, /ИИ-иллюстрация · не фотография сорта/);
   assert.ok(asia.observations.every(row => row.source_key === 'geoplant-asia-nf421' && row.context_text.includes('России')));
   assert.equal(asia.recommendations.length, 0);
+});
+
+test('Мурано и Альба опубликованы с исходными наблюдениями без региональных рекомендаций', async () => {
+  const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
+  for (const [slug, sourceKey] of [['murano', 'civ-murano-technical'], ['alba', 'geoplant-alba-nf311']]) {
+    const html = await readFile(join(root, 'sorta', slug, 'index.html'), 'utf8');
+    const cultivar = catalog.cultivars.find(row => row.slug === slug);
+    assert.ok(cultivar);
+    assert.match(html, /ИИ-иллюстрация · не фотография сорта/);
+    assert.match(html, /урожайность и пригодность для регионов России пока не проверены/);
+    assert.ok(cultivar.observations.length >= 2);
+    assert.ok(cultivar.observations.every(row => row.source_key === sourceKey && row.context_text.includes('России')));
+    assert.equal(cultivar.recommendations.length, 0);
+  }
 });
 
 test('каталог городов ищет по названию и ведёт к региональному опыту без климатических обещаний', async () => {
@@ -285,6 +300,8 @@ test('названия сортов в публичном каталоге и д
   const expected = new Map([
     ['polka', 'Полька'],
     ['joan-j', 'Джоан Джей'],
+    ['murano', 'Мурано'],
+    ['alba', 'Альба'],
     ['cambridge-favourite', 'Кембридж Фаворит'],
     ['elan', 'Элан']
   ]);
