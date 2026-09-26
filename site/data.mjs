@@ -1,4 +1,6 @@
-export const reviewedAt = '24.09.2026';
+import { additionalRaspberryVarieties } from './raspberry-varieties.mjs';
+
+export const reviewedAt = '26.09.2026';
 
 export const varieties = [
   {
@@ -8,7 +10,7 @@ export const varieties = [
     traits: ['Летний сорт', 'Регионы допуска 2, 3, 4, 6, 7 · 2024', 'Местные результаты нужно проверять отдельно'],
     source: 'https://vstisp.org/vstisp/index.php/11-icetheme/sample-news/1448-gusar',
     sourceLabel: 'ФНЦ Садоводства · Гусар', season: 'summer', harvestTiming: 'middle', setting: 'ground', light: 'unknown',
-    fruiting: 'summer', fruitingLabel: 'Летняя малина'
+    fruiting: 'summer', fruitingLabel: 'Летняя малина', fruitColor: 'red'
   },
   {
     slug: 'polka', name: 'Полька', latin: "Rubus idaeus ‘Polka’", crop: 'Малина', cropKey: 'raspberry',
@@ -17,7 +19,7 @@ export const varieties = [
     traits: ['Побеги с небольшими шипами', 'Основной сбор осенью', 'Солнечное место'],
     source: 'https://www.rhs.org.uk/plants/226503/rubus-idaeus-polka-f/details',
     sourceLabel: 'Исходная карточка · Полька', season: 'late', harvestTiming: 'autumn', setting: 'ground', light: 'sun',
-    fruiting: 'remontant', fruitingLabel: 'Ремонтантная малина'
+    fruiting: 'remontant', fruitingLabel: 'Ремонтантная малина', fruitColor: 'red'
   },
   {
     slug: 'joan-j', name: 'Джоан Джей', latin: "Rubus idaeus ‘Joan J’", crop: 'Малина', cropKey: 'raspberry',
@@ -26,8 +28,9 @@ export const varieties = [
     traits: ['Побеги без шипов', 'Осеннее плодоношение', 'Солнечное место'],
     source: 'https://www.rhs.org.uk/plants/195937/rubus-idaeus-joan-j-f/details',
     sourceLabel: 'Исходная карточка · Джоан Джей', season: 'late', harvestTiming: 'autumn', setting: 'ground', light: 'sun',
-    fruiting: 'remontant', fruitingLabel: 'Ремонтантная малина'
+    fruiting: 'remontant', fruitingLabel: 'Ремонтантная малина', fruitColor: 'red'
   },
+  ...additionalRaspberryVarieties,
   {
     slug: 'aziya', name: 'Азия', latin: 'Fragaria × ananassa · Asia NF421', crop: 'Земляника садовая', cropKey: 'strawberry', reviewedAt: '26.09.2026',
     type: 'Тип плодоношения не подтверждён', period: 'Среднеранний срок по описанию итальянского питомника', place: 'Грядка; питомник советует защищённый грунт в дождливых районах',

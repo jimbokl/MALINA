@@ -7,12 +7,38 @@ import { articles } from '../editorial.mjs';
 import { newArticles20260926 } from '../editorial-2026-09-26.mjs';
 import { cities } from '../cities.mjs';
 import { varieties } from '../data.mjs';
+import { additionalRaspberryVarieties } from '../raspberry-varieties.mjs';
 import { depthAdvice } from '../assets/depth-model.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
 const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/raschet-kapelnogo-poliva/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/instrumenty/kalendar-uhoda/', '/instrumenty/proverka-rasteniya/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
   ...varieties.map(variety => `/sorta/${variety.slug}/`),
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
+
+test('атлас малины связывает фильтры и карточки с фактами из SQLite', async () => {
+  const catalogHtml = await readFile(join(root, 'sorta', 'index.html'), 'utf8');
+  const publicCatalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
+  const bySlug = new Map(publicCatalog.cultivars.map(cultivar => [cultivar.slug, cultivar]));
+  assert.equal(bySlug.size, varieties.length);
+  for (const category of ['red', 'yellow', 'summer', 'remontant']) {
+    assert.ok(additionalRaspberryVarieties.some(v => v.fruitColor === category || v.fruiting === category));
+  }
+  for (const variety of additionalRaspberryVarieties) {
+    const database = bySlug.get(variety.slug);
+    assert.ok(database, `Нет записи SQLite: ${variety.slug}`);
+    const observations = database.observations;
+    if (variety.fruitColor !== 'unknown') {
+      const color = variety.fruitColor === 'red' ? 'Красная' : 'Жёлтая';
+      assert.ok(observations.some(o => o.trait_code === 'fruit_color' && o.value_text === color), `Нет источника окраски: ${variety.slug}`);
+    }
+    if (variety.fruiting !== 'unknown') {
+      const cycle = variety.fruiting === 'summer' ? 'Летняя' : 'Ремонтантная';
+      assert.ok(observations.some(o => o.trait_code === 'fruiting_cycle' && o.value_text === cycle), `Нет источника плодоношения: ${variety.slug}`);
+    }
+    assert.ok(catalogHtml.includes(`href="/sorta/${variety.slug}/"`));
+  }
+  assert.match(catalogHtml, /name="fruitColor"/);
+});
 
 test('памятка подключена к общему и городскому подбору и доступна для печати', async () => {
   for (const path of ['podbor', join('podbor', 'tula')]) {
@@ -189,7 +215,7 @@ test('сравнение сортов отдаёт полезный HTML, ист
     assert.match(html, /Применимость к региону России не оценивалась/);
     assert.match(html, /comparison-data/);
     assert.match(html, /comparison\.js/);
-    assert.match(html, /проверено 24\.09\.2026/);
+    assert.match(html, /проверено 26\.09\.2026/);
   }
   const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8').catch(() => '');
   if (process.env.SITE_URL) {

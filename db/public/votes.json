@@ -1,7 +1,23 @@
 {
   "votes": [
     {
+      "cultivar_slug": "abrikosovaya",
+      "count": 0
+    },
+    {
       "cultivar_slug": "alba",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "all-gold",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "anne",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "atlant",
       "count": 0
     },
     {
@@ -9,7 +25,27 @@
       "count": 0
     },
     {
+      "cultivar_slug": "balzam",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "beglyanka",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "bryanskoe-divo",
+      "count": 0
+    },
+    {
       "cultivar_slug": "cambridge-favourite",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "caroline",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "double-gold",
       "count": 0
     },
     {
@@ -17,7 +53,19 @@
       "count": 0
     },
     {
+      "cultivar_slug": "encore",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "evraziya",
+      "count": 0
+    },
+    {
       "cultivar_slug": "festivalnaya",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "gerakl",
       "count": 0
     },
     {
@@ -25,7 +73,23 @@
       "count": 0
     },
     {
+      "cultivar_slug": "heritage",
+      "count": 0
+    },
+    {
       "cultivar_slug": "joan-j",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "krasa-rossii",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "medvezhonok",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "meteor",
       "count": 0
     },
     {
@@ -33,9 +97,77 @@
       "count": 0
     },
     {
+      "cultivar_slug": "nova",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "oranzhevoe-chudo",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "peresvet",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "pingvin",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "podarok-kashinu",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "poklon-kazakovu",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "polana",
+      "count": 0
+    },
+    {
       "cultivar_slug": "polka",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "prelude",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "rubinovoe-ozherele",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "skromnitsa",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "solnyshko",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "yellow-antwerp",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "zhar-ptitsa",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "zheltyy-gigant",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "zhuravlik",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "zolotaya-osen",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "zolotye-kupola",
       "count": 0
     }
   ],
-  "as_of": "2026-09-26T15:57:40Z"
+  "as_of": "2026-09-26T18:43:45Z"
 }

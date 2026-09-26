@@ -6,20 +6,25 @@ import { browserVoterToken, createVoteClient } from '../assets/votes.js';
 import { resolveVoteApi } from '../votes.mjs';
 import { varieties } from '../data.mjs';
 
-const snapshot = { as_of: '2026-09-26T10:00:00Z', votes: [
+const seedVotes = [
   { cultivar_slug: 'polka', count: 4 }, { cultivar_slug: 'joan-j', count: 4 },
-  { cultivar_slug: 'elan', count: 2 }, { cultivar_slug: 'aziya', count: 0 }, { cultivar_slug: 'gusar', count: 0 }, { cultivar_slug: 'cambridge-favourite', count: 0 },
-  { cultivar_slug: 'murano', count: 0 }, { cultivar_slug: 'alba', count: 0 }, { cultivar_slug: 'festivalnaya', count: 0 }
-] };
+  { cultivar_slug: 'elan', count: 2 }
+];
+const snapshot = { as_of: '2026-09-26T10:00:00Z', votes: varieties.map(v =>
+  seedVotes.find(vote => vote.cultivar_slug === v.slug) ?? { cultivar_slug: v.slug, count: 0 }
+) };
 
 test('рейтинг делит места при равенстве, оставляет нули без места и пересчитывает культуру', () => {
   const ranked = rankCultivars(varieties, snapshot.votes);
-  assert.deepEqual(ranked.map(v => [v.slug, v.rank]), [['joan-j', 1], ['polka', 1], ['elan', 3], ['aziya', null], ['alba', null], ['gusar', null], ['cambridge-favourite', null], ['murano', null], ['festivalnaya', null]]);
+  assert.deepEqual(ranked.filter(v => v.rank !== null).map(v => [v.slug, v.rank]), [['joan-j', 1], ['polka', 1], ['elan', 3]]);
+  assert.equal(ranked.length, varieties.length);
+  assert.ok(ranked.slice(3).every(v => v.rank === null));
   const strawberry = rankCultivars(varieties, snapshot.votes, 'strawberry');
-  assert.deepEqual(strawberry.map(v => [v.slug, v.rank]), [['elan', 1], ['aziya', null], ['alba', null], ['cambridge-favourite', null], ['murano', null], ['festivalnaya', null]]);
+  assert.deepEqual(strawberry.filter(v => v.rank !== null).map(v => [v.slug, v.rank]), [['elan', 1]]);
+  assert.equal(strawberry.length, varieties.filter(v => v.cropKey === 'strawberry').length);
   const empty = rankCultivars(varieties, snapshot.votes.map(v => ({ ...v, count: 0 })));
   assert.ok(empty.every(v => v.rank === null));
-  assert.deepEqual(empty.map(v => v.slug), ['aziya', 'alba', 'gusar', 'joan-j', 'cambridge-favourite', 'murano', 'polka', 'festivalnaya', 'elan']);
+  assert.deepEqual(empty.map(v => v.slug), [...varieties].sort((a, b) => a.name.localeCompare(b.name, 'ru')).map(v => v.slug));
 });
 
 test('публичный контракт отклоняет повреждённые счётчики и пропавшие сорта', () => {

@@ -77,15 +77,18 @@ if (catalogForm) {
       for (const control of viewButtons) control.setAttribute('aria-pressed', String(control === button));
     });
   }
-  const requestedFruiting = new URLSearchParams(location.search).get('fruiting');
+  const catalogParams = new URLSearchParams(location.search);
+  const requestedFruiting = catalogParams.get('fruiting');
   if (['remontant', 'summer'].includes(requestedFruiting)) catalogForm.elements.fruiting.value = requestedFruiting;
+  if (['raspberry', 'strawberry'].includes(catalogParams.get('crop'))) catalogForm.elements.crop.value = catalogParams.get('crop');
+  if (['red', 'yellow', 'unknown'].includes(catalogParams.get('fruitColor'))) catalogForm.elements.fruitColor.value = catalogParams.get('fruitColor');
   const filter = () => {
     const data = new FormData(catalogForm);
-    const crop = data.get('crop'); const setting = data.get('setting'); const fruiting = data.get('fruiting');
+    const crop = data.get('crop'); const setting = data.get('setting'); const fruiting = data.get('fruiting'); const fruitColor = data.get('fruitColor');
     const query = String(data.get('query') || '').trim().toLocaleLowerCase('ru');
     let visible = 0;
     for (const card of cards) {
-      const show = (crop === 'all' || card.dataset.crop === crop) && (setting === 'all' || card.dataset.setting === setting) && (fruiting === 'all' || card.dataset.fruiting === fruiting) && card.dataset.name.includes(query);
+      const show = (crop === 'all' || card.dataset.crop === crop) && (setting === 'all' || card.dataset.setting === setting) && (fruiting === 'all' || card.dataset.fruiting === fruiting) && (fruitColor === 'all' || card.dataset.fruitColor === fruitColor) && card.dataset.name.includes(query);
       card.hidden = !show;
       if (show) visible++;
     }

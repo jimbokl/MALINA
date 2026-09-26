@@ -33,9 +33,10 @@ class VoteTests(unittest.TestCase):
         ]), 0)
         result = json.loads(destination.read_text())
         self.assertEqual(set(result), {"votes", "as_of"})
-        self.assertEqual([v["cultivar_slug"] for v in result["votes"]], [
-            "alba", "aziya", "cambridge-favourite", "elan", "festivalnaya", "gusar", "joan-j", "murano", "polka"
-        ])
+        expected_slugs = [row["slug"] for row in self.connection.execute(
+            "SELECT slug FROM public_cultivars ORDER BY slug"
+        )]
+        self.assertEqual([v["cultivar_slug"] for v in result["votes"]], expected_slugs)
         self.assertTrue(all(v["count"] == 0 for v in result["votes"]))
         as_of = datetime.fromisoformat(result["as_of"].replace("Z", "+00:00"))
         self.assertLess(abs((datetime.now(timezone.utc) - as_of).total_seconds()), 10)
@@ -49,7 +50,8 @@ class VoteTests(unittest.TestCase):
         )
         self.connection.commit()
         result = catalog.public_votes_snapshot(self.connection)
-        self.assertEqual(result["votes"][-1], {"cultivar_slug": "polka", "count": 1})
+        self.assertEqual(next(v for v in result["votes"] if v["cultivar_slug"] == "polka"),
+                         {"cultivar_slug": "polka", "count": 1})
         encoded = json.dumps(result)
         self.assertNotIn(token, encoded)
         self.assertNotIn(hashed, encoded)
