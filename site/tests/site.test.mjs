@@ -9,9 +9,24 @@ import { cities } from '../cities.mjs';
 import { varieties } from '../data.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
-const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
+const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/raschet-sazhencev/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
   ...varieties.map(variety => `/sorta/${variety.slug}/`),
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
+
+test('расчёт саженцев доступен с главной, объясняет ограничения и собирается как отдельная страница', async () => {
+  const home = await readFile(join(root, 'index.html'), 'utf8');
+  const html = await readFile(join(root, 'instrumenty', 'raschet-sazhencev', 'index.html'), 'utf8');
+  assert.match(home, /href="\/instrumenty\/raschet-sazhencev\/"/);
+  assert.match(html, /<h1>Сколько саженцев/);
+  assert.match(html, /name="rowSpacing"/);
+  assert.match(html, /name="plantSpacing"/);
+  assert.match(html, /<button[^>]+type="submit">Посчитать/);
+  assert.match(html, /Первое растение и первый ряд стоят на расстоянии половины шага от края/);
+  assert.match(html, /Это геометрия, а не агрономическая рекомендация/);
+  assert.match(html, /href="\/podbor\/"/);
+  assert.match(html, /src="\/assets\/planting\.js\?v=[a-f0-9]+"/);
+  await access(join(root, 'assets', 'planting-model.mjs'));
+});
 
 test('карточки сортов показывают только проверенные паспорта фактов', async () => {
   const polka = await readFile(join(root, 'sorta', 'polka', 'index.html'), 'utf8');
