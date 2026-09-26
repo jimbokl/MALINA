@@ -20,6 +20,14 @@
 
 ## Текущая передача
 
+### 2026-09-26 08:14 UTC · предпросмотр публикаций и деплой / W-05, W-10
+
+- Сделано: коммит [`8de543e`](https://github.com/jimbokl/MALINA/commit/8de543e54dcb1059af757afd13e37cc7f6e0acc6) опубликован в `main`. Для страниц журнала добавлены Open Graph и Twitter метаданные с абсолютной ссылкой на страницу, общей горизонтальной обложкой 1536 × 1024 и типом `article`; production URL теперь проверяются в CI. Мобильное меню закрывается по Escape с возвратом фокуса к кнопке.
+- Проверено: `SITE_URL=https://malinaklubnika.ru SITE_BASE=/ npm run build` собрал 26 страниц; `npm test` — 9/9. [Site checks](https://github.com/jimbokl/MALINA/actions/runs/36229001603) и [Pages](https://github.com/jimbokl/MALINA/actions/runs/36229001601) успешны на точном SHA `8de543e54dcb1059af757afd13e37cc7f6e0acc6`. На публичном домене проверены 19 страниц, sitemap и ключевых ресурсов по HTTP — все отвечают 200; статья отдает абсолютные social metadata.
+- Внешнее состояние: Pages API возвращает `https_certificate: null`, `https_enforced: false`; `npm run check:public` по-прежнему завершается ошибкой несовпадения сертификата `github.io` и `malinaklubnika.ru`. Данные DNS не менялись. Публичные посты не размещались.
+- Осталось: W-05 не закрыт до выпуска сертификата и полной проверки HTTPS; после этого можно перейти к подготовленным анонсам W-10. Публичный API отзывов также остаётся отдельной незапущенной инфраструктурной задачей.
+- Рабочее дерево: сохранить правки другого процесса в `research/README.md`, `Malinavideo/`, `images.md`, `research/media/` и `research/popular-varieties-russia-2026-09-25.csv`; не включать их в коммиты.
+
 ### 2026-09-26 07:31 UTC · дистрибуция и деплой / W-10, W-05
 
 - Сделано: коммит [`2a3a819`](https://github.com/jimbokl/MALINA/commit/2a3a81942b0ff3f0b04dcf8a4301d94819c0af50) опубликован в `main`. Подготовлен отдельный пакет анонсов для Дзена, Pinterest и тематического VK-сообщества со ссылками UTM и оригинальной вертикальной графикой; `deploy.md` обновлён по повторной диагностике HTTPS.

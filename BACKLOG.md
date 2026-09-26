@@ -105,6 +105,8 @@
 
 **Повторный деплой 26.09.2026 (`W-05`):** на SHA `2a3a81942b0ff3f0b04dcf8a4301d94819c0af50` успешны [Site checks](https://github.com/jimbokl/MALINA/actions/runs/36226873294) и [Pages](https://github.com/jimbokl/MALINA/actions/runs/36226873293). После публикации 19 основных HTTP-маршрутов и ресурсов отвечают 200, `www` перенаправляется на корень. HTTPS остаётся незавершённым: Pages API возвращает `https_certificate: null`, `https_enforced: false`, TLS-проверка получает сертификат `github.io`.
 
+**Предпросмотр публикаций и деплой 26.09.2026 (`W-05`/`W-10`):** коммит [`8de543e`](https://github.com/jimbokl/MALINA/commit/8de543e54dcb1059af757afd13e37cc7f6e0acc6) добавил Open Graph/Twitter метаданные для статей с горизонтальной обложкой 1536 × 1024 и тестами production URL; мобильное меню теперь закрывается клавишей Escape с возвратом фокуса. [Site checks](https://github.com/jimbokl/MALINA/actions/runs/36229001603) и [Pages](https://github.com/jimbokl/MALINA/actions/runs/36229001601) успешны на SHA `8de543e54dcb1059af757afd13e37cc7f6e0acc6`. 19 публичных HTTP-маршрутов и ресурсов проверены — все отвечают 200. HTTPS по-прежнему не проходит: сертификат не соответствует домену; DNS не менялся. `W-05` остаётся `in_progress`, размещений W-10 пока нет.
+
 Следующие конкретные действия:
 
 1. `F-01`: домен и доступ к DNS подтверждены; после выпуска HTTPS завершить проверку публичного адреса. Коммерческую модель, продавца и торговый хостинг определить отдельно.
