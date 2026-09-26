@@ -248,7 +248,12 @@ for (const asset of ['malina_selector.js', 'malina_selector_bg.wasm']) await cop
 await writeFile(join(out, 'robots.txt'), `User-agent: *\nAllow: /\n${siteUrl ? `Sitemap: ${siteUrl}/sitemap.xml\n` : ''}`);
 if (siteUrl) await writeFile(join(out, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${paths.map(path => `<url><loc>${siteUrl}${path}</loc></url>`).join('')}</urlset>`);
 if (siteUrl) {
-  const items = articles.map(article => `<item><title>${e(article.title)}</title><link>${e(siteUrl + articlePath(article))}</link><guid isPermaLink="true">${e(siteUrl + articlePath(article))}</guid><description>${e(article.lead)}</description><pubDate>Fri, 25 Sep 2026 00:00:00 GMT</pubDate><media:content url="${e(`${siteUrl}/assets/${article.crop === 'raspberry' ? 'raspberry' : 'strawberry'}-garden.webp`)}" medium="image" type="image/webp"/><media:description>Иллюстрация культуры, созданная для сайта генератором изображений; не фотография сорта.</media:description></item>`).join('');
+  const items = articles.map(article => {
+    const publishedIso = article.publishedIso ?? editorialReviewedIso;
+    const image = article.heroImage?.file ?? `${article.crop === 'raspberry' ? 'raspberry' : 'strawberry'}-garden.webp`;
+    const imageDescription = article.heroImage?.caption ?? 'Иллюстрация культуры, созданная для сайта генератором изображений; не фотография сорта.';
+    return `<item><title>${e(article.title)}</title><link>${e(siteUrl + articlePath(article))}</link><guid isPermaLink="true">${e(siteUrl + articlePath(article))}</guid><description>${e(article.lead)}</description><pubDate>${new Date(`${publishedIso}T00:00:00Z`).toUTCString()}</pubDate><media:content url="${e(`${siteUrl}/assets/${image}`)}" medium="image" type="image/webp"/><media:description>${e(imageDescription)}</media:description></item>`;
+  }).join('');
   await writeFile(join(out, 'feed.xml'), `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title>Ягодный журнал МАЛИНА — КЛУБНИКА</title><link>${e(siteUrl + '/zhurnal/')}</link><description>Проверяемые материалы о выборе и выращивании малины и садовой земляники.</description><language>ru</language><lastBuildDate>${new Date().toUTCString()}</lastBuildDate>${items}</channel></rss>`);
 }
 console.log(`Built ${pages.size} HTML pages${siteUrl ? ` for ${siteUrl}` : ''}.`);

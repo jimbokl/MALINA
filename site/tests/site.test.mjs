@@ -4,6 +4,7 @@ import { readFile, access } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { articles } from '../editorial.mjs';
+import { newArticles20260926 } from '../editorial-2026-09-26.mjs';
 import { cities } from '../cities.mjs';
 import { varieties } from '../data.mjs';
 
@@ -89,7 +90,8 @@ test('журнал содержит проверяемые статьи, авт�
       assert.match(html, new RegExp(`"datePublished":"${publishedIso}"`));
       assert.match(html, new RegExp(`"dateModified":"${reviewedIso}"`));
     }
-    assert.match(html, article.heroImage ? /ИИ-иллюстрация общего приёма ухода после посадки/ : /Иллюстрация культуры, созданная для сайта генератором изображений/);
+    if (article.heroImage) assert.ok(html.includes(article.heroImage.caption), `нет подписи к изображению статьи ${article.slug}`);
+    else assert.match(html, /Иллюстрация культуры, созданная для сайта генератором изображений/);
     assert.match(html, /<section class="media-sources"/);
     assert.match(html, /data-share-article="vk"/);
     assert.match(html, /data-share-article="pinterest"/);
@@ -119,6 +121,19 @@ test('журнал содержит проверяемые статьи, авт�
     const feed = await readFile(join(root, 'feed.xml'), 'utf8');
     assert.equal((feed.match(/<item>/g) || []).length, articles.length);
     assert.match(feed, /<media:content /);
+    assert.match(feed, /<pubDate>Sat, 26 Sep 2026 00:00:00 GMT<\/pubDate>/);
+    assert.ok(feed.indexOf('/zhurnal/malinovoe-derevo-tarusa/') < feed.indexOf('/zhurnal/posadka-klubniki/'));
+  }
+});
+
+test('первый выпуск содержит ровно 20 новых доступных и датированных страниц', async () => {
+  assert.equal(newArticles20260926.length, 20);
+  assert.equal(new Set(newArticles20260926.map(article => article.slug)).size, 20);
+  for (const article of newArticles20260926) {
+    const html = await readFile(join(root, 'zhurnal', article.slug, 'index.html'), 'utf8');
+    assert.ok(html.includes('<time datetime="2026-09-26">26.09.2026</time>'));
+    assert.ok(html.includes(`<h1>${article.title}</h1>`));
+    assert.ok(html.includes('href="#sources"'));
   }
 });
 

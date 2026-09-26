@@ -1,5 +1,6 @@
 // Editorial claims are deliberately narrow. Each section names the primary source
 // used for its practical advice; UK/US growing calendars are not Russian forecasts.
+import { newArticles20260926 } from './editorial-2026-09-26.mjs';
 export const editorialReviewedAt = '25.09.2026';
 export const editorialReviewedIso = '2026-09-25';
 export const editorialAuthor = 'Редакция МАЛИНА — КЛУБНИКА';
@@ -14,7 +15,7 @@ const pennStateStrawberry = { label: 'Penn State Extension · сорта клу�
 const illinoisRaspberry = { label: 'University of Illinois Extension · Growing Raspberries, раздел Planting', url: 'https://extension.illinois.edu/small-fruits/growing-raspberries' };
 const maineStrawberry = { label: 'David T. Handley · Bulletin #2067: Growing Strawberries · University of Maine Cooperative Extension', url: 'https://extension.umaine.edu/publications/2067e/' };
 
-export const articles = [
+const existingArticles = [
   {
     slug: 'posadka-sazhentsev-maliny-i-klubniki', crop: 'both', category: 'Посадка',
     publishedIso: '2026-09-26', reviewedIso: '2026-09-26', reviewedAt: '26.09.2026',
@@ -289,3 +290,4 @@ export const articles = [
     relatedArticles: ['remontantnaya-klubnika', 'kak-vybrat-sazhentsy-klubniki', 'posadka-klubniki']
   }
 ];
+export const articles = [...newArticles20260926, ...existingArticles];
