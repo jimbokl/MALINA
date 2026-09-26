@@ -14,7 +14,15 @@ export const varietyMedia = Object.freeze({
   murano: { file: 'variety-murano.webp', crop: 'strawberry' },
   alba: { file: 'variety-alba.webp', crop: 'strawberry' },
   'cambridge-favourite': { file: 'variety-cambridge-favourite.webp', crop: 'strawberry' },
-  elan: { file: 'variety-elan.webp', crop: 'strawberry' }
+  elan: { file: 'variety-elan.webp', crop: 'strawberry' },
+  tsaritsa: { file: 'variety-tsaritsa.webp', crop: 'strawberry' },
+  bereginya: { file: 'variety-bereginya.webp', crop: 'strawberry' },
+  kleri: { file: 'variety-kleri.webp', crop: 'strawberry' },
+  aprika: { file: 'variety-aprika.webp', crop: 'strawberry' },
+  dzholi: { file: 'variety-dzholi.webp', crop: 'strawberry' },
+  siriya: { file: 'variety-siriya.webp', crop: 'strawberry' },
+  malga: { file: 'variety-malga.webp', crop: 'strawberry' },
+  aniya: { file: 'variety-aniya.webp', crop: 'strawberry' }
 });
 
 const genericRaspberryMedia = Object.freeze({
@@ -33,7 +41,7 @@ export function cultivarImage(variety) {
     throw new Error(`Raspberry fruit color and illustration differ: ${variety.slug}`);
   }
   const subject = variety.cropKey === 'strawberry'
-    ? 'садовой земляники'
+    ? 'клубники'
     : variety.fruitColor === 'yellow' ? 'жёлтой малины' : 'малины';
   return {
     src: `/assets/${media.file}`,

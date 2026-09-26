@@ -1,4 +1,5 @@
 import { additionalRaspberryVarieties } from './raspberry-varieties.mjs';
+import { additionalStrawberryVarieties } from './strawberry-varieties.mjs';
 
 export const reviewedAt = '26.09.2026';
 
@@ -32,7 +33,7 @@ export const varieties = [
   },
   ...additionalRaspberryVarieties,
   {
-    slug: 'aziya', name: 'Азия', latin: 'Fragaria × ananassa · Asia NF421', crop: 'Земляника садовая', cropKey: 'strawberry', reviewedAt: '26.09.2026',
+    slug: 'aziya', name: 'Азия', latin: 'Fragaria × ananassa · Asia NF421', crop: 'Клубника', cropKey: 'strawberry', reviewedAt: '26.09.2026',
     type: '—', period: 'Среднеранний срок по описанию итальянского питомника', place: 'Грядка; питомник советует защищённый грунт в дождливых районах',
     note: 'Питомник описывает «Азию» как среднеранний сорт и отмечает чувствительность к мучнистой росе.',
     traits: ['Среднеранний срок в условиях источника', 'Чувствительность к мучнистой росе по данным питомника'],
@@ -41,7 +42,7 @@ export const varieties = [
     fruiting: 'unknown', fruitingLabel: '—'
   },
   {
-    slug: 'festivalnaya', name: 'Фестивальная', latin: 'Fragaria L. · Фестивальная', crop: 'Земляника садовая', cropKey: 'strawberry', reviewedAt: '26.09.2026',
+    slug: 'festivalnaya', name: 'Фестивальная', latin: 'Fragaria L. · Фестивальная', crop: 'Клубника', cropKey: 'strawberry', reviewedAt: '26.09.2026',
     type: '—', period: '—', place: '—',
     note: 'В Госреестре 2024 года «Фестивальная» указана с допуском для регионов 1–11.',
     traits: ['Регионы допуска 1–11 · 2024'],
@@ -50,7 +51,7 @@ export const varieties = [
     fruiting: 'unknown', fruitingLabel: '—'
   },
   {
-    slug: 'murano', name: 'Мурано', latin: 'Fragaria × ananassa · Murano', crop: 'Земляника садовая', cropKey: 'strawberry', reviewedAt: '26.09.2026',
+    slug: 'murano', name: 'Мурано', latin: 'Fragaria × ananassa · Murano', crop: 'Клубника', cropKey: 'strawberry', reviewedAt: '26.09.2026',
     type: 'Повторное плодоношение', period: 'Продолжительный период сбора в описании оригинатора', place: '—',
     note: 'Оригинатор CIV описывает «Мурано» как сорт с повторным плодоношением и высокими требованиями к холодному периоду.',
     traits: ['Повторное плодоношение по данным оригинатора', 'Требования к холодному периоду отмечены в описании CIV'],
@@ -59,7 +60,7 @@ export const varieties = [
     fruiting: 'remontant', fruitingLabel: 'Повторное плодоношение'
   },
   {
-    slug: 'alba', name: 'Альба', latin: 'Fragaria × ananassa · Alba NF311', crop: 'Земляника садовая', cropKey: 'strawberry', reviewedAt: '26.09.2026',
+    slug: 'alba', name: 'Альба', latin: 'Fragaria × ananassa · Alba NF311', crop: 'Клубника', cropKey: 'strawberry', reviewedAt: '26.09.2026',
     type: '—', period: 'Ранний сбор в условиях итальянского питомника', place: 'Грядка; требуется хорошо дренированная почва',
     note: 'Питомник Geoplant Vivai описывает ранний сбор «Альбы» и отмечает восприимчивость к отдельным заболеваниям.',
     traits: ['Ранний сбор в условиях источника', 'Хорошо дренированная почва по рекомендации питомника'],
@@ -68,7 +69,7 @@ export const varieties = [
     fruiting: 'unknown', fruitingLabel: '—'
   },
   {
-    slug: 'cambridge-favourite', name: 'Кембридж Фаворит', latin: "Fragaria × ananassa ‘Cambridge Favourite’", crop: 'Земляника садовая', cropKey: 'strawberry',
+    slug: 'cambridge-favourite', name: 'Кембридж Фаворит', latin: "Fragaria × ananassa ‘Cambridge Favourite’", crop: 'Клубника', cropKey: 'strawberry',
     type: 'Летнее плодоношение', period: 'Средний срок в исходном описании', place: 'Грядка',
     note: 'Сорт с летним плодоношением и образованием усов.',
     traits: ['Летнее плодоношение', 'Образует усы', 'Солнечное место'],
@@ -77,12 +78,13 @@ export const varieties = [
     fruiting: 'summer', fruitingLabel: 'Летнее плодоношение'
   },
   {
-    slug: 'elan', name: 'Элан', latin: "Fragaria × ananassa ‘Elan’", crop: 'Земляника садовая', cropKey: 'strawberry',
+    slug: 'elan', name: 'Элан', latin: "Fragaria × ananassa ‘Elan’", crop: 'Клубника', cropKey: 'strawberry',
     type: 'Повторное плодоношение', period: 'Повторное плодоношение в описании', place: 'Контейнер',
     note: 'Оригинатор отмечает повторное плодоношение и выращивание в контейнерах.',
     traits: ['Повторное плодоношение', 'Подходит для контейнера', 'Солнечное место'],
     source: 'https://abzseeds.abzstrawberry.nl/en/assortment/elan-f1',
     sourceLabel: 'Оригинатор ABZ Seeds · Elan F1', season: 'long', harvestTiming: 'repeat', setting: 'container', light: 'sun',
     fruiting: 'remontant', fruitingLabel: 'Ремонтантная клубника'
-  }
+  },
+  ...additionalStrawberryVarieties
 ];

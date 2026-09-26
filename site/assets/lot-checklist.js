@@ -8,7 +8,7 @@ if (root) {
   const copy = root.querySelector('#lot-copy');
   const copyStatus = root.querySelector('#lot-copy-status');
   const stockLabels = {
-    frigo: 'земляника садовая Frigo',
+    frigo: 'клубника Frigo',
     tissue: 'растения после In Vitro',
     other: 'другой посадочный материал',
   };

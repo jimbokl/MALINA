@@ -9,6 +9,7 @@ import { cities } from '../cities.mjs';
 import { varieties } from '../data.mjs';
 import { raspberryFacets, raspberryFacetVarieties } from '../catalog-facets.mjs';
 import { additionalRaspberryVarieties } from '../raspberry-varieties.mjs';
+import { additionalStrawberryVarieties } from '../strawberry-varieties.mjs';
 import { depthAdvice } from '../assets/depth-model.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
@@ -39,6 +40,23 @@ test('атлас малины связывает фильтры и карточ�
     assert.ok(catalogHtml.includes(`href="/sorta/${variety.slug}/"`));
   }
   assert.match(catalogHtml, /name="fruitColor"/);
+});
+
+test('новые сорта клубники есть в SQLite, каталоге и собственных карточках', async () => {
+  const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
+  const bySlug = new Map(catalog.cultivars.map(cultivar => [cultivar.slug, cultivar]));
+  const catalogHtml = await readFile(join(root, 'sorta', 'index.html'), 'utf8');
+  for (const variety of additionalStrawberryVarieties) {
+    const record = bySlug.get(variety.slug);
+    assert.ok(record, `Нет записи SQLite: ${variety.slug}`);
+    assert.equal(record.crop_slug, 'strawberry');
+    assert.ok(record.observations.every(item => item.source_key), `Нет источника наблюдения: ${variety.slug}`);
+    const detailHtml = await readFile(join(root, 'sorta', variety.slug, 'index.html'), 'utf8');
+    assert.match(detailHtml, /Иллюстрация клубники/);
+    assert.ok(detailHtml.includes(variety.source));
+    assert.ok(catalogHtml.includes(`href="/sorta/${variety.slug}/"`));
+    await access(join(root, 'assets', `variety-${variety.slug}.webp`));
+  }
 });
 
 test('каждый жёлтый сорт малины использует жёлтую иллюстрацию в каталоге и карточке', async () => {
@@ -303,7 +321,7 @@ test('каталог переключает иллюстрации и харак
   assert.match(html, /id="catalog-results" data-view="illustrations"/);
   assert.match(html, /catalog-facts/);
   assert.match(html, /Источник:/);
-  assert.match(html, /Иллюстрация (малины|садовой земляники)/);
+  assert.match(html, /Иллюстрация (малины|клубники)/);
   const js = await readFile(join(root, 'assets', 'site.js'), 'utf8');
   assert.match(js, /results\.dataset\.view = view/);
   assert.match(js, /aria-pressed/);
@@ -489,7 +507,7 @@ test('карточки показывают источник и границы �
     assert.match(html, /<title>[^<]+: описание сорта (малины|клубники), фото, урожайность и отзывы садоводов/);
     const variety = varieties.find(item => route === `/sorta/${item.slug}/`);
     assert.match(html, /КРАТКО О СОРТЕ/);
-    assert.match(html, /Иллюстрация (малины|жёлтой малины|садовой земляники)/);
+    assert.match(html, /Иллюстрация (малины|жёлтой малины|клубники)/);
     assert.ok(html.includes(variety.source));
     assert.doesNotMatch(html, /RHS|rhs\.org\.uk/i);
     assert.match(html, /id="reviews-root"[^>]*data-cultivar=/);
@@ -520,7 +538,7 @@ test('Азия опубликована с ограничением италья
   const asia = catalog.cultivars.find(row => row.slug === 'aziya');
   assert.ok(asia);
   assert.match(html, /Geoplant Vivai · Asia NF421/);
-  assert.match(html, /Иллюстрация садовой земляники/);
+  assert.match(html, /Иллюстрация клубники/);
   assert.ok(asia.observations.every(row => row.source_key === 'geoplant-asia-nf421'));
   assert.equal(asia.recommendations.length, 0);
 });
@@ -531,7 +549,7 @@ test('Мурано и Альба опубликованы с исходными 
     const html = await readFile(join(root, 'sorta', slug, 'index.html'), 'utf8');
     const cultivar = catalog.cultivars.find(row => row.slug === slug);
     assert.ok(cultivar);
-    assert.match(html, /Иллюстрация садовой земляники/);
+    assert.match(html, /Иллюстрация клубники/);
     assert.match(html, /ПРОИСХОЖДЕНИЕ ДАННЫХ/);
     assert.ok(cultivar.observations.length >= 2);
     assert.ok(cultivar.observations.every(row => row.source_key === sourceKey));
@@ -706,7 +724,7 @@ test('официальный допуск Фестивальной охваты�
   assert.doesNotMatch(farEastHtml, /Фестивальная · допуск в Госреестре/);
   const varietyHtml = await readFile(join(root, 'sorta', 'festivalnaya', 'index.html'), 'utf8');
   assert.match(varietyHtml, /Запись Госреестра подтверждает название и регионы допуска/);
-  assert.match(varietyHtml, /Иллюстрация садовой земляники/);
+  assert.match(varietyHtml, /Иллюстрация клубники/);
   assert.match(varietyHtml, /Урожайность<\/span><strong>—<\/strong>/);
 });
 
