@@ -62,6 +62,53 @@ test('публичные страницы не ссылаются на RHS', asy
   }
 });
 
+test('разметка каталога, сортов и журнала соответствует видимым страницам', async t => {
+  const catalogHtml = await readFile(join(root, 'sorta', 'index.html'), 'utf8');
+  if (!catalogHtml.includes('<link rel="canonical"')) {
+    t.skip('локальная сборка без SITE_URL не содержит публичной разметки');
+    return;
+  }
+  const origin = 'https://malinaklubnika.ru';
+  const schemaAt = async path => {
+    const html = await readFile(join(root, path, 'index.html'), 'utf8');
+    const json = html.match(/<script type="application\/ld\+json">([^<]+)<\/script>/)?.[1];
+    assert.ok(json, `нет JSON-LD: ${path}`);
+    const graph = JSON.parse(json)['@graph'];
+    assert.ok(Array.isArray(graph), `нет графа: ${path}`);
+    assert.doesNotMatch(json, /"@type":"(?:Product|Review|AggregateRating)"/, path);
+    return { html, graph };
+  };
+
+  const catalog = await schemaAt('sorta');
+  assert.equal(catalog.graph[0]['@type'], 'CollectionPage');
+  assert.equal(catalog.graph[0].mainEntity.itemListElement.length, varieties.length);
+  for (const [index, variety] of varieties.entries()) {
+    const item = catalog.graph[0].mainEntity.itemListElement[index];
+    assert.equal(item.url, `${origin}/sorta/${variety.slug}/`);
+    assert.ok(catalog.html.includes(`href="/sorta/${variety.slug}/"`));
+    const detail = await schemaAt(join('sorta', variety.slug));
+    assert.equal(detail.graph[0]['@type'], 'WebPage');
+    assert.equal(detail.graph[0].about.name, `${variety.crop}: ${variety.name}`);
+    assert.equal(detail.graph[1].itemListElement.at(-1).item, item.url);
+  }
+
+  for (const [path, selected] of [
+    ['zhurnal', articles],
+    [join('zhurnal', 'malina'), articles.filter(article => article.crop === 'raspberry' || article.crop === 'both')],
+    [join('zhurnal', 'klubnika'), articles.filter(article => article.crop === 'strawberry' || article.crop === 'both')]
+  ]) {
+    const collection = await schemaAt(path);
+    assert.equal(collection.graph[0]['@type'], 'CollectionPage');
+    assert.deepEqual(collection.graph[0].mainEntity.itemListElement.map(item => item.url),
+      selected.map(article => `${origin}/zhurnal/${article.slug}/`));
+    assert.equal(collection.graph[1].itemListElement.at(-1).item, `${origin}/${path}/`);
+  }
+
+  const reviews = await schemaAt('otzyvy');
+  assert.equal(reviews.graph[0]['@type'], 'WebPage');
+  assert.equal(reviews.graph[1].itemListElement.at(-1).item, `${origin}/otzyvy/`);
+});
+
 test('памятка подключена к общему и городскому подбору и доступна для печати', async () => {
   for (const path of ['podbor', join('podbor', 'tula')]) {
     const html = await readFile(join(root, path, 'index.html'), 'utf8');
