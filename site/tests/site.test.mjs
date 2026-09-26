@@ -14,6 +14,17 @@ const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', 
   ...varieties.map(variety => `/sorta/${variety.slug}/`),
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
+test('памятка подключена к общему и городскому подбору и доступна для печати', async () => {
+  for (const path of ['podbor', join('podbor', 'tula')]) {
+    const html = await readFile(join(root, path, 'index.html'), 'utf8');
+    assert.match(html, /class="picker-memo-open"/);
+    assert.match(html, /id="picker-memo" hidden/);
+    assert.match(html, /id="picker-memo-print"/);
+    assert.match(html, /src="\/assets\/picker-memo\.js\?v=[a-f0-9]+"/);
+  }
+  await access(join(root, 'assets', 'picker-memo.js'));
+});
+
 test('расчёт саженцев доступен с главной, объясняет ограничения и собирается как отдельная страница', async () => {
   const home = await readFile(join(root, 'index.html'), 'utf8');
   const html = await readFile(join(root, 'instrumenty', 'raschet-sazhencev', 'index.html'), 'utf8');
