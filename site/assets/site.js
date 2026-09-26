@@ -167,6 +167,7 @@ if (pickerForm) {
       : 'Укрытие и поведение почвы после дождя пока неизвестны. Эти условия не меняют список: проверенных сортовых правил для них ещё нет.';
     document.querySelector('#picker-empty').hidden = visible !== 0;
     output.hidden = false;
+    output.dispatchEvent(new Event('picker:results'));
     output.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
     output.focus({ preventScroll: true });
     trackGoal('selector_complete', { crop: String(crop), region, matches: visible });

@@ -328,6 +328,14 @@ test('подбор запрашивает регион и честно отме�
   assert.match(html, /assets\/verified-selector\.js/);
 });
 
+test('подбор связывает выбранные сорта со сравнением и сохраняет контекст города', async () => {
+  const html = await readFile(join(root, '/podbor/tula/', 'index.html'), 'utf8');
+  assert.match(html, /id="picker-form" data-city="Тула" data-region="Тульская область"/);
+  assert.match(html, /id="picker-compare-link"/);
+  assert.match(html, /class="picker-compare-checkbox" value="gusar"/);
+  assert.match(html, /assets\/picker-compare\.js\?v=/);
+});
+
 test('публичный JSON подключается к собранному WASM и не выдумывает рекомендации', async () => {
   const catalog = await readFile(join(root, '/data/catalog.json'), 'utf8');
   const data = JSON.parse(catalog);
