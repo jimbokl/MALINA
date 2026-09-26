@@ -357,3 +357,9 @@
 .city-evidence-review{font-size:11px;color:#6b796b;white-space:nowrap}
 @media(max-width:900px){.city-evidence{grid-template-columns:1fr}.city-evidence-intro h2{max-width:none}}
 @media(max-width:600px){.city-evidence{padding-block:28px}.city-evidence-groups{grid-template-columns:1fr}.city-evidence-group{padding:18px}}
+
+/* Глубокие обсуждения сохраняют полезную ширину текста на телефоне. */
+@media(max-width:700px){
+  .review-card-reply .review-thread-items{padding-left:0;border-left:0}
+  .review-card-reply .review-card-reply{padding:12px 0 12px 10px;border-left:2px solid #c9d8c3;border-right:0}
+}
