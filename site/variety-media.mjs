@@ -5,6 +5,7 @@ export const varietyMedia = Object.freeze({
   polka: { file: 'variety-polka.webp', crop: 'raspberry' },
   'joan-j': { file: 'variety-joan-j.webp', crop: 'raspberry' },
   aziya: { file: 'variety-aziya.webp', crop: 'strawberry' },
+  festivalnaya: { file: 'variety-festivalnaya.webp', crop: 'strawberry' },
   murano: { file: 'variety-murano.webp', crop: 'strawberry' },
   alba: { file: 'variety-alba.webp', crop: 'strawberry' },
   'cambridge-favourite': { file: 'variety-cambridge-favourite.webp', crop: 'strawberry' },

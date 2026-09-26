@@ -287,7 +287,7 @@ test('карточки показывают источник и границы �
     if (variety.slug !== 'gusar') assert.match(html, /Проверенных данных для России нет/);
     assert.match(html, /Фото сорта пока не проверено/);
     assert.ok(html.includes(variety.source));
-    assert.match(html, /Региональная пригодность в России пока не проверена|Региональные испытания в России для этой записи пока не подтверждены/);
+    assert.match(html, /Региональная пригодность в России пока не проверена|Региональные испытания в России для этой записи пока не подтверждены|Местные результаты испытаний и пригодность для конкретного участка пока не подтверждены/);
     assert.match(html, /id="reviews-root"[^>]*data-cultivar=/);
     assert.match(html, /Отзывы о сорте/);
     assert.match(html, /name="cultivar_name" value=/);
@@ -415,7 +415,7 @@ test('подбор запрашивает регион и честно отме�
 
 test('подбор срока сбора связан с источниками и не обещает даты для региона', async () => {
   const html = await readFile(join(root, '/podbor/', 'index.html'), 'utf8');
-  const allowed = new Set(['early', 'middle', 'autumn', 'repeat']);
+  const allowed = new Set(['early', 'middle', 'autumn', 'repeat', 'unknown']);
   for (const variety of varieties) {
     assert.ok(allowed.has(variety.harvestTiming), `нет срока сбора для ${variety.slug}`);
     assert.ok(html.includes(`data-cultivar-slug="${variety.slug}"`));
@@ -473,6 +473,28 @@ test('официальный допуск для Тулы виден с исто
   }
   const unrelatedCity = await readFile(join(root, 'podbor', 'arkhangelsk', 'index.html'), 'utf8');
   assert.doesNotMatch(unrelatedCity, /Гусар · допуск в Госреестре/);
+});
+
+test('официальный допуск Фестивальной охватывает регионы 1–11 без обещаний для участка', async () => {
+  const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
+  const festivalnaya = catalog.cultivars.find(cultivar => cultivar.slug === 'festivalnaya');
+  assert.deepEqual(festivalnaya.admissions.map(item => item.admission_region_number), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+  assert.ok(festivalnaya.admissions.every(item => item.registry_entry_code === '5801427' && item.source_pdf_page === 415));
+  assert.deepEqual(festivalnaya.recommendations, []);
+  assert.deepEqual(festivalnaya.observations, []);
+  for (const [city, zone] of [['arkhangelsk', 1], ['belgorod', 5], ['astraxan', 8], ['ufa', 9], ['novosibirsk', 10], ['irkutsk', 11]]) {
+    const cityHtml = await readFile(join(root, 'podbor', city, 'index.html'), 'utf8');
+    assert.match(cityHtml, /Фестивальная · допуск в Госреестре/);
+    assert.match(cityHtml, /#page=415/);
+    const cityRecord = cities.find(item => item.slug === city);
+    assert.equal(catalog.regions.find(region => region.name_ru === cityRecord.region)?.admission_region_number, zone);
+  }
+  const farEastHtml = await readFile(join(root, 'podbor', 'vladivostok', 'index.html'), 'utf8');
+  assert.doesNotMatch(farEastHtml, /Фестивальная · допуск в Госреестре/);
+  const varietyHtml = await readFile(join(root, 'sorta', 'festivalnaya', 'index.html'), 'utf8');
+  assert.match(varietyHtml, /Запись Госреестра подтверждает название и регионы допуска/);
+  assert.match(varietyHtml, /ИИ-иллюстрация · не фотография сорта/);
+  assert.match(varietyHtml, /Урожайность<\/span><strong>Проверенных данных для России нет/);
 });
 
 test('страница отзывов содержит простую форму и публичный снимок без служебных данных', async () => {
