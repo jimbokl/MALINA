@@ -1,9 +1,12 @@
 // Explicit cultivar + crop mapping: raspberry Polka and strawberry Polka are different records.
 // Provenance and publication scope: docs/SOURCES.md, «Иллюстрации карточек сортов».
 export const varietyMedia = Object.freeze({
-  gusar: { file: 'raspberry-garden.webp', crop: 'raspberry', generic: true },
-  polka: { file: 'variety-polka.webp', crop: 'raspberry' },
-  'joan-j': { file: 'variety-joan-j.webp', crop: 'raspberry' },
+  gusar: { file: 'variety-gusar.webp', crop: 'raspberry', fruitColor: 'red' },
+  meteor: { file: 'variety-meteor.webp', crop: 'raspberry', fruitColor: 'red' },
+  peresvet: { file: 'variety-peresvet.webp', crop: 'raspberry', fruitColor: 'red' },
+  polana: { file: 'variety-polana.webp', crop: 'raspberry', fruitColor: 'red' },
+  polka: { file: 'variety-polka.webp', crop: 'raspberry', fruitColor: 'red' },
+  'joan-j': { file: 'variety-joan-j.webp', crop: 'raspberry', fruitColor: 'red' },
   aziya: { file: 'variety-aziya.webp', crop: 'strawberry' },
   festivalnaya: { file: 'variety-festivalnaya.webp', crop: 'strawberry' },
   murano: { file: 'variety-murano.webp', crop: 'strawberry' },
@@ -24,8 +27,8 @@ export function cultivarImage(variety) {
   if (!media || media.crop !== variety.cropKey) {
     throw new Error(`Missing or mismatched cultivar illustration: ${variety.slug}`);
   }
-  if (variety.cropKey === 'raspberry' && variety.fruitColor === 'yellow' && media.fruitColor !== 'yellow') {
-    throw new Error(`Yellow raspberry has a non-yellow illustration: ${variety.slug}`);
+  if (variety.cropKey === 'raspberry' && (variety.fruitColor === 'red' || variety.fruitColor === 'yellow') && media.fruitColor !== variety.fruitColor) {
+    throw new Error(`Raspberry fruit color and illustration differ: ${variety.slug}`);
   }
   const subject = variety.cropKey === 'strawberry'
     ? 'садовой земляники'

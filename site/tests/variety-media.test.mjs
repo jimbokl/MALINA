@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
 import { varieties } from '../data.mjs';
-import { cultivarImage } from '../variety-media.mjs';
+import { cultivarImage, varietyMedia } from '../variety-media.mjs';
 
 const assetsDir = new URL('../assets/', import.meta.url);
 // The approved image was visually checked: ripe berries are yellow/gold, not red.
@@ -30,5 +30,16 @@ test('все жёлтоплодные сорта малины использую
 test('красная малина не получает жёлтую общую иллюстрацию', () => {
   for (const variety of varieties.filter((item) => item.cropKey === 'raspberry' && item.fruitColor === 'red')) {
     assert.notEqual(cultivarImage(variety).src, '/assets/raspberry-yellow-garden.webp', variety.slug);
+  }
+});
+
+test('отдельные иллюстрации красных сортов существуют и не используются для жёлтых', () => {
+  for (const slug of ['gusar', 'meteor', 'peresvet', 'polana']) {
+    const variety = varieties.find((item) => item.slug === slug && item.cropKey === 'raspberry');
+    assert.ok(variety, slug);
+    assert.equal(variety.fruitColor, 'red', slug);
+    assert.equal(varietyMedia[slug].fruitColor, 'red', slug);
+    assert.equal(cultivarImage(variety).src, `/assets/variety-${slug}.webp`, slug);
+    assert.ok(existsSync(fileURLToPath(new URL(`variety-${slug}.webp`, assetsDir))), slug);
   }
 });
