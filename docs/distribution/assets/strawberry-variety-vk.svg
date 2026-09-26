@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Выбор сорта клубники начинается с ритма сбора</title>
+  <desc id="desc">Сравните ритм плодоношения и нужные свойства ягод, затем проверьте местные наблюдения для своего региона.</desc>
+  <rect width="1200" height="630" fill="#f7f3e9"/>
+  <rect x="0" y="0" width="22" height="630" fill="#4d1826"/>
+  <circle cx="1083" cy="122" r="105" fill="#dfe7d3"/>
+  <circle cx="1083" cy="122" r="39" fill="#a84356"/>
+  <path d="M1072 82c-32-23-34-51-24-71 28 13 39 35 24 71Zm16 5c6-34 28-50 53-48-2 27-19 46-53 48Z" fill="#263f31"/>
+  <text x="78" y="85" fill="#718270" font-family="Arial,sans-serif" font-size="20" font-weight="700" letter-spacing="4">МАЛИНА — КЛУБНИКА · ЖУРНАЛ</text>
+  <text x="72" y="224" fill="#33111c" font-family="Georgia,serif" font-size="69" font-weight="700">Сначала —</text>
+  <text x="72" y="304" fill="#33111c" font-family="Georgia,serif" font-size="69" font-weight="700">ритм сбора</text>
+  <text x="78" y="365" fill="#666d65" font-family="Arial,sans-serif" font-size="27">Как выбрать сорт клубники для своего участка</text>
+  <rect x="76" y="420" width="1040" height="115" rx="20" fill="#fffdf8"/>
+  <text x="105" y="470" fill="#222923" font-family="Arial,sans-serif" font-size="24" font-weight="700">Затем сравните свойства ягод и найдите местные наблюдения.</text>
+  <text x="105" y="508" fill="#666d65" font-family="Arial,sans-serif" font-size="22">Иностранный календарь не заменяет данные для вашего региона.</text>
+  <text x="80" y="588" fill="#718270" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="2">РАЗБОР ИСТОЧНИКОВ · MALINAKLUBNIKA.RU</text>
+</svg>

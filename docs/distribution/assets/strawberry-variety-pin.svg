@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1500" viewBox="0 0 1000 1500" role="img" aria-labelledby="title desc">
+  <title id="title">Как выбрать сорт клубники: три шага</title>
+  <desc id="desc">Определите удобный ритм сбора, сравните свойства ягод и проверьте местные наблюдения. Зарубежный календарь не даёт готового прогноза для российского участка.</desc>
+  <rect width="1000" height="1500" fill="#f7f3e9"/>
+  <circle cx="877" cy="117" r="86" fill="#dfe7d3"/>
+  <circle cx="877" cy="117" r="28" fill="#a84356"/>
+  <path d="M870 88c-27-20-29-44-20-62 24 11 34 31 20 62Zm13 4c5-30 25-44 45-42-1 23-16 40-45 42Z" fill="#263f31"/>
+  <text x="76" y="120" fill="#718270" font-family="Arial,sans-serif" font-size="21" font-weight="700" letter-spacing="4">ЯГОДНЫЙ ЖУРНАЛ · ВЫБОР СОРТА</text>
+  <text x="74" y="254" fill="#33111c" font-family="Georgia,serif" font-size="76" font-weight="700">Как выбрать</text>
+  <text x="74" y="345" fill="#33111c" font-family="Georgia,serif" font-size="76" font-weight="700">сорт клубники</text>
+  <text x="80" y="415" fill="#666d65" font-family="Arial,sans-serif" font-size="27">Три шага перед заказом</text>
+
+  <g font-family="Arial,sans-serif">
+    <rect x="70" y="500" width="860" height="220" rx="24" fill="#fffdf8"/>
+    <circle cx="142" cy="575" r="35" fill="#4d1826"/>
+    <text x="142" y="584" text-anchor="middle" fill="#fffdf8" font-size="24" font-weight="700">01</text>
+    <text x="205" y="571" fill="#222923" font-size="31" font-weight="700">Выберите ритм сбора</text>
+    <text x="205" y="625" fill="#666d65" font-size="25">Более дружный урожай или</text>
+    <text x="205" y="661" fill="#666d65" font-size="25">несколько волн за сезон?</text>
+
+    <rect x="70" y="755" width="860" height="220" rx="24" fill="#fffdf8"/>
+    <circle cx="142" cy="830" r="35" fill="#4d1826"/>
+    <text x="142" y="839" text-anchor="middle" fill="#fffdf8" font-size="24" font-weight="700">02</text>
+    <text x="205" y="826" fill="#222923" font-size="31" font-weight="700">Сравните свойства ягод</text>
+    <text x="205" y="880" fill="#666d65" font-size="25">Вкус, размер, сроки, назначение —</text>
+    <text x="205" y="916" fill="#666d65" font-size="25">по данным, а не одной оценке.</text>
+
+    <rect x="70" y="1010" width="860" height="220" rx="24" fill="#fffdf8"/>
+    <circle cx="142" cy="1085" r="35" fill="#4d1826"/>
+    <text x="142" y="1094" text-anchor="middle" fill="#fffdf8" font-size="24" font-weight="700">03</text>
+    <text x="205" y="1081" fill="#222923" font-size="31" font-weight="700">Проверьте свой регион</text>
+    <text x="205" y="1135" fill="#666d65" font-size="25">Чужой календарь не заменяет</text>
+    <text x="205" y="1171" fill="#666d65" font-size="25">местные наблюдения.</text>
+  </g>
+
+  <path d="M78 1290h844" stroke="#d9ddcf" stroke-width="2"/>
+  <text x="80" y="1340" fill="#4d1826" font-family="Arial,sans-serif" font-size="24" font-weight="700">Разбор с источниками — в журнале</text>
+  <text x="80" y="1405" fill="#718270" font-family="Arial,sans-serif" font-size="19" font-weight="700" letter-spacing="3">МАЛИНА — КЛУБНИКА · MALINAKLUBNIKA.RU</text>
+</svg>

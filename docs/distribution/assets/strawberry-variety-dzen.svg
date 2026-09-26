@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Как выбрать сорт клубники</title>
+  <desc id="desc">Редакционный материал о ритме сбора, свойствах ягод и проверке наблюдений для своего региона.</desc>
+  <rect width="1200" height="675" fill="#f7f3e9"/>
+  <path d="M0 0h1200v675H0z" fill="#f7f3e9"/>
+  <circle cx="1048" cy="123" r="113" fill="#dfe7d3"/>
+  <circle cx="1048" cy="123" r="43" fill="#a84356"/>
+  <path d="M1036 79c-34-25-36-55-25-77 30 14 42 38 25 77Zm17 5c7-37 31-55 57-52-2 29-20 50-57 52Z" fill="#263f31"/>
+  <text x="78" y="86" fill="#718270" font-family="Arial,sans-serif" font-size="20" font-weight="700" letter-spacing="4">МАЛИНА — КЛУБНИКА · ЖУРНАЛ</text>
+  <text x="74" y="224" fill="#33111c" font-family="Georgia,serif" font-size="76" font-weight="700">Как выбрать сорт</text>
+  <text x="74" y="310" fill="#33111c" font-family="Georgia,serif" font-size="76" font-weight="700">клубники</text>
+  <text x="80" y="374" fill="#666d65" font-family="Arial,sans-serif" font-size="28">Ритм сбора · свойства ягод · данные по региону</text>
+  <rect x="76" y="438" width="1048" height="142" rx="23" fill="#fffdf8"/>
+  <g font-family="Arial,sans-serif" font-size="25" fill="#222923">
+    <circle cx="139" cy="492" r="24" fill="#4d1826"/><text x="139" y="501" text-anchor="middle" fill="#fffdf8" font-size="22" font-weight="700">1</text>
+    <text x="181" y="501">Определите, как часто удобно собирать ягоды</text>
+    <circle cx="139" cy="548" r="24" fill="#4d1826"/><text x="139" y="557" text-anchor="middle" fill="#fffdf8" font-size="22" font-weight="700">2</text>
+    <text x="181" y="557">Сверьте свойства и местные наблюдения</text>
+  </g>
+  <text x="80" y="632" fill="#718270" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="2">ЧУЖОЙ КАЛЕНДАРЬ НЕ ДАЁТ ПРОГНОЗА ДЛЯ ВАШЕГО УЧАСТКА</text>
+</svg>
