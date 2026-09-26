@@ -22,6 +22,8 @@ use serde_json::{json, Value};
 use tokio::sync::Semaphore;
 use tower_http::cors::{AllowOrigin, CorsLayer};
 
+mod votes;
+
 const POLICY_VERSION: &str = "review-publication-v3";
 const MAX_REVIEW_JSON_BYTES: usize = 8192;
 
@@ -604,6 +606,9 @@ fn app(state: AppState, allowed_origins: Vec<HeaderValue>) -> Router {
     Router::new()
         .route("/healthz", get(health))
         .route("/api/reviews", get(list_reviews).post(submit_review))
+        .route("/api/votes", get(votes::list).post(votes::submit))
+        .route("/api/votes/state", axum::routing::post(votes::state))
+        .layer(axum::Extension(votes::VoteLimiter::default()))
         .layer(DefaultBodyLimit::max(MAX_REVIEW_JSON_BYTES))
         .layer(cors)
         .with_state(state)
@@ -625,6 +630,16 @@ async fn main() -> Result<()> {
         .context("apply db/migrations/0007_review_human_queue.sql before starting")?;
     if migration_applied != 1 {
         bail!("apply db/migrations/0007_review_human_queue.sql before starting");
+    }
+    conn.prepare("SELECT cultivar_slug, count FROM public_cultivar_votes LIMIT 1")
+        .context("apply db/migrations/0009_cultivar_votes.sql before starting")?;
+    let votes_migrated: bool = conn.query_row(
+        "SELECT EXISTS(SELECT 1 FROM schema_migrations WHERE version = '0009_cultivar_votes')",
+        [],
+        |row| row.get(0),
+    )?;
+    if !votes_migrated {
+        bail!("apply db/migrations/0009_cultivar_votes.sql before starting");
     }
     drop(conn);
     let api_key = std::env::var("JEV_API_KEY").context("JEV_API_KEY is required")?;

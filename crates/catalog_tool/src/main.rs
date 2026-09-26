@@ -231,6 +231,7 @@ fn public_snapshot(connection: &Connection, dir: &Path) -> Result<Value> {
         "SELECT * FROM public_cultivars ORDER BY crop_slug, canonical_name, id",
     )?;
     let mut by_id = HashMap::new();
+    let mut evidence_targets: HashMap<(&'static str, i64), (usize, usize)> = HashMap::new();
     for (index, cultivar) in cultivars.iter_mut().enumerate() {
         let id = cultivar
             .get("id")
@@ -260,12 +261,49 @@ fn public_snapshot(connection: &Connection, dir: &Path) -> Result<Value> {
         for mut item in query_objects(connection, &format!("SELECT * FROM {view} ORDER BY id"))? {
             let id = item.remove("cultivar_id").and_then(|value| value.as_i64());
             if let Some(index) = id.and_then(|id| by_id.get(&id)) {
-                cultivars[*index]
+                let items = cultivars[*index]
                     .get_mut(key)
                     .and_then(Value::as_array_mut)
-                    .unwrap()
-                    .push(Value::Object(item));
+                    .unwrap();
+                if key == "observations" || key == "recommendations" {
+                    let target_id = item
+                        .get("id")
+                        .and_then(Value::as_i64)
+                        .ok_or_else(|| anyhow!("{view} missing id"))?;
+                    item.insert("evidence".into(), Value::Null);
+                    evidence_targets.insert((key, target_id), (*index, items.len()));
+                }
+                items.push(Value::Object(item));
             }
+        }
+    }
+    for mut passport in query_objects(
+        connection,
+        "SELECT * FROM public_evidence_passports ORDER BY id",
+    )? {
+        let observation_id = passport
+            .remove("observation_id")
+            .and_then(|value| value.as_i64());
+        let recommendation_id = passport
+            .remove("recommendation_id")
+            .and_then(|value| value.as_i64());
+        let target = observation_id
+            .map(|id| ("observations", id))
+            .or_else(|| recommendation_id.map(|id| ("recommendations", id)));
+        if let Some((cultivar_index, item_index)) =
+            target.and_then(|key| evidence_targets.get(&key))
+        {
+            cultivars[*cultivar_index]
+                .get_mut(if observation_id.is_some() {
+                    "observations"
+                } else {
+                    "recommendations"
+                })
+                .and_then(Value::as_array_mut)
+                .and_then(|items| items.get_mut(*item_index))
+                .and_then(Value::as_object_mut)
+                .ok_or_else(|| anyhow!("public evidence target missing"))?
+                .insert("evidence".into(), Value::Object(passport));
         }
     }
     let generated_at_utc: String = connection.query_row(
@@ -527,6 +565,55 @@ mod tests {
         assert!(cultivar["own_batches"][0]
             .get("origin_document_ref")
             .is_none());
+    }
+
+    #[test]
+    fn evidence_passport_is_exported_only_after_review() {
+        let (_temp, connection) = setup();
+        let observation_id: i64 = connection
+            .query_row(
+                "SELECT id FROM trait_observations WHERE cultivar_id=(SELECT id FROM cultivars WHERE slug='joan-j') LIMIT 1",
+                [],
+                |row| row.get(0),
+            )
+            .unwrap();
+        connection.execute(
+            "INSERT INTO evidence_passports(observation_id, evidence_kind, subject_description, internal_sample_ref, source_locator, applicability_note, limitations_note) VALUES (?1, 'reference_document', 'A described cultivar', 'private/lot-1', 'section 2', 'Source context only', 'Not a local trial')",
+            [observation_id],
+        ).unwrap();
+        let snapshot = public_snapshot(&connection, Path::new(MIGRATIONS_DIR)).unwrap();
+        let joan = snapshot["cultivars"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|item| item["slug"] == "joan-j")
+            .unwrap();
+        let observation = joan["observations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|item| item["id"] == observation_id)
+            .unwrap();
+        assert!(observation["evidence"].is_null());
+        connection.execute(
+            "UPDATE evidence_passports SET review_status='verified', reviewed_by='editor', reviewed_at='2026-09-26 12:00:00' WHERE observation_id=?1",
+            [observation_id],
+        ).unwrap();
+        let snapshot = public_snapshot(&connection, Path::new(MIGRATIONS_DIR)).unwrap();
+        let joan = snapshot["cultivars"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|item| item["slug"] == "joan-j")
+            .unwrap();
+        let observation = joan["observations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|item| item["id"] == observation_id)
+            .unwrap();
+        assert_eq!(observation["evidence"]["source_locator"], "section 2");
+        assert!(observation["evidence"].get("internal_sample_ref").is_none());
     }
 
     #[test]

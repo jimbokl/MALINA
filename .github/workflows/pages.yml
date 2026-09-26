@@ -36,6 +36,7 @@ jobs:
           SITE_URL: https://malinaklubnika.ru
           SITE_BASE: /
           REVIEW_API_URL: ${{ vars.REVIEW_API_URL }}
+          VOTE_API_URL: ${{ vars.VOTE_API_URL }}
         run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

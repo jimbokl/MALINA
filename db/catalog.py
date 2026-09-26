@@ -213,6 +213,7 @@ def public_snapshot(connection: sqlite3.Connection) -> dict[str, object]:
         "SELECT * FROM public_cultivars ORDER BY crop_slug, canonical_name, id"
     )]
     by_id = {row["id"]: row for row in cultivars}
+    evidence_targets: dict[tuple[str, int], dict[str, object]] = {}
     for cultivar in cultivars:
         cultivar.update(aliases=[], observations=[], media=[], recommendations=[], offers=[], own_batches=[])
     for view, key in (
@@ -227,7 +228,18 @@ def public_snapshot(connection: sqlite3.Connection) -> dict[str, object]:
             item = dict(row)
             cultivar_id = item.pop("cultivar_id")
             if cultivar_id in by_id:
+                if key in ("observations", "recommendations"):
+                    item["evidence"] = None
+                    evidence_targets[(key, item["id"])] = item
                 by_id[cultivar_id][key].append(item)
+    for row in connection.execute("SELECT * FROM public_evidence_passports ORDER BY id"):
+        item = dict(row)
+        observation_id = item.pop("observation_id")
+        recommendation_id = item.pop("recommendation_id")
+        key = ("observations", observation_id) if observation_id is not None else ("recommendations", recommendation_id)
+        target = evidence_targets.get(key)
+        if target is not None:
+            target["evidence"] = item
     return {
         "schema_version": 1,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -251,6 +263,17 @@ def public_reviews_snapshot(connection: sqlite3.Connection) -> dict[str, object]
             "created_at, published_at FROM public_reviews "
             "ORDER BY published_at DESC, id DESC"
         )],
+    }
+
+
+def public_votes_snapshot(connection: sqlite3.Connection) -> dict[str, object]:
+    """Export only published cultivar totals; anonymous voter hashes stay private."""
+    check(connection)
+    return {
+        "votes": [dict(row) for row in connection.execute(
+            "SELECT cultivar_slug, count FROM public_cultivar_votes ORDER BY cultivar_slug"
+        )],
+        "as_of": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
     }
 
 
@@ -317,7 +340,7 @@ def write_output(text: str, output: str) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=(
-        "init", "check", "import-drafts", "export-public", "export-reviews",
+        "init", "check", "import-drafts", "export-public", "export-reviews", "export-votes",
         "review-queue", "review-decide",
     ))
     parser.add_argument("--db", type=Path, default=DEFAULT_DB)
@@ -351,6 +374,10 @@ def main(argv: list[str] | None = None) -> int:
                 ), args.out)
             elif args.command == "review-queue":
                 print(json.dumps(review_queue(connection), ensure_ascii=False, indent=2))
+            elif args.command == "export-votes":
+                write_output(json.dumps(
+                    public_votes_snapshot(connection), ensure_ascii=False, indent=2
+                ), args.out)
             else:
                 if args.id is None or args.decision is None or args.reviewer is None:
                     raise ValueError("review-decide requires --id, --decision and --reviewer")

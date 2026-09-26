@@ -24,7 +24,7 @@ class CatalogTests(unittest.TestCase):
         catalog.migrate(self.connection)
         # Migration 0002 seeds the public reference catalog. These tests need
         # an empty fixture so they can exercise publication and rollback gates.
-        for table in ("trait_observations", "cultivars", "sources"):
+        for table in ("evidence_passports", "trait_observations", "cultivars", "sources"):
             self.connection.execute(f"DELETE FROM {table}")
         self.connection.commit()
 
@@ -74,6 +74,114 @@ class CatalogTests(unittest.TestCase):
         records = catalog.public_snapshot(self.connection)["cultivars"][0]["observations"]
         self.assertEqual({item["value_text"] for item in records}, {"early", "late"})
         self.assertEqual({item["context_text"] for item in records}, {"trial A", "trial B"})
+
+    def test_evidence_passport_requires_review_and_hides_internal_sample(self) -> None:
+        self.add_source_and_cultivar()
+        self.publish_identity()
+        cursor = self.connection.execute(
+            "INSERT INTO trait_observations(cultivar_id, trait_code, value_text, "
+            "context_text, source_id, review_status, reviewed_by, reviewed_at) "
+            "VALUES (1, 'flavor', 'sweet', 'source description', 1, 'verified', "
+            "'editor', '2026-09-24 12:00:00')"
+        )
+        observation_id = cursor.lastrowid
+        self.connection.execute(
+            "INSERT INTO evidence_passports(observation_id, evidence_kind, subject_description, "
+            "internal_sample_ref, conditions_json, method_text, sample_size, source_locator, "
+            "applicability_note, limitations_note) VALUES (?, 'published_study', ?, ?, ?, ?, ?, ?, ?, ?)",
+            (observation_id, "One tested cultivar", "private/lot-1", '{"setting":"field"}',
+             "Tasting panel", 12, "p. 14", "Only the tested conditions", "No regional trial"),
+        )
+        record = catalog.public_snapshot(self.connection)["cultivars"][0]["observations"][0]
+        self.assertIsNone(record["evidence"])
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "UPDATE evidence_passports SET review_status='verified' WHERE observation_id=?",
+                (observation_id,),
+            )
+        self.connection.execute(
+            "UPDATE evidence_passports SET review_status='verified', reviewed_by='editor', "
+            "reviewed_at='2026-09-26 12:00:00' WHERE observation_id=?",
+            (observation_id,),
+        )
+        evidence = catalog.public_snapshot(self.connection)["cultivars"][0]["observations"][0]["evidence"]
+        self.assertEqual(evidence["sample_size"], 12)
+        self.assertEqual(evidence["source_locator"], "p. 14")
+        self.assertNotIn("internal_sample_ref", evidence)
+        self.connection.execute("UPDATE evidence_passports SET review_status='rejected' WHERE observation_id=?", (observation_id,))
+        self.assertIsNone(catalog.public_snapshot(self.connection)["cultivars"][0]["observations"][0]["evidence"])
+
+    def test_evidence_passport_links_exactly_one_target_and_recommendation(self) -> None:
+        self.add_source_and_cultivar()
+        self.publish_identity()
+        cursor = self.connection.execute(
+            "INSERT INTO recommendation_rules(cultivar_id, conditions_json, rationale, limitations, "
+            "source_id, review_status, reviewed_by, reviewed_at) "
+            "VALUES (1, '{}', 'test rationale', 'test limitation', 1, 'verified', 'editor', "
+            "'2026-09-24 12:00:00')"
+        )
+        recommendation_id = cursor.lastrowid
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "INSERT INTO evidence_passports(evidence_kind, subject_description) "
+                "VALUES ('expert_assessment', 'No target')"
+            )
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "INSERT INTO evidence_passports(recommendation_id, evidence_kind, subject_description, conditions_json) "
+                "VALUES (?, 'expert_assessment', 'Bad JSON', '[]')",
+                (recommendation_id,),
+            )
+        self.connection.execute(
+            "INSERT INTO evidence_passports(recommendation_id, evidence_kind, subject_description, "
+            "source_locator, applicability_note, limitations_note, review_status, reviewed_by, reviewed_at) "
+            "VALUES (?, 'expert_assessment', 'Test material', 'section 2', 'Test only', "
+            "'No field validation', 'verified', 'editor', '2026-09-26 12:00:00')",
+            (recommendation_id,),
+        )
+        evidence = catalog.public_snapshot(self.connection)["cultivars"][0]["recommendations"][0]["evidence"]
+        self.assertEqual(evidence["source_locator"], "section 2")
+        self.assertIsNone(evidence["sample_size"])
+        self.connection.execute("UPDATE sources SET review_status='rejected' WHERE id=1")
+        self.assertEqual(catalog.public_snapshot(self.connection)["cultivars"], [])
+
+    def test_regional_rule_needs_independent_local_evidence(self) -> None:
+        self.add_source_and_cultivar()
+        self.publish_identity()
+        rule_id = self.connection.execute(
+            "INSERT INTO recommendation_rules(cultivar_id, region_id, conditions_json, rationale, "
+            "limitations, source_id, review_status, reviewed_by, reviewed_at) "
+            "VALUES (1, 1, '{}', 'Reference description', 'Local results unknown', 1, "
+            "'verified', 'editor', '2026-09-24 12:00:00')"
+        ).lastrowid
+        self.assertEqual(catalog.public_snapshot(self.connection)["cultivars"][0]["recommendations"], [])
+        self.connection.execute(
+            "INSERT INTO sources(source_key, kind, title, url, accessed_on, rights_note, "
+            "review_status, reviewed_by, reviewed_at) VALUES "
+            "('local-trial', 'document', 'Local trial', 'https://example.org/local', "
+            "'2026-09-26', 'Facts only', 'verified', 'editor', '2026-09-26 12:00:00')"
+        )
+        basis_id = self.connection.execute(
+            "INSERT INTO regional_evidence(recommendation_id, region_id, source_id, basis_kind, "
+            "source_locator, place_text, conditions_text, limitations_text, review_status, "
+            "reviewed_by, reviewed_at) VALUES (?, 1, 2, 'state_register_admission', 'entry 1', "
+            "'Kaliningrad Oblast', 'Admission only', 'No yield data', 'verified', 'editor', "
+            "'2026-09-26 12:00:00')", (rule_id,)
+        ).lastrowid
+        self.assertEqual(catalog.public_snapshot(self.connection)["cultivars"][0]["recommendations"], [])
+        self.connection.execute(
+            "UPDATE regional_evidence SET basis_kind='regional_trial', review_status='draft' WHERE id=?",
+            (basis_id,),
+        )
+        self.assertEqual(catalog.public_snapshot(self.connection)["cultivars"][0]["recommendations"], [])
+        self.connection.execute(
+            "UPDATE regional_evidence SET review_status='verified' WHERE id=?", (basis_id,)
+        )
+        rec = catalog.public_snapshot(self.connection)["cultivars"][0]["recommendations"][0]
+        self.assertEqual(rec["basis_source_title"], "Local trial")
+        self.assertEqual(rec["basis_kind"], "regional_trial")
+        self.connection.execute("UPDATE sources SET review_status='rejected' WHERE id=2")
+        self.assertEqual(catalog.public_snapshot(self.connection)["cultivars"][0]["recommendations"], [])
 
     def test_offer_expires_and_requires_published_cultivar(self) -> None:
         self.add_source_and_cultivar()

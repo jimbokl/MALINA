@@ -2,7 +2,7 @@
 // Регион используется как поисковый синоним пользовательского поля, а не как климатическая рекомендация.
 export const cities = [
   { slug: 'arkhangelsk', name: 'Архангельск', region: 'Архангельская область' },
-  { slug: 'astrakhan', name: 'Астрахань', region: 'Астраханская область' },
+  { slug: 'astraxan', name: 'Астрахань', region: 'Астраханская область' },
   { slug: 'barnaul', name: 'Барнаул', region: 'Алтайский край' },
   { slug: 'belgorod', name: 'Белгород', region: 'Белгородская область' },
   { slug: 'blagoveshchensk', name: 'Благовещенск', region: 'Амурская область' },

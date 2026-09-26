@@ -68,6 +68,15 @@ if (catalogForm) {
   const cards = [...document.querySelectorAll('#catalog-results .variety-card')];
   const count = document.querySelector('#catalog-count');
   const empty = document.querySelector('#catalog-empty');
+  const results = document.querySelector('#catalog-results');
+  const viewButtons = [...document.querySelectorAll('[data-catalog-view]')];
+  for (const button of viewButtons) {
+    button.addEventListener('click', () => {
+      const view = button.dataset.catalogView;
+      results.dataset.view = view;
+      for (const control of viewButtons) control.setAttribute('aria-pressed', String(control === button));
+    });
+  }
   const requestedFruiting = new URLSearchParams(location.search).get('fruiting');
   if (['remontant', 'summer'].includes(requestedFruiting)) catalogForm.elements.fruiting.value = requestedFruiting;
   const filter = () => {
@@ -91,8 +100,8 @@ if (catalogForm) {
 const pickerForm = document.querySelector('#picker-form');
 if (pickerForm) {
   const params = new URLSearchParams(location.search);
-  const city = (params.get('city') || '').trim();
-  const region = (params.get('region') || '').trim();
+  const city = (pickerForm.dataset.city || params.get('city') || '').trim();
+  const region = (pickerForm.dataset.region || params.get('region') || '').trim();
   const regionInput = pickerForm.querySelector('#picker-region');
   const cityContext = pickerForm.querySelector('#picker-city-context');
   if (region) regionInput.value = region;

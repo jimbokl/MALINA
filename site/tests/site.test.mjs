@@ -7,9 +7,53 @@ import { articles } from '../editorial.mjs';
 import { cities } from '../cities.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
-const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/podbor/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/about/',
+const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
   '/sorta/polka/', '/sorta/joan-j/', '/sorta/cambridge-favourite/', '/sorta/elan/',
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
+
+test('карточки сортов показывают только проверенные паспорта фактов', async () => {
+  const polka = await readFile(join(root, 'sorta', 'polka', 'index.html'), 'utf8');
+  const elan = await readFile(join(root, 'sorta', 'elan', 'index.html'), 'utf8');
+  const joan = await readFile(join(root, 'sorta', 'joan-j', 'index.html'), 'utf8');
+  assert.match(polka, /id="osnovaniya"/);
+  assert.match(polka, /Вводное описание в карточке источника/);
+  assert.match(polka, /<dt>Тип основания<\/dt><dd>Справочный источник<\/dd>/);
+  assert.match(polka, /<time datetime="2026-09-26">26\.09\.2026<\/time>/);
+  assert.match(polka, /Не подтверждает сроки, урожайность и пригодность/);
+  assert.match(elan, /Подтверждает упоминание контейнеров/);
+  assert.doesNotMatch(joan, /id="osnovaniya"/);
+  assert.doesNotMatch(polka, /internal_sample_ref|private\/lot/);
+});
+
+test('каталог переключает иллюстрации и характеристики без подмены фото сорта', async () => {
+  const html = await readFile(join(root, 'sorta', 'index.html'), 'utf8');
+  assert.match(html, /data-catalog-view="illustrations" aria-pressed="true">Иллюстрации/);
+  assert.match(html, /data-catalog-view="facts" aria-pressed="false">Характеристики/);
+  assert.match(html, /id="catalog-results" data-view="illustrations"/);
+  assert.match(html, /catalog-facts/);
+  assert.match(html, /Источник: Исходная карточка/);
+  assert.match(html, /ИИ-иллюстрация · не фотография сорта/);
+  const js = await readFile(join(root, 'assets', 'site.js'), 'utf8');
+  assert.match(js, /results\.dataset\.view = view/);
+  assert.match(js, /aria-pressed/);
+});
+
+test('сравнение сортов отдаёт полезный HTML, источники и корректные границы данных', async () => {
+  for (const [crop, slug] of [['малины', 'malina'], ['клубники', 'klubnika']]) {
+    const html = await readFile(join(root, 'sravnenie', slug, 'index.html'), 'utf8');
+    assert.match(html, new RegExp(`Сравнить сорта<br><em>${crop}\\.`));
+    assert.match(html, /ВЫБЕРИТЕ ОТ 2 ДО 4/);
+    assert.match(html, /Применимость к региону России не оценивалась/);
+    assert.match(html, /comparison-data/);
+    assert.match(html, /comparison\.js/);
+    assert.match(html, /проверено 24\.09\.2026/);
+  }
+  const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8').catch(() => '');
+  if (process.env.SITE_URL) {
+    assert.match(sitemap, /\/sravnenie\/malina\//);
+    assert.match(sitemap, /\/sravnenie\/klubnika\//);
+  }
+});
 
 test('журнал содержит проверяемые статьи, авторство, ссылки и права на изображения', async () => {
   assert.ok(articles.length >= 10);
@@ -25,7 +69,7 @@ test('журнал содержит проверяемые статьи, авт�
     assert.match(html, /<article class="media-article">/);
     assert.match(html, /<meta property="og:type" content="article">/);
     assert.match(html, /<meta property="og:site_name" content="МАЛИНА — КЛУБНИКА">/);
-    assert.match(html, /<meta name="twitter:card" content="summary_large_image">/);
+    assert.match(html, /<meta name="twitter:card" content="summary(?:_large_image)?">/);
     assert.ok(html.includes(`<meta property="article:published_time" content="${publishedIso}">`));
     assert.ok(html.includes(`<meta property="article:modified_time" content="${reviewedIso}">`));
     if (process.env.SITE_URL) {
@@ -61,6 +105,12 @@ test('журнал содержит проверяемые статьи, авт�
   assert.match(cultivarGuide, /href="\/sorta\/cambridge-favourite\/"/);
   const home = await readFile(join(root, 'index.html'), 'utf8');
   assert.match(home, /home-editorial/);
+  const readLinks = [...home.matchAll(/<a class="media-card-link" href="\/zhurnal\/([^" ]+)\/">Читать материал/g)];
+  assert.ok(readLinks.length >= 1, 'на главной нет кликабельных ссылок «Читать материал»');
+  assert.equal(readLinks.length, (home.match(/Читать материал/g) || []).length);
+  for (const [, slug] of readLinks) {
+    await access(join(root, 'zhurnal', slug, 'index.html'));
+  }
   const homeHtml = await readFile(join(root, 'index.html'), 'utf8');
   if (homeHtml.includes('type="application/rss+xml"')) {
     const feed = await readFile(join(root, 'feed.xml'), 'utf8');
@@ -102,6 +152,22 @@ test('каждая публичная страница содержит само
   }
 });
 
+test('проверка партии даёт локальный чеклист без передачи данных или вывода о качестве', async () => {
+  const html = await readFile(join(root, 'proverka-partii', 'index.html'), 'utf8');
+  assert.match(html, /Frigo/);
+  assert.match(html, /цветочной почки/);
+  assert.match(html, /после In Vitro/);
+  assert.match(html, /не удостоверяет сорт, здоровье растений или будущий урожай/i);
+  assert.match(html, /name="planting-stock"/);
+  assert.match(html, /fps\.ucdavis\.edu\/strawberry\.cfm/);
+  assert.match(html, /californiaagriculture\.org\/api\/v1\/articles\/112420-meristem-culture-for-elimination-of-strawberry-viruses\.pdf/);
+  const js = await readFile(join(root, 'assets', 'lot-checklist.js'), 'utf8');
+  assert.match(js, /это список документов для запроса, а не оценка качества партии/i);
+  assert.match(js, /status\.textContent/);
+  assert.match(js, /activeChecks\.filter/);
+  assert.doesNotMatch(js, /fetch\(|localStorage|sessionStorage/);
+});
+
 test('страница In Vitro объясняет проверку партии без обещания оздоровления', async () => {
   const html = await readFile(join(root, 'in-vitro', 'index.html'), 'utf8');
   assert.match(html, /фитосанитарного тестирования/);
@@ -113,7 +179,7 @@ test('карточки показывают источник и границы �
   for (const route of routes.filter(route => route.startsWith('/sorta/') && route !== '/sorta/')) {
     const html = await readFile(join(root, route, 'index.html'), 'utf8');
     assert.match(html, /https:\/\/www\.rhs\.org\.uk\/plants\//);
-    assert.match(html, /не испытание сорта в регионах России/);
+    assert.match(html, /Региональная пригодность в России пока не проверена|Региональные испытания в России для этой записи пока не подтверждены/);
     assert.match(html, /id="reviews-root"[^>]*data-cultivar=/);
     assert.match(html, /Отзывы о сорте/);
     assert.match(html, /name="cultivar_name" value=/);
@@ -128,8 +194,10 @@ test('каталог городов ищет по названию и ведёт
   assert.equal(new Set(cities.map(city => city.name)).size, cities.length);
   assert.match(html, /id="city-search"/);
   assert.match(html, /data-city-card/);
-  assert.match(html, /href="\/podbor\/\?city=%D0/);
+  assert.match(html, /href="\/podbor\/astraxan\/"/);
   assert.match(html, /href="\/otzyvy\/\?city=%D0/);
+  assert.match(html, /href="\/sravnenie\/malina\/\?city=%D0/);
+  assert.match(html, /href="\/sravnenie\/klubnika\/\?city=%D0/);
   assert.match(html, /<h2>Калининград<\/h2>/);
   assert.match(html, /ГОРОД — КОНТЕКСТ ДЛЯ ПОДБОРА/);
   assert.match(js, /toLocaleLowerCase\('ru-RU'\)/);

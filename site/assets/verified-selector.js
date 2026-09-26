@@ -66,9 +66,22 @@ if (form) {
           rationale.textContent = reason.rationale;
           const limits = document.createElement('p');
           limits.textContent = `Ограничения: ${reason.limitations}`;
+          const basis = document.createElement('p');
+          basis.textContent = `${reason.basis_kind === 'regional_trial' ? 'Региональное испытание' : 'Местное наблюдение'}: ${reason.basis_place}. Условия: ${reason.basis_conditions}. Ограничения наблюдения: ${reason.basis_limitations}.`;
           const source = document.createElement('small');
-          source.textContent = `Источник в каталоге: ${reason.source_key}`;
-          item.append(rationale, limits, source);
+          source.append('Основание: ');
+          if (reason.basis_source_url?.startsWith('https://')) {
+            const link = document.createElement('a');
+            link.href = reason.basis_source_url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = reason.basis_source_title;
+            source.append(link);
+          } else {
+            source.append(reason.basis_source_title);
+          }
+          source.append(` · ${reason.basis_source_locator}`);
+          item.append(rationale, limits, basis, source);
         }
         results.append(item);
       }

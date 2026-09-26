@@ -37,6 +37,13 @@ struct Recommendation {
     rationale: String,
     limitations: String,
     source_key: String,
+    basis_kind: Option<String>,
+    basis_source_title: Option<String>,
+    basis_source_url: Option<String>,
+    basis_source_locator: Option<String>,
+    basis_place: Option<String>,
+    basis_conditions: Option<String>,
+    basis_limitations: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -51,7 +58,13 @@ struct Reason {
     rule_id: u64,
     rationale: String,
     limitations: String,
-    source_key: String,
+    basis_kind: String,
+    basis_source_title: String,
+    basis_source_url: Option<String>,
+    basis_source_locator: String,
+    basis_place: String,
+    basis_conditions: String,
+    basis_limitations: String,
 }
 
 #[derive(Serialize)]
@@ -161,6 +174,7 @@ fn select(catalog_json: &str, query_json: &str) -> Result<Selection, ApiError> {
             // can produce positive matches.
             if rule.region_code.as_deref() != Some(region_code)
                 || !matches!(conditions, Value::Object(ref object) if object.is_empty())
+                || !matches!(rule.basis_kind.as_deref(), Some("regional_trial" | "local_field_observation"))
             {
                 continue;
             }
@@ -168,7 +182,13 @@ fn select(catalog_json: &str, query_json: &str) -> Result<Selection, ApiError> {
                 rule_id: rule.id,
                 rationale: rule.rationale,
                 limitations: rule.limitations,
-                source_key: rule.source_key,
+                basis_kind: rule.basis_kind.unwrap(),
+                basis_source_title: rule.basis_source_title.unwrap(),
+                basis_source_url: rule.basis_source_url,
+                basis_source_locator: rule.basis_source_locator.unwrap(),
+                basis_place: rule.basis_place.unwrap(),
+                basis_conditions: rule.basis_conditions.unwrap(),
+                basis_limitations: rule.basis_limitations.unwrap(),
             });
         }
         if !reasons.is_empty() {
@@ -204,6 +224,10 @@ fn validate_cultivar(cultivar: &Cultivar) -> Result<(), ApiError> {
                 || rule.rationale.trim().is_empty()
                 || rule.limitations.trim().is_empty()
                 || rule.source_key.trim().is_empty()
+                || (matches!(rule.basis_kind.as_deref(), Some("regional_trial" | "local_field_observation"))
+                    && [rule.basis_source_title.as_deref(), rule.basis_source_locator.as_deref(),
+                        rule.basis_place.as_deref(), rule.basis_conditions.as_deref(),
+                        rule.basis_limitations.as_deref()].iter().any(|value| value.is_none_or(|value| value.trim().is_empty())))
                 || rule
                     .region_code
                     .as_deref()
@@ -240,7 +264,14 @@ mod tests {
                     "conditions_json": "{}",
                     "rationale": "Проверенное основание.",
                     "limitations": "Только при указанных условиях.",
-                    "source_key": "reviewed-source"
+                    "source_key": "reviewed-source",
+                    "basis_kind": "regional_trial",
+                    "basis_source_title": "Региональное испытание",
+                    "basis_source_url": "https://example.org/trial",
+                    "basis_source_locator": "таблица 2",
+                    "basis_place": "Калининградская область",
+                    "basis_conditions": "Открытый грунт",
+                    "basis_limitations": "Один участок"
                 }]
             }]
         })
@@ -257,8 +288,8 @@ mod tests {
         assert_eq!(result["matches"][0]["slug"], "test-cultivar");
         assert_eq!(result["matches"][0]["reasons"][0]["rule_id"], 7);
         assert_eq!(
-            result["matches"][0]["reasons"][0]["source_key"],
-            "reviewed-source"
+            result["matches"][0]["reasons"][0]["basis_source_title"],
+            "Региональное испытание"
         );
         assert_eq!(
             result["matches"][0]["reasons"][0]["limitations"],
@@ -275,6 +306,13 @@ mod tests {
         assert_eq!(no_rules["total"], 0);
         let other_region = output(catalog(), json!({"region_code": "moscow-oblast"}));
         assert_eq!(other_region["total"], 0);
+    }
+
+    #[test]
+    fn reference_only_rule_does_not_become_a_regional_recommendation() {
+        let mut source = catalog();
+        source["cultivars"][0]["recommendations"][0]["basis_kind"] = Value::Null;
+        assert_eq!(output(source, json!({"region_code": "kaliningrad-oblast"}))["total"], 0);
     }
 
     #[test]
