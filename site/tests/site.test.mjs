@@ -18,12 +18,15 @@ test('журнал содержит проверяемые статьи, авт�
     slugs.add(article.slug);
     assert.ok(article.sources.length > 0);
     assert.ok(article.sections.every(section => section.sources.length && section.sources.every(index => article.sources[index])));
+    const publishedIso = article.publishedIso ?? '2026-09-25';
+    const reviewedIso = article.reviewedIso ?? '2026-09-25';
     const html = await readFile(join(root, 'zhurnal', article.slug, 'index.html'), 'utf8');
     assert.match(html, /<article class="media-article">/);
     assert.match(html, /<meta property="og:type" content="article">/);
     assert.match(html, /<meta property="og:site_name" content="МАЛИНА — КЛУБНИКА">/);
     assert.match(html, /<meta name="twitter:card" content="summary_large_image">/);
-    assert.match(html, /<meta property="article:published_time" content="2026-09-25">/);
+    assert.ok(html.includes(`<meta property="article:published_time" content="${publishedIso}">`));
+    assert.ok(html.includes(`<meta property="article:modified_time" content="${reviewedIso}">`));
     if (process.env.SITE_URL) {
       const siteBase = process.env.SITE_BASE && process.env.SITE_BASE !== '/' ? process.env.SITE_BASE.replace(/\/$/, '') : '';
       assert.match(html, new RegExp(`<meta property="og:url" content="${process.env.SITE_URL}/zhurnal/${article.slug}/">`));
@@ -33,7 +36,11 @@ test('журнал содержит проверяемые статьи, авт�
       assert.match(html, /<meta property="og:image:height" content="1024">/);
     }
     assert.match(html, /Материал: Редакция МАЛИНА — КЛУБНИКА/);
-    assert.match(html, /<time datetime="2026-09-25">/);
+    assert.ok(html.includes(`<time datetime="${reviewedIso}">`));
+    if (process.env.SITE_URL) {
+      assert.match(html, new RegExp(`"datePublished":"${publishedIso}"`));
+      assert.match(html, new RegExp(`"dateModified":"${reviewedIso}"`));
+    }
     assert.match(html, /Иллюстрация культуры, созданная для сайта генератором изображений/);
     assert.match(html, /<section class="media-sources"/);
     assert.match(html, /data-share-article="vk"/);
@@ -41,6 +48,10 @@ test('журнал содержит проверяемые статьи, авт�
     assert.match(html, /data-share-article="copy"/);
     for (const source of article.sources) assert.ok(html.includes(source.url.replaceAll('&', '&amp;')));
   }
+  const plantArticle = await readFile(join(root, 'zhurnal', 'kak-vybrat-sazhentsy-klubniki', 'index.html'), 'utf8');
+  assert.match(plantArticle, /спящими растениями с открытыми корнями/);
+  assert.match(plantArticle, /Микроклон после лабораторного размножения/);
+  assert.match(plantArticle, /письменные условия хранения и посадки/);
   const home = await readFile(join(root, 'index.html'), 'utf8');
   assert.match(home, /home-editorial/);
   const homeHtml = await readFile(join(root, 'index.html'), 'utf8');
