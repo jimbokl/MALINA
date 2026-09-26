@@ -58,6 +58,24 @@
 
 .reviews-layout[data-reviews-enabled="false"]{grid-template-columns:1fr}
 .reviews-layout[data-reviews-enabled="false"] .reviews-compose{display:none}
+.cultivar-reviews{border-top:1px solid var(--line)}
+.city-directory-tools{display:grid;grid-template-columns:minmax(0,440px) 1fr;align-items:center;gap:10px 24px;margin-bottom:28px}
+.city-directory-tools label{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#48634c}
+.city-directory-tools input{grid-column:1;border:1px solid #bfcdbb;background:#fffdf8;border-radius:2px;padding:14px 15px;color:var(--ink);font:inherit}
+.city-directory-tools input:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
+.city-directory-tools p{grid-column:2;grid-row:2;margin:0;color:#657464;font-size:13px}
+.city-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.city-card{display:flex;min-height:165px;flex-direction:column;align-items:flex-start;justify-content:space-between;border:1px solid var(--line);padding:22px;background:var(--paper);transition:background .15s,border-color .15s}
+.city-card:hover{background:#e7ebdd;border-color:#bfcdbb}
+.city-card .eyebrow{font-size:9px;line-height:1.5;color:#6e7c6d}
+.city-card h2{font-family:var(--serif);font-size:clamp(23px,2vw,31px);font-weight:400;letter-spacing:-.04em;margin:16px 0}
+.city-card-actions{display:grid;gap:10px}
+.city-card-link{font-size:11px;font-weight:800;color:var(--wine);text-decoration:underline;text-underline-offset:3px}
+.city-card-primary{font-size:13px}
+.city-card-link:focus-visible{outline:3px solid var(--berry);outline-offset:3px}
+.city-card[hidden]{display:none}
+.city-directory-note{display:grid;gap:7px;margin-top:36px;padding:24px 28px;background:#e5eadb;color:#435447;font-size:13px;line-height:1.65}
+.city-directory-note strong{font-family:var(--serif);font-size:21px;font-weight:400;color:var(--green)}
 .reviews-smallprint{font-size:11px;line-height:1.5;color:#657464;margin:4px 0 0}
 .review-reply-button{border:0;background:none;padding:11px 0 0;color:var(--wine);font-size:12px;font-weight:800;text-decoration:underline;text-underline-offset:4px}
 .review-reply-button:hover{color:var(--berry)}
@@ -89,3 +107,13 @@
 .commerce-section{border-top:1px solid var(--line)}.commerce-section h2{font-family:var(--serif);font-weight:400;margin:15px 0 30px}.commerce-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px}.commerce-card{background:var(--paper);border:1px solid var(--line);padding:28px;min-width:0}.commerce-card h3{font-family:var(--serif);font-size:29px;font-weight:400;margin:12px 0}.commerce-card p{line-height:1.65}.commerce-card .btn{margin:10px 0 16px}.commerce-card small{display:block;line-height:1.5;color:#667564}
 @media(max-width:1000px){.media-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.media-card-featured{grid-row:auto}.media-article-layout{grid-template-columns:170px minmax(0,1fr)}}
 @media(max-width:700px){.media-grid,.media-related-reading .media-grid{grid-template-columns:1fr}.media-card-featured{grid-column:auto}.media-card-image,.media-card-featured .media-card-image{aspect-ratio:1.7}.media-card-featured .media-card-body{padding:24px}.media-card-featured h3{font-size:36px}.media-hub{padding-top:35px}.media-hub-hero p{font-size:15px}.media-article-header{padding:23px 0 38px}.media-article-header h1{font-size:clamp(44px,11vw,65px);margin:18px 0}.media-deck{font-size:18px}.media-byline{margin-top:25px;display:grid;gap:5px}.media-hero-image{width:calc(100% - 36px);margin-top:18px}.media-hero-image img{aspect-ratio:1.35}.media-article-layout{display:block;padding-top:42px;padding-bottom:70px}.media-toc{position:static;margin-bottom:35px}.media-toc a{font-size:13px}.media-story-section{padding:44px 0 38px}.media-story-section p{font-size:16px}.media-takeaway{padding:23px}.media-article-note{padding:22px}.media-related-varieties,.media-sources,.media-share{padding-top:45px}.review-thread-items{padding-left:8px;margin-left:0}.review-card-reply{padding:14px}.review-card-reply .review-thread-items{padding-left:6px}}
+@media(max-width:1000px){.city-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.city-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.city-card{min-height:145px;padding:15px}.city-card .eyebrow{font-size:8px}.city-card h2{font-size:23px}.city-directory-tools{grid-template-columns:1fr;gap:8px}.city-directory-tools input,.city-directory-tools p{grid-column:1;grid-row:auto}.city-directory-tools p{margin-top:4px}}
+@media(min-width:701px) and (max-width:900px){.site-header .header-inner{height:72px}.desktop-nav,.header-action{display:none}.menu-toggle{display:flex;margin-left:auto;flex-direction:column;justify-content:center;gap:6px;width:42px;height:42px;border:0;background:transparent}.menu-toggle span{width:25px;height:2px;background:var(--wine)}.mobile-nav{position:absolute;left:0;right:0;top:72px;background:var(--cream);padding:16px 24px 26px;border-top:1px solid var(--line);box-shadow:0 15px 20px #1e2e241a}.mobile-nav:not([hidden]){display:flex;flex-direction:column}.mobile-nav a{padding:11px 0;border-bottom:1px solid var(--line);font-weight:700}}
+
+/* Cultivar illustrations have their own provenance; captions stay visible on small screens. */
+.variety-card-media{margin:20px -10px 18px}
+.variety-card-media img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.variety-card-media figcaption{font-size:10px;color:#606d61;line-height:1.5;padding-top:7px}
+.variety-hero-art.cultivar-illustration{margin:0;height:auto;aspect-ratio:3/2}
+.cultivar-illustration figcaption{position:absolute;bottom:12px;left:12px;right:12px;width:fit-content;background:#fffdf8ed;color:#394e3c;font-size:11px;line-height:1.5;padding:7px 10px}

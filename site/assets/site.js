@@ -89,7 +89,24 @@ if (catalogForm) {
 }
 
 const pickerForm = document.querySelector('#picker-form');
-if (pickerForm) pickerForm.addEventListener('submit', event => {
+if (pickerForm) {
+  const params = new URLSearchParams(location.search);
+  const city = (params.get('city') || '').trim();
+  const region = (params.get('region') || '').trim();
+  const regionInput = pickerForm.querySelector('#picker-region');
+  const cityContext = pickerForm.querySelector('#picker-city-context');
+  if (region) regionInput.value = region;
+  if (city && region && cityContext) {
+    cityContext.textContent = `Город: ${city}. Он помогает задать контекст, но не подтверждает пригодность сорта.`;
+    const normalizeRegion = value => value.trim().toLocaleLowerCase('ru-RU').replace(/ё/g, 'е');
+    const updateCityContext = () => {
+      cityContext.hidden = normalizeRegion(regionInput.value) !== normalizeRegion(region);
+    };
+    regionInput.addEventListener('input', updateCityContext);
+    regionInput.addEventListener('change', updateCityContext);
+    updateCityContext();
+  }
+  pickerForm.addEventListener('submit', event => {
   event.preventDefault();
   const data = new FormData(pickerForm);
   const region = String(data.get('region') || '').trim();
@@ -111,4 +128,5 @@ if (pickerForm) pickerForm.addEventListener('submit', event => {
   output.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
   output.focus({ preventScroll: true });
   trackGoal('selector_complete', { crop: String(crop), region, matches: visible });
-});
+  });
+}

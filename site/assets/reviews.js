@@ -1,4 +1,4 @@
-(() => {
+(async () => {
   const root = document.getElementById('reviews-root');
   if (!root) return;
 
@@ -8,17 +8,34 @@
   const status = document.getElementById('review-status');
   const api = root.dataset.reviewApi;
   const enabled = root.dataset.reviewsEnabled === 'true' && Boolean(api);
-  const sort = new URLSearchParams(location.search).get('sort')?.trim().slice(0, 100) || '';
+  const siteBase = document.documentElement.dataset.siteBase || '';
+  let cultivarLinks = {};
+  try { cultivarLinks = JSON.parse(root.dataset.cultivarLinks || '{}'); } catch { cultivarLinks = {}; }
+  const internalPath = path => siteBase + path;
+  const query = new URLSearchParams(location.search);
+  const sort = (root.dataset.cultivar || query.get('sort') || '').trim().slice(0, 100);
+  const city = query.get('city')?.trim().slice(0, 100) || '';
+  const region = query.get('region')?.trim().slice(0, 120) || '';
+  let filterReviewThreads, describeReviewPlace;
+  try {
+    ({ filterReviewThreads, describeReviewPlace } = await import('./review-geo.js'));
+  } catch {
+    setMessage('Не удалось загрузить отзывы. Попробуйте позже.');
+    return;
+  }
+  const placeLabel = describeReviewPlace({ city, region });
   const source = enabled
     ? api + (sort ? '?cultivar=' + encodeURIComponent(sort) : '')
     : (document.documentElement.dataset.siteBase || '') + '/data/reviews.json';
   const expanded = new Set();
 
-  if (sort) {
+  if (sort || placeLabel) {
     filterLabel.hidden = false;
-    filterLabel.textContent = 'Сорт: ' + sort;
-    form.elements.cultivar_name.value = sort;
+    filterLabel.textContent = [sort ? 'Сорт: ' + sort : '', placeLabel].filter(Boolean).join(' · ')
+      + (placeLabel ? '. Место указано автором корневого отзыва; ответы из других мест сохранены.' : '');
   }
+  if (sort) form.elements.cultivar_name.value = sort;
+  if (city || region) form.elements.region.value = city || region;
 
   function setMessage(message) {
     list.replaceChildren();
@@ -65,6 +82,7 @@
           : 'Спасибо! Сообщение получено.';
       sendingForm.reset();
       if (sendingForm === form && sort) form.elements.cultivar_name.value = sort;
+      if (sendingForm === form && (city || region)) form.elements.region.value = city || region;
       if (data.status === 'published') await loadReviews(payload.parent_id ?? null);
     } catch (error) {
       feedback.textContent = error instanceof Error ? error.message : 'Не удалось отправить сообщение.';
@@ -118,8 +136,10 @@
     article.dataset.reviewId = String(review.id);
     const meta = document.createElement('div');
     meta.className = 'review-card-meta';
-    const cultivar = document.createElement('span');
+    const cultivar = document.createElement('a');
+    cultivar.href = internalPath('/sorta/' + (cultivarLinks[review.cultivar_name] ? encodeURIComponent(cultivarLinks[review.cultivar_name]) + '/#otzyvy' : ''));
     cultivar.textContent = review.cultivar_name;
+    cultivar.setAttribute('aria-label', 'Открыть отзывы о сорте ' + review.cultivar_name);
     meta.append(cultivar);
     const body = document.createElement('p');
     body.className = 'review-card-body';
@@ -130,7 +150,11 @@
     author.textContent = review.display_name;
     const identity = document.createElement('span');
     identity.className = 'review-identity';
-    identity.append(author, document.createTextNode(' · ' + review.region));
+    const place = document.createElement('a');
+    place.href = internalPath('/otzyvy/?city=' + encodeURIComponent(review.region));
+    place.textContent = review.region;
+    place.setAttribute('aria-label', 'Отзывы садоводов из региона ' + review.region);
+    identity.append(author, document.createTextNode(' · '), place);
     const date = document.createElement('time');
     const timestamp = Date.parse(review.published_at || review.created_at);
     if (Number.isFinite(timestamp)) {
@@ -193,9 +217,7 @@
       if (!response.ok) throw new Error('reviews unavailable');
       const data = await response.json();
       if (!Array.isArray(data.reviews)) throw new Error('invalid reviews response');
-      const reviews = sort
-        ? data.reviews.filter(review => review.cultivar_name?.toLocaleLowerCase('ru-RU') === sort.toLocaleLowerCase('ru-RU'))
-        : data.reviews;
+      const reviews = filterReviewThreads(data.reviews, { city, region, cultivar: sort });
       const byId = new Map(reviews.map(review => [review.id, review]));
       if (revealId != null) {
         let current = byId.get(revealId);
@@ -215,7 +237,9 @@
       }
       const roots = reviews.filter(review => review.parent_id == null);
       if (!roots.length) {
-        setMessage(sort ? 'Для этого сорта пока нет опубликованных отзывов.' : enabled ? 'Пока нет опубликованных отзывов. Ваш может стать первым.' : 'Пока нет опубликованных отзывов.');
+        setMessage(placeLabel ? `Пока нет опубликованных отзывов по выбранному месту${sort ? ' и сорту' : ''}.`
+          : sort ? 'Для этого сорта пока нет опубликованных отзывов.'
+            : enabled ? 'Пока нет опубликованных отзывов. Ваш может стать первым.' : 'Пока нет опубликованных отзывов.');
         return;
       }
       list.replaceChildren();

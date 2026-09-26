@@ -4,9 +4,10 @@ import { readFile, access } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { articles } from '../editorial.mjs';
+import { cities } from '../cities.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
-const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/podbor/', '/otzyvy/', '/guide/', '/in-vitro/', '/about/',
+const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/podbor/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/about/',
   '/sorta/polka/', '/sorta/joan-j/', '/sorta/cambridge-favourite/', '/sorta/elan/',
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
@@ -113,7 +114,46 @@ test('карточки показывают источник и границы �
     const html = await readFile(join(root, route, 'index.html'), 'utf8');
     assert.match(html, /https:\/\/www\.rhs\.org\.uk\/plants\//);
     assert.match(html, /не испытание сорта в регионах России/);
+    assert.match(html, /id="reviews-root"[^>]*data-cultivar=/);
+    assert.match(html, /Отзывы о сорте/);
+    assert.match(html, /name="cultivar_name" value=/);
   }
+});
+
+test('каталог городов ищет по названию и ведёт к региональному опыту без климатических обещаний', async () => {
+  const html = await readFile(join(root, '/goroda/', 'index.html'), 'utf8');
+  const js = await readFile(join(root, '/assets/cities.js'), 'utf8');
+  assert.equal(cities.length, 55);
+  assert.equal(new Set(cities.map(city => city.slug)).size, cities.length);
+  assert.equal(new Set(cities.map(city => city.name)).size, cities.length);
+  assert.match(html, /id="city-search"/);
+  assert.match(html, /data-city-card/);
+  assert.match(html, /href="\/podbor\/\?city=%D0/);
+  assert.match(html, /href="\/otzyvy\/\?city=%D0/);
+  assert.match(html, /<h2>Калининград<\/h2>/);
+  assert.match(html, /ГОРОД — КОНТЕКСТ ДЛЯ ПОДБОРА/);
+  assert.match(js, /toLocaleLowerCase\('ru-RU'\)/);
+});
+
+test('город передаёт регион в подбор и показывает пользователю его контекст', async () => {
+  const picker = await readFile(join(root, '/podbor/', 'index.html'), 'utf8');
+  const js = await readFile(join(root, '/assets/site.js'), 'utf8');
+  assert.match(picker, /id="picker-city-context" hidden/);
+  assert.match(js, /params\.get\('city'\)/);
+  assert.match(js, /params\.get\('region'\)/);
+  assert.match(js, /regionInput\.value = region/);
+  assert.match(js, /не подтверждает пригодность сорта/);
+});
+
+test('городской отзыв связывает место и обсуждение с карточкой сорта', async () => {
+  const reviews = await readFile(join(root, '/otzyvy/', 'index.html'), 'utf8');
+  const js = await readFile(join(root, '/assets/reviews.js'), 'utf8');
+  const polka = await readFile(join(root, '/sorta/', 'polka', 'index.html'), 'utf8');
+  assert.match(reviews, /data-cultivar-links=/);
+  assert.match(js, /Открыть отзывы о сорте/);
+  assert.match(js, /Отзывы садоводов из региона/);
+  assert.match(js, /review\.parent_id/);
+  assert.match(polka, /id="otzyvy"/);
 });
 
 test('названия сортов в публичном каталоге и данных даны по-русски', async () => {
@@ -177,6 +217,8 @@ test('страница отзывов содержит простую форму
   assert.match(js, /textContent = review\.body/);
   assert.match(js, /parent_id: review\.id/);
   assert.match(js, /document\.createElement\('details'\)/);
+  assert.match(js, /review-geo\.js/);
+  assert.ok((await readFile(join(root, '/assets/review-geo.js'), 'utf8')).length > 0);
   assert.match(js, /Ответы · /);
   assert.doesNotMatch(js, /localStorage|sessionStorage|github\.com|api\.github\.com/);
   assert.doesNotMatch(js, /withdrawal_token|review-withdrawal|review-delete/);
