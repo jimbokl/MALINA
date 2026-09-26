@@ -10,7 +10,7 @@ import { varieties } from '../data.mjs';
 import { depthAdvice } from '../assets/depth-model.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
-const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
+const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
   ...varieties.map(variety => `/sorta/${variety.slug}/`),
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
@@ -27,6 +27,17 @@ test('расчёт саженцев доступен с главной, объя
   assert.match(html, /href="\/podbor\/"/);
   assert.match(html, /src="\/assets\/planting\.js\?v=[a-f0-9]+"/);
   await access(join(root, 'assets', 'planting-model.mjs'));
+});
+
+test('расчёт шпалеры доступен из инструментов и раскрывает границы результата', async () => {
+  const index = await readFile(join(root, 'instrumenty', 'index.html'), 'utf8');
+  const html = await readFile(join(root, 'instrumenty', 'raschet-shpalery', 'index.html'), 'utf8');
+  assert.match(index, /href="\/instrumenty\/raschet-shpalery\/"/);
+  assert.match(html, /<h1>Сколько нужно/);
+  assert.match(html, /name="maxSpan"/);
+  assert.match(html, /не проверяет прочность и устойчивость конструкции/);
+  assert.match(html, /src="\/assets\/trellis\.js\?v=[a-f0-9]+"/);
+  await access(join(root, 'assets', 'trellis-model.mjs'));
 });
 
 test('помощник по обрезке связан с малиной и показывает источник и границы', async () => {
