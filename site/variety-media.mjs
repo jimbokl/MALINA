@@ -4,6 +4,7 @@ export const varietyMedia = Object.freeze({
   gusar: { file: 'raspberry-garden.webp', crop: 'raspberry', generic: true },
   polka: { file: 'variety-polka.webp', crop: 'raspberry' },
   'joan-j': { file: 'variety-joan-j.webp', crop: 'raspberry' },
+  aziya: { file: 'variety-aziya.webp', crop: 'strawberry' },
   'cambridge-favourite': { file: 'variety-cambridge-favourite.webp', crop: 'strawberry' },
   elan: { file: 'variety-elan.webp', crop: 'strawberry' }
 });

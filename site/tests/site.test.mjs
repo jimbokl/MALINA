@@ -5,10 +5,11 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { articles } from '../editorial.mjs';
 import { cities } from '../cities.mjs';
+import { varieties } from '../data.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
 const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
-  '/sorta/polka/', '/sorta/joan-j/', '/sorta/gusar/', '/sorta/cambridge-favourite/', '/sorta/elan/',
+  '/sorta/polka/', '/sorta/joan-j/', '/sorta/gusar/', '/sorta/aziya/', '/sorta/cambridge-favourite/', '/sorta/elan/',
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
 test('карточки сортов показывают только проверенные паспорта фактов', async () => {
@@ -197,15 +198,26 @@ test('страница In Vitro объясняет проверку партии
 test('карточки показывают источник и границы применимости данных', async () => {
   for (const route of routes.filter(route => route.startsWith('/sorta/') && route !== '/sorta/')) {
     const html = await readFile(join(root, route, 'index.html'), 'utf8');
-    assert.match(html, /<title>[^<]+: описание сорта (малины|клубники), урожайность, отзывы садоводов/);
+    assert.match(html, /<title>[^<]+: описание сорта (малины|клубники), фото, урожайность и отзывы садоводов/);
     assert.match(html, /Проверенных данных для России нет/);
     assert.match(html, /Фото сорта пока не проверено/);
-    assert.match(html, route === '/sorta/gusar/' ? /https:\/\/gossortrf\.ru\/upload\// : /https:\/\/www\.rhs\.org\.uk\/plants\//);
+    assert.match(html, route === '/sorta/gusar/' ? /https:\/\/gossortrf\.ru\/upload\// : route === '/sorta/aziya/' ? /https:\/\/geoplantvivai\.com\/fragola-asia-nf421\// : /https:\/\/www\.rhs\.org\.uk\/plants\//);
     assert.match(html, /Региональная пригодность в России пока не проверена|Региональные испытания в России для этой записи пока не подтверждены/);
     assert.match(html, /id="reviews-root"[^>]*data-cultivar=/);
     assert.match(html, /Отзывы о сорте/);
     assert.match(html, /name="cultivar_name" value=/);
   }
+});
+
+test('Азия опубликована с ограничением итальянского источника и без обещания урожая в России', async () => {
+  const html = await readFile(join(root, 'sorta', 'aziya', 'index.html'), 'utf8');
+  const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
+  const asia = catalog.cultivars.find(row => row.slug === 'aziya');
+  assert.ok(asia);
+  assert.match(html, /сведения из Италии: сроки, урожайность и пригодность для регионов России пока не проверены/);
+  assert.match(html, /ИИ-иллюстрация · не фотография сорта/);
+  assert.ok(asia.observations.every(row => row.source_key === 'geoplant-asia-nf421' && row.context_text.includes('России')));
+  assert.equal(asia.recommendations.length, 0);
 });
 
 test('каталог городов ищет по названию и ведёт к региональному опыту без климатических обещаний', async () => {
@@ -288,7 +300,7 @@ test('публичный JSON подключается к собранному W
   const catalog = await readFile(join(root, '/data/catalog.json'), 'utf8');
   const data = JSON.parse(catalog);
   assert.equal(data.schema_version, 1);
-  assert.equal(data.cultivars.length, 5);
+  assert.equal(data.cultivars.length, varieties.length);
   assert.ok(data.cultivars.every(cultivar => cultivar.recommendations.length === 0));
   const wasm = await readFile(join(root, '/assets/selector/malina_selector_bg.wasm'));
   assert.equal(wasm.subarray(0, 4).toString('hex'), '0061736d');

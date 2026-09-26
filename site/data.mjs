@@ -29,6 +29,15 @@ export const varieties = [
     fruiting: 'remontant', fruitingLabel: 'Ремонтантная малина'
   },
   {
+    slug: 'aziya', name: 'Азия', latin: 'Fragaria × ananassa · Asia NF421', crop: 'Земляника садовая', cropKey: 'strawberry', reviewedAt: '26.09.2026',
+    type: 'Тип плодоношения не подтверждён', period: 'Среднеранний срок по описанию итальянского питомника', place: 'Грядка; питомник советует защищённый грунт в дождливых районах',
+    note: 'Питомник описывает «Азию» как среднеранний сорт и отмечает чувствительность к мучнистой росе. Это сведения из Италии: сроки, урожайность и пригодность для регионов России пока не проверены.',
+    traits: ['Среднеранний срок в условиях источника', 'Чувствительность к мучнистой росе по данным питомника', 'Региональные испытания в России не подтверждены'],
+    source: 'https://geoplantvivai.com/fragola-asia-nf421/',
+    sourceLabel: 'Geoplant Vivai · Asia NF421', season: 'unknown', setting: 'ground', light: 'unknown',
+    fruiting: 'unknown', fruitingLabel: 'Тип плодоношения не проверен'
+  },
+  {
     slug: 'cambridge-favourite', name: 'Кембридж Фаворит', latin: "Fragaria × ananassa ‘Cambridge Favourite’", crop: 'Земляника садовая', cropKey: 'strawberry',
     type: 'Летнее плодоношение', period: 'Средний срок в исходном описании', place: 'Грядка',
     note: 'Исходное описание относит сорт к летнему плодоношению. Срок созревания для регионов России не проверен.',
