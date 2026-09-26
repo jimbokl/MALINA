@@ -20,6 +20,18 @@ test('журнал содержит проверяемые статьи, авт�
     assert.ok(article.sections.every(section => section.sources.length && section.sources.every(index => article.sources[index])));
     const html = await readFile(join(root, 'zhurnal', article.slug, 'index.html'), 'utf8');
     assert.match(html, /<article class="media-article">/);
+    assert.match(html, /<meta property="og:type" content="article">/);
+    assert.match(html, /<meta property="og:site_name" content="МАЛИНА — КЛУБНИКА">/);
+    assert.match(html, /<meta name="twitter:card" content="summary_large_image">/);
+    assert.match(html, /<meta property="article:published_time" content="2026-09-25">/);
+    if (process.env.SITE_URL) {
+      const siteBase = process.env.SITE_BASE && process.env.SITE_BASE !== '/' ? process.env.SITE_BASE.replace(/\/$/, '') : '';
+      assert.match(html, new RegExp(`<meta property="og:url" content="${process.env.SITE_URL}/zhurnal/${article.slug}/">`));
+      assert.match(html, new RegExp(`<meta property="og:image" content="${process.env.SITE_URL}${siteBase}/assets/berries-hero\\.webp">`));
+      assert.match(html, new RegExp(`<meta name="twitter:image" content="${process.env.SITE_URL}${siteBase}/assets/berries-hero\\.webp">`));
+      assert.match(html, /<meta property="og:image:width" content="1536">/);
+      assert.match(html, /<meta property="og:image:height" content="1024">/);
+    }
     assert.match(html, /Материал: Редакция МАЛИНА — КЛУБНИКА/);
     assert.match(html, /<time datetime="2026-09-25">/);
     assert.match(html, /Иллюстрация культуры, созданная для сайта генератором изображений/);

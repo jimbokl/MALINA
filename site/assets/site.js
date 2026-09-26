@@ -55,6 +55,13 @@ menuButton?.addEventListener('click', () => {
   menuButton.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
   mobileNav.hidden = !open;
 });
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape' || menuButton?.getAttribute('aria-expanded') !== 'true') return;
+  menuButton.setAttribute('aria-expanded', 'false');
+  menuButton.setAttribute('aria-label', 'Открыть меню');
+  mobileNav.hidden = true;
+  menuButton.focus();
+});
 
 const catalogForm = document.querySelector('#catalog-form');
 if (catalogForm) {
