@@ -255,3 +255,27 @@
 @media(max-width:760px){.mulch-layout{grid-template-columns:1fr}.mulch-aside,.mulch-result{padding:22px}.mulch-option{padding:18px}}
 .calendar-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(270px,.75fr);gap:clamp(28px,6vw,90px)}.calendar-main h2,.calendar-aside h2,.calendar-basis h2{font:400 clamp(2rem,4vw,3.2rem)/1.1 var(--serif);margin:12px 0}.calendar-main form{display:grid;gap:18px;max-width:630px;margin-top:26px}.calendar-main label{display:grid;gap:8px;font-size:12px;font-weight:800;color:#36503b}.calendar-main label[hidden]{display:none}.calendar-main select{min-height:53px;width:100%;padding:0 14px;border:1px solid #cbd3c5;background:#fffdf8;color:var(--ink);font:500 16px var(--sans)}.calendar-main .calendar-check{display:flex;align-items:center;gap:11px;font-size:15px;font-weight:500}.calendar-check input{width:20px;height:20px;accent-color:var(--wine)}.calendar-main button{justify-self:start}.calendar-aside{align-self:start;padding:30px;background:#e8eddf}.calendar-aside p,.calendar-basis p{line-height:1.7;color:#405443}.calendar-result{margin-top:28px;padding:30px;background:#f1f0e6;border-left:4px solid var(--green);outline:none}.calendar-result[hidden]{display:none}.calendar-result h2{font-size:clamp(1.7rem,3vw,2.5rem)}.calendar-result p{line-height:1.65}.calendar-caveat,.calendar-uncertainty{font-size:14px;color:#506451}.calendar-result>a,.calendar-basis a,.calendar-aside a{color:var(--wine)}.calendar-result>a.text-link{display:block;margin-top:18px}.calendar-timeline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;list-style:none;padding:0;margin:25px 0}.calendar-timeline li{padding:10px;border:1px solid #cbd3c5;font-size:13px;line-height:1.4}.calendar-timeline .calendar-current{background:#dce6d2;border-color:var(--green);font-weight:800}.calendar-timeline .calendar-future{opacity:.64}.calendar-basis{padding-block:30px 85px;border-top:1px solid var(--line)}.calendar-basis p{max-width:78ch}.calendar-main select:focus-visible,.calendar-main input:focus-visible,.calendar-main button:focus-visible,.calendar-result a:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
 @media(max-width:760px){.calendar-layout{grid-template-columns:1fr}.calendar-aside,.calendar-result{padding:22px}.calendar-timeline{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.observation-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(270px,.75fr);gap:clamp(28px,6vw,90px)}
+.observation-main h2,.observation-aside h2,.observation-basis h2{font:400 clamp(2rem,4vw,3.2rem)/1.1 var(--serif);margin:12px 0}
+.observation-main form{display:grid;gap:18px;max-width:630px;margin-top:26px}
+.observation-main label{display:grid;gap:8px;font-size:12px;font-weight:800;color:#36503b}
+.observation-main label[hidden]{display:none}
+.observation-main select{min-height:53px;width:100%;padding:0 14px;border:1px solid #cbd3c5;background:#fffdf8;color:var(--ink);font:500 16px var(--sans)}
+.observation-main button{justify-self:start}
+.observation-aside{align-self:start;padding:30px;background:#e8eddf}
+.observation-aside p,.observation-basis p{line-height:1.7;color:#405443}
+.observation-result{margin-top:28px;padding:30px;background:#f1f0e6;border-left:4px solid var(--green);outline:none}
+.observation-result[hidden]{display:none}
+.observation-result h2{font-size:clamp(1.7rem,3vw,2.5rem)}
+.observation-result h3{font:400 1.5rem/1.2 var(--serif);margin:24px 0 8px}
+.observation-result p,.observation-result li{line-height:1.65}
+.observation-result ol,.observation-result ul{padding-left:22px}
+.observation-result li{margin-bottom:8px}
+.observation-summary{font-weight:700}
+.observation-limit{padding:14px 18px;background:#fffdf8;border-left:3px solid #a27f43}
+.observation-result a,.observation-basis a,.observation-aside a{color:var(--wine)}
+.observation-basis{padding-block:30px 85px;border-top:1px solid var(--line)}
+.observation-basis p{max-width:78ch}
+.observation-main select:focus-visible,.observation-main button:focus-visible,.observation-result a:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
+@media(max-width:760px){.observation-layout{grid-template-columns:1fr}.observation-aside,.observation-result{padding:22px}}

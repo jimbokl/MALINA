@@ -10,7 +10,7 @@ import { varieties } from '../data.mjs';
 import { depthAdvice } from '../assets/depth-model.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
-const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/instrumenty/kalendar-uhoda/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
+const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/instrumenty/kalendar-uhoda/', '/instrumenty/proverka-rasteniya/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
   ...varieties.map(variety => `/sorta/${variety.slug}/`),
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
@@ -104,6 +104,19 @@ test('календарь доступен из инструментов, сод�
   assert.match(html, /www\.rhs\.org\.uk\/fruit\/raspberries\/grow-your-own/);
   assert.match(html, /src="\/assets\/calendar\.js\?v=[a-f0-9]+"/);
   await access(join(root, 'assets', 'calendar-model.mjs'));
+});
+
+test('помощник осмотра доступен из инструментов и не выдаёт диагноз или обработку', async () => {
+  const index = await readFile(join(root, 'instrumenty', 'index.html'), 'utf8');
+  const html = await readFile(join(root, 'instrumenty', 'proverka-rasteniya', 'index.html'), 'utf8');
+  assert.match(index, /href="\/instrumenty\/proverka-rasteniya\/"/);
+  assert.match(html, /name="symptom"/);
+  assert.match(html, /name="moisture"/);
+  assert.match(html, /name="spread"/);
+  assert.match(html, /Симптом — не диагноз/);
+  assert.match(html, /ничего не отправляет и не сохраняет/);
+  assert.match(html, /src="\/assets\/plant-observation\.js\?v=[a-f0-9]+"/);
+  await access(join(root, 'assets', 'plant-observation-model.mjs'));
 });
 
 test('карточки сортов показывают только проверенные паспорта фактов', async () => {
