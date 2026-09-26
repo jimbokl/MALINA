@@ -3,6 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
+import { createHash } from 'node:crypto';
 import { varieties, reviewedAt } from '../data.mjs';
 import { articles, editorialReviewedAt, editorialReviewedIso, editorialAuthor } from '../editorial.mjs';
 import { cities } from '../cities.mjs';
@@ -25,7 +26,15 @@ const voteSnapshot = validateVoteSnapshot(JSON.parse(await readFile(join(root, '
 const ymCounterId = process.env.YM_COUNTER_ID || '';
 if (ymCounterId && !/^[1-9]\d*$/.test(ymCounterId)) throw new Error('YM_COUNTER_ID must be a positive integer');
 if (reviewApiUrl && !/^https:\/\/[^\s]+\/api\/reviews$/.test(reviewApiUrl) && !/^http:\/\/localhost:\d+\/api\/reviews$/.test(reviewApiUrl) && !/^http:\/\/127\.0\.0\.1:\d+\/api\/reviews$/.test(reviewApiUrl)) throw new Error('REVIEW_API_URL must be HTTPS /api/reviews, except localhost development');
-const withSiteBase = html => siteBase ? html.replace(/\b(href|src)="\/(?!\/)/g, `$1="${siteBase}/`) : html;
+const versionedAssets = new Map(await Promise.all(
+  ['site.js', 'site.css', 'votes.js', 'verified-selector.js', 'reviews.js', 'cities.js', 'comparison.js', 'lot-checklist.js']
+    .map(async name => [name, createHash('sha256').update(await readFile(join(root, 'site', 'assets', name))).digest('hex').slice(0, 12)])
+));
+const withSiteBase = html => {
+  const versioned = html.replace(/\b(href|src)="(\/assets\/([a-z-]+\.(?:js|css)))"/g,
+    (_, attribute, path, name) => `${attribute}="${path}?v=${versionedAssets.get(name)}"`);
+  return siteBase ? versioned.replace(/\b(href|src)="\/(?!\/)/g, `$1="${siteBase}/`) : versioned;
+};
 const withCssBase = css => siteBase ? css.replace(/url\((['"])\/(?!\/)/g, `url($1${siteBase}/`) : css;
 const paths = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/about/', '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...varieties.map(v => `/sorta/${v.slug}/`), ...articles.map(article => `/zhurnal/${article.slug}/`)];
 const e = (value) => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
