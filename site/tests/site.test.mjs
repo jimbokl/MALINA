@@ -7,9 +7,10 @@ import { articles } from '../editorial.mjs';
 import { newArticles20260926 } from '../editorial-2026-09-26.mjs';
 import { cities } from '../cities.mjs';
 import { varieties } from '../data.mjs';
+import { depthAdvice } from '../assets/depth-model.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
-const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/raschet-sazhencev/', '/instrumenty/obrezka-maliny/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
+const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
   ...varieties.map(variety => `/sorta/${variety.slug}/`),
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
@@ -41,6 +42,29 @@ test('помощник по обрезке связан с малиной и п�
   assert.match(html, /Сроки RHS относятся к условиям Великобритании/);
   assert.match(html, /src="\/assets\/pruning\.js\?v=[a-f0-9]+"/);
   await access(join(root, 'assets', 'pruning-model.mjs'));
+});
+
+test('проверка глубины посадки ведёт к разным действиям и не обобщает микропланты', () => {
+  assert.match(depthAdvice({ crop: 'strawberry', stock: 'bare', position: 'buried' }).steps.join(' '), /Освободите сердечко/);
+  assert.match(depthAdvice({ crop: 'strawberry', stock: 'bare', position: 'exposed' }).steps.join(' '), /Прикройте корни/);
+  assert.match(depthAdvice({ crop: 'raspberry', stock: 'bare', position: 'buried' }).steps.join(' '), /старую отметку/);
+  assert.match(depthAdvice({ crop: 'raspberry', stock: 'container', position: 'unknown' }).summary, /Без этих ориентиров/);
+  assert.equal(depthAdvice({ crop: 'strawberry', stock: 'micro', position: 'aligned' }).status, 'check');
+  assert.throws(() => depthAdvice({ crop: 'other', stock: 'bare', position: 'aligned' }), RangeError);
+});
+
+test('инструменты доступны из меню и главной, источники видны на странице проверки', async () => {
+  const home = await readFile(join(root, 'index.html'), 'utf8');
+  const index = await readFile(join(root, 'instrumenty', 'index.html'), 'utf8');
+  const depth = await readFile(join(root, 'instrumenty', 'glubina-posadki', 'index.html'), 'utf8');
+  assert.match(home, /href="\/instrumenty\/"/);
+  for (const path of ['/podbor/', '/instrumenty/raschet-sazhencev/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/']) assert.match(index, new RegExp(`href="${path}"`));
+  assert.match(depth, /name="crop"/);
+  assert.match(depth, /name="stock"/);
+  assert.match(depth, /www\.rhs\.org\.uk\/fruit\/strawberries\/grow-your-own/);
+  assert.match(depth, /www\.rhs\.org\.uk\/fruit\/raspberries\/grow-your-own/);
+  assert.match(depth, /src="\/assets\/depth\.js\?v=[a-f0-9]+"/);
+  await access(join(root, 'assets', 'depth-model.mjs'));
 });
 
 test('карточки сортов показывают только проверенные паспорта фактов', async () => {
