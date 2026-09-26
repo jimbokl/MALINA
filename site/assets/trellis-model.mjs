@@ -21,3 +21,27 @@ export function calculateTrellis(input) {
   const wireLength = length * rows * wireLines;
   return { rows, spansPerRow, endPosts, intermediatePosts, totalPosts: endPosts + intermediatePosts, wireLines, wireLength, actualSpan };
 }
+
+function priceInKopecks(value, label) {
+  if (value === '' || value === null || value === undefined) throw new RangeError(`${label}: укажите цену.`);
+  const raw = String(value).trim();
+  const number = Number(raw.replace(',', '.'));
+  if (!/^\d+(?:[.,]\d{1,2})?$/.test(raw) || !Number.isFinite(number) || number > 1000000) {
+    throw new RangeError(`${label}: укажите цену от 0 до 1 000 000 ₽ с точностью до копейки.`);
+  }
+  return Math.round(number * 100);
+}
+
+export function calculateTrellisCost(materials, prices) {
+  const endPrice = priceInKopecks(prices.endPostPrice, 'Концевая опора');
+  const intermediatePrice = priceInKopecks(prices.intermediatePostPrice, 'Промежуточная опора');
+  const wirePrice = priceInKopecks(prices.wirePrice, 'Проволока');
+  const endPosts = materials.endPosts * endPrice;
+  const intermediatePosts = materials.intermediatePosts * intermediatePrice;
+  const wire = Math.round(materials.wireLength * wirePrice);
+  const total = endPosts + intermediatePosts + wire;
+  if (![endPosts, intermediatePosts, wire, total].every(Number.isSafeInteger)) {
+    throw new RangeError('Сумма слишком велика для точного расчёта. Разделите проект на участки.');
+  }
+  return { endPosts: endPosts / 100, intermediatePosts: intermediatePosts / 100, wire: wire / 100, total: total / 100 };
+}

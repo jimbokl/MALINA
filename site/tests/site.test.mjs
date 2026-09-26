@@ -78,6 +78,16 @@ test('инструменты доступны из меню и главной, �
   await access(join(root, 'assets', 'depth-model.mjs'));
 });
 
+test('смета шпалеры запрашивает собственные цены и раскрывает исключённые затраты', async () => {
+  const html = await readFile(join(root, 'instrumenty', 'raschet-shpalery', 'index.html'), 'utf8');
+  assert.match(html, /name="endPostPrice"/);
+  assert.match(html, /name="intermediatePostPrice"/);
+  assert.match(html, /name="wirePrice"/);
+  assert.match(html, /не включает запас проволоки/);
+  assert.match(html, /крепёж, доставку, работу/);
+  assert.match(html, /src="\/assets\/trellis\.js\?v=[a-f0-9]+"/);
+});
+
 test('сравнение мульчи доступно из инструментов и раскрывает область применимости', async () => {
   const index = await readFile(join(root, 'instrumenty', 'index.html'), 'utf8');
   const html = await readFile(join(root, 'instrumenty', 'vybor-mulchi', 'index.html'), 'utf8');
