@@ -118,8 +118,9 @@ if (pickerForm) {
     regionInput.addEventListener('change', updateCityContext);
     updateCityContext();
   }
-  pickerForm.addEventListener('submit', event => {
+  pickerForm.addEventListener('submit', async event => {
     event.preventDefault();
+    const { classifyPickerCard } = await import('./picker-filter.mjs');
     const data = new FormData(pickerForm);
     const region = String(data.get('region') || '').trim();
     if (!region) { regionInput.focus(); return; }
@@ -141,33 +142,51 @@ if (pickerForm) {
       if (activeCity) target.searchParams.set('city', activeCity);
       link.href = `${target.pathname}${target.search}${target.hash}`;
     }
-    let visible = 0;
+    const matches = [];
+    const needsEvidence = [];
+    const excluded = [];
     for (const card of cards) {
-      const sourceSupportsLight = card.dataset.light === light;
-      const show = (light === 'unknown' || sourceSupportsLight) &&
-        (crop === 'all' || card.dataset.crop === crop) &&
-        (setting === 'all' || card.dataset.setting === setting) &&
-        (fruiting === 'all' || card.dataset.fruiting === fruiting) &&
-        (harvestTiming === 'all' || card.dataset.harvestTiming === harvestTiming);
-      card.hidden = !show;
-      if (!show) continue;
-      visible++;
+      const result = classifyPickerCard({
+        crop: card.dataset.crop,
+        light: card.dataset.light,
+        setting: card.dataset.setting,
+        fruiting: card.dataset.fruiting,
+        harvestTiming: card.dataset.harvestTiming
+      }, { crop, light, setting, fruiting, harvestTiming });
+      card.hidden = result.status === 'exclude';
+      if (result.status === 'exclude') { excluded.push(card); continue; }
+      if (result.status === 'match') matches.push(card);
+      else needsEvidence.push(card);
       const why = card.querySelector('.picker-match-why');
       const check = card.querySelector('.picker-match-check');
       if (why && check) {
         const lightFact = card.dataset.light === 'sun' ? 'солнечное место' : 'освещённость не уточнена';
-        why.textContent = `В опубликованном источнике указаны: ${card.dataset.placeLabel}, ${card.dataset.fruitingLabel.toLocaleLowerCase('ru-RU')} и ${lightFact}. Срок сбора по источнику: ${card.dataset.periodLabel}.`;
-        check.textContent = light === 'unknown'
-          ? `Проверьте освещённость участка: ${card.dataset.light === 'sun' ? 'источник описывает солнечное место' : 'в источнике освещённость не указана'}.`
-          : 'Следующий шаг: сверьте условия участка и происхождение саженца.';
+        why.textContent = result.status === 'match'
+          ? `В источнике указаны: ${card.dataset.placeLabel}, ${card.dataset.fruitingLabel.toLocaleLowerCase('ru-RU')} и ${lightFact}. Срок сбора: ${card.dataset.periodLabel}.`
+          : `Сорт остаётся в сравнении. В источнике нет данных по выбранным признакам: ${result.missing.join(', ')}.`;
+        check.textContent = result.status === 'match'
+          ? 'Сверьте описание сорта с условиями своего участка.'
+          : 'Откройте карточку и источник, прежде чем делать вывод о пригодности.';
       }
     }
+    const results = document.querySelector('#picker-results');
+    const heading = (label, count) => {
+      const node = document.createElement('h3');
+      node.className = 'picker-group-heading';
+      node.textContent = `${label} · ${count}`;
+      return node;
+    };
+    const hasConditions = light !== 'unknown' || setting !== 'all' || fruiting !== 'all' || harvestTiming !== 'all';
+    results.replaceChildren(
+      ...(matches.length ? [heading(hasConditions ? 'Совпадают по выбранным признакам' : 'Сорта для сравнения', matches.length), ...matches] : []),
+      ...(needsEvidence.length ? [heading('Нужно уточнить данные', needsEvidence.length), ...needsEvidence] : []),
+      ...excluded
+    );
+    const visible = matches.length + needsEvidence.length;
     document.querySelector('#picker-title').textContent = visible ? `${visible} ${visible === 1 ? 'сорт для сравнения' : visible < 5 ? 'сорта для сравнения' : 'сортов для сравнения'}` : 'Совпадений нет';
     document.querySelector('#picker-region-status').textContent = `Регион: ${region}. Сравнение по опубликованным характеристикам сортов.`;
     const resultDescription = visible
-      ? light === 'unknown'
-        ? 'Проверьте освещённость участка и откройте карточки сортов: в них указаны источники и условия выращивания.'
-        : 'Сорта совпадают с выбранными признаками. Откройте карточку, чтобы посмотреть основание и опыт садоводов.'
+      ? `${matches.length} совпадают по указанным признакам, для ${needsEvidence.length} нужно уточнить данные. Откройте карточку сорта и его источник.`
       : light === 'shade'
         ? 'Для заметной тени совпадений нет. Уточните освещённость или посмотрите весь каталог.'
         : 'Для выбранных условий совпадений нет. Измените одно условие или посмотрите весь каталог.';

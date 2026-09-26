@@ -11,6 +11,7 @@ import { raspberryFacets, raspberryFacetVarieties } from '../catalog-facets.mjs'
 import { additionalRaspberryVarieties } from '../raspberry-varieties.mjs';
 import { additionalStrawberryVarieties } from '../strawberry-varieties.mjs';
 import { depthAdvice } from '../assets/depth-model.mjs';
+import { classifyPickerCard } from '../assets/picker-filter.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
 const routes = ['/', '/malina/', '/klubnika/', '/sorta/', ...raspberryFacets.map(facet => facet.path), '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/raschet-kapelnogo-poliva/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/instrumenty/kalendar-uhoda/', '/instrumenty/proverka-rasteniya/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
@@ -502,9 +503,15 @@ test('страница In Vitro объясняет проверку партии
 });
 
 test('карточки показывают источник и границы применимости данных', async () => {
+  const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
   for (const route of varieties.map(variety => `/sorta/${variety.slug}/`)) {
     const html = await readFile(join(root, route, 'index.html'), 'utf8');
-    assert.match(html, /<title>[^<]+: описание сорта (малины|клубники), фото, урожайность и отзывы садоводов/);
+    const slug = route.split('/')[2];
+    const hasYield = catalog.cultivars.find(item => item.slug === slug)?.observations?.some(item =>
+      item.trait_code === 'yield' && item.evidence && Number.isFinite(item.value_number) &&
+      Number.isFinite(item.value_max) && item.unit);
+    assert.match(html, new RegExp(`<title>[^<]+: описание сорта (малины|клубники), ${hasYield ? 'урожайность' : 'характеристики'} и отзывы садоводов`));
+    assert.doesNotMatch(html.match(/<title>[^<]+<\/title>/)?.[0] ?? '', /фото/);
     const variety = varieties.find(item => route === `/sorta/${item.slug}/`);
     assert.match(html, /КРАТКО О СОРТЕ/);
     assert.match(html, /Иллюстрация (малины|жёлтой малины|клубники)/);
@@ -513,6 +520,14 @@ test('карточки показывают источник и границы �
     assert.match(html, /id="reviews-root"[^>]*data-cultivar=/);
     assert.match(html, /Отзывы о сорте/);
     assert.match(html, /name="cultivar_name" value=/);
+  }
+});
+
+test('в навигации и материалах используем привычное название «клубника»', async () => {
+  for (const route of ['/', '/klubnika/', '/zhurnal/klubnika/']) {
+    const html = await readFile(join(root, route, 'index.html'), 'utf8');
+    assert.doesNotMatch(html, /садовая земляника|садовой земляники/i);
+    assert.match(html, /Клубника|клубника/);
   }
 });
 
@@ -655,6 +670,16 @@ test('подбор срока сбора связан с источниками 
   assert.match(html, /name="harvestTiming" value="early"/);
   assert.match(html, /name="harvestTiming" value="repeat"/);
   assert.match(html, /Сравните ранний, средний и поздний сроки из описаний сортов/);
+});
+
+test('подбор отличает неподходящий сорт от сорта с неполными данными', () => {
+  const selected = { crop: 'strawberry', light: 'sun', setting: 'ground', fruiting: 'all', harvestTiming: 'all' };
+  assert.deepEqual(classifyPickerCard({ crop: 'strawberry', light: 'sun', setting: 'ground' }, selected), { status: 'match', missing: [] });
+  assert.deepEqual(classifyPickerCard({ crop: 'strawberry', light: 'unknown', setting: 'unknown' }, selected), {
+    status: 'needs-evidence', missing: ['освещённость', 'место выращивания']
+  });
+  assert.deepEqual(classifyPickerCard({ crop: 'strawberry', light: 'shade', setting: 'ground' }, selected), { status: 'exclude', missing: [] });
+  assert.deepEqual(classifyPickerCard({ crop: 'raspberry', light: 'sun', setting: 'ground' }, selected), { status: 'exclude', missing: [] });
 });
 
 test('подбор связывает выбранные сорта со сравнением и сохраняет контекст города', async () => {
