@@ -2,6 +2,15 @@ export const reviewedAt = '24.09.2026';
 
 export const varieties = [
   {
+    slug: 'gusar', name: 'Гусар', latin: 'Rubus idaeus L. · Гусар', crop: 'Малина', cropKey: 'raspberry', reviewedAt: '26.09.2026',
+    type: 'Летний сорт', period: 'Средний срок в описании оригинатора', place: 'Открытый грунт',
+    note: 'В Госреестре 2024 года сорт допущен для Центрального региона (3). Это официальный допуск, а не прогноз зимовки или урожая на вашем участке.',
+    traits: ['Летний сорт', 'Центральный регион допуска · 2024', 'Местные результаты нужно проверять отдельно'],
+    source: 'https://vstisp.org/vstisp/index.php/11-icetheme/sample-news/1448-gusar',
+    sourceLabel: 'ФНЦ Садоводства · Гусар', season: 'summer', setting: 'ground', light: 'unknown',
+    fruiting: 'summer', fruitingLabel: 'Летняя малина'
+  },
+  {
     slug: 'polka', name: 'Полька', latin: "Rubus idaeus ‘Polka’", crop: 'Малина', cropKey: 'raspberry',
     type: 'На побегах текущего года', period: 'Осеннее плодоношение', place: 'Открытый грунт',
     note: 'В исходном описании указано плодоношение на побегах текущего года; основной сбор — осенью. Региональная пригодность в России пока не проверена.',

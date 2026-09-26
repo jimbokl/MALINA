@@ -215,12 +215,13 @@ def public_snapshot(connection: sqlite3.Connection) -> dict[str, object]:
     by_id = {row["id"]: row for row in cultivars}
     evidence_targets: dict[tuple[str, int], dict[str, object]] = {}
     for cultivar in cultivars:
-        cultivar.update(aliases=[], observations=[], media=[], recommendations=[], offers=[], own_batches=[])
+        cultivar.update(aliases=[], observations=[], media=[], recommendations=[], admissions=[], offers=[], own_batches=[])
     for view, key in (
         ("public_aliases", "aliases"),
         ("public_observations", "observations"),
         ("public_media", "media"),
         ("public_recommendations", "recommendations"),
+        ("public_official_admissions", "admissions"),
         ("public_offers", "offers"),
         ("public_own_batches", "own_batches"),
     ):
@@ -247,7 +248,9 @@ def public_snapshot(connection: sqlite3.Connection) -> dict[str, object]:
             "SELECT slug, name_ru FROM crops ORDER BY id"
         )],
         "regions": [dict(row) for row in connection.execute(
-            "SELECT code, name_ru FROM regions ORDER BY id"
+            "SELECT r.code, r.name_ru, m.admission_region_number, m.admission_region_name, "
+            "m.map_source_url FROM regions r LEFT JOIN public_admission_regions m "
+            "ON m.code = r.code ORDER BY r.id"
         )],
         "cultivars": cultivars,
     }

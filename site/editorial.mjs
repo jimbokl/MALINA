@@ -4,15 +4,55 @@ export const editorialReviewedAt = '25.09.2026';
 export const editorialReviewedIso = '2026-09-25';
 export const editorialAuthor = 'Редакция МАЛИНА — КЛУБНИКА';
 
-const rhsRaspberry = { label: 'Исходное руководство · малина', url: 'https://www.rhs.org.uk/fruit/raspberries/grow-your-own' };
-const rhsStrawberry = { label: 'Исходное руководство · садовая земляника', url: 'https://www.rhs.org.uk/fruit/strawberries/grow-your-own' };
+const rhsRaspberry = { label: 'Royal Horticultural Society · How to grow raspberries', url: 'https://www.rhs.org.uk/fruit/raspberries/grow-your-own' };
+const rhsStrawberry = { label: 'Royal Horticultural Society · How to grow strawberries', url: 'https://www.rhs.org.uk/fruit/strawberries/grow-your-own' };
 const umnStrawberry = { label: 'University of Minnesota Extension · выращивание земляники', url: 'https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/growing-strawberries-in-the-home-garden' };
 const umnPlants = { label: 'University of Minnesota Extension · выбор посадочного материала', url: 'https://extension.umn.edu/agriculture/specialty-crops/commercial-fruit-production/strawberry-farming/strawberry-varieties-and-purchasing-plants' };
 const umnPlanting = { label: 'University of Minnesota Extension · посадка и форматы рассады', url: 'https://extension.umn.edu/agriculture/specialty-crops/commercial-fruit-production/strawberry-farming/planting-a-new-strawberry-field' };
 const strawberryMicropropagation = { label: 'Borkowska · сравнение укоренения микроклонов земляники in vitro и ex vitro, 2001', url: 'https://doi.org/10.1016/S0304-4238(00)00230-2' };
 const pennStateStrawberry = { label: 'Penn State Extension · сорта клубники для домашнего сада', url: 'https://extension.psu.edu/strawberry-varieties-for-home-gardens' };
+const illinoisRaspberry = { label: 'University of Illinois Extension · Growing Raspberries, раздел Planting', url: 'https://extension.illinois.edu/small-fruits/growing-raspberries' };
+const maineStrawberry = { label: 'David T. Handley · Bulletin #2067: Growing Strawberries · University of Maine Cooperative Extension', url: 'https://extension.umaine.edu/publications/2067e/' };
 
 export const articles = [
+  {
+    slug: 'posadka-sazhentsev-maliny-i-klubniki', crop: 'both', category: 'Посадка',
+    publishedIso: '2026-09-26', reviewedIso: '2026-09-26', reviewedAt: '26.09.2026',
+    title: 'Как посадить саженцы малины и клубники без типичных ошибок',
+    description: 'Как выбрать место и глубину посадки малины и садовой земляники, полить саженцы и проверить первые дни. Отличия культур и ограничения советов.',
+    lead: 'У малины ориентиром служит прежняя линия почвы на саженце, у садовой земляники — положение сердечка. Разберём эти различия и то, что стоит проверить после посадки.',
+    takeaway: 'Сначала определите тип саженца и проверьте дренаж. У малины расправьте корни и сверяйте прежнюю глубину; у земляники оставьте сердечко над почвой, не оголяя корни. После посадки полейте и следите за влажностью.',
+    heroImage: { file: 'article-planting-aftercare.webp', alt: 'Иллюстрация полива новых посадок садовой земляники рядом с малинником', width: 1536, height: 1024, caption: 'ИИ-иллюстрация общего приёма ухода после посадки. Не документальная фотография и не изображение конкретного сорта.' },
+    sections: [
+      { heading: 'Что проверить до посадки', paragraphs: [
+        'Посмотрите, какой материал у вас в руках: спящий саженец малины с открытыми корнями, растение в контейнере или молодое растение после микроклонального размножения требуют разных действий. Не подрезайте все саженцы по одной инструкции: Illinois Extension отдельно оговаривает, что растения из культуры тканей после посадки не нуждаются в такой обрезке.',
+        'Малине и садовой землянике нужен участок без длительного застоя воды. Перед посадкой проверьте, как быстро уходит вода после дождя и достаточно ли света. Точный день работ определяют по погоде, состоянию почвы и формату саженца, а не по универсальному календарю для всей России.'
+      ], sources: [0, 2, 3] },
+      { heading: 'Как посадить малину с открытыми корнями', paragraphs: [
+        'Не давайте корням подсохнуть во время подготовки. Осмотрите их и удалите повреждённые части. Сделайте лунку, в которой корни можно расправить без загиба, и разместите саженец приблизительно на той глубине, на которой он рос в питомнике. Затем заполните лунку почвой и полейте.',
+        'Это порядок для обычного саженца красной малины с открытыми корнями. Для контейнерного или микроклонального растения сверяйтесь с инструкцией поставщика; правило «обрезать каждый побег до одной длины» здесь не подходит.'
+      ], sources: [0], image: { file: 'article-raspberry-roots.webp', alt: 'ИИ-иллюстрация расправленных корней саженца малины в посадочной лунке', width: 1536, height: 1024, caption: 'ИИ-иллюстрация расположения корней. Глубину проверяйте по реальному саженцу и инструкции поставщика.' } },
+      { heading: 'Как посадить садовую землянику', paragraphs: [
+        'У садовой земляники, которую в быту называют клубникой, важно положение сердечка — места, откуда выходят листья. Расправьте корни в лунке и засыпьте их, оставив верх сердечка открытым. Слишком глубокая посадка может повредить растению; слишком мелкая оставит корни открытыми и пересыхающими.',
+        'Не копируйте расстояние между кустами без указания системы выращивания. Например, Maine Extension приводит схему для ковровой рядовой посадки с размножением усами. При другой цели и другой системе интервалы выбирают отдельно.'
+      ], sources: [1, 3], image: { file: 'article-strawberry-crown.webp', alt: 'ИИ-иллюстрация саженца садовой земляники: сердечко у поверхности почвы, корни прикрыты', width: 1536, height: 1024, caption: 'ИИ-иллюстрация положения сердечка. Сверяйте глубину по живому растению: рисунок не заменяет осмотр.' } },
+      { heading: 'Полив и первые дни после посадки', paragraphs: [
+        'Сразу после посадки полейте почву вокруг растений. Затем проверяйте влажность у корней: она должна помогать укоренению, но вода не должна стоять. Частота полива зависит от погоды, почвы и формата рассады; универсальное число литров для любого участка было бы ложной точностью.',
+        'Мульча может помочь почве удерживать влагу и уменьшить сорняки. У земляники не засыпайте ею сердечко. Если растение увядает, сначала проверьте влажность почвы, состояние корней и дренаж; один симптом не позволяет поставить диагноз.'
+      ], sources: [0, 1, 3] },
+      { heading: 'Какие советы из памятки нельзя применять ко всем саженцам', paragraphs: [
+        'Обещание «100% приживаемости» нельзя проверить без описания партии, условий посадки и наблюдений. Оно не подходит как гарантия для читателя. Одинаковая короткая обрезка всех саженцев малины игнорирует различия посадочного материала.',
+        'Схема 20 × 30 см для земляники не является универсальным способом повысить урожай. Усы тоже не удаляют автоматически: в грядке для размножения они нужны, в иной системе их могут ограничивать. Выбирайте действие под свою цель и способ выращивания.'
+      ], sources: [0, 1] },
+      { heading: 'Короткий чек-лист перед завершением работы', paragraphs: [
+        'Проверьте пять вещей: саженец соответствует заявленному формату; на участке нет постоянного застоя воды; корни малины расправлены; у земляники корни закрыты почвой, а сердечко видно; почва после посадки полита и в дальнейшем её влажность можно контролировать.',
+        'Для конкретного региона России дополнительно нужны местные сведения о сроках и зимовке. Эта статья объясняет общую технику, но не обещает приживаемость или урожай в каждой местности.'
+      ], sources: [0, 1, 2, 3] }
+    ],
+    sources: [illinoisRaspberry, maineStrawberry, rhsRaspberry, rhsStrawberry],
+    method: 'Материал подготовлен редакцией по статье Growing Raspberries (University of Illinois Extension), бюллетеню Дэвида Т. Хэндли Growing Strawberries (University of Maine Cooperative Extension) и руководствам How to grow raspberries / How to grow strawberries (Royal Horticultural Society); ссылки и полные названия приведены выше. Черновая PDF-памятка была использована как список вопросов, а спорные обещания проверены по источникам и исключены. Книги для утверждений этой статьи не использовались. ИИ помог создать иллюстрации; реальные посадки для этой публикации не фотографировались.',
+    relatedVarieties: [], relatedArticles: ['posadka-maliny', 'posadka-klubniki', 'kak-vybrat-sazhentsy-klubniki']
+  },
   {
     slug: 'letnyaya-ili-remontantnaya-malina', crop: 'raspberry', category: 'Выбор сорта',
     title: 'Летняя или ремонтантная малина: с чего начать',

@@ -8,17 +8,17 @@ import { varieties } from '../data.mjs';
 
 const snapshot = { as_of: '2026-09-26T10:00:00Z', votes: [
   { cultivar_slug: 'polka', count: 4 }, { cultivar_slug: 'joan-j', count: 4 },
-  { cultivar_slug: 'elan', count: 2 }, { cultivar_slug: 'cambridge-favourite', count: 0 }
+  { cultivar_slug: 'elan', count: 2 }, { cultivar_slug: 'gusar', count: 0 }, { cultivar_slug: 'cambridge-favourite', count: 0 }
 ] };
 
 test('рейтинг делит места при равенстве, оставляет нули без места и пересчитывает культуру', () => {
   const ranked = rankCultivars(varieties, snapshot.votes);
-  assert.deepEqual(ranked.map(v => [v.slug, v.rank]), [['joan-j', 1], ['polka', 1], ['elan', 3], ['cambridge-favourite', null]]);
+  assert.deepEqual(ranked.map(v => [v.slug, v.rank]), [['joan-j', 1], ['polka', 1], ['elan', 3], ['gusar', null], ['cambridge-favourite', null]]);
   const strawberry = rankCultivars(varieties, snapshot.votes, 'strawberry');
   assert.deepEqual(strawberry.map(v => [v.slug, v.rank]), [['elan', 1], ['cambridge-favourite', null]]);
   const empty = rankCultivars(varieties, snapshot.votes.map(v => ({ ...v, count: 0 })));
   assert.ok(empty.every(v => v.rank === null));
-  assert.deepEqual(empty.map(v => v.slug), ['joan-j', 'cambridge-favourite', 'polka', 'elan']);
+  assert.deepEqual(empty.map(v => v.slug), ['gusar', 'joan-j', 'cambridge-favourite', 'polka', 'elan']);
 });
 
 test('публичный контракт отклоняет повреждённые счётчики и пропавшие сорта', () => {

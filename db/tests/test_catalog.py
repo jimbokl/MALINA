@@ -24,7 +24,7 @@ class CatalogTests(unittest.TestCase):
         catalog.migrate(self.connection)
         # Migration 0002 seeds the public reference catalog. These tests need
         # an empty fixture so they can exercise publication and rollback gates.
-        for table in ("evidence_passports", "trait_observations", "cultivars", "sources"):
+        for table in ("official_admissions", "admission_region_map", "evidence_passports", "trait_observations", "cultivars", "sources"):
             self.connection.execute(f"DELETE FROM {table}")
         self.connection.commit()
 

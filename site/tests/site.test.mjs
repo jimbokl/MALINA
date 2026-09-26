@@ -8,7 +8,7 @@ import { cities } from '../cities.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
 const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
-  '/sorta/polka/', '/sorta/joan-j/', '/sorta/cambridge-favourite/', '/sorta/elan/',
+  '/sorta/polka/', '/sorta/joan-j/', '/sorta/gusar/', '/sorta/cambridge-favourite/', '/sorta/elan/',
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
 test('карточки сортов показывают только проверенные паспорта фактов', async () => {
@@ -75,18 +75,20 @@ test('журнал содержит проверяемые статьи, авт�
     if (process.env.SITE_URL) {
       const siteBase = process.env.SITE_BASE && process.env.SITE_BASE !== '/' ? process.env.SITE_BASE.replace(/\/$/, '') : '';
       assert.match(html, new RegExp(`<meta property="og:url" content="${process.env.SITE_URL}/zhurnal/${article.slug}/">`));
-      assert.match(html, new RegExp(`<meta property="og:image" content="${process.env.SITE_URL}${siteBase}/assets/berries-hero\\.webp">`));
-      assert.match(html, new RegExp(`<meta name="twitter:image" content="${process.env.SITE_URL}${siteBase}/assets/berries-hero\\.webp">`));
+      const socialImage = article.heroImage?.file ?? 'berries-hero.webp';
+      assert.ok(html.includes(`<meta property="og:image" content="${process.env.SITE_URL}${siteBase}/assets/${socialImage}">`));
+      assert.ok(html.includes(`<meta name="twitter:image" content="${process.env.SITE_URL}${siteBase}/assets/${socialImage}">`));
       assert.match(html, /<meta property="og:image:width" content="1536">/);
       assert.match(html, /<meta property="og:image:height" content="1024">/);
     }
-    assert.match(html, /Материал: Редакция МАЛИНА — КЛУБНИКА/);
+    assert.match(html, /Автор: <a href="\/about\/">Редакция МАЛИНА — КЛУБНИКА<\/a>/);
+    assert.ok(html.includes(`<time datetime="${publishedIso}">`));
     assert.ok(html.includes(`<time datetime="${reviewedIso}">`));
     if (process.env.SITE_URL) {
       assert.match(html, new RegExp(`"datePublished":"${publishedIso}"`));
       assert.match(html, new RegExp(`"dateModified":"${reviewedIso}"`));
     }
-    assert.match(html, /Иллюстрация культуры, созданная для сайта генератором изображений/);
+    assert.match(html, article.heroImage ? /ИИ-иллюстрация общего приёма ухода после посадки/ : /Иллюстрация культуры, созданная для сайта генератором изображений/);
     assert.match(html, /<section class="media-sources"/);
     assert.match(html, /data-share-article="vk"/);
     assert.match(html, /data-share-article="pinterest"/);
@@ -116,6 +118,23 @@ test('журнал содержит проверяемые статьи, авт�
     const feed = await readFile(join(root, 'feed.xml'), 'utf8');
     assert.equal((feed.match(/<item>/g) || []).length, articles.length);
     assert.match(feed, /<media:content /);
+  }
+});
+
+test('статья о посадке объясняет различия культур и происхождение иллюстраций', async () => {
+  const html = await readFile(join(root, 'zhurnal', 'posadka-sazhentsev-maliny-i-klubniki', 'index.html'), 'utf8');
+  assert.match(html, /<h1>Как посадить саженцы малины и клубники без типичных ошибок<\/h1>/);
+  assert.match(html, /<aside class="media-toc" aria-label="Содержание статьи">/);
+  assert.match(html, /href="#section-6"/);
+  assert.match(html, /сердечко видно/);
+  assert.match(html, /Для конкретного региона России дополнительно нужны местные сведения/);
+  assert.match(html, /Как подготовлен материал/);
+  assert.match(html, /David T\. Handley · Bulletin #2067: Growing Strawberries/);
+  assert.match(html, /University of Illinois Extension · Growing Raspberries/);
+  if (process.env.SITE_URL) assert.match(html, /"@type":"BreadcrumbList"/);
+  for (const file of ['article-planting-aftercare.webp', 'article-raspberry-roots.webp', 'article-strawberry-crown.webp']) {
+    assert.ok(html.includes(`/assets/${file}`));
+    await access(join(root, 'assets', file));
   }
 });
 
@@ -178,7 +197,10 @@ test('страница In Vitro объясняет проверку партии
 test('карточки показывают источник и границы применимости данных', async () => {
   for (const route of routes.filter(route => route.startsWith('/sorta/') && route !== '/sorta/')) {
     const html = await readFile(join(root, route, 'index.html'), 'utf8');
-    assert.match(html, /https:\/\/www\.rhs\.org\.uk\/plants\//);
+    assert.match(html, /<title>[^<]+: описание сорта (малины|клубники), урожайность, отзывы садоводов/);
+    assert.match(html, /Проверенных данных для России нет/);
+    assert.match(html, /Фото сорта пока не проверено/);
+    assert.match(html, route === '/sorta/gusar/' ? /https:\/\/gossortrf\.ru\/upload\// : /https:\/\/www\.rhs\.org\.uk\/plants\//);
     assert.match(html, /Региональная пригодность в России пока не проверена|Региональные испытания в России для этой записи пока не подтверждены/);
     assert.match(html, /id="reviews-root"[^>]*data-cultivar=/);
     assert.match(html, /Отзывы о сорте/);
@@ -258,7 +280,7 @@ test('публичный JSON подключается к собранному W
   const catalog = await readFile(join(root, '/data/catalog.json'), 'utf8');
   const data = JSON.parse(catalog);
   assert.equal(data.schema_version, 1);
-  assert.equal(data.cultivars.length, 4);
+  assert.equal(data.cultivars.length, 5);
   assert.ok(data.cultivars.every(cultivar => cultivar.recommendations.length === 0));
   const wasm = await readFile(join(root, '/assets/selector/malina_selector_bg.wasm'));
   assert.equal(wasm.subarray(0, 4).toString('hex'), '0061736d');
@@ -268,6 +290,21 @@ test('публичный JSON подключается к собранному W
   assert.equal(result.total, 0);
   assert.deepEqual(result.matches, []);
   assert.equal(result.error, undefined);
+});
+
+test('официальный допуск для Тулы виден с источником и не становится местной рекомендацией', async () => {
+  const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
+  const tula = catalog.regions.find(region => region.code === 'tula-oblast');
+  const gusar = catalog.cultivars.find(cultivar => cultivar.slug === 'gusar');
+  assert.equal(tula.admission_region_number, 3);
+  assert.equal(gusar.admissions.length, 1);
+  assert.equal(gusar.admissions[0].registry_entry_code, '9902171');
+  assert.equal(gusar.admissions[0].source_pdf_page, 418);
+  assert.equal(gusar.recommendations.length, 0);
+  const html = await readFile(join(root, 'sorta', 'gusar', 'index.html'), 'utf8');
+  assert.match(html, /id="gosreestr"/);
+  assert.match(html, /gossortrf\.ru\/upload\/[^" ]+#page=418/);
+  assert.match(html, /не гарантирует зимовку/);
 });
 
 test('страница отзывов содержит простую форму и публичный снимок без служебных данных', async () => {

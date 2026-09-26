@@ -194,3 +194,15 @@
 .picker-match a{display:inline-block;margin-top:2px;color:#496d52;font-size:11px;font-weight:800;text-decoration:underline;text-underline-offset:3px}
 .picker-match a:focus-visible{outline:3px solid var(--wine);outline-offset:4px}
 @media(max-width:700px){#picker-results{grid-template-columns:1fr}.picker-match{margin-inline:-4px;padding:16px}}
+.media-byline a{color:var(--green);text-decoration:underline;text-underline-offset:3px}
+.media-section-image{margin:32px 0 20px}
+.media-section-image img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.media-section-image figcaption{margin-top:10px;color:#687769;font-size:12px;line-height:1.6}
+.media-sources h3{font-family:var(--serif);font-size:27px;font-weight:400;margin:28px 0 8px}
+.admission-section{padding-block:clamp(2.5rem,5vw,4rem);border-top:1px solid rgba(39,61,39,.16)}
+.admission-section h2{max-width:18ch;font-family:var(--serif);font-size:clamp(2rem,4vw,3.25rem);font-weight:400}
+.admission-section>p{max-width:70ch;line-height:1.65;color:#435343}
+.admission-list{display:grid;gap:1rem;padding:0;list-style:none}
+.admission-list li,.admission-result{display:grid;gap:.6rem;padding:1.25rem;border:1px solid rgba(39,61,39,.16);border-radius:1rem;background:#f7f3e9}
+.admission-list span,.admission-result p{line-height:1.55}
+.admission-list a,.admission-result a{color:var(--green);font-weight:700;text-decoration:underline;text-underline-offset:.2em}

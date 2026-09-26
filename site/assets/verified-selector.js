@@ -25,6 +25,29 @@ if (form) {
 
   const normalized = value => value.trim().toLocaleLowerCase('ru-RU').replace(/\s+/g, ' ');
 
+  const showAdmissions = (catalog, region, crop) => {
+    if (!region.admission_region_number) return;
+    const admitted = catalog.cultivars.filter(item =>
+      (crop === 'all' || item.crop_slug === crop) &&
+      item.admissions?.some(entry => entry.admission_region_number === region.admission_region_number)
+    );
+    if (!admitted.length) return;
+    for (const cultivar of admitted) {
+      const admission = cultivar.admissions.find(entry => entry.admission_region_number === region.admission_region_number);
+      const item = document.createElement('li');
+      item.className = 'admission-result';
+      const heading = document.createElement('h3');
+      heading.textContent = `${cultivar.canonical_name} · допуск в Госреестре`;
+      const explanation = document.createElement('p');
+      explanation.textContent = `${region.admission_region_name} регион (${region.admission_region_number}), издание на ${admission.edition_as_of}, запись ${admission.registry_entry_code}. Допуск не гарантирует зимовку и урожай на конкретном участке.`;
+      const cultivarLink = document.createElement('a');
+      cultivarLink.href = `${base}/sorta/${encodeURIComponent(cultivar.slug)}/#gosreestr`;
+      cultivarLink.textContent = 'Карточка сорта и источник ↗';
+      item.append(heading, explanation, cultivarLink);
+      results.append(item);
+    }
+  };
+
   form.addEventListener('submit', async event => {
     event.preventDefault();
     const fields = new FormData(form);
@@ -51,7 +74,8 @@ if (form) {
       const selection = JSON.parse(engine(text, JSON.stringify(query)));
       if (selection.error) throw new Error(selection.error.message);
       if (selection.total === 0) {
-        showStatus(`Для региона «${regionName}» пока нет проверенных рекомендаций. Это не означает, что сорта выше непригодны: региональных данных для них ещё нет.`);
+        showStatus(`Для региона «${regionName}» пока нет проверенных рекомендаций по местным испытаниям. Ниже — отдельные факты об официальном допуске, если они есть.`);
+        showAdmissions(catalog, region, crop);
         return;
       }
       status.textContent = `${selection.total} ${selection.total === 1 ? 'сорт с проверенным региональным правилом' : 'сорта с проверенными региональными правилами'} для региона «${regionName}». Читайте основания и ограничения каждого правила.`;
@@ -85,6 +109,7 @@ if (form) {
         }
         results.append(item);
       }
+      showAdmissions(catalog, region, crop);
     } catch {
       catalogPromise = undefined;
       showStatus('Не удалось проверить региональные рекомендации. Попробуйте обновить страницу позже; справочный каталог доступен отдельно.');

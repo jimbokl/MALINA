@@ -243,6 +243,7 @@ fn public_snapshot(connection: &Connection, dir: &Path) -> Result<Value> {
             "observations",
             "media",
             "recommendations",
+            "admissions",
             "offers",
             "own_batches",
         ] {
@@ -254,6 +255,7 @@ fn public_snapshot(connection: &Connection, dir: &Path) -> Result<Value> {
         ("public_observations", "observations"),
         ("public_media", "media"),
         ("public_recommendations", "recommendations"),
+        ("public_official_admissions", "admissions"),
         ("public_offers", "offers"),
         ("public_own_batches", "own_batches"),
     ] {
@@ -315,7 +317,7 @@ fn public_snapshot(connection: &Connection, dir: &Path) -> Result<Value> {
         "schema_version": 1,
         "generated_at_utc": generated_at_utc,
         "crops": query_objects(connection, "SELECT slug, name_ru FROM crops ORDER BY id")?,
-        "regions": query_objects(connection, "SELECT code, name_ru FROM regions ORDER BY id")?,
+        "regions": query_objects(connection, "SELECT r.code, r.name_ru, m.admission_region_number, m.admission_region_name, m.map_source_url FROM regions r LEFT JOIN public_admission_regions m ON m.code = r.code ORDER BY r.id")?,
         "cultivars": cultivars,
     }))
 }
