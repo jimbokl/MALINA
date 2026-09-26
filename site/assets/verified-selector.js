@@ -39,7 +39,7 @@ if (form) {
       const heading = document.createElement('h3');
       heading.textContent = `${cultivar.canonical_name} · допуск в Госреестре`;
       const explanation = document.createElement('p');
-      explanation.textContent = `${region.admission_region_name} регион (${region.admission_region_number}), издание на ${admission.edition_as_of}, запись ${admission.registry_entry_code}. Допуск не гарантирует зимовку и урожай на конкретном участке.`;
+      explanation.textContent = `${region.admission_region_name} регион (${region.admission_region_number}), издание на ${admission.edition_as_of}, запись ${admission.registry_entry_code}. Допуск не гарантирует зимовку и урожайность на конкретном участке.`;
       const cultivarLink = document.createElement('a');
       cultivarLink.href = `${base}/sorta/${encodeURIComponent(cultivar.slug)}/#gosreestr`;
       cultivarLink.textContent = 'Карточка сорта и источник ↗';

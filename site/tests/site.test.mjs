@@ -355,16 +355,26 @@ test('публичный JSON подключается к собранному W
 test('официальный допуск для Тулы виден с источником и не становится местной рекомендацией', async () => {
   const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
   const tula = catalog.regions.find(region => region.code === 'tula-oblast');
+  const kaliningrad = catalog.regions.find(region => region.code === 'kaliningrad-oblast');
   const gusar = catalog.cultivars.find(cultivar => cultivar.slug === 'gusar');
   assert.equal(tula.admission_region_number, 3);
-  assert.equal(gusar.admissions.length, 1);
-  assert.equal(gusar.admissions[0].registry_entry_code, '9902171');
-  assert.equal(gusar.admissions[0].source_pdf_page, 418);
+  assert.equal(kaliningrad.admission_region_number, 2);
+  assert.deepEqual(gusar.admissions.map(item => item.admission_region_number), [2, 3, 4, 6, 7]);
+  assert.ok(gusar.admissions.every(item => item.registry_entry_code === '9902171' && item.source_pdf_page === 418));
   assert.equal(gusar.recommendations.length, 0);
   const html = await readFile(join(root, 'sorta', 'gusar', 'index.html'), 'utf8');
   assert.match(html, /id="gosreestr"/);
   assert.match(html, /gossortrf\.ru\/upload\/[^" ]+#page=418/);
   assert.match(html, /не гарантирует зимовку/);
+  for (const city of ['kaliningrad', 'tula', 'kazan']) {
+    const cityHtml = await readFile(join(root, 'podbor', city, 'index.html'), 'utf8');
+    assert.match(cityHtml, /Гусар · допуск в Госреестре/);
+    assert.match(cityHtml, /9902171/);
+    assert.match(cityHtml, /#page=418/);
+    assert.match(cityHtml, /не гарантирует зимовку и урожайность/);
+  }
+  const unrelatedCity = await readFile(join(root, 'podbor', 'arkhangelsk', 'index.html'), 'utf8');
+  assert.doesNotMatch(unrelatedCity, /Гусар · допуск в Госреестре/);
 });
 
 test('страница отзывов содержит простую форму и публичный снимок без служебных данных', async () => {

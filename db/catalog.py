@@ -233,6 +233,8 @@ def public_snapshot(connection: sqlite3.Connection) -> dict[str, object]:
                     item["evidence"] = None
                     evidence_targets[(key, item["id"])] = item
                 by_id[cultivar_id][key].append(item)
+    for cultivar in cultivars:
+        cultivar["admissions"].sort(key=lambda item: item["admission_region_number"])
     for row in connection.execute("SELECT * FROM public_evidence_passports ORDER BY id"):
         item = dict(row)
         observation_id = item.pop("observation_id")

@@ -279,6 +279,15 @@ fn public_snapshot(connection: &Connection, dir: &Path) -> Result<Value> {
             }
         }
     }
+    for cultivar in &mut cultivars {
+        if let Some(admissions) = cultivar.get_mut("admissions").and_then(Value::as_array_mut) {
+            admissions.sort_by_key(|item| {
+                item.get("admission_region_number")
+                    .and_then(Value::as_i64)
+                    .unwrap_or(i64::MAX)
+            });
+        }
+    }
     for mut passport in query_objects(
         connection,
         "SELECT * FROM public_evidence_passports ORDER BY id",

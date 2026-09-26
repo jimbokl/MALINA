@@ -153,12 +153,29 @@ const pickerPage = picker.replace('</head>', '<script type="module" src="/assets
 function cityPickerPage(city) {
   const path = `/podbor/${city.slug}/`;
   const title = `Подбор сортов малины и клубники — ${city.name}`;
+  const region = publicCatalog.regions.find(item => item.name_ru === city.region);
+  const admissions = region?.admission_region_number
+    ? publicCatalog.cultivars.flatMap(cultivar => (cultivar.admissions || [])
+      .filter(admission => admission.admission_region_number === region.admission_region_number)
+      .map(admission => ({ cultivar, admission })))
+    : [];
+  const admissionList = admissions.map(({ cultivar, admission }) => {
+    const source = admission.source_pdf_page
+      ? `${admission.source_url}#page=${admission.source_pdf_page}`
+      : admission.source_url;
+    return `<li class="admission-result"><h3>${e(cultivar.canonical_name)} · допуск в Госреестре</h3><p>${e(region.admission_region_name)} регион (${region.admission_region_number}); издание на ${e(admission.edition_as_of)}, запись ${e(admission.registry_entry_code)}. Допуск не гарантирует зимовку и урожайность на конкретном участке.</p><a href="/sorta/${e(cultivar.slug)}/#gosreestr">Карточка сорта ↗</a><a href="${e(source)}" target="_blank" rel="noopener noreferrer">Строка реестра ↗</a></li>`;
+  }).join('');
+  const initialStatus = admissions.length
+    ? `Для региона «${city.region}» найдены записи об официальном допуске в реестре 2024 года. Это не местные рекомендации. Уточните условия участка выше.`
+    : `Для региона «${city.region}» пока нет опубликованных региональных правил. Уточните условия участка выше.`;
   let html = pickerPage
     .replace('<title>Подобрать сорт по условиям участка · МАЛИНА — КЛУБНИКА</title>', `<title>${e(title)} · МАЛИНА — КЛУБНИКА</title>`)
     .replace('<h1>Свой сад.<br><em>Свой сорт.</em></h1>', `<h1>Ягодный сад:<br><em>${e(city.name)}.</em></h1>`)
     .replace('Укажите регион и условия участка. Покажем справочные карточки', `Регион: ${e(city.region)}. Укажите условия участка. Покажем справочные карточки`)
     .replace('id="picker-form"', `id="picker-form" data-city="${e(city.name)}" data-region="${e(city.region)}"`)
     .replace('id="picker-region" name="region"', `id="picker-region" name="region" value="${e(city.region)}"`)
+    .replace('<p id="verified-status">Укажите регион и нажмите «Показать варианты» выше.</p><ul id="verified-results"></ul>',
+      `<p id="verified-status">${e(initialStatus)}</p><ul id="verified-results">${admissionList}</ul>`)
     .replace('</head>', '<meta name="robots" content="noindex,follow"></head>');
   if (siteUrl) {
     html = html.replace(`href="${siteUrl}/podbor/"`, `href="${siteUrl}${path}"`)
@@ -186,7 +203,7 @@ const cityDirectory = layout({
   body: `<section class="simple-hero city-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span>Города</div><span class="eyebrow">ГОРОД — КОНТЕКСТ ДЛЯ ПОДБОРА</span><h1>Сначала условия.<br><em>Потом сорт.</em></h1><p>Выберите город, чтобы открыть подбор с заполненным регионом. Сравнение пока справочное: городской адрес не означает, что пригодность сорта уже подтверждена испытаниями.</p></div></section><section class="section wrap city-directory"><div class="city-directory-tools"><label for="city-search">Найти город</label><input id="city-search" type="search" autocomplete="off" placeholder="Начните вводить название города или региона"><p id="cities-count" aria-live="polite">${cities.length} городов в стартовом каталоге</p></div><div id="city-grid" class="city-grid">${cityCards}</div><p id="cities-empty" class="empty-state" hidden>Ничего не найдено. Попробуйте другое написание или оставьте отзыв — каталог будет расширяться.</p><div class="city-directory-note"><strong>Подбор — основной путь, отзывы — живой контекст.</strong><span>В региональных рекомендациях показываем только выводы с проверенными источниками. Отзывы помогают увидеть опыт людей, но сами по себе не доказывают пригодность сорта для города.</span></div></section>`
 });
 
-const about = layout({ title: 'О проекте и источниках', description: 'Как МАЛИНА проверяет сведения о сортах, что пока неизвестно и почему нет непроверенных предложений саженцев.', path: '/about/', body: `<section class="simple-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span>О проекте</div><span class="eyebrow">КАК МЫ РАБОТАЕМ С ДАННЫМИ</span><h1>Растём<br><em>от фактов.</em></h1><p>МАЛИНА — ранняя версия ягодного навигатора. Мы строим путь от понятных карточек сортов к полезному выбору и проверенным предложениям.</p></div></section><section class="section wrap about-grid"><div><span class="eyebrow">СЕЙЧАС</span><h2>Что уже есть</h2><p>${varieties.length} справочных карточек, ссылки на первоисточники, каталог и подбор по опубликованным признакам. Для сорта «Гусар» дополнительно показан официальный допуск в Центральном регионе по реестру 2024 года. Последняя проверка исходного описания: ${latestCatalogReview}.</p></div><div><span class="eyebrow">ЕЩЁ В РАБОТЕ</span><h2>Чего пока нет</h2><p>Нет подтверждённых региональных испытаний, продавцов, наличия, цен и заказов. Мы не выдаём справочную карточку за подтверждение пригодности в регионах России или гарантию урожая.</p></div><div><span class="eyebrow">ИЗОБРАЖЕНИЯ</span><h2>Как создана графика</h2><p>Фотографические изображения ягод созданы для сайта с помощью генератора изображений. Они иллюстрируют культуры и не подтверждают внешний вид конкретного сорта.</p></div></section><section class="inline-cta wrap"><div><span class="eyebrow light">ПРОДОЛЖИТЬ</span><h2>Посмотрите, что уже можно сравнить.</h2></div><a class="btn btn-cream" href="/sorta/">Открыть каталог ${arrow}</a></section>` });
+const about = layout({ title: 'О проекте и источниках', description: 'Как МАЛИНА проверяет сведения о сортах, что пока неизвестно и почему нет непроверенных предложений саженцев.', path: '/about/', body: `<section class="simple-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span>О проекте</div><span class="eyebrow">КАК МЫ РАБОТАЕМ С ДАННЫМИ</span><h1>Растём<br><em>от фактов.</em></h1><p>МАЛИНА — ранняя версия ягодного навигатора. Мы строим путь от понятных карточек сортов к полезному выбору и проверенным предложениям.</p></div></section><section class="section wrap about-grid"><div><span class="eyebrow">СЕЙЧАС</span><h2>Что уже есть</h2><p>${varieties.length} справочных карточек, ссылки на первоисточники, каталог и подбор по опубликованным признакам. Для сорта «Гусар» дополнительно показан официальный допуск в пяти регионах по реестру 2024 года. Последняя проверка исходного описания: ${latestCatalogReview}.</p></div><div><span class="eyebrow">ЕЩЁ В РАБОТЕ</span><h2>Чего пока нет</h2><p>Нет подтверждённых региональных испытаний, продавцов, наличия, цен и заказов. Мы не выдаём справочную карточку за подтверждение пригодности в регионах России или гарантию урожая.</p></div><div><span class="eyebrow">ИЗОБРАЖЕНИЯ</span><h2>Как создана графика</h2><p>Фотографические изображения ягод созданы для сайта с помощью генератора изображений. Они иллюстрируют культуры и не подтверждают внешний вид конкретного сорта.</p></div></section><section class="inline-cta wrap"><div><span class="eyebrow light">ПРОДОЛЖИТЬ</span><h2>Посмотрите, что уже можно сравнить.</h2></div><a class="btn btn-cream" href="/sorta/">Открыть каталог ${arrow}</a></section>` });
 
 const reviews = layout({
   title: 'Отзывы садоводов о сортах', description: 'Опыт выращивания малины и садовой земляники по регионам России. Оставьте отзыв о сорте.',
