@@ -10,7 +10,7 @@ import { varieties } from '../data.mjs';
 import { depthAdvice } from '../assets/depth-model.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
-const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
+const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
   ...varieties.map(variety => `/sorta/${variety.slug}/`),
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
@@ -76,6 +76,20 @@ test('инструменты доступны из меню и главной, �
   assert.match(depth, /www\.rhs\.org\.uk\/fruit\/raspberries\/grow-your-own/);
   assert.match(depth, /src="\/assets\/depth\.js\?v=[a-f0-9]+"/);
   await access(join(root, 'assets', 'depth-model.mjs'));
+});
+
+test('сравнение мульчи доступно из инструментов и раскрывает область применимости', async () => {
+  const index = await readFile(join(root, 'instrumenty', 'index.html'), 'utf8');
+  const html = await readFile(join(root, 'instrumenty', 'vybor-mulchi', 'index.html'), 'utf8');
+  assert.match(index, /href="\/instrumenty\/vybor-mulchi\/"/);
+  assert.match(html, /name="crop"/);
+  assert.match(html, /name="system"/);
+  assert.match(html, /name="goal"/);
+  assert.match(html, /не устанавливают сроки и пригодность для вашего региона России/);
+  assert.match(html, /extension\.umn\.edu/);
+  assert.match(html, /extension\.oregonstate\.edu/);
+  assert.match(html, /src="\/assets\/mulch\.js\?v=[a-f0-9]+"/);
+  await access(join(root, 'assets', 'mulch-model.mjs'));
 });
 
 test('карточки сортов показывают только проверенные паспорта фактов', async () => {
