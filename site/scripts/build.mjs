@@ -171,6 +171,23 @@ function cityPickerPage(city) {
       : admission.source_url;
     return `<li class="admission-result"><h3>${e(cultivar.canonical_name)} · допуск в Госреестре</h3><p>${e(region.admission_region_name)} регион (${region.admission_region_number}); издание на ${e(admission.edition_as_of)}, запись ${e(admission.registry_entry_code)}. Откройте карточку, чтобы посмотреть источник и характеристики.</p><a href="/sorta/${e(cultivar.slug)}/#gosreestr">Карточка сорта ↗</a><a href="${e(source)}" target="_blank" rel="noopener noreferrer">Строка реестра ↗</a></li>`;
   }).join('');
+  const evidenceGroups = admissions.length ? [
+    { crop: 'raspberry', title: 'Малина', genitive: 'малины' },
+    { crop: 'strawberry', title: 'Клубника', genitive: 'клубники' }
+  ].map(group => {
+    const groupEntries = admissions.filter(({ cultivar }) => cultivar.crop_slug === group.crop)
+      .sort((a, b) => a.cultivar.canonical_name.localeCompare(b.cultivar.canonical_name, 'ru'));
+    if (!groupEntries.length) return '';
+    const links = groupEntries.slice(0, 6).map(({ cultivar }) =>
+      `<li><a href="/sorta/${e(cultivar.slug)}/#gosreestr">${e(cultivar.canonical_name)}</a><a class="city-evidence-review" href="/sorta/${e(cultivar.slug)}/#otzyvy" aria-label="Отзывы о сорте ${e(cultivar.canonical_name)}">Отзывы ↗</a></li>`
+    ).join('');
+    const count = groupEntries.length;
+    const noun = count % 10 === 1 && count % 100 !== 11 ? 'сорт' : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14) ? 'сорта' : 'сортов';
+    return `<div class="city-evidence-group"><div class="city-evidence-group-head"><h3>${group.title}</h3><span>${count} ${noun}</span></div><ul>${links}</ul><a class="city-evidence-more" href="#verified-section">Все записи ${group.genitive} ↓</a></div>`;
+  }).join('') : '';
+  const evidencePreview = admissions.length
+    ? `<section class="section wrap city-evidence" aria-labelledby="city-evidence-title"><div class="city-evidence-intro"><span class="eyebrow">РЕЕСТР СОРТОВ / ${e(city.region)}</span><h2 id="city-evidence-title">Сорта с официальным допуском для региона</h2><p>Регион: ${e(city.region)}. В Госреестре 2024 года найдены записи о ${admissions.length} сортах малины и клубники. Откройте сорт, источник или обсуждение.</p><a href="#picker-form">Подобрать по условиям участка ↓</a></div><div class="city-evidence-groups">${evidenceGroups}</div></section>`
+    : '';
   const initialStatus = admissions.length
     ? `Для региона «${city.region}» найдены записи об официальном допуске в реестре 2024 года. Это не местные рекомендации. Уточните условия участка выше.`
     : `Регион: ${city.region}. Уточните условия участка, чтобы сравнить сорта.`;
@@ -182,6 +199,7 @@ function cityPickerPage(city) {
     .replace('id="picker-region" name="region"', `id="picker-region" name="region" value="${e(city.region)}"`)
     .replace('<p id="verified-status">Укажите регион и нажмите «Показать варианты» выше.</p><ul id="verified-results"></ul>',
       `<p id="verified-status">${e(initialStatus)}</p><ul id="verified-results">${admissionList}</ul>`)
+    .replace('<section class="section wrap picker-layout">', `${evidencePreview}<section class="section wrap picker-layout">`)
     .replace('</head>', '<meta name="robots" content="noindex,follow"></head>');
   if (siteUrl) {
     html = html.replace(`href="${siteUrl}/podbor/"`, `href="${siteUrl}${path}"`)

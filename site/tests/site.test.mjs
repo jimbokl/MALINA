@@ -48,10 +48,12 @@ test('каждый жёлтый сорт малины использует жё�
   assert.ok(yellow.length > 0);
   await access(join(root, 'assets', 'raspberry-yellow-garden.webp'));
   const catalogHtml = await readFile(join(root, 'sorta', 'index.html'), 'utf8');
+  const cityHtml = await readFile(join(root, 'podbor', 'tula', 'index.html'), 'utf8');
   for (const cultivar of yellow) {
     const detailHtml = await readFile(join(root, 'sorta', cultivar.slug, 'index.html'), 'utf8');
     assert.match(detailHtml, /<figure class="variety-hero-art[^"]*"><img src="\/assets\/raspberry-yellow-garden\.webp" alt="Иллюстрация жёлтой малины/);
     assert.ok(catalogHtml.includes(`<a href="/sorta/${cultivar.slug}/"><img src="/assets/raspberry-yellow-garden.webp" alt="Иллюстрация жёлтой малины`), `каталог: ${cultivar.slug}`);
+    assert.ok(cityHtml.includes(`<a href="/sorta/${cultivar.slug}/"><img src="/assets/raspberry-yellow-garden.webp" alt="Иллюстрация жёлтой малины`), `подбор города: ${cultivar.slug}`);
   }
 });
 
@@ -697,6 +699,40 @@ test('проверенные допуски малины связывают со
     const html = await readFile(join(root, 'podbor', slug, 'index.html'), 'utf8');
     assert.match(html, new RegExp(`${variety} · допуск в Госреестре`));
   }
+});
+
+test('новые записи Госреестра сохраняют точные зоны и источник', async () => {
+  const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
+  const cultivar = slug => catalog.cultivars.find(item => item.slug === slug);
+  const cases = [
+    ['abrikosovaya', '9908145', 418, [3]],
+    ['balzam', '8204616', 418, [2, 3, 4, 5, 6, 7, 10, 11]],
+    ['zhuravlik', '8903751', 418, [4, 6, 7]],
+    ['medvezhonok', '8262601', 419, [3]],
+    ['skromnitsa', '8204594', 419, [2, 3, 4, 5, 6, 7, 10]],
+    ['solnyshko', '7906838', 419, [3, 4, 6]]
+  ];
+  for (const [slug, code, page, zones] of cases) {
+    const item = cultivar(slug);
+    assert.deepEqual(item.admissions.map(row => row.admission_region_number), zones, slug);
+    assert.ok(item.admissions.every(row => row.registry_entry_code === code && row.source_pdf_page === page), slug);
+    assert.deepEqual(item.recommendations, [], slug);
+  }
+  for (const slug of ['bryanskoe-divo', 'evraziya', 'zhar-ptitsa', 'podarok-kashinu', 'poklon-kazakovu', 'rubinovoe-ozherele']) {
+    assert.deepEqual(cultivar(slug).admissions.map(row => row.admission_region_number), Array.from({ length: 12 }, (_, i) => i + 1), slug);
+  }
+  assert.deepEqual(cultivar('polka').admissions, []);
+});
+
+test('город сначала показывает официальные сорта со ссылками на отзывы, затем форму', async () => {
+  const tula = await readFile(join(root, 'podbor', 'tula', 'index.html'), 'utf8');
+  assert.ok(tula.indexOf('class="city-evidence"') < tula.indexOf('id="picker-form"'));
+  assert.match(tula, /Сорта с официальным допуском для региона/);
+  assert.match(tula, /href="\/sorta\/abrikosovaya\/#gosreestr"/);
+  assert.match(tula, /href="\/sorta\/abrikosovaya\/#otzyvy"/);
+  assert.match(tula, /href="#verified-section"/);
+  const arkhangelsk = await readFile(join(root, 'podbor', 'arkhangelsk', 'index.html'), 'utf8');
+  assert.doesNotMatch(arkhangelsk, /href="\/sorta\/abrikosovaya\/#gosreestr"/);
 });
 
 test('страница отзывов содержит простую форму и публичный снимок без служебных данных', async () => {
