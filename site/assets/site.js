@@ -124,6 +124,7 @@ if (pickerForm) {
     const setting = data.get('setting');
     const light = data.get('light');
     const fruiting = data.get('fruiting');
+    const harvestTiming = data.get('harvestTiming');
     const shelter = data.get('shelter');
     const drainage = data.get('drainage');
     const output = document.querySelector('#picker-output');
@@ -134,7 +135,8 @@ if (pickerForm) {
       const show = (light === 'unknown' || sourceSupportsLight) &&
         (crop === 'all' || card.dataset.crop === crop) &&
         (setting === 'all' || card.dataset.setting === setting) &&
-        (fruiting === 'all' || card.dataset.fruiting === fruiting);
+        (fruiting === 'all' || card.dataset.fruiting === fruiting) &&
+        (harvestTiming === 'all' || card.dataset.harvestTiming === harvestTiming);
       card.hidden = !show;
       if (!show) continue;
       visible++;
@@ -142,7 +144,7 @@ if (pickerForm) {
       const check = card.querySelector('.picker-match-check');
       if (why && check) {
         const lightFact = card.dataset.light === 'sun' ? 'солнечное место' : 'освещённость не уточнена';
-        why.textContent = `В опубликованном источнике указаны: ${card.dataset.placeLabel}, ${card.dataset.fruitingLabel.toLocaleLowerCase('ru-RU')} и ${lightFact}.`;
+        why.textContent = `В опубликованном источнике указаны: ${card.dataset.placeLabel}, ${card.dataset.fruitingLabel.toLocaleLowerCase('ru-RU')} и ${lightFact}. Срок сбора по источнику: ${card.dataset.periodLabel}.`;
         check.textContent = light === 'unknown'
           ? `Перед выбором проверьте освещённость места: ${card.dataset.light === 'sun' ? 'источник описывает солнечное место' : 'источник не уточняет освещённость'}. Пригодность в вашем регионе не подтверждена.`
           : 'Следующий шаг: сверьте условия участка и происхождение саженца. Пригодность в вашем регионе не подтверждена.';
@@ -150,13 +152,16 @@ if (pickerForm) {
     }
     document.querySelector('#picker-title').textContent = visible ? `${visible} ${visible === 1 ? 'сорт для сравнения' : visible < 5 ? 'сорта для сравнения' : 'сортов для сравнения'}` : 'Пока нет подтверждённого совпадения';
     document.querySelector('#picker-region-status').textContent = `Регион: ${region}. Подтверждённых данных о пригодности этих сортов для вашего региона пока нет. Ниже — справочное сравнение по опубликованным признакам, не региональная рекомендация.`;
-    document.querySelector('#picker-description').textContent = visible
+    const resultDescription = visible
       ? light === 'unknown'
         ? 'Освещённость пока неизвестна, поэтому это кандидаты для изучения, а не готовые рекомендации. У каждого варианта показано основание и то, что следует проверить.'
         : 'Это записи, у которых опубликованный источник описывает выбранные признаки. У каждого варианта показано основание и следующий шаг.'
       : light === 'shade'
         ? 'В первой проверенной подборке нет описаний сортов для заметной тени. Это не означает, что выращивание невозможно: уточните освещённость или посмотрите весь каталог.'
-        : 'Первая подборка пока ограничена. Лучше оставить вопрос открытым, чем предложить сорт без подтверждённых данных.';
+        : 'Для выбранного сочетания условий и срока в первой подборке пока нет подтверждённых записей. Измените одно условие или посмотрите весь каталог.';
+    document.querySelector('#picker-description').textContent = harvestTiming === 'all'
+      ? resultDescription
+      : `${resultDescription} Срок указан относительно условий источника; дата сбора в вашем регионе может отличаться.`;
     const openQuestions = [];
     if (shelter === 'yes') openQuestions.push('планируется зимнее укрытие');
     if (shelter === 'no') openQuestions.push('зимнее укрытие не планируется');
@@ -170,6 +175,6 @@ if (pickerForm) {
     output.dispatchEvent(new Event('picker:results'));
     output.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
     output.focus({ preventScroll: true });
-    trackGoal('selector_complete', { crop: String(crop), region, matches: visible });
+    trackGoal('selector_complete', { crop: String(crop), region, harvest_timing: String(harvestTiming), matches: visible });
   });
 }

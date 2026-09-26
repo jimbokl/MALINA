@@ -344,6 +344,19 @@ test('подбор запрашивает регион и честно отме�
   assert.match(html, /assets\/verified-selector\.js/);
 });
 
+test('подбор срока сбора связан с источниками и не обещает даты для региона', async () => {
+  const html = await readFile(join(root, '/podbor/', 'index.html'), 'utf8');
+  const allowed = new Set(['early', 'middle', 'autumn', 'repeat']);
+  for (const variety of varieties) {
+    assert.ok(allowed.has(variety.harvestTiming), `нет срока сбора для ${variety.slug}`);
+    assert.ok(html.includes(`data-cultivar-slug="${variety.slug}"`));
+    assert.ok(html.includes(`data-harvest-timing="${variety.harvestTiming}"`));
+  }
+  assert.match(html, /name="harvestTiming" value="early"/);
+  assert.match(html, /name="harvestTiming" value="repeat"/);
+  assert.match(html, /не обещание даты сбора в вашем городе/);
+});
+
 test('подбор связывает выбранные сорта со сравнением и сохраняет контекст города', async () => {
   const html = await readFile(join(root, '/podbor/tula/', 'index.html'), 'utf8');
   assert.match(html, /id="picker-form" data-city="Тула" data-region="Тульская область"/);
