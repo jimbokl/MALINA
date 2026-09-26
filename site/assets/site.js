@@ -102,24 +102,58 @@ if (catalogForm) {
 
 const pickerForm = document.querySelector('#picker-form');
 if (pickerForm) {
+  (async () => {
   const params = new URLSearchParams(location.search);
   const city = (pickerForm.dataset.city || params.get('city') || '').trim();
   const cityRegion = (pickerForm.dataset.region || params.get('region') || '').trim();
   const regionInput = pickerForm.querySelector('#picker-region');
   const cityContext = pickerForm.querySelector('#picker-city-context');
+  const placeError = pickerForm.querySelector('#picker-place-error');
+  const placeContinue = pickerForm.querySelector('#picker-place-continue');
+  const places = [...pickerForm.querySelectorAll('#picker-places option')].map(option => ({
+    name: option.value,
+    region: option.dataset.region,
+    city: option.dataset.city
+  }));
+  const { resolvePickerPlace, normalizePickerPlace } = await import('./picker-place.mjs');
   const normalizeRegion = value => value.trim().toLocaleLowerCase('ru-RU').replace(/ё/g, 'е');
+  let currentCity = city;
+  let currentCityRegion = cityRegion;
+  let allowUnknownPlace = false;
   if (cityRegion) regionInput.value = cityRegion;
-  if (city && cityRegion && cityContext) {
-    cityContext.textContent = `Город: ${city}. Выберите условия участка для сравнения сортов.`;
-    const updateCityContext = () => {
-      cityContext.hidden = normalizeRegion(regionInput.value) !== normalizeRegion(cityRegion);
-    };
-    regionInput.addEventListener('input', updateCityContext);
-    regionInput.addEventListener('change', updateCityContext);
-    updateCityContext();
-  }
+  const updateCityContext = () => {
+    placeError.hidden = true;
+    placeContinue.hidden = true;
+    allowUnknownPlace = false;
+    const selected = resolvePickerPlace(regionInput.value, places);
+    const activeCity = selected?.city || (normalizeRegion(regionInput.value) === normalizeRegion(currentCityRegion) ? currentCity : '');
+    cityContext.hidden = !activeCity;
+    if (activeCity) cityContext.textContent = `Город: ${activeCity}. Выберите условия участка для сравнения сортов.`;
+  };
+  regionInput.addEventListener('input', updateCityContext);
+  regionInput.addEventListener('change', updateCityContext);
+  placeContinue.addEventListener('click', () => {
+    allowUnknownPlace = true;
+    pickerForm.requestSubmit();
+  });
+  updateCityContext();
   pickerForm.addEventListener('submit', async event => {
     event.preventDefault();
+    const selectedPlace = resolvePickerPlace(regionInput.value, places);
+    if (!selectedPlace && !allowUnknownPlace) {
+      event.stopImmediatePropagation();
+      placeError.hidden = false;
+      placeContinue.hidden = false;
+      document.querySelector('#picker-output').hidden = true;
+      document.querySelector('#verified-status').textContent = 'Выберите город или регион из списка выше.';
+      document.querySelector('#verified-results').replaceChildren();
+      regionInput.focus();
+      return;
+    }
+    currentCity = selectedPlace ? selectedPlace.city || (normalizePickerPlace(selectedPlace.region) === normalizePickerPlace(currentCityRegion) ? currentCity : '') : '';
+    currentCityRegion = selectedPlace?.region || regionInput.value.trim();
+    if (selectedPlace) regionInput.value = selectedPlace.region;
+    updateCityContext();
     const { classifyPickerCard, cityForPickerContext } = await import('./picker-filter.mjs');
     const data = new FormData(pickerForm);
     const region = String(data.get('region') || '').trim();
@@ -133,7 +167,7 @@ if (pickerForm) {
     const drainage = data.get('drainage');
     const output = document.querySelector('#picker-output');
     const cards = [...document.querySelectorAll('#picker-results .variety-card')];
-    const activeCity = cityForPickerContext(city, cityRegion, region);
+    const activeCity = cityForPickerContext(currentCity, currentCityRegion, region);
     for (const link of output.querySelectorAll('.variety-card a[href]')) {
       const target = new URL(link.href);
       if (target.origin !== location.origin || !/\/sorta\/[a-z0-9-]+\/$/.test(target.pathname)) continue;
@@ -185,7 +219,9 @@ if (pickerForm) {
     );
     const visible = matches.length + needsEvidence.length;
     document.querySelector('#picker-title').textContent = visible ? `${visible} ${visible === 1 ? 'сорт для сравнения' : visible < 5 ? 'сорта для сравнения' : 'сортов для сравнения'}` : 'Совпадений нет';
-    document.querySelector('#picker-region-status').textContent = `Регион: ${region}. Сравнение по опубликованным характеристикам сортов.`;
+    document.querySelector('#picker-region-status').textContent = selectedPlace
+      ? `Регион: ${region}. Сравнение по опубликованным характеристикам сортов.`
+      : `Место: ${region}. Общее сравнение по характеристикам сортов.`;
     const resultDescription = visible
       ? `${matches.length} совпадают по указанным признакам, для ${needsEvidence.length} нужно уточнить данные. Откройте карточку сорта и его источник.`
       : light === 'shade'
@@ -206,5 +242,6 @@ if (pickerForm) {
     output.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
     output.focus({ preventScroll: true });
     trackGoal('selector_complete', { crop: String(crop), region, harvest_timing: String(harvestTiming), matches: visible });
-  });
+  }, true);
+  })();
 }

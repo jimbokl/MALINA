@@ -118,7 +118,7 @@ if (form) {
     selectedRegionName = regionName;
     if (!regionName) return;
     const crop = String(fields.get('crop') || 'all');
-    showStatus(`Проверяем опубликованные правила для региона «${regionName}»…`);
+    showStatus(`Проверяем региональные данные для «${regionName}»…`);
 
     try {
       catalogPromise ||= loadCatalog();
@@ -126,7 +126,7 @@ if (form) {
       if (currentRequest !== requestId) return;
       const region = catalog.regions.find(item => normalized(item.name_ru || '') === normalized(regionName));
       if (!region) {
-        showStatus(`Регион «${regionName}» пока отсутствует в базе. Сравните сорта по характеристикам выше.`);
+        showStatus('Для указанного места региональных данных пока нет. Сравните сорта по характеристикам выше.');
         return;
       }
       if (!engine) {

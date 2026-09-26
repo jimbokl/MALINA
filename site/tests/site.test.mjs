@@ -12,6 +12,19 @@ import { additionalRaspberryVarieties } from '../raspberry-varieties.mjs';
 import { additionalStrawberryVarieties } from '../strawberry-varieties.mjs';
 import { depthAdvice } from '../assets/depth-model.mjs';
 import { classifyPickerCard, cityForPickerContext } from '../assets/picker-filter.mjs';
+import { resolvePickerPlace } from '../assets/picker-place.mjs';
+
+test('подбор распознаёт город и сокращённый регион без ложного совпадения', () => {
+  const places = [
+    { name: 'Тула', region: 'Тульская область', city: 'Тула' },
+    { name: 'Тульская область', region: 'Тульская область', city: '' },
+    { name: 'Санкт-Петербург', region: 'Санкт-Петербург', city: 'Санкт-Петербург' }
+  ];
+  assert.deepEqual(resolvePickerPlace('Тула', places), { region: 'Тульская область', city: 'Тула' });
+  assert.deepEqual(resolvePickerPlace('тульская обл.', places), { region: 'Тульская область', city: '' });
+  assert.deepEqual(resolvePickerPlace('Санкт Петербург', places), { region: 'Санкт-Петербург', city: 'Санкт-Петербург' });
+  assert.equal(resolvePickerPlace('Тулла', places), null);
+});
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
 const routes = ['/', '/malina/', '/klubnika/', '/sorta/', ...raspberryFacets.map(facet => facet.path), '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/raschet-kapelnogo-poliva/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/instrumenty/kalendar-uhoda/', '/instrumenty/proverka-rasteniya/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
@@ -596,6 +609,10 @@ test('город передаёт регион в подбор и показыв
   assert.match(tula, /<title>Подбор сортов малины и клубники — Тула/);
   assert.match(tula, /<h1>Ягодный сад:<br><em>Тула\.<\/em><\/h1>/);
   assert.match(picker, /id="picker-city-context" hidden/);
+  assert.match(picker, /list="picker-places"/);
+  assert.match(picker, /<option value="Тула" data-region="Тульская область" data-city="Тула"/);
+  assert.match(picker, /id="picker-place-error" role="alert" hidden/);
+  assert.match(picker, /id="picker-place-continue" type="button" hidden/);
   assert.match(js, /params\.get\('city'\)/);
   assert.match(js, /params\.get\('region'\)/);
   assert.match(js, /regionInput\.value = cityRegion/);
