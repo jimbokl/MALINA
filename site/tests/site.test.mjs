@@ -672,6 +672,33 @@ test('официальный допуск Фестивальной охваты�
   assert.match(varietyHtml, /Урожайность<\/span><strong>—<\/strong>/);
 });
 
+test('проверенные допуски малины связывают сорт с городом через регион Госреестра', async () => {
+  const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
+  const find = slug => catalog.cultivars.find(cultivar => cultivar.slug === slug);
+  const zones = slug => find(slug).admissions.map(item => item.admission_region_number);
+  assert.deepEqual(zones('meteor'), [1, 2, 3, 4, 5, 7]);
+  assert.deepEqual(zones('peresvet'), [3, 4]);
+  assert.deepEqual(zones('beglyanka'), [3]);
+  assert.deepEqual(zones('zheltyy-gigant'), [2]);
+  assert.deepEqual(zones('zolotye-kupola'), [3]);
+  for (const slug of ['atlant', 'pingvin', 'oranzhevoe-chudo', 'zolotaya-osen']) {
+    assert.deepEqual(zones(slug), Array.from({ length: 12 }, (_, index) => index + 1), slug);
+    assert.deepEqual(find(slug).recommendations, [], slug);
+  }
+  const cityZones = [['kemerovo', 10], ['surgut', 10]];
+  for (const [slug, zone] of cityZones) {
+    const city = cities.find(item => item.slug === slug);
+    assert.equal(catalog.regions.find(region => region.name_ru === city.region)?.admission_region_number, zone);
+    const html = await readFile(join(root, 'podbor', slug, 'index.html'), 'utf8');
+    assert.match(html, /Пингвин · допуск в Госреестре/);
+    assert.match(html, /#page=419/);
+  }
+  for (const [slug, variety] of [['kaliningrad', 'Метеор'], ['tula', 'Пересвет']]) {
+    const html = await readFile(join(root, 'podbor', slug, 'index.html'), 'utf8');
+    assert.match(html, new RegExp(`${variety} · допуск в Госреестре`));
+  }
+});
+
 test('страница отзывов содержит простую форму и публичный снимок без служебных данных', async () => {
   const html = await readFile(join(root, '/otzyvy/', 'index.html'), 'utf8');
   const js = await readFile(join(root, '/assets/reviews.js'), 'utf8');
