@@ -151,10 +151,10 @@ const pickerPage = picker.replace('</head>', '<script type="module" src="/assets
 
 function cityPickerPage(city) {
   const path = `/podbor/${city.slug}/`;
-  const title = `Подбор сортов малины и клубники для ${city.name}`;
+  const title = `Подбор сортов малины и клубники — ${city.name}`;
   let html = pickerPage
     .replace('<title>Подобрать сорт по условиям участка · МАЛИНА — КЛУБНИКА</title>', `<title>${e(title)} · МАЛИНА — КЛУБНИКА</title>`)
-    .replace('<h1>Свой сад.<br><em>Свой сорт.</em></h1>', `<h1>Ягодный сад<br><em>в городе ${e(city.name)}.</em></h1>`)
+    .replace('<h1>Свой сад.<br><em>Свой сорт.</em></h1>', `<h1>Ягодный сад:<br><em>${e(city.name)}.</em></h1>`)
     .replace('Укажите регион и условия участка. Покажем справочные карточки', `Регион: ${e(city.region)}. Укажите условия участка. Покажем справочные карточки`)
     .replace('id="picker-form"', `id="picker-form" data-city="${e(city.name)}" data-region="${e(city.region)}"`)
     .replace('id="picker-region" name="region"', `id="picker-region" name="region" value="${e(city.region)}"`)

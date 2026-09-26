@@ -227,7 +227,10 @@ test('каталог городов ищет по названию и ведёт
 
 test('город передаёт регион в подбор и показывает пользователю его контекст', async () => {
   const picker = await readFile(join(root, '/podbor/', 'index.html'), 'utf8');
+  const tula = await readFile(join(root, '/podbor/tula/', 'index.html'), 'utf8');
   const js = await readFile(join(root, '/assets/site.js'), 'utf8');
+  assert.match(tula, /<title>Подбор сортов малины и клубники — Тула/);
+  assert.match(tula, /<h1>Ягодный сад:<br><em>Тула\.<\/em><\/h1>/);
   assert.match(picker, /id="picker-city-context" hidden/);
   assert.match(js, /params\.get\('city'\)/);
   assert.match(js, /params\.get\('region'\)/);
