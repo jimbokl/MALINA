@@ -236,6 +236,11 @@ test('город передаёт регион в подбор и показыв
   assert.match(js, /params\.get\('region'\)/);
   assert.match(js, /regionInput\.value = region/);
   assert.match(js, /не подтверждает пригодность сорта/);
+  assert.match(picker, /name="shelter" value="unknown" checked/);
+  assert.match(picker, /name="drainage" value="unknown" checked/);
+  assert.match(picker, /id="picker-conditions"/);
+  assert.match(tula, /name="shelter" value="unknown" checked/);
+  assert.match(js, /они не изменили список/);
 });
 
 test('городской отзыв связывает место и обсуждение с карточкой сорта', async () => {

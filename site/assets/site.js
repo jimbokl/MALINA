@@ -124,6 +124,8 @@ if (pickerForm) {
     const setting = data.get('setting');
     const light = data.get('light');
     const fruiting = data.get('fruiting');
+    const shelter = data.get('shelter');
+    const drainage = data.get('drainage');
     const output = document.querySelector('#picker-output');
     const cards = [...document.querySelectorAll('#picker-results .variety-card')];
     let visible = 0;
@@ -155,6 +157,14 @@ if (pickerForm) {
       : light === 'shade'
         ? 'В первой проверенной подборке нет описаний сортов для заметной тени. Это не означает, что выращивание невозможно: уточните освещённость или посмотрите весь каталог.'
         : 'Первая подборка пока ограничена. Лучше оставить вопрос открытым, чем предложить сорт без подтверждённых данных.';
+    const openQuestions = [];
+    if (shelter === 'yes') openQuestions.push('планируется зимнее укрытие');
+    if (shelter === 'no') openQuestions.push('зимнее укрытие не планируется');
+    if (drainage === 'wet') openQuestions.push('после дождя вода долго стоит на участке');
+    if (drainage === 'drained') openQuestions.push('вода после дождя быстро уходит');
+    document.querySelector('#picker-conditions').textContent = openQuestions.length
+      ? `Вы указали: ${openQuestions.join('; ')}. Для этих условий пока нет проверенных сортовых правил, поэтому они не изменили список. Перед покупкой сверяйте их с данными по сорту и своему участку.`
+      : 'Укрытие и поведение почвы после дождя пока неизвестны. Эти условия не меняют список: проверенных сортовых правил для них ещё нет.';
     document.querySelector('#picker-empty').hidden = visible !== 0;
     output.hidden = false;
     output.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
