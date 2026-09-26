@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { comparisonHref, getComparisonFacts, parseSelection, toggleSelection } from '../assets/comparison-model.mjs';
+import { comparisonHref, cultivarHref, getComparisonFacts, parseSelection, toggleSelection } from '../assets/comparison-model.mjs';
 import { varieties } from '../data.mjs';
 
 test('общая ссылка сохраняет город и регион вместе с выбором сортов', () => {
@@ -8,6 +8,15 @@ test('общая ссылка сохраняет город и регион вм
     comparisonHref('raspberry', ['polka', 'joan-j'], '?city=Калининград&region=Калининградская+область', '/MALINA'),
     '/MALINA/sravnenie/malina/?city=%D0%9A%D0%B0%D0%BB%D0%B8%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4&region=%D0%9A%D0%B0%D0%BB%D0%B8%D0%BD%D0%B8%D0%BD%D0%B3%D1%80%D0%B0%D0%B4%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C&sort=polka%2Cjoan-j'
   );
+});
+
+test('из сравнения город и регион доходят до отзывов карточки сорта', () => {
+  const path = cultivarHref('polka', { city: 'Тула', region: 'Тульская область', siteBase: '/MALINA' });
+  const url = new URL(path, 'https://example.test');
+  assert.equal(url.pathname, '/MALINA/sorta/polka/');
+  assert.equal(url.searchParams.get('city'), 'Тула');
+  assert.equal(url.searchParams.get('region'), 'Тульская область');
+  assert.equal(cultivarHref('polka'), '/sorta/polka/');
 });
 
 test('общий выбор принимает известные сорта одной культуры, без дублей и больше четырёх', () => {

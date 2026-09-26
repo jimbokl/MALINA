@@ -1,4 +1,4 @@
-import { comparisonHref, getComparisonFacts, parseSelection, toggleSelection } from './comparison-model.mjs';
+import { comparisonHref, cultivarHref, getComparisonFacts, parseSelection, toggleSelection } from './comparison-model.mjs';
 
   const root = document.querySelector('#comparison');
 if (root) {
@@ -40,7 +40,7 @@ if (root) {
       const th = document.createElement('th');
       th.scope = 'col';
       const link = document.createElement('a');
-      link.href = `${siteBase}/sorta/${encodeURIComponent(item.slug)}/`;
+      link.href = cultivarHref(item.slug, { city, region, siteBase });
       link.textContent = item.name;
       const latin = document.createElement('small');
       latin.textContent = item.latin;

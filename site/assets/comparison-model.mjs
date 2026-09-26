@@ -26,6 +26,14 @@ export function comparisonHref(cropKey, selection, search = '', siteBase = '') {
   return `${siteBase}/sravnenie/${cropKey === 'raspberry' ? 'malina' : 'klubnika'}/${query ? `?${query}` : ''}`;
 }
 
+export function cultivarHref(slug, { city = '', region = '', siteBase = '' } = {}) {
+  const params = new URLSearchParams();
+  if (city.trim()) params.set('city', city.trim());
+  if (region.trim()) params.set('region', region.trim());
+  const query = params.toString();
+  return `${siteBase}/sorta/${encodeURIComponent(slug)}/${query ? `?${query}` : ''}`;
+}
+
 export function getComparisonFacts(variety) {
   return [
     ['Культура', variety.crop],
