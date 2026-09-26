@@ -58,7 +58,7 @@ test('инструменты доступны из меню и главной, �
   const index = await readFile(join(root, 'instrumenty', 'index.html'), 'utf8');
   const depth = await readFile(join(root, 'instrumenty', 'glubina-posadki', 'index.html'), 'utf8');
   assert.match(home, /href="\/instrumenty\/"/);
-  for (const path of ['/podbor/', '/instrumenty/raschet-sazhencev/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/']) assert.match(index, new RegExp(`href="${path}"`));
+  for (const path of ['/podbor/', '/instrumenty/raschet-sazhencev/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/proverka-partii/']) assert.match(index, new RegExp(`href="${path}"`));
   assert.match(depth, /name="crop"/);
   assert.match(depth, /name="stock"/);
   assert.match(depth, /www\.rhs\.org\.uk\/fruit\/strawberries\/grow-your-own/);
@@ -248,12 +248,16 @@ test('проверка партии даёт локальный чеклист �
   assert.match(html, /после In Vitro/);
   assert.match(html, /не удостоверяет сорт, здоровье растений или будущий урожай/i);
   assert.match(html, /name="planting-stock"/);
+  assert.match(html, /<script defer src="\/assets\/lot-checklist\.js\?v=[a-f0-9]+"><\/script>/);
+  assert.match(html, /id="lot-request-text"[^>]*readonly/);
+  assert.match(html, /id="lot-copy"/);
   assert.match(html, /fps\.ucdavis\.edu\/strawberry\.cfm/);
   assert.match(html, /californiaagriculture\.org\/api\/v1\/articles\/112420-meristem-culture-for-elimination-of-strawberry-viruses\.pdf/);
   const js = await readFile(join(root, 'assets', 'lot-checklist.js'), 'utf8');
   assert.match(js, /это список документов для запроса, а не оценка качества партии/i);
   assert.match(js, /status\.textContent/);
   assert.match(js, /activeChecks\.filter/);
+  assert.match(js, /copy\.addEventListener\('click'/);
   assert.doesNotMatch(js, /fetch\(|localStorage|sessionStorage/);
 });
 
