@@ -10,7 +10,7 @@ import { varieties } from '../data.mjs';
 import { depthAdvice } from '../assets/depth-model.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
-const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/instrumenty/kalendar-uhoda/', '/instrumenty/proverka-rasteniya/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
+const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/raschet-kapelnogo-poliva/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/instrumenty/kalendar-uhoda/', '/instrumenty/proverka-rasteniya/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
   ...varieties.map(variety => `/sorta/${variety.slug}/`),
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
@@ -49,6 +49,20 @@ test('расчёт шпалеры доступен из инструментов
   assert.match(html, /не проверяет прочность и устойчивость конструкции/);
   assert.match(html, /src="\/assets\/trellis\.js\?v=[a-f0-9]+"/);
   await access(join(root, 'assets', 'trellis-model.mjs'));
+});
+
+test('капельный полив доступен из каталога инструментов и раскрывает формулу и ограничения', async () => {
+  const index = await readFile(join(root, 'instrumenty', 'index.html'), 'utf8');
+  const html = await readFile(join(root, 'instrumenty', 'raschet-kapelnogo-poliva', 'index.html'), 'utf8');
+  assert.match(index, /href="\/instrumenty\/raschet-kapelnogo-poliva\/"/);
+  assert.match(html, /<h1>Сколько воды/);
+  assert.match(html, /name="spacing"/);
+  assert.match(html, /name="flow"/);
+  assert.match(html, /name="volumeLiters"/);
+  assert.match(html, /не назначает норму полива/);
+  assert.match(html, /ucanr\.edu\/site\/maintenance-microirrigation-systems/);
+  assert.match(html, /src="\/assets\/drip\.js\?v=[a-f0-9]+"/);
+  await access(join(root, 'assets', 'drip-model.mjs'));
 });
 
 test('помощник по обрезке связан с малиной и показывает источник и границы', async () => {
