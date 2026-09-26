@@ -116,26 +116,49 @@ if (pickerForm) {
     updateCityContext();
   }
   pickerForm.addEventListener('submit', event => {
-  event.preventDefault();
-  const data = new FormData(pickerForm);
-  const region = String(data.get('region') || '').trim();
-  if (!region) { pickerForm.querySelector('#picker-region').focus(); return; }
-  const crop = data.get('crop'); const setting = data.get('setting'); const light = data.get('light'); const fruiting = data.get('fruiting');
-  const output = document.querySelector('#picker-output');
-  const cards = [...document.querySelectorAll('#picker-results .variety-card')];
-  let visible = 0;
-  for (const card of cards) {
-    const show = light === 'sun' && (crop === 'all' || card.dataset.crop === crop) && (setting === 'all' || card.dataset.setting === setting) && (fruiting === 'all' || card.dataset.fruiting === fruiting);
-    card.hidden = !show;
-    if (show) visible++;
-  }
-  document.querySelector('#picker-title').textContent = visible ? `${visible} ${visible === 1 ? 'сорт для сравнения' : visible < 5 ? 'сорта для сравнения' : 'сортов для сравнения'}` : 'Пока нет надёжного совпадения';
-  document.querySelector('#picker-region-status').textContent = `Регион: ${region}. Подтверждённых данных о пригодности этих сортов для вашего региона пока нет. Ниже — справочное сравнение по опубликованным признакам, не региональная рекомендация.`;
-  document.querySelector('#picker-description').textContent = visible ? 'Это записи, у которых опубликованный источник описывает выбранные признаки. Пригодность для вашего региона и наличие посадочного материала нужно проверить отдельно.' : 'Первая подборка пока ограничена. Лучше оставить вопрос открытым, чем предложить сорт без подтверждённых данных.';
-  document.querySelector('#picker-empty').hidden = visible !== 0;
-  output.hidden = false;
-  output.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
-  output.focus({ preventScroll: true });
-  trackGoal('selector_complete', { crop: String(crop), region, matches: visible });
+    event.preventDefault();
+    const data = new FormData(pickerForm);
+    const region = String(data.get('region') || '').trim();
+    if (!region) { regionInput.focus(); return; }
+    const crop = data.get('crop');
+    const setting = data.get('setting');
+    const light = data.get('light');
+    const fruiting = data.get('fruiting');
+    const output = document.querySelector('#picker-output');
+    const cards = [...document.querySelectorAll('#picker-results .variety-card')];
+    let visible = 0;
+    for (const card of cards) {
+      const sourceSupportsLight = card.dataset.light === light;
+      const show = (light === 'unknown' || sourceSupportsLight) &&
+        (crop === 'all' || card.dataset.crop === crop) &&
+        (setting === 'all' || card.dataset.setting === setting) &&
+        (fruiting === 'all' || card.dataset.fruiting === fruiting);
+      card.hidden = !show;
+      if (!show) continue;
+      visible++;
+      const why = card.querySelector('.picker-match-why');
+      const check = card.querySelector('.picker-match-check');
+      if (why && check) {
+        const lightFact = card.dataset.light === 'sun' ? 'солнечное место' : 'освещённость не уточнена';
+        why.textContent = `В опубликованном источнике указаны: ${card.dataset.placeLabel}, ${card.dataset.fruitingLabel.toLocaleLowerCase('ru-RU')} и ${lightFact}.`;
+        check.textContent = light === 'unknown'
+          ? `Перед выбором проверьте освещённость места: ${card.dataset.light === 'sun' ? 'источник описывает солнечное место' : 'источник не уточняет освещённость'}. Пригодность в вашем регионе не подтверждена.`
+          : 'Следующий шаг: сверьте условия участка и происхождение саженца. Пригодность в вашем регионе не подтверждена.';
+      }
+    }
+    document.querySelector('#picker-title').textContent = visible ? `${visible} ${visible === 1 ? 'сорт для сравнения' : visible < 5 ? 'сорта для сравнения' : 'сортов для сравнения'}` : 'Пока нет подтверждённого совпадения';
+    document.querySelector('#picker-region-status').textContent = `Регион: ${region}. Подтверждённых данных о пригодности этих сортов для вашего региона пока нет. Ниже — справочное сравнение по опубликованным признакам, не региональная рекомендация.`;
+    document.querySelector('#picker-description').textContent = visible
+      ? light === 'unknown'
+        ? 'Освещённость пока неизвестна, поэтому это кандидаты для изучения, а не готовые рекомендации. У каждого варианта показано основание и то, что следует проверить.'
+        : 'Это записи, у которых опубликованный источник описывает выбранные признаки. У каждого варианта показано основание и следующий шаг.'
+      : light === 'shade'
+        ? 'В первой проверенной подборке нет описаний сортов для заметной тени. Это не означает, что выращивание невозможно: уточните освещённость или посмотрите весь каталог.'
+        : 'Первая подборка пока ограничена. Лучше оставить вопрос открытым, чем предложить сорт без подтверждённых данных.';
+    document.querySelector('#picker-empty').hidden = visible !== 0;
+    output.hidden = false;
+    output.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
+    output.focus({ preventScroll: true });
+    trackGoal('selector_complete', { crop: String(crop), region, matches: visible });
   });
 }

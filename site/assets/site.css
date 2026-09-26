@@ -184,3 +184,13 @@
 .evidence-card dt{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;opacity:.7}
 .evidence-card dd{margin:.2rem 0 0;line-height:1.5;overflow-wrap:anywhere}
 .evidence-card>a{color:inherit;text-decoration:underline;text-underline-offset:.2em;overflow-wrap:anywhere}
+
+/* The selector keeps the source and the remaining question beside each candidate. */
+#picker-results{grid-template-columns:repeat(2,minmax(0,1fr))}
+#picker-results .variety-card[hidden]{display:none}
+.picker-match{margin:20px 0 18px;padding:19px 20px;border-left:3px solid var(--wine);background:#f1f0e6}
+.picker-match strong{display:block;margin:0 0 6px;color:var(--wine);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.picker-match p{margin:0 0 14px;font-size:12px;line-height:1.65;color:#435343}
+.picker-match a{display:inline-block;margin-top:2px;color:#496d52;font-size:11px;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.picker-match a:focus-visible{outline:3px solid var(--wine);outline-offset:4px}
+@media(max-width:700px){#picker-results{grid-template-columns:1fr}.picker-match{margin-inline:-4px;padding:16px}}
