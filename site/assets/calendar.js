@@ -52,7 +52,7 @@ if (form) {
     const next = document.createElement('p'); next.className = 'calendar-next'; next.textContent = plan.next ? `Следите за следующим событием: ${plan.next.label.toLowerCase()}.` : 'Цикл завершён: начните с осмотра нового роста или новой посадки.';
     const catalog = document.createElement('a'); catalog.className = 'text-link'; catalog.href = plan.crop === 'raspberry' ? '/sorta/?crop=raspberry' : '/sorta/?crop=strawberry'; catalog.textContent = 'Уточнить сорт в каталоге →';
     const pruning = document.createElement('a'); pruning.className = 'text-link'; pruning.href = '/instrumenty/obrezka-maliny/'; pruning.textContent = 'Открыть схему обрезки →';
-    result.replaceChildren(eyebrow, heading, check, action, ...(plan.current.caveat ? [caveat] : []), uncertainty, source, trail, next, catalog, ...(plan.crop === 'raspberry' ? [pruning] : []));
+    result.replaceChildren(eyebrow, heading, check, action, ...(plan.current.caveat ? [caveat] : []), ...(plan.uncertainty ? [uncertainty] : []), source, trail, next, catalog, ...(plan.crop === 'raspberry' ? [pruning] : []));
     result.hidden = false;
     result.focus();
   });

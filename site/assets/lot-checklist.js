@@ -25,7 +25,7 @@ if (root) {
       ? `Здравствуйте! Рассматриваю посадочный материал (${stockLabels[kind.value]}). Пожалуйста, уточните и приложите подтверждение по следующим пунктам для конкретной партии:\n\n${missing.map(item => `• ${item.closest('label').querySelector('span').textContent}`).join('\n')}\n\nСпасибо!`
       : '';
     copy.disabled = missing.length === 0;
-    copyStatus.textContent = missing.length ? '' : 'Все пункты отмечены. Сверьте документы с конкретной партией: отметки не подтверждают качество растений.';
+    copyStatus.textContent = missing.length ? '' : 'Все пункты отмечены. Теперь сверьте документы и растения конкретной партии.';
   };
   copy.addEventListener('click', async () => {
     try {

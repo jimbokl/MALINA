@@ -24,7 +24,7 @@ test('массовое поражение добавляет проверку о
   const answer = evaluateObservation({ ...base, crop: 'strawberry', symptom: 'wilt', moisture: 'normal', spread: 'many' });
   assert.match(answer.steps[2], /много растений/);
   assert.match(answer.steps[2], /очная проверка/);
-  assert.match(answer.limitation, /не диагноз/);
+  assert.match(answer.limitation, /местному специалисту/);
 });
 
 test('неизвестные параметры не приводят к молчаливой подмене решения', () => {

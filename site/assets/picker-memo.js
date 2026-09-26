@@ -53,7 +53,7 @@ if (form && results && memo) {
     sources.replaceChildren();
 
     memo.querySelector('#picker-memo-title').textContent = `Сорт «${name}»: памятка после подбора`;
-    memo.querySelector('#picker-memo-lead').textContent = `Вы отметили ${selection.region}. Это ваш контекст для проверки, а не региональная рекомендация сорта.`;
+    memo.querySelector('#picker-memo-lead').textContent = `Регион: ${selection.region}. Проверьте условия участка и данные о сорте перед посадкой.`;
     addFact('Культура', crop === 'raspberry' ? 'Малина' : 'Клубника');
     addFact('Тип плодоношения', card.dataset.fruitingLabel);
     addFact('Срок по описанию сорта', card.dataset.periodLabel);
@@ -62,13 +62,13 @@ if (form && results && memo) {
     const items = [
       'Сверьте название сорта и его свойства с первоисточником. Перед покупкой запросите происхождение и состояние конкретной партии саженцев.',
       selection.light === 'unknown'
-        ? 'Проверьте освещённость места. Без этого результат подбора остаётся предварительным.'
+        ? 'Проверьте освещённость места перед выбором сорта.'
         : selection.light === 'shade'
-          ? 'Вы отметили заметную тень. Сопоставьте её с описанием места выращивания; подбор не доказывает пригодность сорта для тени.'
+          ? 'Вы отметили заметную тень. Сопоставьте её с описанием места выращивания сорта.'
           : 'Вы отметили солнечное место. Сверьте его с описанием сорта и наблюдением на своём участке.',
       selection.drainage === 'wet'
-        ? 'После дождя вода долго стоит: сначала разберитесь с отводом воды. Этот признак не учтён в сортовом фильтре.'
-        : 'Посмотрите, задерживается ли вода после дождя. Этот признак пока не учтён в сортовом фильтре.'
+        ? 'После дождя вода долго стоит: сначала разберитесь с отводом воды.'
+        : 'Посмотрите, задерживается ли вода после дождя.'
     ];
     if (crop === 'raspberry') {
       if (card.dataset.fruiting === 'summer') items.push('Для летней малины после сбора вырезают отплодоносившие побеги у земли, сохраняя молодые побеги для следующего сезона. Подтвердите тип сорта до обрезки.');
@@ -78,7 +78,7 @@ if (form && results && memo) {
     } else {
       items.push('При посадке основание сердечка оставляют у поверхности, а корни закрывают грунтом. Для микроплантов после In Vitro нужна инструкция к партии.');
     }
-    if (selection.shelter !== 'unknown') items.push('Вы указали план зимнего укрытия. Подбор не проверяет, нужно ли оно этому сорту в вашем регионе.');
+    if (selection.shelter !== 'unknown') items.push('Сверьте план зимнего укрытия с особенностями сорта и участка.');
     for (const item of items) {
       const li = document.createElement('li');
       li.textContent = item;
@@ -86,13 +86,13 @@ if (form && results && memo) {
     }
 
     addLink('Актуальная карточка сорта', cultivarHref);
-    addLink('Первоисточник описания сорта', sourceHref);
-    addLink('Руководство RHS по культуре', crop === 'raspberry'
-      ? 'https://www.rhs.org.uk/fruit/raspberries/grow-your-own'
-      : 'https://www.rhs.org.uk/fruit/strawberries/grow-your-own');
+    if (!/(^|\.)rhs\.org\.uk$/i.test(new URL(sourceHref).hostname)) addLink('Первоисточник описания сорта', sourceHref);
+    addLink('Рекомендации Россельхозцентра по культуре', crop === 'raspberry'
+      ? 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/tsentralnyy-okrug/tulskaya-oblast/obrezka-maliny-osenyu/'
+      : 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/sibirskiy/omskaya-oblast/osennyaya-posadka-sadovoy-zemlyaniki/');
     addLink('Повторить подбор на сайте', new URL(location.pathname, location.origin).href);
     const madeAt = new Intl.DateTimeFormat('ru-RU', { dateStyle: 'long' }).format(new Date());
-    memo.querySelector('#picker-memo-date').textContent = `Памятка создана ${madeAt} Описание сорта проверено ${card.dataset.reviewedAt}. Перед новым сезоном откройте актуальную карточку по ссылке выше.`;
+    memo.querySelector('#picker-memo-date').textContent = `Памятка создана ${madeAt}. Описание сорта проверено ${card.dataset.reviewedAt}.`;
     memo.hidden = false;
     document.body.classList.add('picker-memo-ready');
     memo.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });

@@ -113,6 +113,6 @@ export function evaluateObservation(input) {
     title, summary, possibilities,
     steps: [...baseSteps, ...steps],
     sources: [...new Set(sources)].map(key => observationSources[key]),
-    limitation: 'Это маршрут осмотра, а не диагноз. Он не назначает препарат, удобрение или норму полива и не заменяет местную лабораторную проверку.'
+    limitation: 'При быстром ухудшении покажите фотографии и образец местному специалисту.'
   };
 }

@@ -12,18 +12,29 @@ export const varietyMedia = Object.freeze({
   elan: { file: 'variety-elan.webp', crop: 'strawberry' }
 });
 
+const genericRaspberryMedia = Object.freeze({
+  red: { file: 'raspberry-garden.webp', crop: 'raspberry', fruitColor: 'red', generic: true },
+  yellow: { file: 'raspberry-yellow-garden.webp', crop: 'raspberry', fruitColor: 'yellow', generic: true }
+});
+
 export function cultivarImage(variety) {
   const media = varietyMedia[variety.slug] ?? (variety.cropKey === 'raspberry'
-    ? { file: 'raspberry-garden.webp', crop: 'raspberry', generic: true }
+    ? genericRaspberryMedia[variety.fruitColor === 'yellow' ? 'yellow' : 'red']
     : undefined);
   if (!media || media.crop !== variety.cropKey) {
     throw new Error(`Missing or mismatched cultivar illustration: ${variety.slug}`);
   }
+  if (variety.cropKey === 'raspberry' && variety.fruitColor === 'yellow' && media.fruitColor !== 'yellow') {
+    throw new Error(`Yellow raspberry has a non-yellow illustration: ${variety.slug}`);
+  }
+  const subject = variety.cropKey === 'strawberry'
+    ? 'садовой земляники'
+    : variety.fruitColor === 'yellow' ? 'жёлтой малины' : 'малины';
   return {
     src: `/assets/${media.file}`,
     width: 960,
     height: 640,
-    alt: media.generic ? `ИИ-иллюстрация малинового сада; сорт ${variety.name} на изображении не показан` : `ИИ-иллюстрация ${variety.cropKey === 'raspberry' ? 'малины' : 'садовой земляники'} к карточке «${variety.name}»`,
-    caption: media.generic ? 'ИИ-иллюстрация малинового сада · не изображение сорта' : 'ИИ-иллюстрация · не фотография сорта'
+    alt: `Иллюстрация ${subject} для карточки «${variety.name}»`,
+    caption: `Иллюстрация ${subject}`
   };
 }

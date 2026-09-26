@@ -14,7 +14,7 @@ test('мульча различает системы клубники и зим�
 
 test('малина не получает клубничный совет, а каждый результат имеет источник', () => {
   const raspberry = compareMulch({ crop: 'raspberry', system: 'june', goal: 'weeds' });
-  assert.match(raspberry.options[0].limit, /грызунов/);
+  assert.match(raspberry.options[0].limit, /грызунами/);
   const berries = compareMulch({ crop: 'raspberry', system: 'june', goal: 'berries' });
   assert.equal(berries.options.length, 0);
   assert.match(berries.next.url, /shpalery/);

@@ -16,7 +16,7 @@ test('primocane strategies remain distinct', () => {
   const single = pruningAdvice({ type: 'primocane', harvest: 'single' });
   const double = pruningAdvice({ type: 'primocane', harvest: 'double' });
   assert.notEqual(single.title, double.title);
-  assert.match(double.summary, /только сильным/);
+  assert.match(double.summary, /сильные, хорошо укоренившиеся растения/);
   assert.equal(pruningAdvice({ type: 'primocane', harvest: '' }).title, pruningAdvice({ type: 'unknown' }).title);
 });
 

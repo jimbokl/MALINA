@@ -109,7 +109,7 @@ if (pickerForm) {
   const cityContext = pickerForm.querySelector('#picker-city-context');
   if (region) regionInput.value = region;
   if (city && region && cityContext) {
-    cityContext.textContent = `Город: ${city}. Он помогает задать контекст, но не подтверждает пригодность сорта.`;
+    cityContext.textContent = `Город: ${city}. Выберите условия участка для сравнения сортов.`;
     const normalizeRegion = value => value.trim().toLocaleLowerCase('ru-RU').replace(/ё/g, 'е');
     const updateCityContext = () => {
       cityContext.hidden = normalizeRegion(regionInput.value) !== normalizeRegion(region);
@@ -149,30 +149,28 @@ if (pickerForm) {
         const lightFact = card.dataset.light === 'sun' ? 'солнечное место' : 'освещённость не уточнена';
         why.textContent = `В опубликованном источнике указаны: ${card.dataset.placeLabel}, ${card.dataset.fruitingLabel.toLocaleLowerCase('ru-RU')} и ${lightFact}. Срок сбора по источнику: ${card.dataset.periodLabel}.`;
         check.textContent = light === 'unknown'
-          ? `Перед выбором проверьте освещённость места: ${card.dataset.light === 'sun' ? 'источник описывает солнечное место' : 'источник не уточняет освещённость'}. Пригодность в вашем регионе не подтверждена.`
-          : 'Следующий шаг: сверьте условия участка и происхождение саженца. Пригодность в вашем регионе не подтверждена.';
+          ? `Проверьте освещённость участка: ${card.dataset.light === 'sun' ? 'источник описывает солнечное место' : 'в источнике освещённость не указана'}.`
+          : 'Следующий шаг: сверьте условия участка и происхождение саженца.';
       }
     }
-    document.querySelector('#picker-title').textContent = visible ? `${visible} ${visible === 1 ? 'сорт для сравнения' : visible < 5 ? 'сорта для сравнения' : 'сортов для сравнения'}` : 'Пока нет подтверждённого совпадения';
-    document.querySelector('#picker-region-status').textContent = `Регион: ${region}. Подтверждённых данных о пригодности этих сортов для вашего региона пока нет. Ниже — справочное сравнение по опубликованным признакам, не региональная рекомендация.`;
+    document.querySelector('#picker-title').textContent = visible ? `${visible} ${visible === 1 ? 'сорт для сравнения' : visible < 5 ? 'сорта для сравнения' : 'сортов для сравнения'}` : 'Совпадений нет';
+    document.querySelector('#picker-region-status').textContent = `Регион: ${region}. Сравнение по опубликованным характеристикам сортов.`;
     const resultDescription = visible
       ? light === 'unknown'
-        ? 'Освещённость пока неизвестна, поэтому это кандидаты для изучения, а не готовые рекомендации. У каждого варианта показано основание и то, что следует проверить.'
-        : 'Это записи, у которых опубликованный источник описывает выбранные признаки. У каждого варианта показано основание и следующий шаг.'
+        ? 'Проверьте освещённость участка и откройте карточки сортов: в них указаны источники и условия выращивания.'
+        : 'Сорта совпадают с выбранными признаками. Откройте карточку, чтобы посмотреть основание и опыт садоводов.'
       : light === 'shade'
-        ? 'В первой проверенной подборке нет описаний сортов для заметной тени. Это не означает, что выращивание невозможно: уточните освещённость или посмотрите весь каталог.'
-        : 'Для выбранного сочетания условий и срока в первой подборке пока нет подтверждённых записей. Измените одно условие или посмотрите весь каталог.';
-    document.querySelector('#picker-description').textContent = harvestTiming === 'all'
-      ? resultDescription
-      : `${resultDescription} Срок указан относительно условий источника; дата сбора в вашем регионе может отличаться.`;
+        ? 'Для заметной тени совпадений нет. Уточните освещённость или посмотрите весь каталог.'
+        : 'Для выбранных условий совпадений нет. Измените одно условие или посмотрите весь каталог.';
+    document.querySelector('#picker-description').textContent = resultDescription;
     const openQuestions = [];
     if (shelter === 'yes') openQuestions.push('планируется зимнее укрытие');
     if (shelter === 'no') openQuestions.push('зимнее укрытие не планируется');
     if (drainage === 'wet') openQuestions.push('после дождя вода долго стоит на участке');
     if (drainage === 'drained') openQuestions.push('вода после дождя быстро уходит');
     document.querySelector('#picker-conditions').textContent = openQuestions.length
-      ? `Вы указали: ${openQuestions.join('; ')}. Для этих условий пока нет проверенных сортовых правил, поэтому они не изменили список. Перед покупкой сверяйте их с данными по сорту и своему участку.`
-      : 'Укрытие и поведение почвы после дождя пока неизвестны. Эти условия не меняют список: проверенных сортовых правил для них ещё нет.';
+      ? `Особенности участка: ${openQuestions.join('; ')}. Сверьте их с описанием сорта перед посадкой.`
+      : 'Для точного выбора оцените, задерживается ли вода после дождя и нужно ли зимнее укрытие.';
     document.querySelector('#picker-empty').hidden = visible !== 0;
     output.hidden = false;
     output.dispatchEvent(new Event('picker:results'));

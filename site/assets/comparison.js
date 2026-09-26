@@ -22,7 +22,7 @@ if (root) {
   const region = (params.get('region') || '').trim();
   if (city || region) {
     context.hidden = false;
-    context.textContent = `Контекст места: ${[city, region].filter(Boolean).join(', ')}. Он помогает сохранить ваш выбор, но сам по себе не подтверждает пригодность сортов.`;
+    context.textContent = `Место сравнения: ${[city, region].filter(Boolean).join(', ')}. Сверьте условия участка в карточках сортов.`;
   }
 
   function update() {

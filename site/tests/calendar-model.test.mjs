@@ -22,15 +22,16 @@ test('ремонтантная малина не получает преждев
 test('неизвестный тип не назначает сплошную обрезку', () => {
   for (const crop of ['raspberry', 'strawberry']) {
     const plan = makeCalendar({ crop, type: 'unknown', phase: 'after' });
-    assert.match(plan.uncertainty, /не подтверждён/);
-    assert.match(plan.current.action, /не срезайте все|Не назначайте сплошную/);
+    assert.match(plan.uncertainty, /Уточните тип плодоношения/);
+    assert.match(plan.current.action, /Уточните/);
+    assert.doesNotMatch(plan.current.action, /срежьте все|срезайте все/);
   }
 });
 
 test('послесборовый уход различает однократную и нейтральнодневную клубнику', () => {
   const once = makeCalendar({ crop: 'strawberry', type: 'june', phase: 'after' });
   const continuous = makeCalendar({ crop: 'strawberry', type: 'day-neutral', phase: 'after' });
-  assert.match(once.current.caveat, /не срезайте листья автоматически/);
+  assert.match(once.current.action, /не повреждая сердечко/);
   assert.match(continuous.current.action, /не применяйте сплошную обрезку/);
 });
 

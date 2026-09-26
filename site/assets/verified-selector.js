@@ -24,7 +24,7 @@ if (form) {
     const heading = document.createElement('strong');
     heading.textContent = 'Есть официальный допуск';
     const explanation = document.createElement('p');
-    explanation.textContent = `${region.admission_region_name} регион (${region.admission_region_number}), реестр на ${admission.edition_as_of}. Это не прогноз зимовки или урожайности на вашем участке.`;
+    explanation.textContent = `${region.admission_region_name} регион (${region.admission_region_number}), реестр на ${admission.edition_as_of}.`;
     const source = document.createElement('a');
     source.href = `${admission.source_url}${admission.source_pdf_page ? `#page=${admission.source_pdf_page}` : ''}`;
     source.target = '_blank';
@@ -67,7 +67,7 @@ if (form) {
       const heading = document.createElement('h3');
       heading.textContent = `${cultivar.canonical_name} · допуск в Госреестре`;
       const explanation = document.createElement('p');
-      explanation.textContent = `${region.admission_region_name} регион (${region.admission_region_number}), издание на ${admission.edition_as_of}, запись ${admission.registry_entry_code}. Допуск не гарантирует зимовку и урожайность на конкретном участке.`;
+      explanation.textContent = `${region.admission_region_name} регион (${region.admission_region_number}), издание на ${admission.edition_as_of}, запись ${admission.registry_entry_code}.`;
       const cultivarLink = document.createElement('a');
       cultivarLink.href = `${base}/sorta/${encodeURIComponent(cultivar.slug)}/#gosreestr`;
       cultivarLink.textContent = 'Карточка сорта и источник ↗';
@@ -92,7 +92,7 @@ if (form) {
       if (currentRequest !== requestId) return;
       const region = catalog.regions.find(item => normalized(item.name_ru || '') === normalized(regionName));
       if (!region) {
-        showStatus(`Для региона «${regionName}» пока нет проверенных рекомендаций. Сорта выше — справочное сравнение по признакам, а не региональный вывод.`);
+        showStatus(`Регион «${regionName}» пока отсутствует в базе. Сравните сорта по характеристикам выше.`);
         return;
       }
       if (!engine) {
@@ -106,11 +106,11 @@ if (form) {
       const selection = JSON.parse(engine(text, JSON.stringify(query)));
       if (selection.error) throw new Error(selection.error.message);
       if (selection.total === 0) {
-        showStatus(`Для региона «${regionName}» пока нет проверенных рекомендаций по местным испытаниям. Ниже — отдельные факты об официальном допуске, если они есть.`);
+        showStatus(`Местных испытаний для региона «${regionName}» в базе нет. Проверьте официальный допуск сортов ниже.`);
         showAdmissions(catalog, region, crop);
         return;
       }
-      status.textContent = `${selection.total} ${selection.total === 1 ? 'сорт с проверенным региональным правилом' : 'сорта с проверенными региональными правилами'} для региона «${regionName}». Читайте основания и ограничения каждого правила.`;
+      status.textContent = `${selection.total} ${selection.total === 1 ? 'сорт с проверенным региональным правилом' : 'сорта с проверенными региональными правилами'} для региона «${regionName}».`;
       results.replaceChildren();
       for (const match of selection.matches) {
         const item = document.createElement('li');
@@ -121,9 +121,9 @@ if (form) {
           const rationale = document.createElement('p');
           rationale.textContent = reason.rationale;
           const limits = document.createElement('p');
-          limits.textContent = `Ограничения: ${reason.limitations}`;
+          limits.textContent = `Условия применения: ${reason.limitations}`;
           const basis = document.createElement('p');
-          basis.textContent = `${reason.basis_kind === 'regional_trial' ? 'Региональное испытание' : 'Местное наблюдение'}: ${reason.basis_place}. Условия: ${reason.basis_conditions}. Ограничения наблюдения: ${reason.basis_limitations}.`;
+          basis.textContent = `${reason.basis_kind === 'regional_trial' ? 'Региональное испытание' : 'Местное наблюдение'}: ${reason.basis_place}. Условия: ${reason.basis_conditions}. Детали наблюдения: ${reason.basis_limitations}.`;
           const source = document.createElement('small');
           source.append('Основание: ');
           if (reason.basis_source_url?.startsWith('https://')) {
