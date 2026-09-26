@@ -107,10 +107,10 @@ if (pickerForm) {
   const region = (pickerForm.dataset.region || params.get('region') || '').trim();
   const regionInput = pickerForm.querySelector('#picker-region');
   const cityContext = pickerForm.querySelector('#picker-city-context');
+  const normalizeRegion = value => value.trim().toLocaleLowerCase('ru-RU').replace(/ё/g, 'е');
   if (region) regionInput.value = region;
   if (city && region && cityContext) {
     cityContext.textContent = `Город: ${city}. Выберите условия участка для сравнения сортов.`;
-    const normalizeRegion = value => value.trim().toLocaleLowerCase('ru-RU').replace(/ё/g, 'е');
     const updateCityContext = () => {
       cityContext.hidden = normalizeRegion(regionInput.value) !== normalizeRegion(region);
     };
@@ -132,6 +132,15 @@ if (pickerForm) {
     const drainage = data.get('drainage');
     const output = document.querySelector('#picker-output');
     const cards = [...document.querySelectorAll('#picker-results .variety-card')];
+    const activeCity = city && normalizeRegion(region) === normalizeRegion(regionInput.value) ? city : '';
+    for (const link of output.querySelectorAll('.variety-card a[href]')) {
+      const target = new URL(link.href);
+      if (target.origin !== location.origin || !/\/sorta\/[a-z0-9-]+\/$/.test(target.pathname)) continue;
+      target.searchParams.delete('city');
+      target.searchParams.set('region', region);
+      if (activeCity) target.searchParams.set('city', activeCity);
+      link.href = `${target.pathname}${target.search}${target.hash}`;
+    }
     let visible = 0;
     for (const card of cards) {
       const sourceSupportsLight = card.dataset.light === light;

@@ -50,11 +50,12 @@ test('каждый жёлтый сорт малины использует жё�
   await access(join(root, 'assets', 'raspberry-yellow-garden.webp'));
   const catalogHtml = await readFile(join(root, 'sorta', 'index.html'), 'utf8');
   const cityHtml = await readFile(join(root, 'podbor', 'tula', 'index.html'), 'utf8');
+  const cityQuery = new URLSearchParams({ city: 'Тула', region: 'Тульская область' }).toString().replaceAll('&', '&amp;');
   for (const cultivar of yellow) {
     const detailHtml = await readFile(join(root, 'sorta', cultivar.slug, 'index.html'), 'utf8');
     assert.match(detailHtml, /<figure class="variety-hero-art[^"]*"><img src="\/assets\/raspberry-yellow-garden\.webp" alt="Иллюстрация жёлтой малины/);
     assert.ok(catalogHtml.includes(`<a href="/sorta/${cultivar.slug}/"><img src="/assets/raspberry-yellow-garden.webp" alt="Иллюстрация жёлтой малины`), `каталог: ${cultivar.slug}`);
-    assert.ok(cityHtml.includes(`<a href="/sorta/${cultivar.slug}/"><img src="/assets/raspberry-yellow-garden.webp" alt="Иллюстрация жёлтой малины`), `подбор города: ${cultivar.slug}`);
+    assert.ok(cityHtml.includes(`<a href="/sorta/${cultivar.slug}/?${cityQuery}"><img src="/assets/raspberry-yellow-garden.webp" alt="Иллюстрация жёлтой малины`), `подбор города: ${cultivar.slug}`);
   }
 });
 
@@ -573,6 +574,15 @@ test('город передаёт регион в подбор и показыв
   assert.match(js, /Сверьте их с описанием сорта перед посадкой/);
 });
 
+test('город сохраняется в переходе к сорту и его отзывам даже без JavaScript', async () => {
+  const tula = await readFile(join(root, '/podbor/tula/', 'index.html'), 'utf8');
+  const query = new URLSearchParams({ city: 'Тула', region: 'Тульская область' }).toString().replaceAll('&', '&amp;');
+  assert.ok(tula.includes(`href="/sorta/gusar/?${query}#gosreestr"`));
+  assert.ok(tula.includes(`href="/sorta/abrikosovaya/?${query}#otzyvy"`));
+  assert.ok(tula.includes(`href="/sorta/festivalnaya/?${query}#otzyvy"`));
+  assert.doesNotMatch(tula, /href="\/sorta\/gusar\/#otzyvy"/);
+});
+
 test('городской отзыв связывает место и обсуждение с карточкой сорта', async () => {
   const reviews = await readFile(join(root, '/otzyvy/', 'index.html'), 'utf8');
   const js = await readFile(join(root, '/assets/reviews.js'), 'utf8');
@@ -618,7 +628,7 @@ test('подбор запрашивает регион и честно отме�
 
 test('подбор срока сбора связан с источниками и не обещает даты для региона', async () => {
   const html = await readFile(join(root, '/podbor/', 'index.html'), 'utf8');
-  const allowed = new Set(['early', 'middle', 'autumn', 'repeat', 'unknown']);
+  const allowed = new Set(['early', 'middle', 'late', 'autumn', 'repeat', 'unknown']);
   for (const variety of varieties) {
     assert.ok(allowed.has(variety.harvestTiming), `нет срока сбора для ${variety.slug}`);
     assert.ok(html.includes(`data-cultivar-slug="${variety.slug}"`));
@@ -752,13 +762,14 @@ test('новые записи Госреестра сохраняют точны
 
 test('город сначала показывает официальные сорта со ссылками на отзывы, затем форму', async () => {
   const tula = await readFile(join(root, 'podbor', 'tula', 'index.html'), 'utf8');
+  const query = new URLSearchParams({ city: 'Тула', region: 'Тульская область' }).toString().replaceAll('&', '&amp;');
   assert.ok(tula.indexOf('class="city-evidence"') < tula.indexOf('id="picker-form"'));
   assert.match(tula, /Сорта с официальным допуском для региона/);
-  assert.match(tula, /href="\/sorta\/abrikosovaya\/#gosreestr"/);
-  assert.match(tula, /href="\/sorta\/abrikosovaya\/#otzyvy"/);
+  assert.ok(tula.includes(`href="/sorta/abrikosovaya/?${query}#gosreestr"`));
+  assert.ok(tula.includes(`href="/sorta/abrikosovaya/?${query}#otzyvy"`));
   assert.match(tula, /href="#verified-section"/);
   const arkhangelsk = await readFile(join(root, 'podbor', 'arkhangelsk', 'index.html'), 'utf8');
-  assert.doesNotMatch(arkhangelsk, /href="\/sorta\/abrikosovaya\/#gosreestr"/);
+  assert.doesNotMatch(arkhangelsk, /Абрикосовая · допуск в Госреестре/);
 });
 
 test('страница отзывов содержит простую форму и публичный снимок без служебных данных', async () => {

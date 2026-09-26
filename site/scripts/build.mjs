@@ -168,6 +168,7 @@ const pickerPage = picker.replace('</head>', '<script type="module" src="/assets
 function cityPickerPage(city) {
   const path = `/podbor/${city.slug}/`;
   const title = `Подбор сортов малины и клубники — ${city.name}`;
+  const citySearch = e(new URLSearchParams({ city: city.name, region: city.region }).toString());
   const region = publicCatalog.regions.find(item => item.name_ru === city.region);
   const admissions = region?.admission_region_number
     ? publicCatalog.cultivars.flatMap(cultivar => (cultivar.admissions || [])
@@ -209,6 +210,9 @@ function cityPickerPage(city) {
     .replace('<p id="verified-status">Укажите регион и нажмите «Показать варианты» выше.</p><ul id="verified-results"></ul>',
       `<p id="verified-status">${e(initialStatus)}</p><ul id="verified-results">${admissionList}</ul>`)
     .replace('<section class="section wrap picker-layout">', `${evidencePreview}<section class="section wrap picker-layout">`)
+    .replace(/href="(\/sorta\/[a-z0-9-]+\/)(#[^"]*)?"/g, (_, cultivarPath, fragment = '') =>
+      `href="${cultivarPath}?${citySearch}${fragment}"`)
+    .replaceAll('сортов малины и садовой земляники.', 'сортов малины и клубники.')
     .replace('</head>', '<meta name="robots" content="noindex,follow"></head>');
   if (siteUrl) {
     html = html.replace(`href="${siteUrl}/podbor/"`, `href="${siteUrl}${path}"`)
