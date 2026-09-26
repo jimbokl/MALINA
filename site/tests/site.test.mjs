@@ -52,6 +52,12 @@ test('журнал содержит проверяемые статьи, авт�
   assert.match(plantArticle, /спящими растениями с открытыми корнями/);
   assert.match(plantArticle, /Микроклон после лабораторного размножения/);
   assert.match(plantArticle, /письменные условия хранения и посадки/);
+  const cultivarGuide = await readFile(join(root, 'zhurnal', 'kak-vybrat-sort-klubniki', 'index.html'), 'utf8');
+  assert.match(cultivarGuide, /один более дружный сбор или несколько волн/);
+  assert.match(cultivarGuide, /не подтверждают зимостойкость или урожайность сорта в России/);
+  assert.match(cultivarGuide, /strawberry-varieties-for-home-gardens/);
+  assert.match(cultivarGuide, /href="\/zhurnal\/kak-vybrat-sazhentsy-klubniki\/"/);
+  assert.match(cultivarGuide, /href="\/sorta\/cambridge-favourite\/"/);
   const home = await readFile(join(root, 'index.html'), 'utf8');
   assert.match(home, /home-editorial/);
   const homeHtml = await readFile(join(root, 'index.html'), 'utf8');
