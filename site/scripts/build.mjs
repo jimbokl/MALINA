@@ -141,8 +141,8 @@ function comparePage(cropKey) {
   const route = `/sravnenie/${isRaspberry ? 'malina' : 'klubnika'}/`;
   const cropVarieties = varieties.filter(item => item.cropKey === cropKey);
   const comparisonData = JSON.stringify(cropVarieties).replaceAll('<', '\\u003c');
-  const choices = cropVarieties.map(item => `<label class="comparison-choice"><input type="checkbox" name="cultivar" value="${e(item.slug)}" checked><span><strong>${e(item.name)}</strong><small>${e(item.latin)}</small></span><a href="/sorta/${e(item.slug)}/">Карточка сорта ↗</a></label>`).join('');
-  const facts = cropVarieties.map(item => `<th scope="col"><a href="/sorta/${e(item.slug)}/">${e(item.name)}</a><small>${e(item.latin)}</small></th>`).join('');
+  const choices = cropVarieties.map(item => `<label class="comparison-choice"><input type="checkbox" name="cultivar" value="${e(item.slug)}" checked><span><strong>${e(item.name)}</strong></span><a href="/sorta/${e(item.slug)}/">Карточка сорта ↗</a></label>`).join('');
+  const facts = cropVarieties.map(item => `<th scope="col"><a href="/sorta/${e(item.slug)}/">${e(item.name)}</a></th>`).join('');
   const rows = [
     ['Культура', item => item.crop],
     ['Тип плодоношения', item => item.fruitingLabel],

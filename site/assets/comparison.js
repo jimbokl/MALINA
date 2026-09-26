@@ -46,9 +46,7 @@ if (root) {
       const link = document.createElement('a');
       link.href = cultivarHref(item.slug, { city, region, siteBase });
       link.textContent = item.name;
-      const latin = document.createElement('small');
-      latin.textContent = item.latin;
-      th.append(link, latin);
+      th.append(link);
       head.append(th);
     }
     body.replaceChildren();
