@@ -214,15 +214,31 @@ test('карточки показывают источник и границы �
   for (const route of routes.filter(route => route.startsWith('/sorta/') && route !== '/sorta/')) {
     const html = await readFile(join(root, route, 'index.html'), 'utf8');
     assert.match(html, /<title>[^<]+: описание сорта (малины|клубники), фото, урожайность и отзывы садоводов/);
-    assert.match(html, /Проверенных данных для России нет/);
-    assert.match(html, /Фото сорта пока не проверено/);
     const variety = varieties.find(item => route === `/sorta/${item.slug}/`);
+    if (variety.slug !== 'gusar') assert.match(html, /Проверенных данных для России нет/);
+    assert.match(html, /Фото сорта пока не проверено/);
     assert.ok(html.includes(variety.source));
     assert.match(html, /Региональная пригодность в России пока не проверена|Региональные испытания в России для этой записи пока не подтверждены/);
     assert.match(html, /id="reviews-root"[^>]*data-cultivar=/);
     assert.match(html, /Отзывы о сорте/);
     assert.match(html, /name="cultivar_name" value=/);
   }
+});
+
+test('урожайность Гусара показана с источником и ограничениями, без обещания для участка', async () => {
+  const html = await readFile(join(root, 'sorta', 'gusar', 'index.html'), 'utf8');
+  const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
+  const gusar = catalog.cultivars.find(row => row.slug === 'gusar');
+  const yieldRow = gusar.observations.find(row => row.trait_code === 'yield');
+  assert.equal(yieldRow.value_number, 7);
+  assert.equal(yieldRow.value_max, 9);
+  assert.equal(yieldRow.unit, 'т/га');
+  assert.equal(yieldRow.source_key, 'fnc-gusar');
+  assert.equal(yieldRow.evidence.evidence_kind, 'reference_document');
+  assert.match(html, /7–9 т\/га по описанию ФНЦ Садоводства/);
+  assert.match(html, /<h3>7–9 т\/га<\/h3>/);
+  assert.match(html, /условия измерения не указаны/);
+  assert.match(html, /Не доказывает урожайность в конкретном регионе России/);
 });
 
 test('Азия опубликована с ограничением итальянского источника и без обещания урожая в России', async () => {
