@@ -7,11 +7,12 @@ import { articles } from '../editorial.mjs';
 import { newArticles20260926 } from '../editorial-2026-09-26.mjs';
 import { cities } from '../cities.mjs';
 import { varieties } from '../data.mjs';
+import { raspberryFacets, raspberryFacetVarieties } from '../catalog-facets.mjs';
 import { additionalRaspberryVarieties } from '../raspberry-varieties.mjs';
 import { depthAdvice } from '../assets/depth-model.mjs';
 
 const root = fileURLToPath(new URL('../../dist/', import.meta.url));
-const routes = ['/', '/malina/', '/klubnika/', '/sorta/', '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/raschet-kapelnogo-poliva/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/instrumenty/kalendar-uhoda/', '/instrumenty/proverka-rasteniya/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
+const routes = ['/', '/malina/', '/klubnika/', '/sorta/', ...raspberryFacets.map(facet => facet.path), '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/raschet-kapelnogo-poliva/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/instrumenty/kalendar-uhoda/', '/instrumenty/proverka-rasteniya/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/proverka-partii/', '/about/',
   ...varieties.map(variety => `/sorta/${variety.slug}/`),
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
@@ -57,6 +58,23 @@ test('каждый жёлтый сорт малины использует жё�
   }
 });
 
+test('страницы видов малины показывают только сорта с подтверждённым признаком', async () => {
+  const catalogHtml = await readFile(join(root, 'sorta', 'index.html'), 'utf8');
+  const raspberryHtml = await readFile(join(root, 'malina', 'index.html'), 'utf8');
+  const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8').catch(() => '');
+  for (const facet of raspberryFacets) {
+    const html = await readFile(join(root, facet.path, 'index.html'), 'utf8');
+    const expected = raspberryFacetVarieties(varieties, facet).map(variety => variety.slug);
+    const actual = [...html.matchAll(/class="variety-card-media"><a href="\/sorta\/([^/]+)\//g)].map(match => match[1]);
+    assert.ok(expected.length > 0, facet.path);
+    assert.deepEqual(actual, expected, facet.path);
+    assert.ok(catalogHtml.includes(`href="${facet.path}"`), `каталог: ${facet.path}`);
+    assert.ok(raspberryHtml.includes(`href="${facet.path}"`), `раздел малины: ${facet.path}`);
+    assert.ok(html.includes(`href="${facet.path}" aria-current="page"`), `выбранный раздел: ${facet.path}`);
+    if (process.env.SITE_URL) assert.ok(sitemap.includes(`${process.env.SITE_URL}${facet.path}`), facet.path);
+  }
+});
+
 test('публичные страницы не ссылаются на RHS', async () => {
   for (const route of routes) {
     const html = await readFile(join(root, route, 'index.html'), 'utf8');
@@ -92,6 +110,14 @@ test('разметка каталога, сортов и журнала соот
     assert.equal(detail.graph[0]['@type'], 'WebPage');
     assert.equal(detail.graph[0].about.name, `${variety.crop}: ${variety.name}`);
     assert.equal(detail.graph[1].itemListElement.at(-1).item, item.url);
+  }
+
+  for (const facet of raspberryFacets) {
+    const collection = await schemaAt(facet.path.slice(1, -1));
+    assert.equal(collection.graph[0]['@type'], 'CollectionPage');
+    assert.deepEqual(collection.graph[0].mainEntity.itemListElement.map(item => item.url),
+      raspberryFacetVarieties(varieties, facet).map(variety => `${origin}/sorta/${variety.slug}/`));
+    assert.equal(collection.graph[1].itemListElement.at(-1).item, `${origin}${facet.path}`);
   }
 
   for (const [path, selected] of [
@@ -457,7 +483,7 @@ test('страница In Vitro объясняет проверку партии
 });
 
 test('карточки показывают источник и границы применимости данных', async () => {
-  for (const route of routes.filter(route => route.startsWith('/sorta/') && route !== '/sorta/')) {
+  for (const route of varieties.map(variety => `/sorta/${variety.slug}/`)) {
     const html = await readFile(join(root, route, 'index.html'), 'utf8');
     assert.match(html, /<title>[^<]+: описание сорта (малины|клубники), фото, урожайность и отзывы садоводов/);
     const variety = varieties.find(item => route === `/sorta/${item.slug}/`);

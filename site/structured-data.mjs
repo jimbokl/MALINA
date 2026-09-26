@@ -1,3 +1,5 @@
+import { raspberryFacets, raspberryFacetVarieties } from './catalog-facets.mjs';
+
 const context = 'https://schema.org';
 
 const absolute = (siteUrl, path) => `${siteUrl}${path}`;
@@ -39,6 +41,16 @@ export function pageStructuredData({ siteUrl, path, title, description, varietie
       description,
       url: absolute(siteUrl, path),
       mainEntity: listedPages(siteUrl, varieties, variety => `/sorta/${variety.slug}/`)
+    };
+  } else if (raspberryFacets.some(facet => facet.path === path)) {
+    const facet = raspberryFacets.find(item => item.path === path);
+    trail = [home, catalog, [facet.label, path]];
+    page = {
+      '@type': 'CollectionPage',
+      name: title,
+      description,
+      url: absolute(siteUrl, path),
+      mainEntity: listedPages(siteUrl, raspberryFacetVarieties(varieties, facet), variety => `/sorta/${variety.slug}/`)
     };
   } else if (path.startsWith('/sorta/')) {
     const variety = varieties.find(item => path === `/sorta/${item.slug}/`);
