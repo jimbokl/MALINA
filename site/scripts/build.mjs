@@ -43,7 +43,7 @@ const articlePath = article => `/zhurnal/${article.slug}/`;
 const cropTitle = crop => crop === 'raspberry' ? 'Малина' : 'Клубника';
 function articleCard(article, featured = false) {
   const image = article.crop === 'raspberry' ? 'raspberry' : 'strawberry';
-  return `<article class="media-card${featured ? ' media-card-featured' : ''}"><a class="media-card-image" href="${articlePath(article)}" aria-label="Читать: ${e(article.title)}"><img src="/assets/${image}-garden.webp" alt="Иллюстрация культуры ${e(cropTitle(article.crop).toLowerCase())}, не конкретного сорта" loading="lazy" width="800" height="600"></a><div class="media-card-body"><span class="media-card-category">${e(cropTitle(article.crop))} · ${e(article.category)}</span><h3><a href="${articlePath(article)}">${e(article.title)}</a></h3><p>${e(article.lead)}</p><span class="media-card-link">Читать материал ${arrow}</span></div></article>`;
+  return `<article class="media-card${featured ? ' media-card-featured' : ''}"><a class="media-card-image" href="${articlePath(article)}" aria-label="Читать: ${e(article.title)}"><img src="/assets/${image}-garden.webp" alt="Иллюстрация культуры ${e(cropTitle(article.crop).toLowerCase())}, не конкретного сорта" loading="lazy" width="800" height="600"></a><div class="media-card-body"><span class="media-card-category">${e(cropTitle(article.crop))} · ${e(article.category)}</span><h3><a href="${articlePath(article)}">${e(article.title)}</a></h3><p>${e(article.lead)}</p><a class="media-card-link" href="${articlePath(article)}">Читать материал ${arrow}</a></div></article>`;
 }
 function articleCollection(crop = '') {
   const selected = crop ? articles.filter(article => article.crop === crop) : articles;
