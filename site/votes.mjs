@@ -15,7 +15,7 @@ export function resolveVoteApi(explicit, reviewApi = '') {
 
 export function voteWidget(v, snapshot, api) {
   const count = snapshot.votes.find(row => row.cultivar_slug === v.slug)?.count ?? 0;
-  return `<div class="cultivar-vote" data-vote-widget="${e(v.slug)}" data-vote-name="${e(v.name)}"><div class="vote-action"><button class="vote-button" type="button" data-vote-button aria-pressed="false" aria-label="Рекомендовать сорт ${e(v.name)}" disabled><span aria-hidden="true">♡</span> <span data-vote-label>Рекомендую</span></button><span class="vote-count" data-vote-count="${e(v.slug)}">${e(recommendationLabel(count))}</span></div><p class="vote-status" role="status" aria-live="polite">${api ? 'Подключаем голосование…' : 'Голосование временно недоступно.'}</p><noscript><p class="vote-status">Для голосования включите JavaScript.</p></noscript></div>`;
+  return `<div class="cultivar-vote" data-vote-widget="${e(v.slug)}" data-vote-name="${e(v.name)}"><div class="vote-action"><button class="vote-button" type="button" data-vote-button aria-pressed="false" aria-label="Рекомендовать сорт ${e(v.name)}" disabled><span aria-hidden="true">♡</span> <span data-vote-label>Рекомендую</span></button><span class="vote-count" data-vote-count="${e(v.slug)}">${e(recommendationLabel(count))}</span></div><p class="vote-status" role="status" aria-live="polite">${api ? 'Подключаем голосование…' : ''}</p><noscript><p class="vote-status">Для голосования включите JavaScript.</p></noscript></div>`;
 }
 
 export function voteFreshness(snapshot) {
