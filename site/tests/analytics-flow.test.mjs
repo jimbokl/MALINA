@@ -182,7 +182,7 @@ test('article and affiliate goals reject raw URLs and uncontrolled IDs', async (
   assert.doesNotMatch(JSON.stringify(state.calls), /PRIVATE_/);
 });
 
-test('selector start, missing regional rule, error and completion send no form text', async () => {
+test('selector start, regional rule outcomes, error and completion send no form text', async () => {
   const picker = new Element({
     elements: { crop: { value: 'raspberry' } },
     values: {
@@ -214,11 +214,14 @@ test('selector start, missing regional rule, error and completion send no form t
   state.observers[0].callback();
   status.textContent = 'Не удалось загрузить данные Госреестра. Попробуйте позже.';
   state.observers[0].callback();
+  status.textContent = '1 сорт с проверенным региональным правилом для региона «PRIVATE_REGION».';
+  state.observers[0].callback();
   await picker.dispatchEvent({ type: 'submit', preventDefault() {}, stopImmediatePropagation() {} });
   assert.deepEqual(state.goals(), [
     { name: 'selector_start', params: { page_type: 'selector', crop: 'raspberry' } },
     { name: 'selector_no_region_data', params: { page_type: 'selector', crop: 'raspberry', result: 'unmapped_region' } },
     { name: 'selector_error', params: { page_type: 'selector', crop: 'raspberry', result: 'load_error' } },
+    { name: 'selector_rule_found', params: { page_type: 'selector', crop: 'raspberry', result: 'verified_rule' } },
     { name: 'selector_complete', params: { page_type: 'selector', crop: 'raspberry', result: 'empty', matches: 0 } }
   ]);
   assert.doesNotMatch(JSON.stringify(state.calls), /PRIVATE_/);

@@ -109,7 +109,8 @@ class CatalogEntries20260928Tests(unittest.TestCase):
             "FROM public_observations o JOIN public_cultivars c ON c.id=o.cultivar_id "
             "JOIN sources s ON s.id=(SELECT source_id FROM trait_observations WHERE id=o.id) "
             "JOIN public_evidence_passports e ON e.observation_id=o.id "
-            "WHERE c.slug IN ('borovitskaya','nashe-podmoskove')"
+            "WHERE c.slug IN ('borovitskaya','nashe-podmoskove') "
+            "AND s.source_key IN ('borovitskaya-fncsad','nashe-podmoskove-fncsad')"
         ).fetchall()
         facts = {(row[0], row[1], row[2]): tuple(row[3:]) for row in rows}
         self.assertEqual(len(facts), 19)

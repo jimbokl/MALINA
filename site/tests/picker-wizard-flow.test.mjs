@@ -86,6 +86,56 @@ test('после результата можно вернуться к прос�
   assert.equal(form.scrolled, true);
 });
 
+test('подбор показывает сорта порциями и не прячет выбранное при обновлении порядка', async () => {
+  const source = await readFile(new URL('../assets/picker-wizard.js', import.meta.url), 'utf8');
+  const form = new FakeElement();
+  const output = new FakeElement();
+  const results = new FakeElement();
+  const more = new FakeElement();
+  const edit = new FakeElement();
+  const heading = new FakeElement();
+  heading.className = 'picker-group-heading';
+  heading.classList = { contains: name => name === heading.className };
+  const cards = Array.from({ length: 12 }, (_, index) => {
+    const card = new FakeElement();
+    card.className = 'variety-card';
+    card.classList = { contains: name => name === card.className };
+    card.dataset.pickerVisible = 'true';
+    const checkbox = { checked: false };
+    const link = { focus() { this.focused = true; } };
+    card.querySelector = selector => selector === '.picker-compare-checkbox' ? checkbox : link;
+    card.link = link;
+    card.checkbox = checkbox;
+    return card;
+  });
+  results.querySelectorAll = selector => selector === '.variety-card' ? cards : [heading];
+  heading.nextElementSibling = cards[0];
+  for (let index = 0; index < cards.length - 1; index++) cards[index].nextElementSibling = cards[index + 1];
+  runInNewContext(source, {
+    document: { querySelector: selector => ({
+      '#picker-form': form,
+      '#picker-edit-conditions': edit,
+      '#picker-output': output,
+      '#picker-results': results,
+      '#picker-show-more': more
+    })[selector] || null },
+    Event: class { constructor(type) { this.type = type; } },
+    matchMedia: () => ({ matches: true })
+  });
+  output.dispatchEvent({ type: 'picker:results' });
+  assert.equal(cards.filter(card => !card.hidden).length, 8);
+  assert.equal(more.textContent, 'Показать ещё 4 из 4');
+  cards[10].checkbox.checked = true;
+  output.dispatchEvent({ type: 'picker:order-change' });
+  assert.equal(cards.filter(card => !card.hidden).length, 11);
+  assert.equal(more.textContent, 'Показать ещё 1 из 1');
+  more.click();
+  assert.equal(cards.filter(card => !card.hidden).length, 12);
+  assert.equal(more.hidden, true);
+  assert.equal(cards[11].link.focused, true);
+  assert.equal(heading.hidden, false);
+});
+
 test('подтверждение неизвестного места сохраняется после подбора и сбрасывается при редактировании', async () => {
   const source = await readFile(new URL('../assets/site.js', import.meta.url), 'utf8');
   const pickerSource = source.slice(source.indexOf('const pickerForm = document.querySelector'), source.length)

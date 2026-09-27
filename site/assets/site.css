@@ -198,6 +198,11 @@
 .picker-admission-status{padding:12px 16px;background:#eef2e8;border-left:3px solid #527657}
 .picker-admission-status[hidden]{display:none}
 #picker-results .variety-card[hidden]{display:none}
+.picker-group-heading[hidden]{display:none}
+.picker-show-more{display:block;min-height:48px;margin:25px auto 0;padding:10px 24px;border:1px solid var(--green);background:transparent;color:var(--green);font:800 13px/1.35 var(--sans);cursor:pointer}
+.picker-show-more[hidden]{display:none}
+.picker-show-more:hover{background:#e9f1e8}
+.picker-show-more:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
 .picker-compare-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:26px 0;padding:18px 22px;background:#f1f0e6;border-left:3px solid var(--wine)}
 .picker-compare-bar[hidden],.picker-compare-bar [hidden],.picker-compare-option[hidden]{display:none}
 .picker-compare-bar p{margin:0;line-height:1.5}

@@ -30,6 +30,7 @@ if (form) {
       cards.sort((left, right) => Number(admittedSlugs.has(right.dataset.cultivarSlug)) - Number(admittedSlugs.has(left.dataset.cultivarSlug)));
       heading.after(...cards);
     }
+    document.querySelector('#picker-output').dispatchEvent(new Event('picker:order-change'));
   };
 
   document.querySelector('#picker-output').addEventListener('picker:results', () => {

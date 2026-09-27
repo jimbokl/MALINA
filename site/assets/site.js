@@ -208,10 +208,12 @@ if (pickerForm) {
       const outcome = message === 'Регион не сопоставлен с районированием Госреестра.' ? 'unmapped_region'
         : message.startsWith('В Госреестре:') || message.startsWith('В Госреестре нет записей') ? 'no_verified_rule'
           : message === 'Регион не найден в справочнике.' ? 'unknown_region'
-            : message === 'Не удалось загрузить данные Госреестра. Попробуйте позже.' ? 'load_error' : '';
+            : message === 'Не удалось загрузить данные Госреестра. Попробуйте позже.' ? 'load_error'
+              : /^\d+ сорт(?:а|ов)? с проверенн(?:ым|ыми) региональн(?:ым|ыми) правил(?:ом|ами) для региона /.test(message) ? 'verified_rule' : '';
       if (!outcome || outcome === lastRuleOutcome) return;
       lastRuleOutcome = outcome;
-      trackGoal(outcome === 'load_error' ? 'selector_error' : 'selector_no_region_data', {
+      trackGoal(outcome === 'load_error' ? 'selector_error'
+        : outcome === 'verified_rule' ? 'selector_rule_found' : 'selector_no_region_data', {
         crop: pickerCropValue(pickerForm.elements?.crop?.value), result: outcome
       });
     }).observe(ruleStatus, { childList: true, characterData: true, subtree: true });

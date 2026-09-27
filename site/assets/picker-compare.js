@@ -55,6 +55,9 @@ if (output && form) {
     update();
   });
 
+  output.addEventListener('picker:page', update);
+  output.addEventListener('picker:order-change', update);
+
   form.addEventListener('picker:location-change', () => {
     for (const input of choices) input.checked = false;
     notice = '';
