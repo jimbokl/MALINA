@@ -413,6 +413,15 @@
 .grower-journal-main>p{max-width:700px}
 .grower-journal-main form{margin-top:28px}
 .grower-journal-main fieldset{border:0;padding:0;margin:0;min-width:0}
+.grower-journal-first{display:flex;flex-wrap:wrap;align-items:end;gap:14px;padding:20px;background:#e5eadb}
+.grower-journal-first label{display:flex;flex:1 1 220px;flex-direction:column;gap:8px;min-width:0;font-size:16px;font-weight:800;color:#36503b}
+.grower-journal-first select{width:100%;min-height:50px;border:1px solid #cbd4c7;background:var(--paper);color:var(--ink);padding:11px 13px;font-size:15px;font-weight:500}
+.grower-journal-first select:focus-visible{outline:3px solid var(--wine);outline-offset:2px}
+.grower-journal-first button{min-height:50px}
+.grower-journal-first button[hidden]{display:none}
+.grower-journal-next{margin-top:24px}
+.grower-journal-next>p{margin:0 0 18px;color:#405443}
+#grower-journal-form[data-step="start"] .grower-journal-next{display:none}
 .grower-journal-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
 .grower-journal-fields label{display:flex;flex-direction:column;gap:8px;min-width:0;font-size:12px;font-weight:800;color:#36503b}
 .grower-journal-fields input,.grower-journal-fields select,.grower-journal-fields textarea{width:100%;min-height:50px;border:1px solid #cbd4c7;background:var(--paper);color:var(--ink);padding:11px 13px;font-size:14px;font-weight:500;outline:0;border-radius:0}
@@ -432,12 +441,15 @@
 .grower-journal-status{min-height:1.6em;margin-top:18px;color:#36503b;font-weight:700}
 .grower-journal-status[data-error="true"]{color:#9a2843}
 .grower-journal-aside{background:#e5eadb;padding:clamp(23px,3vw,40px)}
+.grower-journal-aside summary{color:var(--wine);font-size:15px;font-weight:800;line-height:1.4;cursor:pointer}
+.grower-journal-aside summary:focus-visible{outline:3px solid var(--wine);outline-offset:4px}
+.grower-journal-aside details>div{padding-top:24px}
 .grower-journal-aside p{font-size:13px;line-height:1.7}
 .grower-journal-aside button{display:block;width:100%;margin:24px 0 20px;padding:14px;border:1px solid var(--green);background:var(--green);color:white;font-weight:800;text-align:center}
 .grower-journal-aside button:disabled{opacity:.55;cursor:not-allowed}
 .grower-journal-aside label{display:block;font-size:12px;font-weight:800;margin-bottom:8px}
 .grower-journal-aside input{display:block;max-width:100%;font-size:12px}
-.grower-journal-aside>a{display:inline-block;border-bottom:1px solid;margin-top:18px;color:#36503b;font-size:12px;font-weight:800}
+.grower-journal-aside>a{display:inline-block;border-bottom:1px solid;margin:0 0 18px;color:#36503b;font-size:14px;font-weight:800}
 .grower-journal-records{padding-top:0}
 .grower-journal-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
 .grower-journal-more{display:block;margin:24px auto 0;padding:13px 24px;background:var(--paper);border:1px solid var(--line);color:var(--wine);font:800 14px/1.2 var(--sans);cursor:pointer}
@@ -454,5 +466,5 @@
 .grower-journal-empty{grid-column:1/-1;margin:0;background:#e5eadb;padding:30px}
 .variety-next-actions{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
 .variety-next-actions .text-link{font-size:12px;font-weight:800;text-decoration:underline;text-underline-offset:4px}
-@media(max-width:760px){.grower-journal-layout,.grower-journal-list{grid-template-columns:1fr}.grower-journal-aside{order:2}.grower-journal-records{padding-top:0}.grower-journal-fields{grid-template-columns:1fr}.grower-journal-details{grid-template-columns:minmax(90px,.7fr) minmax(0,1.3fr)}.variety-next-actions{margin-top:20px}}
+@media(max-width:760px){.grower-journal-hero{padding-bottom:22px}.grower-journal-layout{padding-top:18px}.grower-journal-main>h2{font-size:1.9rem;margin:5px 0 0}.grower-journal-main>.eyebrow,.grower-journal-main>p{display:none}.grower-journal-main form{margin-top:16px}.grower-journal-first{padding:16px}.grower-journal-first button{width:100%}.grower-journal-layout,.grower-journal-list{grid-template-columns:1fr}.grower-journal-aside{order:2;padding:18px}.grower-journal-records{padding-top:0}.grower-journal-fields{grid-template-columns:1fr}.grower-journal-details{grid-template-columns:minmax(90px,.7fr) minmax(0,1.3fr)}.variety-next-actions{margin-top:20px}}
 @media(max-width:700px){.variety-hero-grid{grid-template-columns:minmax(0,1fr)}.variety-hero-grid>div,.variety-hero-art{min-width:0}.variety-hero h1{font-size:clamp(43px,10.8vw,58px);overflow-wrap:anywhere}}

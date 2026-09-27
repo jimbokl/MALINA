@@ -17,6 +17,7 @@ if (form && list && status && count && moreButton && importInput) {
   const params = new URLSearchParams(location.search);
   const title = document.querySelector('#grower-journal-form-title');
   const cancel = document.querySelector('#grower-journal-cancel');
+  const continueButton = document.querySelector('#grower-journal-continue');
   const extra = document.querySelector('#grower-journal-extra');
   const exportButton = document.querySelector('#grower-journal-export');
   let records = [];
@@ -27,6 +28,26 @@ if (form && list && status && count && moreButton && importInput) {
   function announce(message, error = false) {
     status.textContent = message;
     status.dataset.error = String(error);
+  }
+
+  function setStep(step) {
+    form.dataset.step = step;
+    continueButton.hidden = step !== 'start';
+    for (const name of ['cultivar', 'region', 'season']) form.elements[name].disabled = step === 'start';
+  }
+
+  function continueEntry() {
+    if (!form.elements.crop.reportValidity()) return;
+    updateCultivarHint();
+    setStep('details');
+    title.textContent = `Запись о ${form.elements.crop.value === 'raspberry' ? 'малине' : 'клубнике'}`;
+    form.elements.cultivar.focus();
+  }
+
+  function updateCultivarHint() {
+    const raspberry = form.elements.crop.value !== 'strawberry';
+    form.elements.cultivar.placeholder = raspberry ? 'Например, Гусар' : 'Например, Азия';
+    form.elements.cultivar.setAttribute('list', `journal-${raspberry ? 'raspberry' : 'strawberry'}-varieties`);
   }
 
   function persist(next) {
@@ -116,21 +137,23 @@ if (form && list && status && count && moreButton && importInput) {
     editingId = '';
     delete form.dataset.parentId;
     form.reset();
+    setStep('start');
     if (extra) extra.open = false;
     form.elements.season.value = String(new Date().getFullYear());
-    form.elements.cultivar.setAttribute('list', 'journal-raspberry-varieties');
+    updateCultivarHint();
     title.textContent = 'Новая запись';
     cancel.hidden = true;
     cancel.textContent = 'Отменить изменение';
   }
 
   function fillForm(record) {
+    setStep('details');
     if (extra) extra.open = true;
     for (const [key, value] of Object.entries(record)) {
       const input = form.elements.namedItem(key);
       if (input && typeof input.value === 'string') input.value = value == null ? '' : String(value);
     }
-    form.elements.cultivar.setAttribute('list', `journal-${record.crop}-varieties`);
+    updateCultivarHint();
     form.elements.cultivar.focus();
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -152,19 +175,29 @@ if (form && list && status && count && moreButton && importInput) {
   const regionParam = params.get('region');
   if (cropParam === 'raspberry' || cropParam === 'strawberry') {
     form.elements.crop.value = cropParam;
-    form.elements.cultivar.setAttribute('list', `journal-${cropParam}-varieties`);
+    updateCultivarHint();
   }
   if (cultivarParam && cultivarParam.length <= 100) form.elements.cultivar.value = cultivarParam;
   if (regionParam && regionParam.length <= 100) form.elements.region.value = regionParam;
+  if (cropParam === 'raspberry' || cropParam === 'strawberry') {
+    setStep('details');
+    title.textContent = `Запись о ${cropParam === 'raspberry' ? 'малине' : 'клубнике'}`;
+  }
+
+  continueButton.addEventListener('click', continueEntry);
 
   form.elements.crop.addEventListener('change', () => {
     form.elements.cultivar.value = '';
-    form.elements.cultivar.setAttribute('list', `journal-${form.elements.crop.value}-varieties`);
+    updateCultivarHint();
+    if (form.dataset.step === 'details' && !editingId && !form.dataset.parentId) {
+      title.textContent = `Запись о ${form.elements.crop.value === 'raspberry' ? 'малине' : 'клубнике'}`;
+    }
   });
 
   form.addEventListener('submit', event => {
     event.preventDefault();
     if (!readable) return;
+    if (form.dataset.step === 'start') { continueEntry(); return; }
     try {
       const previous = records.find(record => record.id === editingId) ?? null;
       const raw = Object.fromEntries(new FormData(form));
