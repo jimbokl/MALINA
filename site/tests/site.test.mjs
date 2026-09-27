@@ -14,6 +14,7 @@ import { additionalStrawberryVarieties } from '../strawberry-varieties.mjs';
 import { depthAdvice } from '../assets/depth-model.mjs';
 import { classifyPickerCard, cityForPickerContext } from '../assets/picker-filter.mjs';
 import { resolvePickerPlace } from '../assets/picker-place.mjs';
+import { getComparisonYields } from '../assets/comparison-model.mjs';
 
 test('подбор распознаёт город и сокращённый регион без ложного совпадения', () => {
   const places = [
@@ -420,7 +421,11 @@ test('сравнение сортов отдаёт полезный HTML, ист
     assert.match(html, /Урожайность в источнике/);
     assert.ok(data.varieties.some(item => item.yieldObservation), 'проверенные результаты урожайности доступны сравнению');
     const htmlReviewedDates = new Set([...html.matchAll(/проверено (\d{2}\.\d{2}\.\d{4})/g)].map(match => match[1]));
-    assert.ok([...new Set(data.varieties.map(item => item.reviewedAt))].every(date => htmlReviewedDates.has(date)), 'серверный HTML показывает дату каждой записи сорта');
+    assert.ok([...new Set(data.varieties.slice(0, 4).map(item => item.reviewedAt))].every(date => htmlReviewedDates.has(date)), 'серверный HTML показывает даты первых четырёх сортов');
+    const header = html.match(/<table class="comparison-table">[\s\S]*?<thead><tr>([\s\S]*?)<\/tr><\/thead>/)?.[1];
+    assert.ok(header, 'таблица сравнения видна без JavaScript');
+    assert.equal((header.match(/<th scope="col">/g) || []).length, 5, 'исходная таблица содержит параметр и четыре сорта');
+    assert.equal((html.match(/name="cultivar" value="[^"]+" checked/g) || []).length, 4, 'в длинном списке отмечены только четыре сорта');
   }
   const script = await readFile(join(root, 'assets', 'comparison.js'), 'utf8');
   assert.match(script, /resolveComparisonPlace/);
@@ -443,9 +448,10 @@ test('сравнение клубники показывает оба источ
     assert.equal(item.yieldObservations.length, 2, slug);
   }
   for (const value of ['21,6 т/га', '148,3 ц/га', '7,7 т/га', '127,5 ц/га']) {
-    assert.ok(html.includes(value), value);
+    assert.ok(varieties.some(item => getComparisonYields(item).some(row => row.value === value)), value);
   }
-  assert.match(html, /vniispk\.ru\/pages\/activities\/science-activities\/conference-2008\/publ-2008-25/);
+  assert.ok(varieties.some(item => (item.yieldObservations || []).some(row =>
+    row.source_url.includes('vniispk.ru/pages/activities/science-activities/conference-2008/publ-2008-25'))));
 });
 
 test('карточки Русича и Зенги Зенганы показывают оба измерения урожайности с условиями и источниками', async () => {

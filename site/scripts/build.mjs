@@ -31,7 +31,7 @@ const ymCounterId = process.env.YM_COUNTER_ID || '';
 if (ymCounterId && !/^[1-9]\d*$/.test(ymCounterId)) throw new Error('YM_COUNTER_ID must be a positive integer');
 if (reviewApiUrl && !/^https:\/\/[^\s]+\/api\/reviews$/.test(reviewApiUrl) && !/^http:\/\/localhost:\d+\/api\/reviews$/.test(reviewApiUrl) && !/^http:\/\/127\.0\.0\.1:\d+\/api\/reviews$/.test(reviewApiUrl)) throw new Error('REVIEW_API_URL must be HTTPS /api/reviews, except localhost development');
 const versionedAssets = new Map(await Promise.all(
-  ['site.js', 'site.css', 'picker-wizard.js', 'votes.js', 'picker-compare.js', 'picker-memo.js', 'verified-selector.js', 'reviews.js', 'cities.js', 'comparison.js', 'lot-checklist.js', 'planting.js', 'trellis.js', 'drip.js', 'pruning.js', 'depth.js', 'mulch.js', 'calendar.js', 'plant-observation.js', 'journal.js']
+  ['site.js', 'site.css', 'picker-wizard.js', 'votes.js', 'picker-compare.js', 'picker-memo.js', 'verified-selector.js', 'admissions.js', 'reviews.js', 'cities.js', 'comparison.js', 'lot-checklist.js', 'planting.js', 'trellis.js', 'drip.js', 'pruning.js', 'depth.js', 'mulch.js', 'calendar.js', 'plant-observation.js', 'journal.js']
     .map(async name => [name, createHash('sha256').update(await readFile(join(root, 'site', 'assets', name))).digest('hex').slice(0, 12)])
 ));
 await rm(out, { recursive: true, force: true });
@@ -142,6 +142,7 @@ function comparePage(cropKey) {
   const cropName = isRaspberry ? 'малины' : 'клубники';
   const route = `/sravnenie/${isRaspberry ? 'malina' : 'klubnika'}/`;
   const cropVarieties = varieties.filter(item => item.cropKey === cropKey);
+  const initialVarieties = cropVarieties.slice(0, 4);
   const comparisonData = JSON.stringify({
     varieties: cropVarieties.map(item => {
       const publicRecord = publicCultivars.get(item.slug);
@@ -155,8 +156,8 @@ function comparePage(cropKey) {
     cities,
     regions: publicCatalog.regions
   }).replaceAll('<', '\\u003c');
-  const choices = cropVarieties.map(item => `<label class="comparison-choice"><input type="checkbox" name="cultivar" value="${e(item.slug)}" checked><span><strong>${e(item.name)}</strong></span><a href="/sorta/${e(item.slug)}/">Карточка сорта ↗</a></label>`).join('');
-  const facts = cropVarieties.map(item => `<th scope="col"><a href="/sorta/${e(item.slug)}/">${e(item.name)}</a></th>`).join('');
+  const choices = cropVarieties.map(item => `<label class="comparison-choice"><input type="checkbox" name="cultivar" value="${e(item.slug)}"${initialVarieties.includes(item) ? ' checked' : ''}><span><strong>${e(item.name)}</strong></span><a href="/sorta/${e(item.slug)}/">Карточка сорта ↗</a></label>`).join('');
+  const facts = initialVarieties.map(item => `<th scope="col"><a href="/sorta/${e(item.slug)}/">${e(item.name)}</a></th>`).join('');
   const factDefinitions = [
     ['Культура', item => item.crop],
     ['Тип плодоношения', item => item.fruitingLabel],
@@ -165,8 +166,8 @@ function comparePage(cropKey) {
     ['Что сообщает источник', item => item.note]
   ];
   const rows = [
-    ...factDefinitions.map(([label, getValue]) => `<tr><th scope="row">${e(label)}</th>${cropVarieties.map(item => `<td>${e(getValue(item) || '—')}<a class="comparison-source" href="${e(item.source)}" target="_blank" rel="noopener noreferrer">${e(item.sourceLabel)} · проверено ${e(item.reviewedAt ?? reviewedAt)} ↗</a></td>`).join('')}</tr>`),
-    `<tr><th scope="row">Урожайность в источнике</th>${cropVarieties.map(item => {
+    ...factDefinitions.map(([label, getValue]) => `<tr><th scope="row">${e(label)}</th>${initialVarieties.map(item => `<td>${e(getValue(item) || '—')}<a class="comparison-source" href="${e(item.source)}" target="_blank" rel="noopener noreferrer">${e(item.sourceLabel)} · проверено ${e(item.reviewedAt ?? reviewedAt)} ↗</a></td>`).join('')}</tr>`),
+    `<tr><th scope="row">Урожайность в источнике</th>${initialVarieties.map(item => {
       const publicRecord = publicCultivars.get(item.slug);
       const studies = getComparisonYields({ observations: publicRecord?.observations || [] });
       if (!studies.length) return '<td>—</td>';
@@ -325,7 +326,7 @@ function withCommerce(html, variety) {
 
 function withEvidence(html, variety) {
   const row = publicCultivars.get(variety.slug);
-  const section = evidenceSection(row) + admissionSection(row);
+  const section = evidenceSection(row) + admissionSection(row, { cities, regions: publicCatalog.regions });
   if (variety.slug === 'festivalnaya') {
     html = html.replace(
       'Откройте исходное описание и проверьте условия испытания сорта.',
@@ -455,7 +456,7 @@ const pages = new Map([['/', home], ['/malina/', withCropReading(cropPage('raspb
 for (const [path, html] of pages) { const dir = join(out, path); await mkdir(dir, { recursive: true }); await writeFile(join(dir, 'index.html'), withSiteBase(html)); }
 await mkdir(join(out, 'assets'), { recursive: true });
 await writeFile(join(out, 'assets', 'site.css'), withCssBase(await readFile(join(root, 'site', 'assets', 'site.css'), 'utf8')));
-for (const asset of ['site.js', 'picker-filter.mjs', 'picker-place.mjs', 'picker-wizard.js', 'votes.js', 'picker-compare.js', 'picker-memo.js', 'vote-model.js', 'verified-selector.js', 'reviews.js', 'review-geo.js', 'cities.js', 'comparison.js', 'comparison-model.mjs', 'lot-checklist.js', 'planting.js', 'planting-model.mjs', 'trellis.js', 'trellis-model.mjs', 'drip.js', 'drip-model.mjs', 'economics.js', 'economics-model.mjs', 'pruning.js', 'pruning-model.mjs', 'depth.js', 'depth-model.mjs', 'mulch.js', 'mulch-model.mjs', 'calendar.js', 'calendar-model.mjs', 'plant-observation.js', 'plant-observation-model.mjs', 'journal.js', 'journal-model.mjs', 'favicon.svg', 'berries-hero.webp', 'raspberry-garden.webp', 'raspberry-yellow-garden.webp', 'strawberry-garden.webp', 'raspberry-mark.webp', 'strawberry-mark.webp', ...new Set(articles.flatMap(article => [article.heroImage?.file, ...article.sections.map(section => section.image?.file)].filter(Boolean))), ...Object.values(varietyMedia).map(image => image.file)]) await copyFile(join(root, 'site', 'assets', asset), join(out, 'assets', asset));
+for (const asset of ['site.js', 'picker-filter.mjs', 'picker-place.mjs', 'picker-wizard.js', 'votes.js', 'picker-compare.js', 'picker-memo.js', 'vote-model.js', 'verified-selector.js', 'admissions.js', 'admissions-model.mjs', 'reviews.js', 'review-geo.js', 'cities.js', 'comparison.js', 'comparison-model.mjs', 'lot-checklist.js', 'planting.js', 'planting-model.mjs', 'trellis.js', 'trellis-model.mjs', 'drip.js', 'drip-model.mjs', 'economics.js', 'economics-model.mjs', 'pruning.js', 'pruning-model.mjs', 'depth.js', 'depth-model.mjs', 'mulch.js', 'mulch-model.mjs', 'calendar.js', 'calendar-model.mjs', 'plant-observation.js', 'plant-observation-model.mjs', 'journal.js', 'journal-model.mjs', 'favicon.svg', 'berries-hero.webp', 'raspberry-garden.webp', 'raspberry-yellow-garden.webp', 'strawberry-garden.webp', 'raspberry-mark.webp', 'strawberry-mark.webp', ...new Set(articles.flatMap(article => [article.heroImage?.file, ...article.sections.map(section => section.image?.file)].filter(Boolean))), ...Object.values(varietyMedia).map(image => image.file)]) await copyFile(join(root, 'site', 'assets', asset), join(out, 'assets', asset));
 await copyFile(join(root, 'db', 'public', 'reviews.json'), join(out, 'data', 'reviews.json'));
 await writeFile(join(out, 'data', 'cities.json'), JSON.stringify(cities) + '\n');
 await writeFile(join(out, 'data', 'votes.json'), JSON.stringify(voteSnapshot) + '\n');

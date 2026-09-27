@@ -261,8 +261,16 @@
 .media-sources h3{font-family:var(--serif);font-size:27px;font-weight:400;margin:28px 0 8px}
 .admission-section{padding-block:clamp(2.5rem,5vw,4rem);border-top:1px solid rgba(39,61,39,.16)}
 .admission-section h2{max-width:18ch;font-family:var(--serif);font-size:clamp(2rem,4vw,3.25rem);font-weight:400}
-.admission-section>p{max-width:70ch;line-height:1.65;color:#435343}
-.admission-list{display:grid;gap:1rem;padding:0;list-style:none}
+.admission-overview,.admission-place{max-width:70ch;line-height:1.65;color:#435343}
+.admission-featured[hidden],.admission-overview[hidden]{display:none}
+.admission-featured{max-width:42rem;margin-bottom:1.25rem}
+.admission-place{font-weight:700;margin-bottom:.75rem}
+.admission-more{max-width:48rem;border:1px solid rgba(39,61,39,.2);border-radius:1rem;background:#fffdf8}
+.admission-more summary{cursor:pointer;padding:1rem 1.25rem;color:var(--green);font-weight:700}
+.admission-more summary:focus-visible{outline:3px solid var(--berry);outline-offset:3px}
+.admission-more[open] summary{border-bottom:1px solid rgba(39,61,39,.16)}
+.admission-more .admission-list{padding:1rem;margin:0}
+.admission-list{display:grid;gap:.75rem;padding:0;margin:0;list-style:none}
 .admission-list li,.admission-result{display:grid;gap:.6rem;padding:1.25rem;border:1px solid rgba(39,61,39,.16);border-radius:1rem;background:#f7f3e9}
 .admission-list span,.admission-result p{line-height:1.55}
 .admission-list a,.admission-result a{color:var(--green);font-weight:700;text-decoration:underline;text-underline-offset:.2em}
