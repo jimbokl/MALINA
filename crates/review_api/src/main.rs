@@ -379,15 +379,15 @@ fn possible_contact_text(haystack: &str) -> bool {
     if address.is_match(&lower) {
         return true;
     }
-    // Detect phone-like digit sequences without interpreting postal codes or years.
+    // Detect phone-like digit sequences, including Unicode digits and spacing.
     let mut digits = 0;
     for c in haystack.chars() {
-        if c.is_ascii_digit() {
+        if c.is_numeric() {
             digits += 1;
             if digits >= 10 {
                 return true;
             }
-        } else if !matches!(c, ' ' | '-' | '(' | ')' | '+') {
+        } else if !c.is_whitespace() && !matches!(c, '-' | '(' | ')' | '+') {
             digits = 0;
         }
     }
@@ -1073,6 +1073,20 @@ mod tests {
         review["body"] = json!("Хорошо растёт, пишите name@example.ru");
         assert_eq!(post(&router, review).await.0, StatusCode::BAD_REQUEST);
         assert_eq!(get(&router).await["reviews"].as_array().unwrap().len(), 0);
+        let conn = open_db(&path).unwrap();
+        let count: i64 = conn
+            .query_row("SELECT COUNT(*) FROM reviews", [], |r| r.get(0))
+            .unwrap();
+        assert_eq!(count, 0);
+    }
+
+    #[tokio::test]
+    async fn unicode_phone_is_rejected_before_moderation_and_storage() {
+        let (_dir, router, path) = setup(Some(normal()));
+        let mut review = input();
+        review["body"] =
+            json!("Ягоды хорошие, звоните ７\u{a0}９９９\u{a0}１２３\u{a0}４５\u{a0}６７");
+        assert_eq!(post(&router, review).await.0, StatusCode::BAD_REQUEST);
         let conn = open_db(&path).unwrap();
         let count: i64 = conn
             .query_row("SELECT COUNT(*) FROM reviews", [], |r| r.get(0))

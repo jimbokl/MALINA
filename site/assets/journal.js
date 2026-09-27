@@ -17,7 +17,6 @@ if (form && list && status && count && moreButton && importInput) {
   const params = new URLSearchParams(location.search);
   const title = document.querySelector('#grower-journal-form-title');
   const cancel = document.querySelector('#grower-journal-cancel');
-  const continueButton = document.querySelector('#grower-journal-continue');
   const extra = document.querySelector('#grower-journal-extra');
   const exportButton = document.querySelector('#grower-journal-export');
   let records = [];
@@ -32,7 +31,6 @@ if (form && list && status && count && moreButton && importInput) {
 
   function setStep(step) {
     form.dataset.step = step;
-    continueButton.hidden = step !== 'start';
     for (const name of ['cultivar', 'region', 'season']) form.elements[name].disabled = step === 'start';
   }
 
@@ -198,11 +196,13 @@ if (form && list && status && count && moreButton && importInput) {
     }
   }
 
-  continueButton.addEventListener('click', continueEntry);
-
   form.elements.crop.addEventListener('change', () => {
     form.elements.cultivar.value = '';
     updateCultivarHint();
+    if (form.dataset.step === 'start') {
+      continueEntry();
+      return;
+    }
     if (form.dataset.step === 'details' && !editingId && !form.dataset.parentId) {
       title.textContent = `Запись о ${form.elements.crop.value === 'raspberry' ? 'малине' : 'клубнике'}`;
     }
