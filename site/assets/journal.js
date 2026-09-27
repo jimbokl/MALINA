@@ -90,6 +90,8 @@ if (form && list && status && count && moreButton && importInput) {
     for (const record of [...records].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).slice(0, visibleCount)) {
       const article = document.createElement('article');
       article.className = 'grower-journal-entry';
+      article.id = `journal-entry-${record.id}`;
+      article.tabIndex = -1;
       const eyebrow = document.createElement('span');
       eyebrow.className = 'eyebrow';
       eyebrow.textContent = `${record.crop === 'raspberry' ? 'Малина' : 'Клубника'} / ${record.season}`;
@@ -183,6 +185,18 @@ if (form && list && status && count && moreButton && importInput) {
     setStep('details');
     title.textContent = `Запись о ${cropParam === 'raspberry' ? 'малине' : 'клубнике'}`;
   }
+  const entryParam = params.get('entry');
+  if (entryParam && readable) {
+    const ordered = [...records].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+    const index = ordered.findIndex(record => record.id === entryParam);
+    if (index >= 0) {
+      visibleCount = Math.max(visibleCount, index + 1);
+      render();
+      requestAnimationFrame(() => document.getElementById(`journal-entry-${entryParam}`)?.focus());
+    } else {
+      announce('Этой записи нет в журнале этого браузера.', true);
+    }
+  }
 
   continueButton.addEventListener('click', continueEntry);
 
@@ -212,8 +226,10 @@ if (form && list && status && count && moreButton && importInput) {
   cancel.addEventListener('click', () => { resetForm(); announce('Изменение отменено.'); });
 
   moreButton.addEventListener('click', () => {
+    const firstNewRecord = visibleCount;
     visibleCount += 8;
     render();
+    list.children[firstNewRecord]?.focus();
   });
 
   list.addEventListener('click', event => {

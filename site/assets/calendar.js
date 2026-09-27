@@ -53,7 +53,10 @@ if (form) {
         ? ` · ${new Intl.NumberFormat('ru-RU').format(entry.harvestKg)} кг${entry.harvestMethod === 'estimated' ? ' (оценка)' : ''}`
         : '';
       detail.textContent = `${entry.cultivar} · ${entry.region}${amount}`;
-      item.append(time, title, detail);
+      const link = document.createElement('a');
+      link.href = `/instrumenty/zhurnal-uchastka/?entry=${encodeURIComponent(entry.id)}`;
+      link.textContent = 'Открыть запись →';
+      item.append(time, title, detail, link);
       journalList.append(item);
     }
     journalMore.hidden = events.length <= 12;
