@@ -33,6 +33,46 @@ const routes = ['/', '/malina/', '/klubnika/', '/sorta/', ...raspberryFacets.map
   ...varieties.map(variety => `/sorta/${variety.slug}/`),
   '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...articles.map(article => `/zhurnal/${article.slug}/`)];
 
+test('городские подборы и рубрики журнала получают свои описания', async () => {
+  const descriptions = new Set();
+  for (const city of cities) {
+    const html = await readFile(join(root, 'podbor', city.slug, 'index.html'), 'utf8');
+    const description = html.match(/<meta name="description" content="([^"]+)"/)?.[1];
+    assert.ok(description?.includes(city.name), city.slug);
+    assert.ok(description.includes(city.region), city.slug);
+    assert.ok(html.includes(`<meta property="og:description" content="${description}">`), city.slug);
+    assert.ok(html.includes(`<meta name="twitter:description" content="${description}">`), city.slug);
+    assert.ok(!descriptions.has(description), `повтор метаописания: ${city.slug}`);
+    descriptions.add(description);
+  }
+  const raspberry = await readFile(join(root, 'zhurnal', 'malina', 'index.html'), 'utf8');
+  const strawberry = await readFile(join(root, 'zhurnal', 'klubnika', 'index.html'), 'utf8');
+  assert.match(raspberry, /<meta name="description" content="[^"]*малину/);
+  assert.match(strawberry, /<meta name="description" content="[^"]*клубнику/);
+});
+
+test('карточки сортов ведут к сортам той же культуры и связанным материалам', async () => {
+  for (const variety of varieties) {
+    const html = await readFile(join(root, 'sorta', variety.slug, 'index.html'), 'utf8');
+    const section = html.match(/<section class="section wrap variety-related"[\s\S]*?<\/section>/)?.[0];
+    assert.ok(section, variety.slug);
+    const linked = [...section.matchAll(/class="variety-related-card" href="\/sorta\/([^/]+)\//g)].map(match => match[1]);
+    assert.equal(linked.length, 3, variety.slug);
+    assert.ok(linked.every(slug => slug !== variety.slug && varieties.find(item => item.slug === slug)?.cropKey === variety.cropKey), variety.slug);
+  }
+  const polka = await readFile(join(root, 'sorta', 'polka', 'index.html'), 'utf8');
+  assert.match(polka, /class="variety-related-reading"/);
+  assert.match(polka, /href="\/zhurnal\/[a-z0-9-]+\/"/);
+});
+
+test('страница редакции раскрывает процесс проверки и происхождение изображений', async () => {
+  const html = await readFile(join(root, 'about', 'index.html'), 'utf8');
+  assert.match(html, /id="redakciya"/);
+  assert.match(html, /Сверяем название и признаки с первоисточником/);
+  assert.match(html, /Отличаем фото от графики/);
+  assert.match(html, /href="\/podbor\/"/);
+});
+
 test('атлас малины связывает фильтры и карточки с фактами из SQLite', async () => {
   const catalogHtml = await readFile(join(root, 'sorta', 'index.html'), 'utf8');
   const publicCatalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));

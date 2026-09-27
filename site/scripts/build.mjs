@@ -72,7 +72,11 @@ function articleCollection(crop = '') {
   const selected = crop ? articles.filter(article => article.crop === crop || article.crop === 'both') : articles;
   const title = crop ? `Материалы о ${crop === 'raspberry' ? 'малине' : 'клубнике'}` : 'Журнал о малине и клубнике';
   const path = crop ? `/zhurnal/${crop === 'raspberry' ? 'malina' : 'klubnika'}/` : '/zhurnal/';
-  const intro = crop ? 'Выбор сортов, посадка и уход: практические материалы с источниками.' : 'Выбор сортов, посадка и уход: практические материалы с источниками и датой проверки.';
+  const intro = crop === 'raspberry'
+    ? 'Как выбрать малину, посадить её и ухаживать за кустами: материалы с источниками и датой проверки.'
+    : crop === 'strawberry'
+      ? 'Как выбрать клубнику, подготовить грядку и ухаживать за посадками: материалы с источниками и датой проверки.'
+      : 'Выбор сортов, посадка и уход: практические материалы с источниками и датой проверки.';
   return layout({ title, description: intro, path, active: 'journal', body: `<section class="simple-hero media-hub-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span>${crop ? '<a href="/zhurnal/">Журнал</a><span> / </span>' : ''}${crop ? e(cropTitle(crop)) : 'Журнал'}</div><span class="eyebrow">ЯГОДНОЕ МЕДИА / САД И СОРТА</span><h1>${crop ? e(cropTitle(crop)) : 'Ягодный'}<br><em>${crop ? 'от А до Я.' : 'журнал.'}</em></h1><p>${e(intro)}</p></div></section><section class="section wrap media-hub"><nav class="media-filters" aria-label="Темы журнала"><a class="${!crop ? 'selected' : ''}" href="/zhurnal/">Все материалы</a><a class="${crop === 'raspberry' ? 'selected' : ''}" href="/zhurnal/malina/">Малина</a><a class="${crop === 'strawberry' ? 'selected' : ''}" href="/zhurnal/klubnika/">Клубника</a></nav><div class="media-grid">${selected.map((article, index) => articleCard(article, !crop && index === 0)).join('')}</div></section><section class="inline-cta wrap"><div><span class="eyebrow light">ПРОВЕРЬТЕ УСЛОВИЯ</span><h2>От статьи — к выбору для своего сада.</h2></div><a class="btn btn-cream" href="/podbor/">Подобрать сорт ${arrow}</a></section>` });
 }
 function articlePage(article) {
@@ -202,6 +206,7 @@ const pickerPage = picker.replace('</head>', '<script type="module" src="/assets
 function cityPickerPage(city) {
   const path = `/podbor/${city.slug}/`;
   const title = `Подбор сортов малины и клубники — ${city.name}`;
+  const description = `Подбор малины и клубники для сада в городе ${city.name} (${city.region}): сравните сорта, условия участка и записи Госреестра.`;
   const citySearch = e(new URLSearchParams({ city: city.name, region: city.region }).toString());
   const region = publicCatalog.regions.find(item => item.name_ru === city.region);
   const admissions = region?.admission_region_number
@@ -220,6 +225,7 @@ function cityPickerPage(city) {
     : `Регион: ${city.region}. Уточните условия участка, чтобы сравнить сорта.`;
   let html = pickerPage
     .replace('<title>Подобрать сорт по условиям участка · МАЛИНА — КЛУБНИКА</title>', `<title>${e(title)} · МАЛИНА — КЛУБНИКА</title>`)
+    .replaceAll('Выбор региона России и условий участка для справочного сравнения сортов малины и клубники.', e(description))
     .replace('<h1>Свой сад.<br><em>Свой сорт.</em></h1>', `<h1>Ягодный сад:<br><em>${e(city.name)}.</em></h1>`)
     .replace('Укажите город или регион и выберите малину или клубнику.', 'Выберите малину или клубнику. Условия участка можно уточнить по желанию.')
     .replace('id="picker-form"', `id="picker-form" data-city="${e(city.name)}" data-region="${e(city.region)}"`)
@@ -286,7 +292,15 @@ const cityDirectory = layout({
   body: `<section class="simple-hero city-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span>Города</div><span class="eyebrow">ГОРОД — КОНТЕКСТ ДЛЯ ПОДБОРА</span><h1>Сначала условия.<br><em>Потом сорт.</em></h1><p>Выберите город и сразу перейдите к сортам и данным для вашего региона.</p></div></section><section class="section wrap city-directory"><div class="city-directory-tools"><label for="city-search">Найти город</label><input id="city-search" type="search" autocomplete="off" placeholder="Начните вводить название города или региона"><p id="cities-count" aria-live="polite">${cities.length} городов в стартовом каталоге</p></div><div id="city-grid" class="city-grid">${cityCards}</div><p id="cities-empty" class="empty-state" hidden>Ничего не найдено. Попробуйте другое написание города или региона.</p><div class="city-directory-note"><strong>Подбор и опыт садоводов</strong><span>Сравните данные о сорте с отзывами садоводов из вашего региона.</span></div></section>`
 });
 
-const about = layout({ title: 'О проекте и источниках', description: 'Как МАЛИНА проверяет сведения о сортах и ведёт каталог источников.', path: '/about/', body: `<section class="simple-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span>О проекте</div><span class="eyebrow">КАК МЫ РАБОТАЕМ С ДАННЫМИ</span><h1>Растём<br><em>от фактов.</em></h1><p>МАЛИНА помогает сравнивать сорта малины и клубники, выбирать условия выращивания и изучать опыт садоводов.</p></div></section><section class="section wrap about-grid"><div><span class="eyebrow">СЕЙЧАС</span><h2>Что уже есть</h2><p>${varieties.length} справочных карточек, ссылки на первоисточники, каталог и подбор по опубликованным признакам. Для «Гусара» и «Фестивальной» дополнительно показаны регионы официального допуска по реестру 2024 года. Последняя проверка исходного описания: ${latestCatalogReview}.</p></div><div><span class="eyebrow">ЕЩЁ В РАБОТЕ</span><h2>Как читать карточку</h2><p>Откройте исходное описание сорта, сравните условия испытания со своим участком и посмотрите опыт садоводов по регионам.</p></div><div><span class="eyebrow">ИЗОБРАЖЕНИЯ</span><h2>Как создана графика</h2><p>Иллюстрации ягод созданы для сайта; изображения конкретных сортов отмечены отдельно.</p></div></section><section class="inline-cta wrap"><div><span class="eyebrow light">ПРОДОЛЖИТЬ</span><h2>Посмотрите, что уже можно сравнить.</h2></div><a class="btn btn-cream" href="/sorta/">Открыть каталог ${arrow}</a></section>` });
+const about = layout({
+  title: 'О проекте и редакции',
+  description: 'Кто делает МАЛИНУ, как редакция проверяет сведения о сортах малины и клубники, источники и изображения.',
+  path: '/about/',
+  body: `<section class="simple-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span>О проекте</div><span class="eyebrow">РЕДАКЦИЯ И МЕТОД</span><h1>Выбор сорта<br><em>начинается с фактов.</em></h1><p>МАЛИНА — ягодное медиа и набор инструментов для тех, кто выращивает малину и клубнику в России. Мы связываем каталог сортов, условия участка, материалы и опыт садоводов.</p></div></section>
+<section class="section wrap about-grid" id="redakciya"><div><span class="eyebrow">КТО ПИШЕТ</span><h2>Редакция МАЛИНЫ</h2><p>Материалы готовит редакция МАЛИНА — КЛУБНИКА. На странице каждого материала указаны дата публикации, дата проверки и использованные источники.</p></div><div><span class="eyebrow">КАК ПРОВЕРЯЕМ</span><h2>От записи к карточке</h2><p>Сверяем название и признаки с первоисточником. Для регионов отдельно показываем записи Госреестра и условия исследований. В карточке можно открыть исходную запись и проверить формулировку.</p></div><div><span class="eyebrow">КАК ОБНОВЛЯЕМ</span><h2>Следим за изменениями</h2><p>Каталог сейчас содержит ${varieties.length} карточек. У каждой есть дата проверки исходного описания; последнее обновление каталога — ${latestCatalogReview}. Новые данные добавляем вместе со ссылкой на источник.</p></div></section>
+<section class="section wrap about-grid"><div><span class="eyebrow">ЧТО ПОКАЗЫВАЕТ ПОДБОР</span><h2>Условия и основания</h2><p>Подбор помогает сравнить признаки сортов с выбранным городом и участком. Откройте карточку сорта, чтобы увидеть сведения Госреестра, исследование и опыт садоводов.</p><a class="text-link" href="/podbor/">Подобрать сорт ↗</a></div><div><span class="eyebrow">ИЗОБРАЖЕНИЯ</span><h2>Отличаем фото от графики</h2><p>Подпись к изображению сообщает, где фотография сорта, а где иллюстрация ягоды или посадки. Источник фотографий указываем в карточке или материале.</p></div><div><span class="eyebrow">ОПЫТ САДОВОДОВ</span><h2>Отдельно от описания</h2><p>Отзывы помогают увидеть практику выращивания в разных регионах. Они связаны с сортом, но не заменяют данные испытаний. Перейти к обсуждению можно из карточки сорта.</p><a class="text-link" href="/otzyvy/">Обсуждения сортов ↗</a></div></section>
+<section class="inline-cta wrap"><div><span class="eyebrow light">ПРОДОЛЖИТЬ</span><h2>Посмотрите, что уже можно сравнить.</h2></div><a class="btn btn-cream" href="/sorta/">Открыть каталог ${arrow}</a></section>`
+});
 
 const reviews = layout({
   title: 'Отзывы садоводов о сортах', description: 'Опыт выращивания малины и клубники по регионам России. Оставьте отзыв о сорте.',
@@ -334,6 +348,26 @@ function withEvidence(html, variety) {
     );
   }
   return section ? html.replace('<section class="section wrap source-panel">', `${section}<section class="section wrap source-panel">`) : html;
+}
+
+function withRelatedReading(html, variety) {
+  const score = candidate =>
+    Number(variety.fruiting !== 'unknown' && candidate.fruiting === variety.fruiting) * 2
+    + Number(variety.fruitColor && variety.fruitColor !== 'unknown' && candidate.fruitColor === variety.fruitColor) * 2
+    + Number(variety.harvestTiming !== 'unknown' && candidate.harvestTiming === variety.harvestTiming);
+  const similar = varieties.filter(candidate => candidate.slug !== variety.slug && candidate.cropKey === variety.cropKey)
+    .sort((left, right) => score(right) - score(left) || left.name.localeCompare(right.name, 'ru'))
+    .slice(0, 3);
+  const reading = articles.filter(article => article.relatedVarieties?.includes(variety.slug)).slice(0, 3);
+  const varietyLinks = similar.map(candidate => {
+    const image = cultivarImage(candidate);
+    return `<a class="variety-related-card" href="/sorta/${e(candidate.slug)}/"><img src="${image.src}" alt="${e(image.alt)}" width="${image.width}" height="${image.height}" loading="lazy" decoding="async"><span>${e(candidate.crop)}</span><strong>${e(candidate.name)}</strong></a>`;
+  }).join('');
+  const readingLinks = reading.length
+    ? `<div class="variety-related-reading"><h3>Читайте по теме</h3><ul>${reading.map(article => `<li><a href="${articlePath(article)}">${e(article.title)} ${arrow}</a></li>`).join('')}</ul></div>`
+    : '';
+  const section = `<section class="section wrap variety-related" aria-labelledby="variety-related-title"><div class="section-head"><div><span class="eyebrow">ПРОДОЛЖИТЬ ВЫБОР</span><h2 id="variety-related-title">Другие сорта для сравнения</h2><p>Откройте карточки ${variety.cropKey === 'raspberry' ? 'малины' : 'клубники'} и сравните признаки по источникам.</p></div><a class="text-link" href="/sorta/">Весь каталог ↗</a></div><div class="variety-related-grid">${varietyLinks}</div>${readingLinks}</section>`;
+  return html.replace('<section class="section wrap"><div class="next-row">', `${section}<section class="section wrap"><div class="next-row">`);
 }
 
 function withCultivarReviews(html, variety) {
@@ -452,7 +486,7 @@ const plantObservation = layout({
 });
 
 const rating = layout({ title: 'Рейтинг сортов малины и клубники — рекомендации садоводов', description: 'Какие сорта малины и клубники рекомендуют читатели. Голосование, число рекомендаций и прозрачная методика рейтинга.', path: '/rating/', active: 'rating', body: ratingBody(varieties, voteSnapshot, voteApiUrl) });
-const pages = new Map([['/', home], ['/malina/', withCropReading(cropPage('raspberry'), 'raspberry')], ['/klubnika/', withCropReading(cropPage('strawberry'), 'strawberry')], ['/sorta/', catalog], ...raspberryFacets.map(facet => [facet.path, raspberryFacetPage(facet)]), ['/sravnenie/malina/', raspberryComparison], ['/sravnenie/klubnika/', strawberryComparison], ['/rating/', rating], ['/podbor/', pickerPage], ['/instrumenty/', toolsIndex], ['/instrumenty/raschet-sazhencev/', plantingCalculator], ['/instrumenty/raschet-shpalery/', trellisCalculator], ['/instrumenty/raschet-kapelnogo-poliva/', dripCalculator], ['/instrumenty/ekonomika-posadki/', economicsCalculator], ['/instrumenty/obrezka-maliny/', pruningHelper], ['/instrumenty/glubina-posadki/', depthHelper], ['/instrumenty/vybor-mulchi/', mulchHelper], ['/instrumenty/kalendar-uhoda/', careCalendar], ['/instrumenty/proverka-rasteniya/', plantObservation], ['/instrumenty/zhurnal-uchastka/', growerJournal], ...cities.map(city => [`/podbor/${city.slug}/`, cityPickerPage(city)]), ['/otzyvy/', reviews], ['/goroda/', cityDirectory], ['/guide/', guide], ['/in-vitro/', inVitro], ['/proverka-partii/', lotChecklist], ['/about/', about], ['/zhurnal/', articleCollection()], ['/zhurnal/malina/', articleCollection('raspberry')], ['/zhurnal/klubnika/', articleCollection('strawberry')], ...varieties.map(v => [`/sorta/${v.slug}/`, withCultivarReviews(withCommerce(withEvidence(withCropReading(varietyPage(v), v.cropKey), v), v), v)]), ...articles.map(article => [articlePath(article), articlePage(article)])]);
+const pages = new Map([['/', home], ['/malina/', withCropReading(cropPage('raspberry'), 'raspberry')], ['/klubnika/', withCropReading(cropPage('strawberry'), 'strawberry')], ['/sorta/', catalog], ...raspberryFacets.map(facet => [facet.path, raspberryFacetPage(facet)]), ['/sravnenie/malina/', raspberryComparison], ['/sravnenie/klubnika/', strawberryComparison], ['/rating/', rating], ['/podbor/', pickerPage], ['/instrumenty/', toolsIndex], ['/instrumenty/raschet-sazhencev/', plantingCalculator], ['/instrumenty/raschet-shpalery/', trellisCalculator], ['/instrumenty/raschet-kapelnogo-poliva/', dripCalculator], ['/instrumenty/ekonomika-posadki/', economicsCalculator], ['/instrumenty/obrezka-maliny/', pruningHelper], ['/instrumenty/glubina-posadki/', depthHelper], ['/instrumenty/vybor-mulchi/', mulchHelper], ['/instrumenty/kalendar-uhoda/', careCalendar], ['/instrumenty/proverka-rasteniya/', plantObservation], ['/instrumenty/zhurnal-uchastka/', growerJournal], ...cities.map(city => [`/podbor/${city.slug}/`, cityPickerPage(city)]), ['/otzyvy/', reviews], ['/goroda/', cityDirectory], ['/guide/', guide], ['/in-vitro/', inVitro], ['/proverka-partii/', lotChecklist], ['/about/', about], ['/zhurnal/', articleCollection()], ['/zhurnal/malina/', articleCollection('raspberry')], ['/zhurnal/klubnika/', articleCollection('strawberry')], ...varieties.map(v => [`/sorta/${v.slug}/`, withCultivarReviews(withCommerce(withEvidence(withRelatedReading(withCropReading(varietyPage(v), v.cropKey), v), v), v), v)]), ...articles.map(article => [articlePath(article), articlePage(article)])]);
 for (const [path, html] of pages) { const dir = join(out, path); await mkdir(dir, { recursive: true }); await writeFile(join(dir, 'index.html'), withSiteBase(html)); }
 await mkdir(join(out, 'assets'), { recursive: true });
 await writeFile(join(out, 'assets', 'site.css'), withCssBase(await readFile(join(root, 'site', 'assets', 'site.css'), 'utf8')));
