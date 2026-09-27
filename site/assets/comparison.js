@@ -17,6 +17,7 @@ if (root) {
   const table = root.querySelector('.comparison-table');
   const tableWrap = root.querySelector('.comparison-table-wrap');
   const context = root.querySelector('#comparison-context');
+  const chooser = root.querySelector('#comparison-chooser');
   const siteBase = document.documentElement.dataset.siteBase || '';
   const verbForms = count => count === 1 ? 'сорт' : count > 1 && count < 5 ? 'сорта' : 'сортов';
   let notice = '';
@@ -131,6 +132,7 @@ if (root) {
     }
     table.hidden = selected.length < 2;
     tableWrap.hidden = selected.length < 2;
+    if (selected.length < 2 && chooser) chooser.open = true;
     const next = comparisonHref(cropKey, selection, location.search, siteBase);
     history.replaceState(null, '', next);
   }

@@ -402,7 +402,8 @@ test('сравнение сортов отдаёт полезный HTML, ист
   for (const [crop, slug] of [['малины', 'malina'], ['клубники', 'klubnika']]) {
     const html = await readFile(join(root, 'sravnenie', slug, 'index.html'), 'utf8');
     assert.match(html, new RegExp(`Сравнить сорта<br><em>${crop}\\.`));
-    assert.match(html, /ВЫБЕРИТЕ ОТ 2 ДО 4/);
+    assert.match(html, /<details class="comparison-chooser" id="comparison-chooser"><summary>Изменить сорта для сравнения<\/summary>/);
+    assert.ok(html.indexOf('id="comparison-rows"') < html.indexOf('id="comparison-chooser"'), 'результат сравнения расположен до длинного списка сортов');
     assert.match(html, /Сравните характеристики сортов и откройте источник в любой строке/);
     assert.match(html, /comparison-data/);
     assert.match(html, /comparison\.js/);
@@ -425,6 +426,7 @@ test('сравнение сортов отдаёт полезный HTML, ист
   assert.match(script, /resolveComparisonPlace/);
   assert.match(script, /Строка Госреестра/);
   assert.match(script, /item\.reviewedAt \|\| root\.dataset\.reviewedAt/);
+  assert.match(script, /selected\.length < 2 && chooser/);
   const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8').catch(() => '');
   if (process.env.SITE_URL) {
     assert.match(sitemap, /\/sravnenie\/malina\//);
