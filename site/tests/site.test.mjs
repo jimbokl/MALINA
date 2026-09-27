@@ -446,6 +446,22 @@ test('сравнение клубники показывает оба источ
   assert.match(html, /vniispk\.ru\/pages\/activities\/science-activities\/conference-2008\/publ-2008-25/);
 });
 
+test('карточки Русича и Зенги Зенганы показывают оба измерения урожайности с условиями и источниками', async () => {
+  const expected = {
+    rusich: ['21,6 т/га', '148,3 ц/га'],
+    'zenga-zengana': ['7,7 т/га', '127,5 ц/га']
+  };
+  for (const [slug, values] of Object.entries(expected)) {
+    const html = await readFile(join(root, 'sorta', slug, 'index.html'), 'utf8');
+    const facts = html.match(/<section class="section wrap facts-section">([\s\S]*?)<\/section>/)?.[1];
+    assert.ok(facts, slug);
+    assert.match(facts, /Результаты исследований/);
+    for (const value of values) assert.ok(facts.includes(value), `${slug}: ${value}`);
+    assert.match(facts, /Московская область указана в заголовке публикации/);
+    assert.match(facts, /vniispk\.ru\/pages\/activities\/science-activities\/conference-2008\/publ-2008-25/);
+  }
+});
+
 test('журнал содержит проверяемые статьи, авторство, ссылки и права на изображения', async () => {
   assert.ok(articles.length >= 10);
   const slugs = new Set();
