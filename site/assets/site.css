@@ -467,6 +467,10 @@
 .grower-journal-aside input{display:block;max-width:100%;font-size:12px}
 .grower-journal-aside>a{display:inline-block;border-bottom:1px solid;margin:0 0 18px;color:#36503b;font-size:14px;font-weight:800}
 .grower-journal-records{padding-top:0}
+.grower-journal-filter{display:flex;align-items:center;gap:12px;max-width:max-content;margin:0 0 22px;color:#36503b;font-size:14px;font-weight:800}
+.grower-journal-filter[hidden]{display:none}
+.grower-journal-filter select{min-width:155px;min-height:44px;padding:8px 12px;border:1px solid #cbd4c7;background:var(--paper);color:var(--ink);font:500 15px/1.2 var(--sans)}
+.grower-journal-filter select:focus-visible{outline:3px solid var(--wine);outline-offset:2px}
 .grower-journal-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
 .grower-journal-more{display:block;margin:24px auto 0;padding:13px 24px;background:var(--paper);border:1px solid var(--line);color:var(--wine);font:800 14px/1.2 var(--sans);cursor:pointer}
 .grower-journal-more[hidden]{display:none}
@@ -483,7 +487,7 @@
 .grower-journal-empty{grid-column:1/-1;margin:0;background:#e5eadb;padding:30px}
 .variety-next-actions{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
 .variety-next-actions .text-link{font-size:12px;font-weight:800;text-decoration:underline;text-underline-offset:4px}
-@media(max-width:760px){.grower-journal-hero{padding-bottom:22px}.grower-journal-layout{padding-top:18px}.grower-journal-main>h2{font-size:1.9rem;margin:5px 0 0}.grower-journal-main>.eyebrow,.grower-journal-main>p{display:none}.grower-journal-main form{margin-top:16px}.grower-journal-first{padding:16px}.grower-journal-layout,.grower-journal-list{grid-template-columns:1fr}.grower-journal-aside{order:2;padding:18px}.grower-journal-records{padding-top:0}.grower-journal-fields{grid-template-columns:1fr}.grower-journal-details{grid-template-columns:minmax(90px,.7fr) minmax(0,1.3fr)}.variety-next-actions{margin-top:20px}}
+@media(max-width:760px){.grower-journal-hero{padding-bottom:22px}.grower-journal-layout{padding-top:18px}.grower-journal-main>h2{font-size:1.9rem;margin:5px 0 0}.grower-journal-main>.eyebrow,.grower-journal-main>p{display:none}.grower-journal-main form{margin-top:16px}.grower-journal-first{padding:16px}.grower-journal-layout,.grower-journal-list{grid-template-columns:1fr}.grower-journal-aside{order:2;padding:18px}.grower-journal-records{padding-top:0}.grower-journal-filter{flex-wrap:wrap}.grower-journal-fields{grid-template-columns:1fr}.grower-journal-details{grid-template-columns:minmax(90px,.7fr) minmax(0,1.3fr)}.variety-next-actions{margin-top:20px}}
 @media(max-width:700px){.variety-hero-grid{grid-template-columns:minmax(0,1fr)}.variety-hero-grid>div,.variety-hero-art{min-width:0}.variety-hero h1{font-size:clamp(43px,10.8vw,58px);overflow-wrap:anywhere}}
 .facts-grid .facts-yield-list{grid-column:1/-1}
 .facts-yield-list ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;list-style:none;padding:0;margin:0}

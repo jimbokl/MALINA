@@ -358,6 +358,7 @@ test('журнал участка доступен из инструментов
   for (const name of ['crop', 'cultivar', 'region', 'season', 'plantingDate', 'conditions', 'winterDate', 'winterLoss', 'harvestDate', 'harvestKg', 'harvestMethod']) assert.match(page, new RegExp(`name="${name}"`));
   assert.match(page, /id="grower-journal-import"/);
   assert.match(page, /id="grower-journal-export"/);
+  assert.match(page, /id="grower-journal-filter"/);
   assert.match(page, /src="\/assets\/journal\.js\?v=[a-f0-9]+"/);
   await access(join(root, 'assets', 'journal-model.mjs'));
 });

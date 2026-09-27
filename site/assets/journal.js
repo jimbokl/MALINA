@@ -11,9 +11,11 @@ const list = document.querySelector('#grower-journal-list');
 const status = document.querySelector('#grower-journal-status');
 const count = document.querySelector('#grower-journal-count');
 const moreButton = document.querySelector('#grower-journal-more');
+const cropFilter = document.querySelector('#grower-journal-filter');
+const cropFilterLabel = document.querySelector('#grower-journal-filter-label');
 const importInput = document.querySelector('#grower-journal-import');
 
-if (form && list && status && count && moreButton && importInput) {
+if (form && list && status && count && moreButton && cropFilter && cropFilterLabel && importInput) {
   const params = new URLSearchParams(location.search);
   const title = document.querySelector('#grower-journal-form-title');
   const cancel = document.querySelector('#grower-journal-cancel');
@@ -70,22 +72,30 @@ if (form && list && status && count && moreButton && importInput) {
 
   function render() {
     list.replaceChildren();
+    const selectedCrop = cropFilter.value;
+    const filtered = selectedCrop === 'all' ? records : records.filter(record => record.crop === selectedCrop);
+    const showFilter = records.length > 4 && new Set(records.map(record => record.crop)).size > 1;
+    cropFilterLabel.hidden = !showFilter;
+    if (!showFilter && selectedCrop !== 'all') {
+      cropFilter.value = 'all';
+      return render();
+    }
     const lastTwo = records.length % 100;
     const lastDigit = records.length % 10;
     const countLabel = lastTwo >= 11 && lastTwo <= 14 ? 'записей' : lastDigit === 1 ? 'запись' : lastDigit >= 2 && lastDigit <= 4 ? 'записи' : 'записей';
-    count.textContent = records.length === 0 ? 'Записей пока нет' : `${records.length} ${countLabel}`;
+    count.textContent = records.length === 0 ? 'Записей пока нет' : `${records.length} ${countLabel}${selectedCrop === 'all' ? '' : ` · ${selectedCrop === 'raspberry' ? 'Малина' : 'Клубника'}: ${filtered.length}`}`;
     exportButton.disabled = records.length === 0;
-    const remaining = Math.max(0, records.length - visibleCount);
+    const remaining = Math.max(0, filtered.length - visibleCount);
     moreButton.hidden = remaining === 0;
     moreButton.textContent = `Показать ещё ${Math.min(8, remaining)}`;
-    if (records.length === 0) {
+    if (filtered.length === 0) {
       const empty = document.createElement('p');
       empty.className = 'grower-journal-empty';
-      empty.textContent = 'Начните с сорта, региона и сезона. Наблюдения можно дописать позже.';
+      empty.textContent = records.length === 0 ? 'Начните с сорта, региона и сезона. Наблюдения можно дописать позже.' : `Записей о ${selectedCrop === 'raspberry' ? 'малине' : 'клубнике'} пока нет.`;
       list.append(empty);
       return;
     }
-    for (const record of [...records].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).slice(0, visibleCount)) {
+    for (const record of [...filtered].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).slice(0, visibleCount)) {
       const article = document.createElement('article');
       article.className = 'grower-journal-entry';
       article.id = `journal-entry-${record.id}`;
@@ -231,6 +241,8 @@ if (form && list && status && count && moreButton && importInput) {
     render();
     list.children[firstNewRecord]?.focus();
   });
+
+  cropFilter.addEventListener('change', () => { visibleCount = 4; render(); });
 
   list.addEventListener('click', event => {
     const button = event.target.closest('button[data-action][data-id]');
