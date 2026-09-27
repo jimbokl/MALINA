@@ -19,7 +19,7 @@ if (root) {
       return !section || !section.hidden;
     });
     const checked = activeChecks.filter(item => item.checked).length;
-    status.textContent = `Отмечено ${checked} из ${activeChecks.length} пунктов. Это список документов для запроса, а не оценка качества партии.`;
+    status.textContent = `Отмечено ${checked} из ${activeChecks.length} вопросов продавцу.`;
     const missing = activeChecks.filter(item => !item.checked);
     request.value = missing.length
       ? `Здравствуйте! Рассматриваю посадочный материал (${stockLabels[kind.value]}). Пожалуйста, уточните и приложите подтверждение по следующим пунктам для конкретной партии:\n\n${missing.map(item => `• ${item.closest('label').querySelector('span').textContent}`).join('\n')}\n\nСпасибо!`

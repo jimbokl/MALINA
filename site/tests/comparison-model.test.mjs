@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { comparisonHref, cultivarHref, getComparisonFacts, parseSelection, toggleSelection } from '../assets/comparison-model.mjs';
+import { admissionForPlace, comparisonHref, cultivarHref, getComparisonFacts, getComparisonLabels, getComparisonYield, getComparisonYields, parseSelection, resolveComparisonPlace, toggleSelection } from '../assets/comparison-model.mjs';
 import { varieties } from '../data.mjs';
 
 test('общая ссылка сохраняет город и регион вместе с выбором сортов', () => {
@@ -38,4 +38,65 @@ test('выбор можно отменить, а неизвестные хара
   assert.equal(facts.at(-1)[1], varieties.find(item => item.slug === 'polka').note);
   const incomplete = getComparisonFacts({ ...varieties[0], period: null });
   assert.equal(incomplete[2][1], null);
+});
+
+test('подписи характеристик в таблице сравнения остаются полными на узком экране', () => {
+  assert.deepEqual(getComparisonLabels(), [
+    'Культура', 'Тип плодоношения', 'Период по источнику', 'Указанное место выращивания', 'Что сообщает источник', 'Урожайность в источнике'
+  ]);
+  assert.deepEqual(getComparisonLabels(true), [
+    'Культура', 'Тип плодоношения', 'Период по источнику', 'Указанное место выращивания', 'Что сообщает источник', 'Урожайность в источнике', 'Допуск в Госреестре'
+  ]);
+});
+
+test('сравнение показывает урожайность только по проверенному паспорту опыта и сохраняет его условия', () => {
+  const observation = {
+    trait_code: 'yield', value_number: 21.6, value_max: null, unit: 'т/га',
+    source_url: 'https://example.test/study', source_title: 'Сортоиспытание',
+    evidence: { period_from: '2006', period_to: '2007', place_text: 'Кокино, Брянская область', setting_text: 'Полевой опыт', source_locator: 'Таблица 2, строка сорта' }
+  };
+  assert.deepEqual(getComparisonYield({ observations: [observation] }), {
+    value: '21,6 т/га', context: 'Кокино, Брянская область · 2006–2007 · Полевой опыт',
+    sourceUrl: 'https://example.test/study', sourceTitle: 'Сортоиспытание', sourceLocator: 'Таблица 2, строка сорта'
+  });
+  assert.equal(getComparisonYield({ observations: [{ ...observation, evidence: null }] }), null);
+  assert.equal(getComparisonYield({ yieldObservation: { ...observation, evidence: null } }), null);
+  assert.equal(getComparisonYield({ observations: [{ ...observation, source_url: 'javascript:alert(1)' }] }), null);
+  for (const field of ['place_text', 'setting_text', 'source_locator']) {
+    assert.equal(getComparisonYield({ observations: [{ ...observation, evidence: { ...observation.evidence, [field]: null } }] }), null, field);
+  }
+  assert.equal(getComparisonYield({ observations: [{ ...observation, evidence: { ...observation.evidence, period_from: null, period_to: null } }] }), null);
+  assert.equal(getComparisonYield({ observations: [{ ...observation, evidence: { ...observation.evidence, period_from: ' ', period_to: null } }] }), null);
+  assert.equal(getComparisonYield({ observations: [{ ...observation, source_title: '' }] }), null);
+  assert.deepEqual(getComparisonYield({ observations: [
+    { ...observation, evidence: { ...observation.evidence, place_text: null } }, observation
+  ] }).value, '21,6 т/га');
+  const second = { ...observation, value_number: 148.3, unit: 'ц/га',
+    source_url: 'https://example.test/second-study',
+    evidence: { ...observation.evidence, place_text: 'Московская область' } };
+  assert.deepEqual(getComparisonYields({ yieldObservations: [observation, second] }).map(item => item.value), ['21,6 т/га', '148,3 ц/га']);
+  assert.equal(getComparisonYield({ yieldObservations: [observation, second] }).value, '21,6 т/га');
+});
+
+test('сравнение связывает город с точным регионом допуска, не подменяя конфликтующие места', () => {
+  const cities = [
+    { name: 'Тула', region: 'Тульская область' },
+    { name: 'Александровка', region: 'Тульская область' },
+    { name: 'Александровка', region: 'Самарская область' }
+  ];
+  const regions = [
+    { name_ru: 'Тульская область', admission_region_number: 3 },
+    { name_ru: 'Москва', admission_region_number: null }
+  ];
+  const tula = resolveComparisonPlace({ city: 'Тула', region: 'Тульская область', cities, regions });
+  assert.equal(tula.region.admission_region_number, 3);
+  assert.deepEqual(resolveComparisonPlace({ city: 'Неизвестный город', region: 'Тульская область', cities, regions }), {
+    city: null, region: null, reason: 'unknown-city'
+  });
+  assert.equal(resolveComparisonPlace({ city: 'Тула', region: 'Калужская область', cities, regions }).reason, 'conflicting-place');
+  assert.equal(resolveComparisonPlace({ city: 'Александровка', cities, regions }).reason, 'ambiguous-city');
+  assert.equal(resolveComparisonPlace({ city: 'александровка', region: 'Тульская область', cities, regions }).region.name_ru, 'Тульская область');
+  const moscow = resolveComparisonPlace({ region: 'Москва', cities, regions });
+  assert.equal(admissionForPlace({ admissions: [{ admission_region_number: 3 }] }, moscow), null);
+  assert.equal(admissionForPlace({ admissions: [{ admission_region_number: 3 }] }, tula).admission_region_number, 3);
 });

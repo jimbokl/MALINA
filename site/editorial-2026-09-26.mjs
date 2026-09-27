@@ -10,6 +10,7 @@ const refs = {
   blackBerry: { label: 'Penn State Extension · What is the Difference Between a Raspberry and a Blackberry?', url: 'https://extension.psu.edu/programs/master-gardener/counties/tioga/news/what-is-the-difference-between-a-raspberry-and-a-blackberry' },
   aphid: { label: 'University of Minnesota Extension · Aphids in home yards and gardens', url: 'https://extension.umn.edu/garden-and-home/yard-and-garden/yard-and-garden-insects/aphids' },
   sHome: { label: 'University of Minnesota Extension · Growing strawberries in the home garden', url: 'https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/growing-strawberries-in-the-home-garden' },
+  sColdFlower: { label: 'Yano et al. · Effect of Three-day Low-temperature Storage of Tray-grown Strawberry Plants on Emergence and Flowering of Primary Flower · Horticultural Research, 2024', url: 'https://www.jstage.jst.go.jp/article/hrj/23/4/23_271/_pdf' },
   sMaine: { label: 'David T. Handley, University of Maine Cooperative Extension · Bulletin #2067: Growing Strawberries', url: 'https://extension.umaine.edu/publications/2067e/' },
   sPlants: { label: 'University of Minnesota Extension · Strawberry varieties and purchasing plants', url: 'https://extension.umn.edu/agriculture/specialty-crops/commercial-fruit-production/strawberry-farming/strawberry-varieties-and-purchasing-plants' },
   sPlant: { label: 'University of Minnesota Extension · Planting a new strawberry field', url: 'https://extension.umn.edu/agriculture/specialty-crops/commercial-fruit-production/strawberry-farming/planting-a-new-strawberry-field' },
@@ -51,7 +52,9 @@ function article(data) {
   return {
     ...data,
     heroImage: releaseImages[data.slug],
-    publishedIso: '2026-09-26', reviewedIso: '2026-09-26', reviewedAt: '26.09.2026',
+    publishedIso: data.publishedIso ?? '2026-09-26',
+    reviewedIso: data.reviewedIso ?? '2026-09-26',
+    reviewedAt: data.reviewedAt ?? '26.09.2026',
     method: data.method ?? 'Редакция сопоставила рекомендации указанных источников и подготовила практические шаги. Источники проверены 26.09.2026.',
     sources: keys.map(key => refs[key]),
     sections: data.sections.map(([heading, first, second, citations]) => ({ heading, paragraphs: [first, second], sources: citations.map(key => keys.indexOf(key)) })),
@@ -87,13 +90,15 @@ export const newArticles20260926 = [
   article({
     slug: 'klubnika-frigo-chto-proverit', crop: 'strawberry', category: 'Посадочный материал',
     title: 'Рассада клубники Frigo: что означает охлаждение и что спросить у продавца',
-    description: 'Frigo — хранившиеся в холоде спящие растения клубники. Какие документы и признаки проверить при покупке.',
-    lead: 'Frigo описывает способ подготовки и хранения спящих растений. Это не название сорта и не доказательство здоровья конкретной партии.',
-    takeaway: 'Попросите сорт, происхождение, формат, историю хранения и состояние партии. Маркировка A+ или WB требует определения стандарта продавца и не заменяет проверку качества.',
+    description: 'Что означает рассада клубники Frigo, как срок хранения связан со сроком урожая, какие фото и отзывы садоводов смотреть и что спросить у продавца.',
+    lead: 'Frigo — спящие растения клубники с открытыми корнями, которые хранят охлаждёнными до высадки. Для планирования первого сбора важны сорт и состояние цветочной почки, а не одна цифра срока хранения.',
+    takeaway: 'Уточните сорт, класс по стандарту продавца, состояние цветочной почки и историю хранения конкретной партии. Эти сведения помогут сопоставить срок поставки со сроком первого сбора.',
+    reviewedIso: '2026-09-27', reviewedAt: '27.09.2026',
+    method: 'Редакция сопоставила рекомендации указанных источников и подготовила практические шаги. Источники проверены 27.09.2026.',
     sections: [
-      ['Что значит Frigo', 'В руководстве University of Minnesota спящие растения с открытыми корнями рассматриваются отдельно от растущей рассады. Их можно держать охлаждёнными до посадки при подходящих условиях, но после получения корни нельзя оставлять сохнуть.', 'Слово Frigo не сообщает, заражена ли партия вирусами, соответствует ли заявленному сорту и как она перенесла транспортировку. Эти вопросы требуют собственных документов и осмотра.', ['sPlants', 'sPlant']],
-      ['Как читать класс на этикетке', 'Обозначения A+, WB и похожие классы применяются в торговле, но без указанного стандарта, измеряемого признака и партии сравнение бессмысленно. Попросите поставщика расшифровать класс и прислать спецификацию.', 'На сбор влияют сорт, сохранность корней, условия посадки и дальнейший уход.', ['sPlants', 'sPlant']],
-      ['Что проверить при получении', 'Сверьте название сорта на документах и упаковке, число растений, состояние корней и признаки пересыхания или плесени. Запишите дату получения и сразу согласуйте условия хранения и срок посадки с поставщиком.', 'Если документов о фитосанитарном статусе нет, не подменяйте их словом «сертифицировано» в объявлении. При сомнениях отделите покупку небольшой партии для испытания от большой закладки.', ['sPlants', 'sPlant']]
+      ['Что значит Frigo', 'Frigo — формат спящей рассады клубники с открытыми корнями. До высадки растения хранят охлаждёнными; после получения держите корни влажными и следуйте согласованному с поставщиком режиму хранения и посадки.', 'В заказе зафиксируйте сорт, класс рассады, количество растений и номер или дату партии. Эти данные нужны, чтобы сопоставить документы, упаковку и полученные растения.', ['sPlants', 'sPlant']],
+      ['Почему срок хранения не задаёт дату урожая', 'Срок хранения и срок до первого сбора — разные параметры. На формирование первого цветка влияет состояние растения и цветочной почки. В японском опыте Yano и коллег с горшечной рассадой момент трёхдневного охлаждения относительно естественного формирования почки менял сроки появления и цветения первого цветка; подходящий момент различался у изученных сортов.', 'Попросите продавца указать сорт, тип рассады, состояние цветочной почки перед хранением, дату подъёма и режим хранения. Затем уточните рекомендуемые срок высадки и условия выращивания для этой партии.', ['sColdFlower', 'sPlants']],
+      ['Как читать класс на этикетке и проверить партию', 'Попросите расшифровать обозначения A+, WB и другие классы: по какому стандарту их присваивают, какой размер корневой шейки соответствует классу и где указана эта характеристика в документах.', 'При получении сверьте сорт, класс, количество и данные партии с накладной и упаковкой. Осмотрите корни и точку роста, запишите дату получения и обсудите с поставщиком срок высадки.', ['sPlants', 'sPlant']]
     ], relatedArticles: ['kak-vybrat-sazhentsy-klubniki', 'posadka-klubniki']
   }),
   article({

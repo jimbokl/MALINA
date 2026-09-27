@@ -288,6 +288,25 @@ fn public_snapshot(connection: &Connection, dir: &Path) -> Result<Value> {
             });
         }
     }
+    let mut agronomic_claims = query_objects(
+        connection,
+        "SELECT * FROM public_agronomic_claims ORDER BY crop_slug, topic_code, id",
+    )?
+    .into_iter()
+    .map(Value::Object)
+    .collect::<Vec<_>>();
+    let mut claim_targets = HashMap::new();
+    for (index, claim) in agronomic_claims.iter_mut().enumerate() {
+        let object = claim
+            .as_object_mut()
+            .ok_or_else(|| anyhow!("public agronomic claim is not an object"))?;
+        let id = object
+            .get("id")
+            .and_then(Value::as_i64)
+            .ok_or_else(|| anyhow!("public agronomic claim missing id"))?;
+        object.insert("evidence".into(), Value::Null);
+        claim_targets.insert(id, index);
+    }
     for mut passport in query_objects(
         connection,
         "SELECT * FROM public_evidence_passports ORDER BY id",
@@ -298,6 +317,16 @@ fn public_snapshot(connection: &Connection, dir: &Path) -> Result<Value> {
         let recommendation_id = passport
             .remove("recommendation_id")
             .and_then(|value| value.as_i64());
+        let claim_id = passport
+            .remove("claim_id")
+            .and_then(|value| value.as_i64());
+        if let Some(index) = claim_id.and_then(|id| claim_targets.get(&id)) {
+            agronomic_claims[*index]
+                .as_object_mut()
+                .ok_or_else(|| anyhow!("public agronomic claim is not an object"))?
+                .insert("evidence".into(), Value::Object(passport));
+            continue;
+        }
         let target = observation_id
             .map(|id| ("observations", id))
             .or_else(|| recommendation_id.map(|id| ("recommendations", id)));
@@ -328,6 +357,7 @@ fn public_snapshot(connection: &Connection, dir: &Path) -> Result<Value> {
         "crops": query_objects(connection, "SELECT slug, name_ru FROM crops ORDER BY id")?,
         "regions": query_objects(connection, "SELECT r.code, r.name_ru, m.admission_region_number, m.admission_region_name, m.map_source_url FROM regions r LEFT JOIN public_admission_regions m ON m.code = r.code ORDER BY r.id")?,
         "cultivars": cultivars,
+        "agronomic_claims": agronomic_claims,
     }))
 }
 
@@ -528,10 +558,19 @@ mod tests {
     #[test]
     fn migration_is_idempotent_and_export_has_contract() {
         let (_temp, mut connection) = setup();
+        let passport_count_before: i64 = connection
+            .query_row("SELECT COUNT(*) FROM public_evidence_passports", [], |row| row.get(0))
+            .unwrap();
         migrate(&mut connection, Path::new(MIGRATIONS_DIR)).unwrap();
         let snapshot = public_snapshot(&connection, Path::new(MIGRATIONS_DIR)).unwrap();
         assert_eq!(snapshot["schema_version"], 1);
         assert!(snapshot["cultivars"].is_array());
+        assert!(snapshot["agronomic_claims"].as_array().unwrap().is_empty());
+        let passport_count: i64 = connection
+            .query_row("SELECT COUNT(*) FROM public_evidence_passports", [], |row| row.get(0))
+            .unwrap();
+        assert!(passport_count >= 17, "the legacy published evidence passports must remain available");
+        assert_eq!(passport_count, passport_count_before, "reapplying migrations must not duplicate evidence passports");
         assert_eq!(snapshot["crops"].as_array().unwrap().len(), 2);
         assert!(snapshot["cultivars"][0]["offers"]
             .as_array()
@@ -541,6 +580,52 @@ mod tests {
             .as_array()
             .unwrap()
             .is_empty());
+    }
+
+    #[test]
+    fn new_state_register_admissions_export_as_admissions_not_recommendations() {
+        let (_temp, connection) = setup();
+        let snapshot = public_snapshot(&connection, Path::new(MIGRATIONS_DIR)).unwrap();
+        let expected = [
+            ("bereginya", "9253565", vec![3], 414),
+            ("kleri", "9463230", vec![6], 414),
+            ("honey", "9359371", vec![2, 3, 5, 6], 415),
+            ("tsaritsa", "9705623", vec![3], 415),
+            ("karamelka", "8757408", (1..=12).collect(), 418),
+            ("kimberli", "9154051", vec![3, 5], 414),
+            ("samohval", "8456205", (1..=12).collect(), 419),
+        ];
+
+        for (slug, code, zones, page) in expected {
+            let cultivar = snapshot["cultivars"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|item| item["slug"] == slug)
+                .unwrap();
+            let admissions = cultivar["admissions"].as_array().unwrap();
+            let actual_zones = admissions
+                .iter()
+                .map(|item| item["admission_region_number"].as_i64().unwrap())
+                .collect::<Vec<_>>();
+            assert_eq!(actual_zones, zones, "unexpected admission zones for {slug}");
+            assert!(admissions.iter().all(|item| {
+                item["registry_entry_code"] == code
+                    && item["edition_as_of"] == "2024-05-31"
+                    && item["source_pdf_page"] == page
+                    && item["source_url"]
+                        .as_str()
+                        .is_some_and(|url| url.contains("gossortrf.ru/upload/"))
+            }));
+            let recommendations = cultivar["recommendations"].as_array().unwrap();
+            if slug == "samohval" {
+                assert_eq!(recommendations.len(), 1);
+                assert_eq!(recommendations[0]["region_code"], "leningrad-oblast");
+                assert_eq!(recommendations[0]["basis_kind"], "regional_trial");
+            } else {
+                assert!(recommendations.is_empty());
+            }
+        }
     }
 
     #[test]
@@ -625,6 +710,41 @@ mod tests {
             .unwrap();
         assert_eq!(observation["evidence"]["source_locator"], "section 2");
         assert!(observation["evidence"].get("internal_sample_ref").is_none());
+    }
+
+    #[test]
+    fn general_agronomic_claim_exports_only_with_verified_source_and_passport() {
+        let (_temp, connection) = setup();
+        connection.execute(
+            "INSERT INTO sources(source_key,kind,title,author_or_org,url,accessed_on,rights_note,review_status,reviewed_by,reviewed_at) VALUES ('general-claim-source','document','Raspberry field guide','Research institute','https://example.org/field-guide','2026-09-27','Brief factual paraphrase and citation only','verified','editor','2026-09-27 12:00:00')",
+            [],
+        ).unwrap();
+        let source_id = connection.last_insert_rowid();
+        let crop_id: i64 = connection.query_row(
+            "SELECT id FROM crops WHERE slug='raspberry'",
+            [],
+            |row| row.get(0),
+        ).unwrap();
+        connection.execute(
+            "INSERT INTO agronomic_claims(crop_id,topic_code,statement,source_id,editorial_status,reviewed_by,reviewed_at,published_at) VALUES (?1,'pruning','A general raspberry claim.',?2,'published','editor','2026-09-27 12:00:00','2026-09-27 12:00:00')",
+            params![crop_id, source_id],
+        ).unwrap();
+        let claim_id = connection.last_insert_rowid();
+        connection.execute(
+            "INSERT INTO evidence_passports(claim_id,evidence_kind,subject_description,internal_sample_ref,source_locator,applicability_note,limitations_note) VALUES (?1,'published_study','Raspberry pruning evidence','private/sample-1','p. 12','Applies to the stated study conditions','Not a regional cultivar trial')",
+            [claim_id],
+        ).unwrap();
+        let snapshot = public_snapshot(&connection, Path::new(MIGRATIONS_DIR)).unwrap();
+        assert!(snapshot["agronomic_claims"].as_array().unwrap().is_empty());
+        connection.execute(
+            "UPDATE evidence_passports SET review_status='verified',reviewed_by='editor',reviewed_at='2026-09-27 12:00:00' WHERE claim_id=?1",
+            [claim_id],
+        ).unwrap();
+        let claim = &public_snapshot(&connection, Path::new(MIGRATIONS_DIR)).unwrap()["agronomic_claims"][0];
+        assert_eq!(claim["crop_slug"], "raspberry");
+        assert_eq!(claim["topic_code"], "pruning");
+        assert_eq!(claim["evidence"]["source_locator"], "p. 12");
+        assert!(claim["evidence"].get("internal_sample_ref").is_none());
     }
 
     #[test]
@@ -771,7 +891,8 @@ mod tests {
     #[test]
     fn approved_reviews_are_only_in_private_view_not_pages_snapshot() {
         let (_temp, connection) = setup();
-        let body = "Ягоды \"вкусные\" \\ тест\n</script><script>alert(1)</script>";
+        let private_marker = "MALINA_PRIVATE_REVIEW_SENTINEL_20260927_83d59f";
+        let body = format!("{private_marker} \"вкусные\" \\ тест\n</script><script>alert(1)</script>");
         connection.execute(
             "INSERT INTO reviews(display_name, region, cultivar_name, body, consent_processing, processing_consented_at) VALUES (?1, ?2, ?3, ?4, 1, '2026-09-24 12:00:00')",
             params!["Посетитель-X", "Калининградская область", "Мой сорт", body],
@@ -794,7 +915,7 @@ mod tests {
         let json_text = serde_json::to_string(&snapshot).unwrap();
         assert!(snapshot.get("reviews").is_none());
         assert!(!json_text.contains("Посетитель-X"));
-        assert!(!json_text.contains("Ягоды"));
+        assert!(!json_text.contains(private_marker));
         connection
             .execute("DELETE FROM reviews WHERE id=?1", [review_id])
             .unwrap();

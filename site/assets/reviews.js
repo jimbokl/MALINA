@@ -31,8 +31,7 @@
 
   if (sort || placeLabel) {
     filterLabel.hidden = false;
-    filterLabel.textContent = [sort ? 'Сорт: ' + sort : '', placeLabel].filter(Boolean).join(' · ')
-      + (placeLabel ? '. Место указано автором корневого отзыва; ответы из других мест сохранены.' : '');
+    filterLabel.textContent = [sort ? 'Сорт: ' + sort : '', placeLabel].filter(Boolean).join(' · ');
   }
   if (sort) form.elements.cultivar_name.value = sort;
   if (city || region) form.elements.region.value = city || region;
@@ -53,7 +52,6 @@
     control.required = true;
     control.maxLength = name === 'body' ? 2000 : name === 'region' ? 100 : 80;
     if (tag === 'textarea') {
-      control.minLength = 20;
       control.rows = 4;
       control.placeholder = 'Добавьте вопрос, аргумент или собственный опыт';
     } else {

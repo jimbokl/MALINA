@@ -24,16 +24,17 @@ if (output && form) {
       input.disabled = !input.checked && (card.hidden || (crop && card.dataset.crop !== crop) || count >= MAX_COMPARISON);
     }
     status.textContent = notice || (count === 0
-      ? 'Отметьте от двух до четырёх сортов одной культуры, чтобы сравнить их по источникам.'
+      ? 'Отметьте 2–4 сорта для сравнения.'
       : count === 1
         ? 'Выбран один сорт. Добавьте ещё один той же культуры.'
         : `Выбрано ${count} ${count < 5 ? 'сорта' : 'сортов'}. Сравнение сохранит выбранные сорта.`);
     link.hidden = count < 2;
     if (count >= 2) {
       const params = new URLSearchParams();
-      const region = form.elements.region.value.trim();
+      const region = form.dataset.activeRegion || form.elements.region.value.trim();
       if (region) params.set('region', region);
-      if (cityContext && !cityContext.hidden && form.dataset.city) params.set('city', form.dataset.city);
+      const city = form.dataset.activeCity || (cityContext && !cityContext.hidden ? form.dataset.city : '');
+      if (city) params.set('city', city);
       const slugs = selected.map(input => input.value);
       link.href = comparisonHref(crop, slugs, params.toString(), siteBase);
       link.textContent = `Сравнить ${count} сорта ↗`;
@@ -50,6 +51,12 @@ if (output && form) {
     for (const input of choices) {
       if (input.closest('.variety-card').hidden) input.checked = false;
     }
+    notice = '';
+    update();
+  });
+
+  form.addEventListener('picker:location-change', () => {
+    for (const input of choices) input.checked = false;
     notice = '';
     update();
   });

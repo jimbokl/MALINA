@@ -11,6 +11,7 @@ import os
 import sqlite3
 import sys
 import tempfile
+from contextlib import closing
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -91,6 +92,48 @@ def check(connection: sqlite3.Connection) -> dict[str, object]:
     if integrity != "ok" or foreign_keys:
         raise ValueError(f"Database check failed: integrity={integrity}, foreign_keys={foreign_keys}")
     return {"migrations": sorted(applied), "integrity": integrity, "foreign_key_errors": 0}
+
+
+def check_snapshot(connection: sqlite3.Connection) -> dict[str, object]:
+    """Validate a restorable MALINA database without requiring current migrations."""
+    applied = applied_migrations(connection)
+    if not applied:
+        raise ValueError("Snapshot has no MALINA migrations")
+    for version, checksum in applied.items():
+        path = MIGRATIONS / f"{version}.sql"
+        if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != checksum:
+            raise ValueError(f"Snapshot migration is unavailable or changed: {version}")
+    integrity = connection.execute("PRAGMA integrity_check").fetchone()[0]
+    foreign_keys = connection.execute("PRAGMA foreign_key_check").fetchall()
+    if integrity != "ok" or foreign_keys:
+        raise ValueError(f"Snapshot check failed: integrity={integrity}, foreign_keys={foreign_keys}")
+    return {"migrations": len(applied), "integrity": integrity, "foreign_key_errors": 0}
+
+
+def copy_database_snapshot(source: Path, target: Path) -> dict[str, object]:
+    """Use SQLite's live backup API, then publish a checked file without overwrite."""
+    if not source.is_file():
+        raise ValueError(f"Database does not exist: {source}")
+    if source.resolve() == target.resolve():
+        raise ValueError("Source and target must differ")
+    if any(path.exists() or path.is_symlink() for path in (
+        target, Path(f"{target}-wal"), Path(f"{target}-shm")
+    )):
+        raise ValueError(f"Target already exists: {target}")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(
+        dir=target.parent, prefix=".malina-snapshot-", suffix=".sqlite3", delete=False
+    ) as handle:
+        temporary = Path(handle.name)
+    try:
+        with closing(connect(source)) as original, closing(connect(temporary)) as snapshot:
+            original.backup(snapshot)
+            result = check_snapshot(snapshot)
+        # A hard link is atomic and fails if another process created the target.
+        os.link(temporary, target)
+        return result
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def rows_from_csv(path: Path | None, required: set[str]) -> list[dict[str, str]]:
@@ -235,10 +278,20 @@ def public_snapshot(connection: sqlite3.Connection) -> dict[str, object]:
                 by_id[cultivar_id][key].append(item)
     for cultivar in cultivars:
         cultivar["admissions"].sort(key=lambda item: item["admission_region_number"])
+    agronomic_claims = [dict(row) for row in connection.execute(
+        "SELECT * FROM public_agronomic_claims ORDER BY crop_slug, topic_code, id"
+    )]
+    claims_by_id = {row["id"]: row for row in agronomic_claims}
     for row in connection.execute("SELECT * FROM public_evidence_passports ORDER BY id"):
         item = dict(row)
         observation_id = item.pop("observation_id")
         recommendation_id = item.pop("recommendation_id")
+        claim_id = item.pop("claim_id")
+        if claim_id is not None:
+            claim = claims_by_id.get(claim_id)
+            if claim is not None:
+                claim["evidence"] = item
+            continue
         key = ("observations", observation_id) if observation_id is not None else ("recommendations", recommendation_id)
         target = evidence_targets.get(key)
         if target is not None:
@@ -255,6 +308,7 @@ def public_snapshot(connection: sqlite3.Connection) -> dict[str, object]:
             "ON m.code = r.code ORDER BY r.id"
         )],
         "cultivars": cultivars,
+        "agronomic_claims": agronomic_claims,
     }
 
 
@@ -346,9 +400,10 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=(
         "init", "check", "import-drafts", "export-public", "export-reviews", "export-votes",
-        "review-queue", "review-decide",
+        "review-queue", "review-decide", "backup", "restore",
     ))
     parser.add_argument("--db", type=Path, default=DEFAULT_DB)
+    parser.add_argument("--source", type=Path)
     parser.add_argument("--sources", type=Path)
     parser.add_argument("--cultivars", type=Path)
     parser.add_argument("--observations", type=Path)
@@ -358,6 +413,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--reviewer")
     args = parser.parse_args(argv)
     try:
+        if args.command == "backup":
+            if args.out == "-":
+                raise ValueError("backup requires --out PATH")
+            result = copy_database_snapshot(args.db, Path(args.out))
+            print(json.dumps({"backup": args.out, **result}, ensure_ascii=False))
+            return 0
+        if args.command == "restore":
+            if args.source is None:
+                raise ValueError("restore requires --source PATH")
+            result = copy_database_snapshot(args.source, args.db)
+            print(json.dumps({"restored": str(args.db), **result}, ensure_ascii=False))
+            return 0
         with connect(args.db, create=args.command == "init") as connection:
             if args.command == "init":
                 migrate(connection)

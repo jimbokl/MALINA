@@ -52,9 +52,9 @@ test('region is explicitly opt-in and combined with cultivar, rather than bypass
   assert.deepEqual(ids(filterReviewThreads(reviews, { region: 'Калининградская область' })), [2, 3, 5]);
   assert.deepEqual(ids(filterReviewThreads(reviews, { city: 'Омск', cultivar: 'Полька' })), []);
   assert.equal(describeReviewPlace({ city: 'Калининград', region: 'Калининградская область' }),
-    'Город: Калининград или регион: Калининградская область (целиком)');
+    'Место: Калининград или Калининградская область');
   assert.equal(describeReviewPlace({ city: 'Москва', region: 'Москва' }), 'Место: Москва');
-  assert.equal(describeReviewPlace({ region: 'Московская область' }), 'Регион: Московская область');
+  assert.equal(describeReviewPlace({ region: 'Московская область' }), 'Место: Московская область');
 });
 
 test('orphaned and cyclic replies are not promoted to roots; input order and data stay intact', () => {

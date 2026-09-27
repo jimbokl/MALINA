@@ -22,9 +22,9 @@ export function matchesReviewPlace(place, { city = '', region = '' } = {}) {
 
 export function describeReviewPlace({ city = '', region = '' } = {}) {
   if (city && region && normalizeReviewPlace(city) !== normalizeReviewPlace(region)) {
-    return `Город: ${city} или регион: ${region} (целиком)`;
+    return `Место: ${city} или ${region}`;
   }
-  return city ? `Место: ${city}` : region ? `Регион: ${region}` : '';
+  return city || region ? `Место: ${city || region}` : '';
 }
 
 // Geography belongs to the root experience. Replies retain their original place

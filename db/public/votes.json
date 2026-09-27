@@ -9,6 +9,14 @@
       "count": 0
     },
     {
+      "cultivar_slug": "albion",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "alfa",
+      "count": 0
+    },
+    {
       "cultivar_slug": "all-gold",
       "count": 0
     },
@@ -22,6 +30,10 @@
     },
     {
       "cultivar_slug": "aprika",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "arisha",
       "count": 0
     },
     {
@@ -45,7 +57,23 @@
       "count": 0
     },
     {
+      "cultivar_slug": "borovitskaya",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "brilla",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "brilliantovaya",
+      "count": 0
+    },
+    {
       "cultivar_slug": "bryanskoe-divo",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "cabrillo",
       "count": 0
     },
     {
@@ -54,6 +82,18 @@
     },
     {
       "cultivar_slug": "caroline",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "darenka",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "desnyanka-kokinskaya",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "divnaya",
       "count": 0
     },
     {
@@ -66,6 +106,10 @@
     },
     {
       "cultivar_slug": "elan",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "elsanta",
       "count": 0
     },
     {
@@ -93,7 +137,19 @@
       "count": 0
     },
     {
+      "cultivar_slug": "honey",
+      "count": 0
+    },
+    {
       "cultivar_slug": "joan-j",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "karamelka",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "kimberli",
       "count": 0
     },
     {
@@ -101,11 +157,31 @@
       "count": 0
     },
     {
+      "cultivar_slug": "kokinskaya-rannyaya",
+      "count": 0
+    },
+    {
       "cultivar_slug": "krasa-rossii",
       "count": 0
     },
     {
+      "cultivar_slug": "lyachka",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "magnus",
+      "count": 0
+    },
+    {
       "cultivar_slug": "malga",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "malvina",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "maroseyka",
       "count": 0
     },
     {
@@ -121,11 +197,19 @@
       "count": 0
     },
     {
+      "cultivar_slug": "nashe-podmoskove",
+      "count": 0
+    },
+    {
       "cultivar_slug": "nova",
       "count": 0
     },
     {
       "cultivar_slug": "oranzhevoe-chudo",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "patritsiya",
       "count": 0
     },
     {
@@ -138,6 +222,10 @@
     },
     {
       "cultivar_slug": "podarok-kashinu",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "pohvalinka",
       "count": 0
     },
     {
@@ -157,7 +245,27 @@
       "count": 0
     },
     {
+      "cultivar_slug": "pshehiba",
+      "count": 0
+    },
+    {
       "cultivar_slug": "rubinovoe-ozherele",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "rumba",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "rusich",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "salyut",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "samohval",
       "count": 0
     },
     {
@@ -169,7 +277,23 @@
       "count": 0
     },
     {
+      "cultivar_slug": "slavutich",
+      "count": 0
+    },
+    {
       "cultivar_slug": "solnyshko",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "solovushka",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "sudarushka",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "tarusa",
       "count": 0
     },
     {
@@ -177,7 +301,27 @@
       "count": 0
     },
     {
+      "cultivar_slug": "tsarskoselskaya",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "vityaz",
+      "count": 0
+    },
+    {
       "cultivar_slug": "yellow-antwerp",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "yubileinaya-kulikova",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "zenga-zengana",
+      "count": 0
+    },
+    {
+      "cultivar_slug": "zenit",
       "count": 0
     },
     {
@@ -201,5 +345,5 @@
       "count": 0
     }
   ],
-  "as_of": "2026-09-26T18:43:45Z"
+  "as_of": "2026-09-27T01:30:47.553Z"
 }

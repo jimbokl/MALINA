@@ -43,7 +43,7 @@ if (form && results && memo) {
     opener = button;
     const name = card.querySelector('h3 a').textContent.trim();
     const crop = card.dataset.crop;
-    const sourceHref = card.querySelector('.picker-match a').href;
+    const sourceHref = card.querySelector('.catalog-facts a[href]')?.href;
     const cultivarHref = card.querySelector('h3 a').href;
     const facts = memo.querySelector('#picker-memo-facts');
     const steps = memo.querySelector('#picker-memo-steps');
@@ -86,7 +86,7 @@ if (form && results && memo) {
     }
 
     addLink('Актуальная карточка сорта', cultivarHref);
-    if (!/(^|\.)rhs\.org\.uk$/i.test(new URL(sourceHref).hostname)) addLink('Первоисточник описания сорта', sourceHref);
+    if (sourceHref && !/(^|\.)rhs\.org\.uk$/i.test(new URL(sourceHref).hostname)) addLink('Первоисточник описания сорта', sourceHref);
     addLink('Рекомендации Россельхозцентра по культуре', crop === 'raspberry'
       ? 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/tsentralnyy-okrug/tulskaya-oblast/obrezka-maliny-osenyu/'
       : 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/sibirskiy/omskaya-oblast/osennyaya-posadka-sadovoy-zemlyaniki/');

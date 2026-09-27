@@ -1,8 +1,8 @@
 use std::{
     net::SocketAddr,
     path::PathBuf,
-    sync::{Arc, OnceLock},
-    time::Duration,
+    sync::{Arc, Mutex, OnceLock},
+    time::{Duration, Instant},
 };
 
 use anyhow::{bail, Context, Result};
@@ -26,12 +26,48 @@ mod votes;
 
 const POLICY_VERSION: &str = "review-publication-v3";
 const MAX_REVIEW_JSON_BYTES: usize = 8192;
+const REVIEW_POST_LIMIT: u32 = 60;
+const REVIEW_POST_WINDOW: Duration = Duration::from_secs(60);
+
+#[derive(Clone)]
+struct ReviewLimiter {
+    window: Arc<Mutex<(Instant, u32)>>,
+    limit: u32,
+}
+
+impl ReviewLimiter {
+    fn new(limit: u32) -> Self {
+        Self {
+            window: Arc::new(Mutex::new((Instant::now(), 0))),
+            limit,
+        }
+    }
+
+    fn check_at(&self, now: Instant) -> Result<(), (StatusCode, Json<Value>)> {
+        let mut window = self.window.lock().map_err(|_| server_error())?;
+        if now.duration_since(window.0) >= REVIEW_POST_WINDOW {
+            *window = (now, 0);
+        }
+        if window.1 >= self.limit {
+            return Err(review_rate_error());
+        }
+        window.1 += 1;
+        Ok(())
+    }
+}
+
+impl Default for ReviewLimiter {
+    fn default() -> Self {
+        Self::new(REVIEW_POST_LIMIT)
+    }
+}
 
 #[derive(Clone)]
 struct AppState {
     db_path: Arc<PathBuf>,
     moderator: Arc<dyn Moderator>,
     moderation_slots: Arc<Semaphore>,
+    review_limiter: ReviewLimiter,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -304,9 +340,6 @@ fn normalize_submission(mut s: Submission) -> Option<Submission> {
         _ => return None,
     }
     s.body = validated_field(&s.body, 3000)?;
-    if s.body.chars().count() < 20 {
-        return None;
-    }
     Some(s)
 }
 
@@ -446,6 +479,13 @@ async fn submit_review(
             Json(json!({"error": "Удалите из отзыва контакты, ссылки и точный адрес."})),
         ));
     }
+    // Admit at most four active submissions and a bounded number per minute.
+    // This is global: no IP address or browser identifier is stored.
+    let _slot = state
+        .moderation_slots
+        .try_acquire()
+        .map_err(|_| review_rate_error())?;
+    state.review_limiter.check_at(Instant::now())?;
     let parent_context = if let Some(parent_id) = submission.parent_id {
         let db_path = state.db_path.clone();
         let parent = tokio::task::spawn_blocking(move || -> Result<Option<(String, String)>> {
@@ -492,11 +532,6 @@ async fn submit_review(
     } else {
         None
     };
-    let _slot = state
-        .moderation_slots
-        .acquire()
-        .await
-        .map_err(|_| server_error())?;
     let decision = state
         .moderator
         .classify(&submission.body, parent_context.as_deref())
@@ -598,6 +633,13 @@ fn server_error() -> (StatusCode, Json<Value>) {
     )
 }
 
+fn review_rate_error() -> (StatusCode, Json<Value>) {
+    (
+        StatusCode::TOO_MANY_REQUESTS,
+        Json(json!({"error": "Сейчас много отзывов. Повторите попытку через минуту."})),
+    )
+}
+
 fn app(state: AppState, allowed_origins: Vec<HeaderValue>) -> Router {
     let cors = CorsLayer::new()
         .allow_origin(AllowOrigin::list(allowed_origins))
@@ -673,6 +715,7 @@ async fn main() -> Result<()> {
         db_path: Arc::new(db_path),
         moderator: Arc::new(JevModerator::new(api_key)?),
         moderation_slots: Arc::new(Semaphore::new(4)),
+        review_limiter: ReviewLimiter::default(),
     };
     let listener = tokio::net::TcpListener::bind(bind_addr).await?;
     axum::serve(listener, app(state, origins)).await?;
@@ -699,7 +742,7 @@ mod tests {
         }
     }
 
-    fn setup(decision: Option<Decision>) -> (TempDir, Router, PathBuf) {
+    fn setup_with_moderator(moderator: Arc<dyn Moderator>) -> (TempDir, Router, PathBuf) {
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("reviews.sqlite");
         let conn = Connection::open(&path).unwrap();
@@ -720,10 +763,15 @@ mod tests {
         drop(conn);
         let state = AppState {
             db_path: Arc::new(path.clone()),
-            moderator: Arc::new(FakeModerator(decision)),
+            moderator,
             moderation_slots: Arc::new(Semaphore::new(4)),
+            review_limiter: ReviewLimiter::default(),
         };
         (dir, app(state, vec![]), path)
+    }
+
+    fn setup(decision: Option<Decision>) -> (TempDir, Router, PathBuf) {
+        setup_with_moderator(Arc::new(FakeModerator(decision)))
     }
 
     fn normal() -> Decision {
@@ -823,6 +871,7 @@ mod tests {
                 db_path: Arc::new(path),
                 moderator: Arc::new(FakeModerator(decision)),
                 moderation_slots: Arc::new(Semaphore::new(4)),
+                review_limiter: ReviewLimiter::default(),
             },
             vec![],
         )
@@ -862,16 +911,45 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn one_word_review_is_rejected_before_moderation() {
-        let (_dir, router, path) = setup(Some(normal()));
+    async fn short_low_value_review_is_sent_to_jev_and_rejected() {
+        use axum::routing::post as route_post;
+        let mock = Router::new().route(
+            "/api/v1/decide",
+            route_post(|Json(request): Json<Value>| async move {
+                assert_eq!(request["state"], "Бред");
+                assert!(request.get("display_name").is_none());
+                Json(json!({"model":"jev-1.13.0", "answers": {"review_quality": {
+                    "type":"choice", "choice":"low_value", "probabilities": {
+                        "publishable_useful":0.001, "spam":0.001, "low_value":0.997, "needs_review":0.001
+                    }
+                }}}))
+            }),
+        );
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let addr = listener.local_addr().unwrap();
+        let task = tokio::spawn(async move {
+            axum::serve(listener, mock).await.unwrap();
+        });
+        let mut moderator = JevModerator::new("test-only-key".to_owned()).unwrap();
+        moderator.endpoint = format!("http://{addr}/api/v1/decide");
+        let (_dir, router, path) = setup_with_moderator(Arc::new(moderator));
         let mut review = input();
         review["body"] = json!("Бред");
-        assert_eq!(post(&router, review).await.0, StatusCode::BAD_REQUEST);
+        let (code, receipt) = post(&router, review).await;
+        assert_eq!(code, StatusCode::ACCEPTED);
+        assert_eq!(receipt, json!({"status":"received"}));
         let conn = open_db(&path).unwrap();
-        let count: i64 = conn
-            .query_row("SELECT COUNT(*) FROM reviews", [], |r| r.get(0))
+        let (status, verdict): (String, String) = conn
+            .query_row("SELECT status, moderation_verdict FROM reviews", [], |r| {
+                Ok((r.get(0)?, r.get(1)?))
+            })
             .unwrap();
-        assert_eq!(count, 0);
+        assert_eq!(
+            (status.as_str(), verdict.as_str()),
+            ("rejected", "low_value")
+        );
+        assert!(get(&router).await["reviews"].as_array().unwrap().is_empty());
+        task.abort();
     }
 
     #[tokio::test]
@@ -886,6 +964,69 @@ mod tests {
             .query_row("SELECT status FROM reviews", [], |r| r.get(0))
             .unwrap();
         assert_eq!(status, "pending_human_review");
+    }
+
+    #[tokio::test]
+    async fn failed_moderation_cannot_fill_an_unbounded_human_queue() {
+        let (_dir, _router, path) = setup(None);
+        let router = app(
+            AppState {
+                db_path: Arc::new(path.clone()),
+                moderator: Arc::new(FakeModerator(None)),
+                moderation_slots: Arc::new(Semaphore::new(4)),
+                review_limiter: ReviewLimiter::new(2),
+            },
+            vec![],
+        );
+        assert_eq!(post(&router, input()).await.0, StatusCode::ACCEPTED);
+        assert_eq!(post(&router, input()).await.0, StatusCode::ACCEPTED);
+        let (status, receipt) = post(&router, input()).await;
+        assert_eq!(status, StatusCode::TOO_MANY_REQUESTS);
+        assert!(receipt["error"].as_str().unwrap().contains("минуту"));
+        let conn = open_db(&path).unwrap();
+        let pending: i64 = conn
+            .query_row(
+                "SELECT count(*) FROM reviews WHERE status = 'pending_human_review'",
+                [],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(pending, 2);
+    }
+
+    #[tokio::test]
+    async fn busy_moderation_rejects_immediately_without_queuing() {
+        let (_dir, _router, path) = setup(Some(normal()));
+        let router = app(
+            AppState {
+                db_path: Arc::new(path.clone()),
+                moderator: Arc::new(FakeModerator(Some(normal()))),
+                moderation_slots: Arc::new(Semaphore::new(0)),
+                review_limiter: ReviewLimiter::default(),
+            },
+            vec![],
+        );
+        let (status, _) = tokio::time::timeout(Duration::from_millis(250), post(&router, input()))
+            .await
+            .expect("a full moderator must not queue the request");
+        assert_eq!(status, StatusCode::TOO_MANY_REQUESTS);
+        let conn = open_db(&path).unwrap();
+        let count: i64 = conn
+            .query_row("SELECT count(*) FROM reviews", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(count, 0);
+    }
+
+    #[test]
+    fn review_budget_resets_after_one_minute() {
+        let limiter = ReviewLimiter::new(1);
+        let now = Instant::now();
+        assert!(limiter.check_at(now).is_ok());
+        assert_eq!(
+            limiter.check_at(now).unwrap_err().0,
+            StatusCode::TOO_MANY_REQUESTS
+        );
+        assert!(limiter.check_at(now + REVIEW_POST_WINDOW).is_ok());
     }
 
     #[tokio::test]
@@ -1196,6 +1337,7 @@ mod tests {
                 db_path: Arc::new(path.clone()),
                 moderator: Arc::new(DemotingModerator(path.clone())),
                 moderation_slots: Arc::new(Semaphore::new(4)),
+                review_limiter: ReviewLimiter::default(),
             },
             vec![],
         );

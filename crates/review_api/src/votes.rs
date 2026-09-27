@@ -217,6 +217,7 @@ mod tests {
                 db_path: Arc::new(path.clone()),
                 moderator: Arc::new(UnusedModerator),
                 moderation_slots: Arc::new(Semaphore::new(4)),
+                review_limiter: crate::ReviewLimiter::default(),
             },
             vec![],
         );

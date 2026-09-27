@@ -24,7 +24,22 @@ class CatalogTests(unittest.TestCase):
         catalog.migrate(self.connection)
         # Migration 0002 seeds the public reference catalog. These tests need
         # an empty fixture so they can exercise publication and rollback gates.
-        for table in ("official_admissions", "admission_region_map", "evidence_passports", "trait_observations", "cultivars", "sources"):
+        for table in (
+            "evidence_passports",
+            "agronomic_claims",
+            "regional_evidence",
+            "official_admissions",
+            "admission_region_map",
+            "cultivar_aliases",
+            "cultivar_votes",
+            "media_assets",
+            "offers",
+            "own_batches",
+            "recommendation_rules",
+            "trait_observations",
+            "cultivars",
+            "sources",
+        ):
             self.connection.execute(f"DELETE FROM {table}")
         self.connection.commit()
 
@@ -144,6 +159,179 @@ class CatalogTests(unittest.TestCase):
         self.assertIsNone(evidence["sample_size"])
         self.connection.execute("UPDATE sources SET review_status='rejected' WHERE id=1")
         self.assertEqual(catalog.public_snapshot(self.connection)["cultivars"], [])
+
+    def test_general_agronomic_claim_requires_verified_source_and_passport(self) -> None:
+        self.add_source_and_cultivar()
+        crop_id = self.connection.execute(
+            "SELECT id FROM crops WHERE slug='raspberry'"
+        ).fetchone()["id"]
+        claim_id = self.connection.execute(
+            "INSERT INTO agronomic_claims(crop_id, topic_code, statement, source_id) "
+            "VALUES (?, 'pruning', 'A general raspberry claim.', 1)",
+            (crop_id,),
+        ).lastrowid
+        cultivar_id = self.connection.execute(
+            "SELECT id FROM cultivars WHERE slug='test-cultivar'"
+        ).fetchone()["id"]
+        observation_id = self.connection.execute(
+            "INSERT INTO trait_observations(cultivar_id, trait_code, value_text, "
+            "context_text, source_id) VALUES (?, 'flavor', 'test', 'cultivar context', 1)",
+            (cultivar_id,),
+        ).lastrowid
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "INSERT INTO evidence_passports(evidence_kind, subject_description) "
+                "VALUES ('published_study', 'Missing target')"
+            )
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "INSERT INTO evidence_passports(observation_id, claim_id, evidence_kind, "
+                "subject_description) VALUES (?, ?, 'published_study', 'Two targets')",
+                (observation_id, claim_id),
+            )
+        self.connection.execute(
+            "INSERT INTO evidence_passports(claim_id, evidence_kind, subject_description, "
+            "internal_sample_ref, source_locator, applicability_note, limitations_note) "
+            "VALUES (?, 'published_study', 'Raspberry pruning evidence', 'private/sample-1', "
+            "'p. 12', 'Applies to the stated study conditions', 'Not a regional cultivar trial')",
+            (claim_id,),
+        )
+        self.connection.execute(
+            "UPDATE evidence_passports SET review_status='verified', reviewed_by='editor', "
+            "reviewed_at='2026-09-27 12:00:00' WHERE claim_id=?",
+            (claim_id,),
+        )
+        self.connection.execute(
+            "UPDATE evidence_passports SET review_status='verified', reviewed_by='editor', "
+            "reviewed_at='2026-09-27 12:00:00' WHERE claim_id=?",
+            (claim_id,),
+        )
+        self.connection.execute(
+            "UPDATE sources SET review_status='verified', reviewed_by='editor', "
+            "reviewed_at='2026-09-27 12:00:00' WHERE id=1"
+        )
+        self.assertEqual(catalog.public_snapshot(self.connection)["agronomic_claims"], [])
+        self.connection.execute(
+            "UPDATE agronomic_claims SET editorial_status='published', reviewed_by='editor', "
+            "reviewed_at='2026-09-27 12:00:00', published_at='2026-09-27 12:00:00' "
+            "WHERE id=?",
+            (claim_id,),
+        )
+        claim = catalog.public_snapshot(self.connection)["agronomic_claims"][0]
+        self.assertEqual(claim["crop_slug"], "raspberry")
+        self.assertEqual(claim["topic_code"], "pruning")
+        self.assertEqual(claim["evidence"]["source_locator"], "p. 12")
+        self.assertNotIn("internal_sample_ref", claim["evidence"])
+
+        self.connection.execute(
+            "UPDATE sources SET review_status='draft' WHERE id=1"
+        )
+        self.assertEqual(catalog.public_snapshot(self.connection)["agronomic_claims"], [])
+        self.connection.execute(
+            "UPDATE sources SET review_status='verified' WHERE id=1"
+        )
+
+        self.connection.execute(
+            "UPDATE agronomic_claims SET editorial_status='withdrawn' WHERE id=?", (claim_id,)
+        )
+        self.assertEqual(catalog.public_snapshot(self.connection)["agronomic_claims"], [])
+
+    def test_evidence_passport_preserves_distinct_source_context_without_private_refs(self) -> None:
+        self.add_source_and_cultivar()
+        self.publish_identity()
+        examples = [
+            {
+                "trait": "flavor",
+                "kind": "reference_document",
+                "subject": "Описание сорта",
+                "setting": "Печатное описание",
+                "locator": "раздел «Описание»",
+                "applicability": "Подтверждает формулировку источника",
+                "limitations": "Не подтверждает результат на отдельном участке",
+            },
+            {
+                "trait": "yield",
+                "kind": "published_study",
+                "subject": "Сорт Test Cultivar в публикации",
+                "material_type": "растения сорта",
+                "material_stage": "плодоношение",
+                "setting": "полевой опыт",
+                "place": "опытная станция",
+                "period_from": "2021-01-01",
+                "period_to": "2022-12-31",
+                "conditions": '{"setting":"field","replicates":3}',
+                "method": "взвешивание собранных ягод",
+                "sample_size": 24,
+                "uncertainty": "разброс указан в публикации",
+                "locator": "таблица 2, с. 14",
+                "applicability": "Только для описанного опыта",
+                "limitations": "Не переносить на другие регионы без проверки",
+            },
+            {
+                "trait": "winter_hardiness",
+                "kind": "farm_observation",
+                "subject": "Посадка Test Cultivar в хозяйстве",
+                "material_type": "саженцы",
+                "material_stage": "первый сезон",
+                "setting": "открытый грунт",
+                "place": "участок наблюдения",
+                "period_from": "2025-03-01",
+                "period_to": "2025-10-31",
+                "conditions": '{"irrigation":"drip"}',
+                "method": "учёт урожая по сборам",
+                "sample_size": 18,
+                "uncertainty": "одно хозяйство, один сезон",
+                "locator": "журнал наблюдений, запись 18",
+                "applicability": "Наблюдение относится к указанному участку и сезону",
+                "limitations": "Не является независимым сортоиспытанием",
+                "internal_sample_ref": "private-lot-2025-18",
+            },
+            {
+                "trait": "disease_resistance",
+                "kind": "expert_assessment",
+                "subject": "Экспертная оценка Test Cultivar",
+                "setting": "Экспертный разбор публикаций",
+                "locator": "протокол экспертной оценки, раздел 1",
+                "applicability": "Сводная интерпретация перечисленных публикаций",
+                "limitations": "Не заменяет самостоятельное полевое испытание",
+            },
+        ]
+        for index, example in enumerate(examples):
+            observation_id = self.connection.execute(
+                "INSERT INTO trait_observations(cultivar_id, trait_code, value_text, "
+                "context_text, source_id, review_status, reviewed_by, reviewed_at) "
+                "VALUES (1, ?, ?, 'fixture context', 1, 'verified', 'editor', "
+                "'2026-09-27 12:00:00')",
+                (example["trait"], f"value_{index}"),
+            ).lastrowid
+            self.connection.execute(
+                "INSERT INTO evidence_passports(observation_id, evidence_kind, subject_description, "
+                "internal_sample_ref, material_type, material_stage, setting_text, place_text, "
+                "period_from, period_to, conditions_json, method_text, sample_size, uncertainty_text, "
+                "source_locator, applicability_note, limitations_note, review_status, reviewed_by, reviewed_at) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'verified', 'editor', "
+                "'2026-09-27 12:00:00')",
+                (observation_id, example["kind"], example["subject"],
+                 example.get("internal_sample_ref"), example.get("material_type"),
+                 example.get("material_stage"), example.get("setting"), example.get("place"),
+                 example.get("period_from"), example.get("period_to"), example.get("conditions", "{}"),
+                 example.get("method"), example.get("sample_size"), example.get("uncertainty"),
+                 example["locator"], example["applicability"], example["limitations"]),
+            )
+
+        observations = catalog.public_snapshot(self.connection)["cultivars"][0]["observations"]
+        by_kind = {item["evidence"]["evidence_kind"]: item["evidence"] for item in observations}
+        self.assertEqual(set(by_kind), {
+            "reference_document", "published_study", "farm_observation", "expert_assessment"
+        })
+        self.assertEqual(by_kind["published_study"]["sample_size"], 24)
+        self.assertEqual(by_kind["published_study"]["method_text"], "взвешивание собранных ягод")
+        self.assertEqual(by_kind["farm_observation"]["period_from"], "2025-03-01")
+        self.assertEqual(
+            json.loads(by_kind["farm_observation"]["conditions_json"]),
+            {"irrigation": "drip"},
+        )
+        self.assertNotIn("internal_sample_ref", by_kind["farm_observation"])
 
     def test_regional_rule_needs_independent_local_evidence(self) -> None:
         self.add_source_and_cultivar()

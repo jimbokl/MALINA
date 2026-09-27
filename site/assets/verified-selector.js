@@ -20,7 +20,7 @@ if (form) {
     const visible = pickerCards.filter(card => card.dataset.pickerVisible === 'true');
     const admitted = visible.filter(card => admittedSlugs.has(card.dataset.cultivarSlug));
     if (!admitted.length) return;
-    admissionStatus.textContent = `Запись Госреестра для региона «${selectedRegionName}»: ${admitted.length} из ${visible.length} показанных сортов. Они стоят первыми в каждой группе; источник — на карточке.`;
+    admissionStatus.textContent = `Госреестр: ${admitted.length} из ${visible.length} сортов с допуском для региона «${selectedRegionName}».`;
     admissionStatus.hidden = false;
     for (const heading of pickerResults.querySelectorAll('.picker-group-heading')) {
       const cards = [];
@@ -47,6 +47,14 @@ if (form) {
     }
   };
 
+  form.addEventListener('picker:location-change', () => {
+    requestId += 1;
+    resultsReady = false;
+    selectedRegionName = '';
+    clearCardAdmissions();
+    showStatus('Выберите регион и нажмите «Показать сорта».');
+  });
+
   const showCardAdmission = (cultivar, admission, region) => {
     const card = pickerCards.find(item => item.dataset.cultivarSlug === cultivar.slug);
     if (!card) return;
@@ -64,9 +72,9 @@ if (form) {
     badge.hidden = false;
   };
 
-  const showStatus = message => {
+  const showStatus = (message, clearResults = true) => {
     status.textContent = message;
-    results.replaceChildren();
+    if (clearResults) results.replaceChildren();
   };
 
   const loadCatalog = async () => {
@@ -81,14 +89,31 @@ if (form) {
   };
 
   const normalized = value => value.trim().toLocaleLowerCase('ru-RU').replace(/\s+/g, ' ');
+  const recordWord = count => {
+    const lastTwo = count % 100;
+    if (lastTwo >= 11 && lastTwo <= 14) return 'записей';
+    const last = count % 10;
+    if (last === 1) return 'запись';
+    if (last >= 2 && last <= 4) return 'записи';
+    return 'записей';
+  };
+
+  const cultivarHref = slug => {
+    const url = new URL(`${base}/sorta/${encodeURIComponent(slug)}/`, location.origin);
+    const region = form.dataset.activeRegion || String(form.elements.region.value || '').trim();
+    const city = form.dataset.activeCity || '';
+    if (region) url.searchParams.set('region', region);
+    if (city) url.searchParams.set('city', city);
+    return `${url.pathname}${url.search}#gosreestr`;
+  };
 
   const showAdmissions = (catalog, region, crop) => {
-    if (!region.admission_region_number) return;
+    if (!region.admission_region_number) return { mapped: false, count: 0 };
     const admitted = catalog.cultivars.filter(item =>
       (crop === 'all' || item.crop_slug === crop) &&
       item.admissions?.some(entry => entry.admission_region_number === region.admission_region_number)
     );
-    if (!admitted.length) return;
+    if (!admitted.length) return { mapped: true, count: 0 };
     admittedSlugs = new Set(admitted.map(cultivar => cultivar.slug));
     for (const cultivar of admitted) {
       const admission = cultivar.admissions.find(entry => entry.admission_region_number === region.admission_region_number);
@@ -100,12 +125,13 @@ if (form) {
       const explanation = document.createElement('p');
       explanation.textContent = `${region.admission_region_name} регион (${region.admission_region_number}), издание на ${admission.edition_as_of}, запись ${admission.registry_entry_code}.`;
       const cultivarLink = document.createElement('a');
-      cultivarLink.href = `${base}/sorta/${encodeURIComponent(cultivar.slug)}/#gosreestr`;
+      cultivarLink.href = cultivarHref(cultivar.slug);
       cultivarLink.textContent = 'Карточка сорта и источник ↗';
       item.append(heading, explanation, cultivarLink);
       results.append(item);
     }
     updatePickerAdmissions();
+    return { mapped: true, count: admitted.length };
   };
 
   form.addEventListener('submit', async event => {
@@ -126,7 +152,7 @@ if (form) {
       if (currentRequest !== requestId) return;
       const region = catalog.regions.find(item => normalized(item.name_ru || '') === normalized(regionName));
       if (!region) {
-        showStatus('Для указанного места региональных данных пока нет. Сравните сорта по характеристикам выше.');
+        showStatus('Регион не найден в справочнике.');
         return;
       }
       if (!engine) {
@@ -140,8 +166,13 @@ if (form) {
       const selection = JSON.parse(engine(text, JSON.stringify(query)));
       if (selection.error) throw new Error(selection.error.message);
       if (selection.total === 0) {
-        showStatus(`Местных испытаний для региона «${regionName}» в базе нет. Проверьте официальный допуск сортов ниже.`);
-        showAdmissions(catalog, region, crop);
+        const admissions = showAdmissions(catalog, region, crop);
+        const statusMessage = !admissions.mapped
+          ? 'Регион не сопоставлен с районированием Госреестра.'
+          : admissions.count
+          ? `В Госреестре: ${admissions.count} ${recordWord(admissions.count)} о допуске сортов.`
+            : 'В Госреестре нет записей для выбранной культуры и региона.';
+        showStatus(statusMessage, false);
         return;
       }
       status.textContent = `${selection.total} ${selection.total === 1 ? 'сорт с проверенным региональным правилом' : 'сорта с проверенными региональными правилами'} для региона «${regionName}».`;
@@ -150,7 +181,10 @@ if (form) {
         const item = document.createElement('li');
         const heading = document.createElement('h3');
         heading.textContent = match.canonical_name;
-        item.append(heading);
+        const cultivarLink = document.createElement('a');
+        cultivarLink.href = cultivarHref(match.slug);
+        cultivarLink.textContent = 'Карточка сорта и источники ↗';
+        item.append(heading, cultivarLink);
         for (const reason of match.reasons) {
           const rationale = document.createElement('p');
           rationale.textContent = reason.rationale;
@@ -179,7 +213,7 @@ if (form) {
     } catch {
       if (currentRequest !== requestId) return;
       catalogPromise = undefined;
-      showStatus('Не удалось проверить региональные рекомендации. Попробуйте обновить страницу позже; справочный каталог доступен отдельно.');
+      showStatus('Не удалось загрузить данные Госреестра. Попробуйте позже.');
     }
   });
 }

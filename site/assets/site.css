@@ -20,7 +20,10 @@
 .verified-section{border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:28px 50px}
 .verified-intro h2{font-family:var(--serif);font-size:clamp(34px,4vw,54px);font-weight:400;line-height:1.08;letter-spacing:-.04em;margin:18px 0}
 .verified-intro p{max-width:540px;line-height:1.7;color:#516250}
-.verified-output{grid-column:2;align-self:start;border-left:4px solid var(--berry);background:#f5eee8;padding:24px 28px;line-height:1.6}
+.verified-details{grid-column:2;align-self:start}
+.verified-details summary{cursor:pointer;padding:16px 20px;background:#e8eadf;color:var(--green);font-weight:800}
+.verified-details summary:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
+.verified-output{border-left:4px solid var(--berry);background:#f5eee8;padding:24px 28px;line-height:1.6}
 .verified-output[hidden]{display:none}
 .verified-output>p{margin:0}
 .verified-output ul{list-style:none;padding:0;margin:18px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
@@ -29,7 +32,7 @@
 .verified-output h3{font-family:var(--serif);font-size:24px;font-weight:400;margin:0 0 12px}
 .verified-output li p{font-size:13px;margin:8px 0}
 .verified-output small{color:#586a5b}
-@media(max-width:700px){.verified-section{grid-template-columns:1fr}.verified-output{grid-column:auto;padding:20px}}
+@media(max-width:700px){.verified-section{grid-template-columns:1fr}.verified-details{grid-column:auto}.verified-output{padding:20px}}
 
 /* Отзывы: опубликованный опыт и простая форма без контактов. */
 .reviews-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);align-items:start;gap:clamp(32px,6vw,96px)}
@@ -166,6 +169,7 @@
 .comparison-choice{min-width:0;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;padding:14px;background:#fffdf8;border:1px solid #d8dfd1}.comparison-choice input{width:20px;height:20px;accent-color:var(--wine)}.comparison-choice span{min-width:0;display:grid;gap:3px}.comparison-choice strong{font-family:var(--serif);font-weight:400;font-size:20px}.comparison-choice small,.comparison-table small{display:block;font-size:11px;color:#667566;overflow-wrap:anywhere}.comparison-choice>a{font-size:11px;font-weight:700;color:var(--wine)}
 .comparison-status{min-height:25px;margin:13px 0 18px;font-size:13px;font-weight:700;color:var(--wine)}.comparison-table-wrap{max-width:100%;overflow-x:auto;border:1px solid #d5ddcf;background:#fffdf8;overscroll-behavior-inline:contain}.comparison-table{width:100%;min-width:680px;border-collapse:collapse;text-align:left;font-size:13px;line-height:1.6}.comparison-table[hidden]{display:none}.comparison-table caption{text-align:left;padding:12px 15px;color:#607160;font-size:12px}
 .comparison-table th,.comparison-table td{min-width:170px;vertical-align:top;padding:17px 15px;border-top:1px solid #dfe5d9}.comparison-table thead th{background:#e8eddf;font-family:var(--serif);font-size:21px;font-weight:400;color:var(--wine)}.comparison-table thead th:first-child{min-width:185px;font:700 12px var(--sans);color:var(--ink)}.comparison-table tbody th{background:#f2f2e9;font-size:12px;color:#536853}.comparison-table a{color:var(--wine);font-weight:700}.comparison-table small{margin-top:5px;font-family:var(--sans)}.comparison-source{display:block;margin-top:11px;font-size:10px;line-height:1.5}.comparison-limits{max-width:900px;margin:20px 0 0;color:#596b5b;font-size:12px;line-height:1.75}
+.comparison-yield+.comparison-yield{margin-top:15px;padding-top:15px;border-top:1px solid #dfe5d9}.comparison-yield strong{font-weight:800;color:var(--ink)}
 @media(max-width:700px){.comparison-intro{display:block}.comparison-intro>.text-link{display:inline-block;margin-top:15px}.comparison-choices{grid-template-columns:1fr}.comparison-choice{grid-template-columns:auto minmax(0,1fr)}.comparison-choice>a{grid-column:2}.comparison-entry{align-items:flex-start;flex-direction:column;gap:9px}}
 
 .catalog-view-switch{display:flex;align-items:center;gap:8px;padding-top:18px;color:#647267;font-size:11px;font-weight:700}.catalog-view-switch button{border:1px solid #cfd8cb;background:transparent;color:#455447;padding:9px 13px;font-size:11px;font-weight:800}.catalog-view-switch button[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}.catalog-view-switch button:focus-visible{outline:3px solid #b25b71;outline-offset:2px}.catalog-facts{display:none;margin:18px 0 12px;border-top:1px solid var(--line);padding-top:13px}.catalog-facts div{display:grid;grid-template-columns:100px 1fr;gap:10px;padding:5px 0}.catalog-facts dt{color:#718270;font-size:10px;font-weight:800}.catalog-facts dd{margin:0;font-size:12px;color:var(--ink)}.catalog-facts>a{display:inline-block;margin-top:10px;color:#496d52;font-size:11px;font-weight:800;border-bottom:1px solid currentColor}#catalog-results[data-view="facts"]{grid-template-columns:repeat(2,minmax(0,1fr))}#catalog-results[data-view="facts"] .variety-card-media{display:none}#catalog-results[data-view="facts"] .catalog-facts{display:block}#catalog-results[data-view="facts"] .variety-card{min-height:0}
@@ -200,7 +204,18 @@
 .picker-compare-option input{width:19px;height:19px;accent-color:var(--wine)}
 .picker-compare-option:has(input:disabled){opacity:.48;cursor:default}
 .picker-compare-option:focus-within{outline:2px solid var(--wine);outline-offset:3px}
+.picker-advanced{margin:0 0 24px;border:1px solid #dce1d4;background:#f7f8f2}.picker-advanced summary{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;color:var(--ink);font-weight:800;cursor:pointer}.picker-advanced summary span{color:#667767;font-size:12px;font-weight:600}.picker-advanced summary:focus-visible{outline:3px solid var(--wine);outline-offset:3px}.picker-advanced-fields{padding:8px 20px 1px;border-top:1px solid #dce1d4}.picker-advanced .picker-step:last-child{border-bottom:0;margin-bottom:0}.picker-submit{width:100%;justify-content:center;min-height:52px}.picker-submit:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
 .picker-match{margin:20px 0 18px;padding:19px 20px;border-left:3px solid var(--wine);background:#f1f0e6}
+.picker-result-controls{display:flex;justify-content:flex-end;margin:8px 0 22px}
+.picker-edit-conditions{display:inline-flex;min-height:44px;align-items:center;justify-content:center;padding:9px 12px;border:1px solid transparent;background:transparent;color:var(--wine);font:800 12px/1.35 var(--font);text-decoration:underline;text-underline-offset:4px}
+.picker-edit-conditions:hover{background:#f1f0e6}
+.picker-edit-conditions:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
+#picker-region-status{padding:0;border:0;background:transparent;color:#536653;font-size:13px}
+.results-section .variety-grid{margin-top:12px}
+.results-section .picker-group-heading{margin-top:8px}
+.results-section .picker-admission-status{padding:8px 0;border:0;background:transparent;color:#425d43;font-size:13px}
+.results-section .picker-compare-bar{margin:12px 0;padding:12px 16px;gap:12px}
+.results-section .picker-result-controls{margin:0 0 8px}
 .picker-match strong{display:block;margin:0 0 6px;color:var(--wine);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .picker-match p{margin:0 0 14px;font-size:12px;line-height:1.65;color:#435343}
 .picker-match a{display:inline-block;margin-top:2px;color:#496d52;font-size:11px;font-weight:800;text-decoration:underline;text-underline-offset:3px}
@@ -218,7 +233,7 @@
 .picker-memo h3{margin:20px 0 12px;font:400 clamp(2rem,4vw,3rem)/1.1 var(--serif)}.picker-memo h4{margin:30px 0 12px;font:400 1.5rem/1.2 var(--serif)}.picker-memo-lead,.picker-memo-limit{max-width:72ch;line-height:1.65;color:#435343}
 .picker-memo dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px 28px;margin:25px 0}.picker-memo dl div{border-top:1px solid var(--line);padding-top:10px}.picker-memo dt{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:#607264}.picker-memo dd{margin:5px 0 0;line-height:1.5;font-weight:700}
 .picker-memo ol{display:grid;gap:10px;max-width:72ch;padding-left:24px;line-height:1.6}.picker-memo li{padding-left:5px}.picker-memo-limit{padding:15px 18px;border-left:3px solid var(--wine);background:#f1f0e6}.picker-memo-sources{display:flex;flex-wrap:wrap;gap:12px 20px;margin-top:22px}.picker-memo-sources a{color:var(--green);font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}.picker-memo-date{font-size:11px;color:#5b6b5f;line-height:1.6}.picker-memo-actions{display:flex;align-items:center;gap:18px;margin-top:24px}.picker-memo-actions span{max-width:33ch;font-size:11px;line-height:1.5;color:#57685c}
-@media(max-width:700px){#picker-results{grid-template-columns:1fr}.picker-match{margin-inline:-4px;padding:16px}.picker-compare-bar{align-items:stretch;flex-direction:column}.picker-compare-bar .btn{width:100%;justify-content:center}}
+@media(max-width:700px){#picker-results{grid-template-columns:1fr}.picker-match{margin-inline:-4px;padding:16px}.picker-result-controls{justify-content:flex-start;margin:0 0 8px}.picker-edit-conditions{width:auto;border:0;background:transparent;padding-inline:0}.picker-compare-bar{align-items:stretch;flex-direction:column}.picker-compare-bar .btn{width:100%;justify-content:center}}
 @media(max-width:700px){.picker-memo dl{grid-template-columns:1fr}.picker-memo-actions{align-items:stretch;flex-direction:column}.picker-memo-actions .btn{justify-content:center}.picker-memo-sources{flex-direction:column}}
 @media print{
   @page{size:A4;margin:15mm}
@@ -252,6 +267,14 @@
 .planting-form-panel,.planting-method{min-width:0}.planting-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:26px 0}
 .planting-fields label{display:grid;gap:8px;font-size:12px;font-weight:800;color:#36503b}.planting-fields input{width:100%;min-width:0;height:50px;padding:0 14px;border:1px solid #cbd3c5;background:#fffdf8;color:var(--ink);font:500 16px var(--sans)}
 .planting-fields input:focus-visible,.planting-layout .btn:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
+.economics-extra{margin:0 0 24px;padding:16px 18px;border:1px solid var(--line);background:var(--paper)}
+.economics-extra summary{color:var(--green);font-size:14px;font-weight:800;cursor:pointer}
+.economics-extra summary:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
+.economics-extra p{font-size:13px;line-height:1.5;color:var(--muted)}
+.economics-extra .planting-fields{margin:18px 0 0}
+.economics-result-extra{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}
+.economics-result-extra summary{font-size:13px;font-weight:800;color:var(--wine);cursor:pointer}
+.economics-result-extra summary:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
 .planting-method{align-self:start;padding:30px;background:#e8eddf}.planting-method p{font-size:13px;line-height:1.7;color:#405443}.planting-method a{display:inline-block;margin-top:12px}
 .planting-result{margin-top:28px;padding:26px;background:#f1f0e6;border-left:4px solid var(--green);outline:none}.planting-result[hidden]{display:none}.planting-result>strong{display:block;margin:11px 0 20px;color:var(--wine);font:400 clamp(2.25rem,5vw,4rem)/1.05 var(--serif)}
 .planting-result dl{display:grid;gap:10px;margin:0}.planting-result dl div{display:flex;justify-content:space-between;gap:14px;border-top:1px solid #d1d9ca;padding-top:9px}.planting-result dt{font-size:12px;color:#536558}.planting-result dd{margin:0;font-size:13px;font-weight:800;text-align:right}.planting-result p{font-size:12px;line-height:1.6}.planting-error{border-color:#a63f55;color:#702f3b}
@@ -282,6 +305,10 @@
 @media(max-width:760px){.mulch-layout{grid-template-columns:1fr}.mulch-aside,.mulch-result{padding:22px}.mulch-option{padding:18px}}
 .calendar-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(270px,.75fr);gap:clamp(28px,6vw,90px)}.calendar-main h2,.calendar-aside h2,.calendar-basis h2{font:400 clamp(2rem,4vw,3.2rem)/1.1 var(--serif);margin:12px 0}.calendar-main form{display:grid;gap:18px;max-width:630px;margin-top:26px}.calendar-main label{display:grid;gap:8px;font-size:12px;font-weight:800;color:#36503b}.calendar-main label[hidden]{display:none}.calendar-main select{min-height:53px;width:100%;padding:0 14px;border:1px solid #cbd3c5;background:#fffdf8;color:var(--ink);font:500 16px var(--sans)}.calendar-main .calendar-check{display:flex;align-items:center;gap:11px;font-size:15px;font-weight:500}.calendar-check input{width:20px;height:20px;accent-color:var(--wine)}.calendar-main button{justify-self:start}.calendar-aside{align-self:start;padding:30px;background:#e8eddf}.calendar-aside p,.calendar-basis p{line-height:1.7;color:#405443}.calendar-result{margin-top:28px;padding:30px;background:#f1f0e6;border-left:4px solid var(--green);outline:none}.calendar-result[hidden]{display:none}.calendar-result h2{font-size:clamp(1.7rem,3vw,2.5rem)}.calendar-result p{line-height:1.65}.calendar-caveat,.calendar-uncertainty{font-size:14px;color:#506451}.calendar-result>a,.calendar-basis a,.calendar-aside a{color:var(--wine)}.calendar-result>a.text-link{display:block;margin-top:18px}.calendar-timeline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;list-style:none;padding:0;margin:25px 0}.calendar-timeline li{padding:10px;border:1px solid #cbd3c5;font-size:13px;line-height:1.4}.calendar-timeline .calendar-current{background:#dce6d2;border-color:var(--green);font-weight:800}.calendar-timeline .calendar-future{opacity:.64}.calendar-basis{padding-block:30px 85px;border-top:1px solid var(--line)}.calendar-basis p{max-width:78ch}.calendar-main select:focus-visible,.calendar-main input:focus-visible,.calendar-main button:focus-visible,.calendar-result a:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
 @media(max-width:760px){.calendar-layout{grid-template-columns:1fr}.calendar-aside,.calendar-result{padding:22px}.calendar-timeline{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.calendar-journal{border-top:1px solid var(--line);padding-block:52px}.calendar-journal-header{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:end}.calendar-journal h2{font:400 clamp(2rem,4vw,3.2rem)/1.1 var(--serif);margin:12px 0}.calendar-journal-header p{max-width:55ch;line-height:1.65;color:#405443;margin:0 0 8px}.calendar-journal-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;list-style:none;padding:0;margin:25px 0 0}.calendar-journal-list:empty{display:none}.calendar-journal-list li{display:flex;flex-direction:column;gap:7px;min-width:0;padding:19px 22px;background:#fffdf8;border:1px solid var(--line);overflow-wrap:anywhere}.calendar-journal-list time{font-size:12px;font-weight:800;color:var(--wine)}.calendar-journal-list strong{font:400 1.5rem/1.2 var(--serif)}.calendar-journal-list span{font-size:14px;line-height:1.5;color:#405443}.calendar-journal-empty{padding:20px 22px;background:#e8eddf;margin:25px 0 0}.calendar-journal-empty[hidden],.calendar-journal-more[hidden]{display:none}.calendar-journal-actions{display:flex;flex-wrap:wrap;gap:16px 25px;align-items:center;margin-top:22px}.calendar-journal-more{border:0;background:transparent;padding:8px 0;color:var(--wine);font-size:13px;font-weight:800;text-decoration:underline;text-underline-offset:4px;cursor:pointer}.calendar-journal-actions a{color:var(--wine);font-size:13px;font-weight:800}.calendar-journal-actions a:focus-visible,.calendar-journal-more:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
+.calendar-optional{border:1px solid #cbd3c5;background:#fffdf8}.calendar-optional summary{padding:14px 16px;color:var(--wine);font-size:13px;font-weight:800;cursor:pointer}.calendar-optional summary:focus-visible{outline:3px solid var(--wine);outline-offset:2px}.calendar-optional>div{display:grid;gap:16px;padding:0 16px 16px}
+.calendar-sequence{margin-top:20px}.calendar-sequence summary{color:var(--wine);font-size:14px;font-weight:800;cursor:pointer}.calendar-sequence summary:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
+@media(max-width:760px){.calendar-journal{padding-block:36px}.calendar-journal-header,.calendar-journal-list{grid-template-columns:1fr}.calendar-journal-header{gap:7px}}
 
 .observation-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(270px,.75fr);gap:clamp(28px,6vw,90px)}
 .observation-main h2,.observation-aside h2,.observation-basis h2{font:400 clamp(2rem,4vw,3.2rem)/1.1 var(--serif);margin:12px 0}
@@ -367,3 +394,65 @@
   .review-card-reply .review-card-reply{padding:12px 0 12px 10px;border-left:2px solid #c9d8c3;border-right:0}
 }
 .picker-place-continue{display:inline-flex;align-items:center;margin:4px 0 12px;padding:0;border:0;background:transparent;color:var(--wine);font-weight:800;text-decoration:underline;text-underline-offset:4px}.picker-place-continue[hidden]{display:none}.picker-place-continue:focus-visible{outline:3px solid var(--wine);outline-offset:4px}
+
+/* Личный журнал выращивания */
+.grower-journal-hero{background:#e6eadc;padding:22px 0 38px}
+.grower-journal-hero .breadcrumbs,.calendar-hero .breadcrumbs{margin-bottom:18px}
+.grower-journal-hero h1,.calendar-hero h1{font-size:clamp(42px,5vw,68px);line-height:1.04;margin:9px 0}
+.grower-journal-hero p,.calendar-hero p{margin:0}
+.calendar-hero{padding:22px 0 38px}
+.grower-journal-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.75fr);gap:clamp(28px,6vw,84px);align-items:start}
+.grower-journal-layout,.calendar-layout{padding-top:48px}
+@media(max-width:760px){
+  .calendar-hero{padding-bottom:24px}
+  .calendar-layout{padding-top:24px}
+  .calendar-main>.eyebrow,.calendar-main>h2,.calendar-aside{display:none}
+  .calendar-main form{margin-top:0}
+}
+.grower-journal-main>h2,.grower-journal-aside h2{font:400 clamp(2rem,4vw,3.2rem)/1.1 var(--serif);margin:12px 0}
+.grower-journal-main>p{max-width:700px}
+.grower-journal-main form{margin-top:28px}
+.grower-journal-main fieldset{border:0;padding:0;margin:0;min-width:0}
+.grower-journal-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.grower-journal-fields label{display:flex;flex-direction:column;gap:8px;min-width:0;font-size:12px;font-weight:800;color:#36503b}
+.grower-journal-fields input,.grower-journal-fields select,.grower-journal-fields textarea{width:100%;min-height:50px;border:1px solid #cbd4c7;background:var(--paper);color:var(--ink);padding:11px 13px;font-size:14px;font-weight:500;outline:0;border-radius:0}
+.grower-journal-fields textarea{resize:vertical;min-height:94px}
+.grower-journal-fields input:focus-visible,.grower-journal-fields select:focus-visible,.grower-journal-fields textarea:focus-visible{border-color:var(--wine);box-shadow:0 0 0 3px #a8435633}
+.grower-journal-wide{grid-column:1/-1}
+.grower-journal-extra{margin-top:22px;border-top:1px solid var(--line);padding-top:16px}
+.grower-journal-extra summary{color:var(--wine);font-size:14px;font-weight:800;cursor:pointer;line-height:1.5}
+.grower-journal-extra summary:focus-visible{outline:3px solid var(--berry);outline-offset:4px}
+.grower-journal-extra>.grower-journal-fields{margin-top:20px}
+.grower-journal-group{border-top:1px solid var(--line);margin-top:29px;padding-top:21px}
+.grower-journal-group h3{font:400 1.75rem/1.2 var(--serif);margin:0 0 19px}
+.grower-journal-form-actions{display:flex;align-items:center;flex-wrap:wrap;gap:18px;margin-top:28px}
+.grower-journal-cancel,.grower-journal-actions button{border:0;background:transparent;color:var(--wine);font-size:13px;font-weight:800;text-decoration:underline;text-underline-offset:4px;padding:8px 4px}
+.grower-journal-cancel[hidden]{display:none}
+.grower-journal-cancel:focus-visible,.grower-journal-actions button:focus-visible,.grower-journal-aside button:focus-visible,.grower-journal-aside input:focus-visible{outline:3px solid var(--berry);outline-offset:3px}
+.grower-journal-status{min-height:1.6em;margin-top:18px;color:#36503b;font-weight:700}
+.grower-journal-status[data-error="true"]{color:#9a2843}
+.grower-journal-aside{background:#e5eadb;padding:clamp(23px,3vw,40px)}
+.grower-journal-aside p{font-size:13px;line-height:1.7}
+.grower-journal-aside button{display:block;width:100%;margin:24px 0 20px;padding:14px;border:1px solid var(--green);background:var(--green);color:white;font-weight:800;text-align:center}
+.grower-journal-aside button:disabled{opacity:.55;cursor:not-allowed}
+.grower-journal-aside label{display:block;font-size:12px;font-weight:800;margin-bottom:8px}
+.grower-journal-aside input{display:block;max-width:100%;font-size:12px}
+.grower-journal-aside>a{display:inline-block;border-bottom:1px solid;margin-top:18px;color:#36503b;font-size:12px;font-weight:800}
+.grower-journal-records{padding-top:0}
+.grower-journal-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.grower-journal-more{display:block;margin:24px auto 0;padding:13px 24px;background:var(--paper);border:1px solid var(--line);color:var(--wine);font:800 14px/1.2 var(--sans);cursor:pointer}
+.grower-journal-more[hidden]{display:none}
+.grower-journal-more:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
+.grower-journal-entry{background:var(--paper);border:1px solid var(--line);padding:clamp(20px,3vw,32px);min-width:0}
+.grower-journal-entry h3{font:400 2rem/1.15 var(--serif);margin:10px 0 4px}
+.grower-journal-region{margin:0 0 22px;color:var(--muted)}
+.grower-journal-continuation{display:inline-block;margin:0 0 16px;padding:5px 9px;background:var(--sage);color:var(--green);font-size:12px;font-weight:700}
+.grower-journal-details{display:grid;grid-template-columns:minmax(100px,.6fr) minmax(0,1.4fr);gap:9px 15px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;overflow-wrap:anywhere}
+.grower-journal-details dt{color:var(--muted)}
+.grower-journal-details dd{margin:0;white-space:pre-wrap}
+.grower-journal-actions{display:flex;flex-wrap:wrap;gap:9px 15px;border-top:1px solid var(--line);padding-top:13px;margin-top:21px}
+.grower-journal-empty{grid-column:1/-1;margin:0;background:#e5eadb;padding:30px}
+.variety-next-actions{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.variety-next-actions .text-link{font-size:12px;font-weight:800;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:760px){.grower-journal-layout,.grower-journal-list{grid-template-columns:1fr}.grower-journal-aside{order:2}.grower-journal-records{padding-top:0}.grower-journal-fields{grid-template-columns:1fr}.grower-journal-details{grid-template-columns:minmax(90px,.7fr) minmax(0,1.3fr)}.variety-next-actions{margin-top:20px}}
+@media(max-width:700px){.variety-hero-grid{grid-template-columns:minmax(0,1fr)}.variety-hero-grid>div,.variety-hero-art{min-width:0}.variety-hero h1{font-size:clamp(43px,10.8vw,58px);overflow-wrap:anywhere}}

@@ -14,7 +14,7 @@ export const varieties = [
     fruiting: 'summer', fruitingLabel: 'Летняя малина', fruitColor: 'red'
   },
   {
-    slug: 'polka', name: 'Полька', latin: "Rubus idaeus ‘Polka’", crop: 'Малина', cropKey: 'raspberry',
+    slug: 'polka', name: 'Полька', latin: "Rubus idaeus ‘Polka’", crop: 'Малина', cropKey: 'raspberry', reviewedAt: '26.09.2026',
     type: 'На побегах текущего года', period: 'Осеннее плодоношение', place: 'Открытый грунт',
     note: 'Плодоносит на побегах текущего года; основной сбор — осенью.',
     traits: ['Побеги с небольшими шипами', 'Основной сбор осенью', 'Солнечное место'],
@@ -23,7 +23,7 @@ export const varieties = [
     fruiting: 'remontant', fruitingLabel: 'Ремонтантная малина', fruitColor: 'red'
   },
   {
-    slug: 'joan-j', name: 'Джоан Джей', latin: "Rubus idaeus ‘Joan J’", crop: 'Малина', cropKey: 'raspberry',
+    slug: 'joan-j', name: 'Джоан Джей', latin: "Rubus idaeus ‘Joan J’", crop: 'Малина', cropKey: 'raspberry', reviewedAt: '26.09.2026',
     type: 'На побегах текущего года', period: 'Осеннее плодоношение', place: 'Открытый грунт',
     note: 'Осеннее плодоношение на прямостоячих побегах без шипов.',
     traits: ['Побеги без шипов', 'Осеннее плодоношение', 'Солнечное место'],
@@ -69,7 +69,7 @@ export const varieties = [
     fruiting: 'unknown', fruitingLabel: '—'
   },
   {
-    slug: 'cambridge-favourite', name: 'Кембридж Фаворит', latin: "Fragaria × ananassa ‘Cambridge Favourite’", crop: 'Клубника', cropKey: 'strawberry',
+    slug: 'cambridge-favourite', name: 'Кембридж Фаворит', latin: "Fragaria × ananassa ‘Cambridge Favourite’", crop: 'Клубника', cropKey: 'strawberry', reviewedAt: '26.09.2026',
     type: 'Летнее плодоношение', period: 'Средний срок в исходном описании', place: 'Грядка',
     note: 'Сорт с летним плодоношением и образованием усов.',
     traits: ['Летнее плодоношение', 'Образует усы', 'Солнечное место'],
@@ -78,7 +78,7 @@ export const varieties = [
     fruiting: 'summer', fruitingLabel: 'Летнее плодоношение'
   },
   {
-    slug: 'elan', name: 'Элан', latin: "Fragaria × ananassa ‘Elan’", crop: 'Клубника', cropKey: 'strawberry',
+    slug: 'elan', name: 'Элан', latin: "Fragaria × ananassa ‘Elan’", crop: 'Клубника', cropKey: 'strawberry', reviewedAt: '26.09.2026',
     type: 'Повторное плодоношение', period: 'Повторное плодоношение в описании', place: 'Контейнер',
     note: 'Оригинатор отмечает повторное плодоношение и выращивание в контейнерах.',
     traits: ['Повторное плодоношение', 'Подходит для контейнера', 'Солнечное место'],

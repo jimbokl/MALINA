@@ -5,7 +5,7 @@ import { makeCalendar, calendarSources, calendarPhases } from '../assets/calenda
 test('летняя малина после урожая сохраняет молодые побеги', () => {
   const plan = makeCalendar({ crop: 'raspberry', type: 'summer', phase: 'after' });
   assert.match(plan.current.action, /молодые сохраните/);
-  assert.equal(plan.current.source, 'raspberry');
+  assert.equal(plan.current.source, 'raspberryPruning');
   assert.equal(plan.next.id, 'dormant');
 });
 
@@ -25,6 +25,7 @@ test('неизвестный тип не назначает сплошную о�
     assert.match(plan.uncertainty, /Уточните тип плодоношения/);
     assert.match(plan.current.action, /Уточните/);
     assert.doesNotMatch(plan.current.action, /срежьте все|срезайте все/);
+    assert.equal(makeCalendar({ crop, type: 'unknown', phase: 'flowers' }).uncertainty, '');
   }
 });
 
@@ -40,6 +41,15 @@ test('заморозок во время цветения меняет шаг т
   const no = makeCalendar({ crop: 'strawberry', type: 'june', phase: 'flowers', frostForecast: false });
   assert.match(yes.current.action, /укройте/);
   assert.match(no.current.action, /только при реальной угрозе/);
+  assert.equal(yes.current.source, 'strawberryFrost');
+});
+
+test('ссылка в ответе относится к выбранному этапу ухода', () => {
+  assert.equal(makeCalendar({ crop: 'raspberry', phase: 'planted' }).current.source, 'raspberryPlanting');
+  assert.equal(makeCalendar({ crop: 'raspberry', phase: 'harvest' }).current.source, 'raspberryHarvest');
+  assert.equal(makeCalendar({ crop: 'strawberry', phase: 'planted' }).current.source, 'strawberryPlanting');
+  assert.equal(makeCalendar({ crop: 'strawberry', phase: 'after' }).current.source, 'strawberryAfter');
+  assert.equal(makeCalendar({ crop: 'strawberry', phase: 'dormant' }).current.source, 'strawberryWinter');
 });
 
 test('каждая фаза имеет источник и последовательность', () => {
