@@ -9,6 +9,10 @@ function clean(value, limit = 250) {
     .slice(0, limit);
 }
 
+function displayName(product) {
+  return clean(product.name || product.expectedName).replace(/^Земляника садовая\s+/iu, 'Клубника ');
+}
+
 function cropTerms(product) {
   if (product.crop === 'raspberry') {
     return {
@@ -116,7 +120,7 @@ function categoryTip(kind, product) {
  * Existing editor-reviewed articles take precedence at the call site.
  */
 export function buildShopArticle(product) {
-  const name = clean(product.name || product.expectedName);
+  const name = displayName(product);
   if (!name) throw new Error('Shop article requires a product name');
   cropTerms(product);
   const kind = categoryKind(product);
@@ -131,7 +135,7 @@ export function buildShopArticle(product) {
 }
 
 export function buildShopLead(product) {
-  const name = clean(product.name || product.expectedName);
+  const name = displayName(product);
   if (!name) throw new Error('Shop lead requires a product name');
   const kind = categoryKind(product);
   const terms = cropTerms(product);

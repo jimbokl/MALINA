@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { access, readFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { shopProducts } from '../shop-products.mjs';
 import { currentShopOffers } from '../shop-model.mjs';
+import { shopNameKey } from '../scripts/generate-shop-catalog.mjs';
 
 const dist = process.env.MALINA_TEST_DIST || fileURLToPath(new URL('../../dist/', import.meta.url));
 const root = fileURLToPath(new URL('../../', import.meta.url));
@@ -20,16 +21,16 @@ async function shopSnapshot() {
   }
 }
 
-test('фид содержит 298 позиций, публичный каталог — 239 уникальных товаров', () => {
+test('фид содержит 298 позиций, публичный каталог — 166 уникальных товаров', () => {
   assert.equal(shopProducts.length, 298);
   assert.equal(shopProducts.filter(product => product.crop === 'raspberry').length, 121);
   assert.equal(shopProducts.filter(product => product.crop === 'strawberry').length, 177);
   assert.equal(new Set(shopProducts.map(product => String(product.id))).size, 298);
   assert.equal(new Set(shopProducts.map(product => product.slug)).size, 298);
-  assert.equal(shopProducts.filter(product => product.canonicalSlug !== product.slug).length, 59);
-  assert.equal(new Set(shopProducts.map(product => product.canonicalSlug || product.slug)).size, 239);
-  assert.equal(publicProducts.length, 239);
-  assert.equal(new Set(publicProducts.map(product => product.name.normalize('NFKC').toLocaleLowerCase('ru'))).size, 239);
+  assert.equal(shopProducts.filter(product => product.canonicalSlug !== product.slug).length, 132);
+  assert.equal(new Set(shopProducts.map(product => product.canonicalSlug || product.slug)).size, 166);
+  assert.equal(publicProducts.length, 166);
+  assert.equal(new Set(publicProducts.map(product => `${product.crop}\0${shopNameKey(product.name)}`)).size, 166);
   const slugs = new Set(shopProducts.map(product => product.slug));
   for (const product of shopProducts) {
     assert.ok(product.name?.trim(), `missing name: ${product.id}`);
@@ -37,16 +38,24 @@ test('фид содержит 298 позиций, публичный катал�
   }
 });
 
-test('магазин показывает 239 карточек и убирает повторные артикулы', async () => {
+test('магазин показывает 166 карточек и убирает повторные упаковки и артикулы', async () => {
   const html = await readFile(join(dist, 'magazin', 'index.html'), 'utf8');
+  const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
   assert.match(html, /<h1>Саженцы малины/);
-  assert.equal((html.match(/class="shop-card"/g) || []).length, 239);
+  assert.equal((html.match(/class="shop-card"/g) || []).length, 166);
+  const offers = currentShopOffers(await shopSnapshot(), shopProducts);
+  const inStockGroups = new Set(shopProducts.filter(product => offers.has(String(product.id))).map(product => product.canonicalSlug));
+  assert.equal((html.match(/data-stock="in_stock"/g) || []).length, inStockGroups.size);
   for (const product of publicProducts) {
     assert.ok(html.includes(`href="/magazin/${product.slug}/"`), product.slug);
+    assert.ok(sitemap.includes(`/magazin/${product.slug}/`), `primary missing from sitemap: ${product.slug}`);
   }
   for (const product of shopProducts.filter(item => item.canonicalSlug && item.canonicalSlug !== item.slug)) {
     assert.ok(!html.includes(`href="/magazin/${product.slug}/"`), `duplicate listed: ${product.slug}`);
-    await assert.rejects(access(join(dist, 'magazin', product.slug, 'index.html')), { code: 'ENOENT' });
+    assert.ok(!sitemap.includes(`/magazin/${product.slug}/`), `duplicate in sitemap: ${product.slug}`);
+    const redirect = await productHtml(product);
+    assert.match(redirect, /name="robots" content="noindex,follow"/, product.slug);
+    assert.ok(redirect.includes(`url=/magazin/${product.canonicalSlug}/`), `redirect: ${product.slug}`);
   }
   if (process.env.SITE_URL) {
     assert.match(html, /"@type":"ItemList"/);

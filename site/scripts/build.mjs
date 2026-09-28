@@ -39,6 +39,7 @@ const shopFeedItems = new Map((shopSnapshot?.products || []).map(product => [Str
 const publicShopProducts = shopProducts
   .filter(product => !product.canonicalSlug || product.canonicalSlug === product.slug)
   .map(product => ({ ...product, duplicateName: false, variantLabel: null }));
+const publicShopBySlug = new Map(publicShopProducts.map(product => [product.slug, product]));
 const shopOfferFor = product => shopOffers.get(String(product.id))
   || shopProducts.filter(item => item.canonicalSlug === product.slug).map(item => shopOffers.get(String(item.id))).find(Boolean);
 const ymCounterId = process.env.YM_COUNTER_ID || '';
@@ -370,7 +371,7 @@ const shopHeadline = product => product.headline || shopDisplayName(product);
 const shopLead = product => product.lead || buildShopLead(product);
 const shopArticle = product => product.article || buildShopArticle(product);
 function shopImage(product) {
-  const feedItem = shopFeedItems.get(String(product.id));
+  const feedItem = shopFeedItems.get(String(shopOfferFor(product)?.id || product.id));
   const yellow = product.crop === 'raspberry' && /ж[её]лт/iu.test(product.name || '');
   const fallback = yellow ? '/assets/raspberry-yellow-garden.webp' : `/assets/${product.crop}-garden.webp`;
   const local = feedItem?.imagePath || product.imagePath;
@@ -455,10 +456,18 @@ function shopLanding(product) {
   return layout({ title, description, path, active: 'shop', socialImage, socialImageAlt, script: `${schema}<script defer src="/assets/shop-filter.js"></script>`, body });
 }
 
+function shopVariantRedirect(product) {
+  const primary = publicShopBySlug.get(product.canonicalSlug);
+  if (!primary) throw new Error(`Missing primary shop product for ${product.slug}`);
+  const target = `${siteBase}${shopProductPath(primary)}`;
+  const canonical = siteUrl ? `<link rel="canonical" href="${e(siteUrl + shopProductPath(primary))}">` : '';
+  return `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,follow">${canonical}<meta http-equiv="refresh" content="0;url=${e(target)}"><title>${e(shopDisplayName(primary))} — магазин</title></head><body><p>Товар доступен на <a href="${e(target)}">общей странице «${e(shopDisplayName(primary))}»</a>.</p></body></html>`;
+}
+
 function withShopLink(html, variety) {
-  const product = shopProducts.find(item => item.cultivarSlug === variety.slug);
+  const product = publicShopProducts.find(item => item.cultivarSlug === variety.slug);
   if (!product) return html;
-  const offer = shopOffers.get(String(product.id));
+  const offer = shopOfferFor(product);
   const section = `<section class="section wrap shop-variety-link"><div><span class="eyebrow">${shopPlantLabel(product)} СОРТА</span><h2>${e(variety.name)}: предложение и посадка</h2><p>На странице товара собраны описание, регионы допуска и шаги посадки.</p></div><a class="btn btn-dark" href="${shopProductPath(product)}">${offer ? `Посмотреть от ${e(shopPrice(offer))}` : 'Посмотреть товар'} ${arrow}</a></section>`;
   return html.replace('</main>', `${section}</main>`);
 }
@@ -612,6 +621,9 @@ const plantObservation = layout({
 
 const rating = layout({ title: 'Рейтинг сортов малины и клубники — рекомендации садоводов', description: 'Какие сорта малины и клубники рекомендуют читатели. Голосование, число рекомендаций и прозрачная методика рейтинга.', path: '/rating/', active: 'rating', body: ratingBody(varieties, voteSnapshot, voteApiUrl) });
 const pages = new Map([['/', home], ['/malina/', withCropReading(cropPage('raspberry'), 'raspberry')], ['/klubnika/', withCropReading(cropPage('strawberry'), 'strawberry')], ['/sorta/', catalog], ['/magazin/', shopIndex()], ...publicShopProducts.map(product => [shopProductPath(product), shopLanding(product)]), ...raspberryFacets.map(facet => [facet.path, raspberryFacetPage(facet)]), ['/sravnenie/malina/', raspberryComparison], ['/sravnenie/klubnika/', strawberryComparison], ['/rating/', rating], ['/podbor/', pickerPage], ['/instrumenty/', toolsIndex], ['/instrumenty/raschet-sazhencev/', plantingCalculator], ['/instrumenty/raschet-shpalery/', trellisCalculator], ['/instrumenty/raschet-kapelnogo-poliva/', dripCalculator], ['/instrumenty/ekonomika-posadki/', economicsCalculator], ['/instrumenty/obrezka-maliny/', pruningHelper], ['/instrumenty/glubina-posadki/', depthHelper], ['/instrumenty/vybor-mulchi/', mulchHelper], ['/instrumenty/kalendar-uhoda/', careCalendar], ['/instrumenty/proverka-rasteniya/', plantObservation], ['/instrumenty/zhurnal-uchastka/', growerJournal], ...cities.map(city => [`/podbor/${city.slug}/`, cityPickerPage(city)]), ['/otzyvy/', reviews], ['/goroda/', cityDirectory], ['/guide/', guide], ['/in-vitro/', inVitro], ['/proverka-partii/', lotChecklist], ['/about/', about], ['/zhurnal/', articleCollection()], ['/zhurnal/malina/', articleCollection('raspberry')], ['/zhurnal/klubnika/', articleCollection('strawberry')], ...varieties.map(v => [`/sorta/${v.slug}/`, withShopLink(withCultivarReviews(withCommerce(withEvidence(withRelatedReading(withCropReading(varietyPage(v), v.cropKey), v), v), v), v), v)]), ...articles.map(article => [articlePath(article), articlePage(article)])]);
+for (const product of shopProducts.filter(item => item.canonicalSlug !== item.slug)) {
+  pages.set(shopProductPath(product), shopVariantRedirect(product));
+}
 for (const [path, html] of pages) { const dir = join(out, path); await mkdir(dir, { recursive: true }); await writeFile(join(dir, 'index.html'), withSiteBase(html)); }
 await mkdir(join(out, 'assets'), { recursive: true });
 await writeFile(join(out, 'assets', 'site.css'), withCssBase(await readFile(join(root, 'site', 'assets', 'site.css'), 'utf8')));

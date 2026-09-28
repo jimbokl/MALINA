@@ -2,6 +2,7 @@
 // shop-catalog.json; prices, links and stock come from the current feed.
 // Growing advice and cultivar traits below are backed by the linked Russian sources.
 import { readFileSync } from 'node:fs';
+import { varieties } from './data.mjs';
 const raspberryPlanting = {
   title: 'Как посадить малину',
   guideHref: '/zhurnal/posadka-maliny/',
@@ -159,11 +160,57 @@ const curatedShopProducts = [
 
 const catalog = JSON.parse(readFileSync(new URL('./shop-catalog.json', import.meta.url), 'utf8'));
 const curatedById = new Map(curatedShopProducts.map(product => [product.id, product]));
+const normalizeCultivarName = name => name.normalize('NFKC').toLocaleLowerCase('ru')
+  .replaceAll('ё', 'е').replace(/\s+/gu, ' ').trim();
+const verifiedByName = new Map(varieties.map(variety => [
+  `${variety.cropKey}\u0000${normalizeCultivarName(variety.name)}`, variety
+]));
+// The catalog itself calls this cultivar «Вима Кимберли» in its source name.
+const verifiedAliases = new Map([['strawberry\u0000вима кимберли', 'kimberli']]);
 
-export const shopProducts = catalog.map(product => ({
-  ...product,
-  planting: product.crop === 'raspberry' ? raspberryPlanting : strawberryPlanting,
-  buyerChecklist: product.crop === 'raspberry' ? raspberryBuyerChecklist : strawberryBuyerChecklist,
-  sources: product.crop === 'raspberry' ? [raspberryPlantingSource] : strawberryPlantingSources,
-  ...(curatedById.get(product.id) || {})
-}));
+export function matchShopCultivar(product) {
+  const name = normalizeCultivarName(product.name);
+  let cultivarName;
+  let qualifier;
+  if (product.crop === 'raspberry' && product.categoryId.startsWith('Плодовые/Малина/')) {
+    const match = name.match(/^малина (?:(бесшипая|крупноплодная|ремонтантная) )?(.+)$/u);
+    qualifier = match?.[1];
+    cultivarName = match?.[2];
+  } else if (product.crop === 'strawberry' && product.categoryId.startsWith('Саженцы земляники/')) {
+    cultivarName = name.match(/^земляника садовая (.+)$/u)?.[1];
+  }
+  if (!cultivarName) return null;
+  // Only the feed's explicit single-plant notation is removed. Other words remain
+  // part of the name, so sets, hybrids and embellished names cannot match.
+  cultivarName = cultivarName.replace(/\s+1\s*шт\.?(?:\s*р9)?$/u, '');
+  const key = `${product.crop}\u0000${cultivarName}`;
+  const variety = verifiedByName.get(key);
+  // A seller's remontant label must agree with the verified cultivar card.
+  if (qualifier === 'ремонтантная' && variety?.type !== 'Плодоношение на побегах текущего года') return null;
+  return variety?.slug || verifiedAliases.get(key) || null;
+}
+
+const verifiedBySlug = new Map(varieties.map(variety => [variety.slug, variety]));
+const cultivarSources = slug => {
+  const variety = verifiedBySlug.get(slug);
+  if (!variety) return [];
+  return [
+    { label: variety.sourceLabel, url: variety.source },
+    ...(variety.secondarySource ? [{ label: variety.secondarySourceLabel, url: variety.secondarySource }] : [])
+  ];
+};
+
+export const shopProducts = catalog.map(product => {
+  const cultivarSlug = matchShopCultivar(product) || product.cultivarSlug;
+  return {
+    ...product,
+    cultivarSlug,
+    planting: product.crop === 'raspberry' ? raspberryPlanting : strawberryPlanting,
+    buyerChecklist: product.crop === 'raspberry' ? raspberryBuyerChecklist : strawberryBuyerChecklist,
+    sources: [
+      ...(product.crop === 'raspberry' ? [raspberryPlantingSource] : strawberryPlantingSources),
+      ...cultivarSources(cultivarSlug)
+    ],
+    ...(curatedById.get(product.id) || {})
+  };
+});

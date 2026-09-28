@@ -30,8 +30,17 @@ function merchantUrl(row) {
   } catch { return null; }
 }
 
-export function buildCatalogManifest(csv, curatedProducts = []) {
+// Feed entries for the same plant may differ only by pack size or pot code.
+// Keep every SKU in the manifest, but publish one landing page per plant name.
+export function shopNameKey(name) {
+  return name.trim().normalize('NFKC').toLocaleLowerCase('ru')
+    .replace(/\s+\d+\s*шт\.?\s*(?:[рp]\s*\d+)?\s*$/iu, '')
+    .replace(/\s+/g, ' ').trim();
+}
+
+export function buildCatalogManifest(csv, curatedProducts = [], previousProducts = []) {
   const curatedById = new Map(curatedProducts.map(product => [String(product.id), product]));
+  const previousById = new Map(previousProducts.map(product => [String(product.id), product]));
   const selected = parseCsv(csv).filter(row => row.categoryId.startsWith(raspberryPrefix) || row.categoryId.startsWith(strawberryPrefix));
   const ids = new Set();
   const names = new Map();
@@ -41,23 +50,29 @@ export function buildCatalogManifest(csv, curatedProducts = []) {
       throw new Error(`Invalid or duplicate catalog ID ${row.id}`);
     }
     ids.add(row.id);
-    const name = row.name.trim().normalize('NFKC').toLocaleLowerCase('ru');
+    const name = shopNameKey(row.name);
     names.set(name, (names.get(name) || 0) + 1);
-    const key = `${name}\u0000${merchantUrl(row)}`;
+    const crop = row.categoryId.startsWith(raspberryPrefix) ? 'raspberry' : 'strawberry';
+    const key = `${crop}\u0000${name}`;
     if (!groups.has(key)) groups.set(key, []);
     groups.get(key).push(row);
   }
-  const primaryIds = new Map([...groups].map(([key, rows]) => [key,
-    rows.sort((left, right) => Number(right.available === 'true') - Number(left.available === 'true') ||
-      Number(left.id) - Number(right.id))[0].id
-  ]));
   const slugById = new Map(selected.map(row => [row.id, curatedById.get(row.id)?.slug || slugify(row.name, row.id)]));
+  const primaryIds = new Map([...groups].map(([key, rows]) => {
+    const curated = rows.find(row => curatedById.has(row.id));
+    const bareName = row => shopNameKey(row.name) === row.name.trim().normalize('NFKC').toLocaleLowerCase('ru');
+    const byStableName = (left, right) => Number(!bareName(left)) - Number(!bareName(right)) || Number(left.id) - Number(right.id);
+    const oldCanonical = rows.filter(row => previousById.get(row.id)?.canonicalSlug === slugById.get(row.id))
+      .sort(byStableName)[0];
+    const bare = rows.filter(bareName).sort(byStableName)[0];
+    return [key, (curated || oldCanonical || bare || [...rows].sort((left, right) => Number(left.id) - Number(right.id))[0]).id];
+  }));
   const products = selected.map(row => {
     const crop = row.categoryId.startsWith(raspberryPrefix) ? 'raspberry' : 'strawberry';
     const curated = curatedById.get(row.id);
     if (curated && curated.crop !== crop) throw new Error(`Curated crop differs for ${row.id}`);
-    const nameKey = row.name.trim().normalize('NFKC').toLocaleLowerCase('ru');
-    const groupKey = `${nameKey}\u0000${merchantUrl(row)}`;
+    const nameKey = shopNameKey(row.name);
+    const groupKey = `${crop}\u0000${nameKey}`;
     const duplicate = groups.get(groupKey).length > 1;
     return {
       id: row.id,
@@ -97,7 +112,11 @@ async function main() {
     { id: '68612', slug: 'aziya-sazhenec', crop: 'strawberry', expectedName: 'Азия', cultivarSlug: 'aziya' },
     { id: '68587', slug: 'kleri-sazhenec', crop: 'strawberry', expectedName: 'Клери', cultivarSlug: 'kleri' }
   ];
-  const products = buildCatalogManifest(csv, curated);
+  const previous = await readFile(output, 'utf8').then(JSON.parse).catch(error => {
+    if (error.code === 'ENOENT') return [];
+    throw error;
+  });
+  const products = buildCatalogManifest(csv, curated, previous);
   await writeFile(output, `${JSON.stringify(products, null, 2)}\n`);
   process.stdout.write(`Shop catalog: ${products.length} products (${products.filter(product => product.crop === 'raspberry').length} raspberry, ${products.filter(product => product.crop === 'strawberry').length} strawberry)\n`);
 }
