@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { currentShopOffers } from '../shop-model.mjs';
+import { currentShopOffers, shopSnapshotIsCurrent, shopStockState } from '../shop-model.mjs';
 
 const now = new Date('2026-09-28T12:00:00Z');
 const merchantUrl = 'https://agrosemfond.ru/catalog/gusar/';
@@ -18,6 +18,21 @@ test('устаревший снимок и отсутствующий товар
   assert.equal(currentShopOffers({ ...snapshot, expiresAt: '2026-09-28T11:59:59Z' }, [{ id: '67762' }], now).size, 0);
   assert.equal(currentShopOffers(snapshot, [{ id: 'other' }], now).size, 0);
   assert.equal(currentShopOffers({ ...snapshot, products: [{ ...product, availability: 'out_of_stock' }] }, [{ id: '67762' }], now).size, 0);
+});
+
+test('нет в наличии только при свежем явном статусе каждого артикула', () => {
+  const second = { id: 'other' };
+  const variants = [{ id: product.id }, second];
+  const unavailable = { ...snapshot, products: [
+    { id: product.id, availability: 'out_of_stock' },
+    { id: second.id, availability: 'out_of_stock' }
+  ] };
+  assert.equal(shopSnapshotIsCurrent(snapshot, now), true);
+  assert.equal(shopStockState(unavailable, variants, new Map(), now), 'out_of_stock');
+  assert.equal(shopStockState({ ...unavailable, products: unavailable.products.slice(0, 1) }, variants, new Map(), now), 'unknown');
+  assert.equal(shopStockState({ ...unavailable, expiresAt: '2026-09-28T11:59:59Z' }, variants, new Map(), now), 'unknown');
+  assert.equal(shopStockState(null, variants, new Map(), now), 'unknown');
+  assert.equal(shopStockState(unavailable, variants, new Map([[second.id, product]]), now), 'in_stock');
 });
 
 test('подменённая ссылка продавца и трекера отклоняется', () => {

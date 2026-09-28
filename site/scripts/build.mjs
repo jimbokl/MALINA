@@ -16,7 +16,7 @@ import { pageStructuredData } from '../structured-data.mjs';
 import { raspberryFacets, raspberryFacetVarieties } from '../catalog-facets.mjs';
 import { getComparisonYields } from '../assets/comparison-model.mjs';
 import { shopProducts } from '../shop-products.mjs';
-import { currentShopOffers } from '../shop-model.mjs';
+import { currentShopOffers, shopStockState } from '../shop-model.mjs';
 import { buildShopArticle, buildShopLead } from '../shop-copy.mjs';
 import { relatedShopProducts } from '../shop-related.mjs';
 
@@ -31,7 +31,7 @@ const reviewApiUrl = process.env.REVIEW_API_URL || '';
 const reviewsEnabled = Boolean(reviewApiUrl);
 const voteApiUrl = resolveVoteApi(process.env.VOTE_API_URL, reviewApiUrl);
 const voteSnapshot = validateVoteSnapshot(JSON.parse(await readFile(join(root, 'db', 'public', 'votes.json'), 'utf8')), varieties.map(v => v.slug));
-const shopSnapshot = await readFile(join(root, 'db', 'public', 'shop-offers.json'), 'utf8').then(JSON.parse).catch(error => {
+const shopSnapshot = await readFile(process.env.MALINA_SHOP_SNAPSHOT || join(root, 'db', 'public', 'shop-offers.json'), 'utf8').then(JSON.parse).catch(error => {
   if (error.code === 'ENOENT') return null;
   throw error;
 });
@@ -41,8 +41,16 @@ const publicShopProducts = shopProducts
   .filter(product => !product.canonicalSlug || product.canonicalSlug === product.slug)
   .map(product => ({ ...product, duplicateName: false, variantLabel: null }));
 const publicShopBySlug = new Map(publicShopProducts.map(product => [product.slug, product]));
+const shopVariantsByCanonical = new Map();
+for (const product of shopProducts) {
+  const canonical = product.canonicalSlug || product.slug;
+  if (!shopVariantsByCanonical.has(canonical)) shopVariantsByCanonical.set(canonical, []);
+  shopVariantsByCanonical.get(canonical).push(product);
+}
 const shopOfferFor = product => shopOffers.get(String(product.id))
   || shopProducts.filter(item => item.canonicalSlug === product.slug).map(item => shopOffers.get(String(item.id))).find(Boolean);
+const shopStockFor = product => shopStockState(shopSnapshot, shopVariantsByCanonical.get(product.slug) || [product], shopOffers);
+const shopStockLabel = state => state === 'out_of_stock' ? 'Нет в наличии' : 'Наличие уточняется';
 const ymCounterId = process.env.YM_COUNTER_ID || '';
 if (ymCounterId && !/^[1-9]\d*$/.test(ymCounterId)) throw new Error('YM_COUNTER_ID must be a positive integer');
 if (reviewApiUrl && !/^https:\/\/[^\s]+\/api\/reviews$/.test(reviewApiUrl) && !/^http:\/\/localhost:\d+\/api\/reviews$/.test(reviewApiUrl) && !/^http:\/\/127\.0\.0\.1:\d+\/api\/reviews$/.test(reviewApiUrl)) throw new Error('REVIEW_API_URL must be HTTPS /api/reviews, except localhost development');
@@ -392,10 +400,12 @@ function shopImage(product) {
 
 function shopCard(product) {
   const offer = shopOfferFor(product);
+  const stock = shopStockFor(product);
   const image = shopImage(product);
   const name = shopDisplayName(product);
   const offerName = offer?.name.replace(/^Земляника садовая\s+/iu, 'Клубника ');
-  return `<article class="shop-card" data-shop-card data-crop="${e(product.crop)}" data-stock="${offer ? 'in_stock' : 'out_of_stock'}" data-search="${e(`${name} ${offerName || ''} ${offer?.id || product.id}`.toLocaleLowerCase('ru'))}"><a class="shop-card-image" href="${shopProductPath(product)}" aria-label="Подробнее: ${e(name)}"><img src="${e(image.src)}" alt="${e(image.alt)}"${image.fallback ? ` data-shop-fallback="${e(image.fallback)}"` : ''} width="800" height="640" loading="lazy" decoding="async"></a><div class="shop-card-body"><span class="eyebrow">${e(shopCropLabel(product))} / ${shopPlantLabel(product)}</span><h3><a href="${shopProductPath(product)}">${e(name)}</a></h3>${offerName && offerName !== name ? `<small class="shop-sku">У продавца: ${e(offerName)}</small>` : ''}<p>${e(shopLead(product))}</p><div class="shop-card-bottom"><strong>${offer ? e(shopPrice(offer)) : 'Нет в наличии'}</strong><a href="${shopProductPath(product)}">Подробнее ${arrow}</a></div></div></article>`;
+  const search = [...new Set([name, offerName, ...shopVariantsByCanonical.get(product.slug).flatMap(item => [item.name, item.id])].filter(Boolean))].join(' ').toLocaleLowerCase('ru').replaceAll('ё', 'е');
+  return `<article class="shop-card" data-shop-card data-shop-canonical="${e(product.slug)}" data-crop="${e(product.crop)}" data-stock="${stock}" data-search="${e(search)}"><a class="shop-card-image" href="${shopProductPath(product)}" aria-label="Подробнее: ${e(name)}"><img src="${e(image.src)}" alt="${e(image.alt)}"${image.fallback ? ` data-shop-fallback="${e(image.fallback)}"` : ''} width="800" height="640" loading="lazy" decoding="async"></a><div class="shop-card-body"><span class="eyebrow">${e(shopCropLabel(product))} / ${shopPlantLabel(product)}</span><h3><a href="${shopProductPath(product)}">${e(name)}</a></h3>${offerName && offerName !== name ? `<small class="shop-sku">У продавца: ${e(offerName)}</small>` : ''}<p>${e(shopLead(product))}</p><div class="shop-card-bottom"><strong>${offer ? e(shopPrice(offer)) : shopStockLabel(stock)}</strong><a href="${shopProductPath(product)}">Подробнее ${arrow}</a></div></div></article>`;
 }
 
 function shopIndex() {
@@ -410,13 +420,14 @@ function shopIndex() {
     { '@type': 'CollectionPage', name: 'Магазин саженцев малины и рассады клубники', url: `${siteUrl}/magazin/`, mainEntity: { '@type': 'ItemList', itemListElement: publicShopProducts.map((product, index) => ({ '@type': 'ListItem', position: index + 1, name: shopDisplayName(product), url: `${siteUrl}${shopProductPath(product)}` })) } },
     { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Главная', item: `${siteUrl}/` }, { '@type': 'ListItem', position: 2, name: 'Магазин', item: `${siteUrl}/magazin/` }] }
   ] }).replaceAll('<', '\\u003c')}</script>` : '';
-  return layout({ title: 'Магазин саженцев малины и клубники', description: 'Каталог саженцев малины и рассады клубники: фото, наличие, описание и посадка. Отдельная страница для каждого товара.', path: '/magazin/', active: 'shop', script: `${schema}<script defer src="/assets/shop-filter.js"></script>`, body: `<section class="simple-hero shop-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span>Магазин</div><span class="eyebrow">МАЛИНА — КЛУБНИКА / МАГАЗИН</span><h1>Саженцы малины<br><em>и рассада клубники.</em></h1><p>${publicShopProducts.length} товаров в каталоге. Откройте карточку, чтобы посмотреть описание, посадку и наличие.</p><div class="shop-hero-links"><a href="#malina">Малина ${arrow}</a><a href="#klubnika">Клубника ${arrow}</a></div></div></section><div class="wrap shop-filter" role="search"><label>Найти товар<input type="search" data-shop-query placeholder="Название или артикул" autocomplete="off"></label><label>Наличие<select data-shop-stock><option value="all">Все товары</option><option value="in_stock">Есть в наличии</option><option value="out_of_stock">Нет в наличии</option></select></label><p data-shop-count aria-live="polite">Показано ${publicShopProducts.length} товаров</p></div>${sections}<section class="inline-cta wrap"><div><span class="eyebrow light">ЕЩЁ НЕ ОПРЕДЕЛИЛИСЬ</span><h2>Сначала подберите сорт для своего города.</h2></div><a class="btn btn-cream" href="/podbor/">Открыть подбор ${arrow}</a></section>` });
+  return layout({ title: 'Магазин саженцев малины и клубники', description: 'Каталог саженцев малины и рассады клубники: фото, наличие, описание и посадка. Отдельная страница для каждого товара.', path: '/magazin/', active: 'shop', script: `${schema}<script defer src="/assets/shop-filter.js"></script>`, body: `<section class="simple-hero shop-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span>Магазин</div><span class="eyebrow">МАЛИНА — КЛУБНИКА / МАГАЗИН</span><h1>Саженцы малины<br><em>и рассада клубники.</em></h1><p>${publicShopProducts.length} товаров в каталоге. Откройте карточку, чтобы посмотреть описание, посадку и наличие.</p><div class="shop-hero-links"><a href="#malina">Малина ${arrow}</a><a href="#klubnika">Клубника ${arrow}</a></div></div></section><div class="wrap shop-filter" role="search"><label>Найти товар<input type="search" data-shop-query placeholder="Название или артикул" autocomplete="off"></label><label>Наличие<select data-shop-stock><option value="all">Все товары</option><option value="in_stock">Есть в наличии</option><option value="out_of_stock">Нет в наличии</option><option value="unknown">Наличие уточняется</option></select></label><p data-shop-count aria-live="polite">Показано ${publicShopProducts.length} товаров</p></div>${sections}<section class="inline-cta wrap"><div><span class="eyebrow light">ЕЩЁ НЕ ОПРЕДЕЛИЛИСЬ</span><h2>Сначала подберите сорт для своего города.</h2></div><a class="btn btn-cream" href="/podbor/">Открыть подбор ${arrow}</a></section>` });
 }
 
 function shopLanding(product) {
   const variety = shopVariety(product);
   const catalog = product.cultivarSlug ? publicCultivars.get(product.cultivarSlug) : null;
   const offer = shopOfferFor(product);
+  const stock = shopStockFor(product);
   const image = shopImage(product);
   const name = shopDisplayName(product);
   const offerName = offer?.name.replace(/^Земляника садовая\s+/iu, 'Клубника ');
@@ -425,8 +436,8 @@ function shopLanding(product) {
   const path = shopProductPath(product);
   const title = `${name}: описание и посадка`;
   const description = product.lead
-    ? `${name}. ${offer ? 'Есть в наличии.' : 'Нет в наличии.'} ${lead}`
-    : `${name}: описание товара, посадка и подбор по городу. ${offer ? `Цена ${shopPrice(offer)}.` : 'Нет в наличии.'}`;
+    ? `${name}. ${offer ? 'Есть в наличии.' : `${shopStockLabel(stock)}.`} ${lead}`
+    : `${name}: описание товара, посадка и подбор по городу. ${offer ? `Цена ${shopPrice(offer)}.` : `${shopStockLabel(stock)}.`}`;
   const productImage = /^https:\/\//i.test(image.src) ? image.src : `${siteUrl}${siteBase}${image.src}`;
   const regionNumbers = [...new Set((catalog?.admissions || []).map(admission => admission.admission_region_number))].sort((a, b) => a - b);
   const regionNames = regionNumbers.map(number => publicCatalog.regions.find(region => region.admission_region_number === number)?.admission_region_name).filter(Boolean);
@@ -437,7 +448,7 @@ function shopLanding(product) {
     : '';
   const order = offer
     ? `<div class="shop-order"><span class="eyebrow">ПРЕДЛОЖЕНИЕ ПРОДАВЦА</span><h2>${e(offerName)}</h2><p class="shop-sku">Артикул ${e(offer.id)}</p><p class="shop-order-price">${e(shopPrice(offer))}</p><p>Продавец: Агросемфонд · обновлено ${e(shopSnapshot.checkedAt.slice(0, 10).split('-').reverse().join('.'))}</p><a class="btn btn-dark" href="${e(offer.affiliateUrl)}" target="_blank" rel="sponsored nofollow noopener noreferrer" data-affiliate-offer="${e(offer.id)}"${product.cultivarSlug ? ` data-cultivar="${e(product.cultivarSlug)}"` : ''}>Заказать у продавца ${arrow}</a><small>Партнёрская ссылка · заказ на сайте продавца.</small></div>`
-    : `<div class="shop-order shop-order-empty"><span class="eyebrow">ПРЕДЛОЖЕНИЕ ПРОДАВЦА</span><h2>Нет в наличии</h2></div>`;
+    : `<div class="shop-order shop-order-empty"><span class="eyebrow">ПРЕДЛОЖЕНИЕ ПРОДАВЦА</span><h2>${shopStockLabel(stock)}</h2></div>`;
   const varietyFacts = variety
     ? [['Культура', shopCropLabel(product)], ['Плодоношение', variety.fruitingLabel === shopCropLabel(product) ? '' : variety.fruitingLabel], ['Срок', variety.period], ['Место', variety.place]]
       .filter(([, value]) => value && value !== '—')

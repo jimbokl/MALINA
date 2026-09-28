@@ -6,6 +6,8 @@
       image.removeAttribute('data-shop-fallback');
       image.src = fallback;
       image.alt = 'Иллюстрация культуры';
+      const caption = image.closest('figure')?.querySelector('figcaption');
+      if (caption) caption.textContent = 'Иллюстрация культуры.';
     }, { once: true });
   }
   const query = document.querySelector('[data-shop-query]');
@@ -16,7 +18,7 @@
   if (!query || !stock || !count) return;
 
   const update = () => {
-    const term = query.value.trim().toLocaleLowerCase('ru');
+    const term = query.value.trim().toLocaleLowerCase('ru').replaceAll('ё', 'е');
     let visible = 0;
     for (const card of cards) {
       const show = (!term || card.dataset.search.includes(term))

@@ -1,10 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { shopProducts } from '../shop-products.mjs';
-import { currentShopOffers } from '../shop-model.mjs';
+import { currentShopOffers, shopStockState } from '../shop-model.mjs';
 import { shopNameKey } from '../scripts/generate-shop-catalog.mjs';
 
 const dist = process.env.MALINA_TEST_DIST || fileURLToPath(new URL('../../dist/', import.meta.url));
@@ -64,6 +66,19 @@ test('магазин показывает уникальные карточки 
   }
 });
 
+test('поиск по артикулу любой фасовки ведёт к общей карточке', async () => {
+  const html = await readFile(join(dist, 'magazin', 'index.html'), 'utf8');
+  const cards = new Map([...html.matchAll(/<article class="shop-card"[^>]*>/g)].map(([tag]) => [
+    tag.match(/data-shop-canonical="([^"]+)"/)?.[1],
+    tag.match(/data-search="([^"]+)"/)?.[1] || ''
+  ]));
+  assert.equal(cards.size, publicProducts.length);
+  for (const product of shopProducts) {
+    const canonical = product.canonicalSlug || product.slug;
+    assert.ok(cards.get(canonical)?.includes(String(product.id)), `${product.id} missing from ${canonical}`);
+  }
+});
+
 test('все публичные товарные страницы имеют уникальный заголовок и свой canonical', async () => {
   const titles = new Set();
   for (const product of publicProducts) {
@@ -106,14 +121,16 @@ test('снимок содержит только известные позици
   }
 });
 
-test('заказ доступен только для товаров в наличии; остальные подписаны «Нет в наличии»', async () => {
+test('заказ доступен только для товаров в наличии; остальных подписываем по подтверждённому статусу', async () => {
   const snapshot = await shopSnapshot();
   const current = currentShopOffers(snapshot, shopProducts);
   const index = await readFile(join(dist, 'magazin', 'index.html'), 'utf8');
   const cards = index.match(/<article class="shop-card"[\s\S]*?<\/article>/g) || [];
   for (const product of publicProducts) {
     const html = await productHtml(product);
-    const offer = current.get(String(product.id)) || shopProducts.filter(item => item.canonicalSlug === product.slug).map(item => current.get(String(item.id))).find(Boolean);
+    const variants = shopProducts.filter(item => (item.canonicalSlug || item.slug) === product.slug);
+    const offer = variants.map(item => current.get(String(item.id))).find(Boolean);
+    const stock = shopStockState(snapshot, variants, current);
     if (offer) {
       assert.ok(html.includes(`data-affiliate-offer="${offer.id}"`), product.slug);
       assert.ok(html.includes(`<h2>${escapeHtml(offer.name.replace(/^Земляника садовая\s+/iu, 'Клубника '))}</h2>`), `active offer name: ${product.slug}`);
@@ -126,11 +143,34 @@ test('заказ доступен только для товаров в нали
     } else {
       assert.doesNotMatch(html, /data-affiliate-offer=/, product.slug);
       assert.doesNotMatch(html, /Заказать у продавца/, product.slug);
-      assert.match(html, /Нет в наличии/i, product.slug);
+      assert.match(html, stock === 'out_of_stock' ? /Нет в наличии/i : /Наличие уточняется/i, product.slug);
       const card = cards.find(item => item.includes(`href="/magazin/${product.slug}/"`));
       assert.ok(card, `missing card: ${product.slug}`);
-      assert.match(card, /Нет в наличии/i, `card stock label: ${product.slug}`);
+      assert.match(card, stock === 'out_of_stock' ? /Нет в наличии/i : /Наличие уточняется/i, `card stock label: ${product.slug}`);
     }
+  }
+});
+
+test('сбой обновления фида не объявляет все товары отсутствующими', async () => {
+  const temp = await mkdtemp(join(tmpdir(), 'malina-shop-failure-'));
+  try {
+    const snapshotPath = join(temp, 'failed-snapshot.json');
+    const output = join(temp, 'dist');
+    await writeFile(snapshotPath, JSON.stringify({ checkedAt: null, expiresAt: null, products: [] }));
+    execFileSync(process.execPath, [join(root, 'site', 'scripts', 'build.mjs')], {
+      cwd: root,
+      env: { ...process.env, MALINA_BUILD_OUT: output, MALINA_SHOP_SNAPSHOT: snapshotPath },
+      stdio: 'pipe'
+    });
+    const index = await readFile(join(output, 'magazin', 'index.html'), 'utf8');
+    const cards = index.match(/<article class="shop-card"[\s\S]*?<\/article>/g) || [];
+    assert.equal(cards.length, publicProducts.length);
+    assert.ok(cards.every(card => card.includes('data-stock="unknown"') && card.includes('Наличие уточняется') && !card.includes('Нет в наличии')));
+    const page = await readFile(join(output, 'magazin', publicProducts[0].slug, 'index.html'), 'utf8');
+    assert.match(page, /Наличие уточняется/);
+    assert.doesNotMatch(page, /Нет в наличии|data-affiliate-offer=/);
+  } finally {
+    await rm(temp, { recursive: true, force: true });
   }
 });
 

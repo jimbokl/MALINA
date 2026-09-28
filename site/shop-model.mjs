@@ -7,12 +7,24 @@ function secureUrl(value, host) {
   } catch { return null; }
 }
 
-export function currentShopOffers(snapshot, manifest, now = new Date()) {
-  if (!snapshot || !Array.isArray(snapshot.products)) return new Map();
+export function shopSnapshotIsCurrent(snapshot, now = new Date()) {
+  if (!snapshot || !Array.isArray(snapshot.products)) return false;
   const checked = Date.parse(snapshot.checkedAt);
   const expires = Date.parse(snapshot.expiresAt);
   const moment = now.getTime();
-  if (!Number.isFinite(checked) || !Number.isFinite(expires) || checked > moment || expires <= moment || expires - checked > 36 * 60 * 60 * 1000) return new Map();
+  return Number.isFinite(checked) && Number.isFinite(expires) && checked <= moment && expires > moment && expires - checked <= 36 * 60 * 60 * 1000;
+}
+
+export function shopStockState(snapshot, variants, offers, now = new Date()) {
+  if (variants.some(product => offers.has(String(product.id)))) return 'in_stock';
+  if (!shopSnapshotIsCurrent(snapshot, now) || !variants.length) return 'unknown';
+  const byId = new Map(snapshot.products.filter(product => product?.id != null).map(product => [String(product.id), product]));
+  return variants.every(product => byId.get(String(product.id))?.availability === 'out_of_stock')
+    ? 'out_of_stock' : 'unknown';
+}
+
+export function currentShopOffers(snapshot, manifest, now = new Date()) {
+  if (!shopSnapshotIsCurrent(snapshot, now)) return new Map();
   const products = new Map(manifest.map(product => [String(product.id), product]));
   const valid = new Map();
   for (const offer of snapshot.products) {
