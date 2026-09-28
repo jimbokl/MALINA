@@ -1,58 +1,13 @@
 import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseCsv } from './admitad-csv.mjs';
+
+export { parseCsv } from './admitad-csv.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const requiredColumns = ['available', 'categoryId', 'currencyId', 'id', 'name', 'picture', 'price', 'url'];
 const maxFeedBytes = 60 * 1024 * 1024;
 const freshnessMs = 36 * 60 * 60 * 1000;
-
-export function parseCsv(input) {
-  const text = input.replace(/^\uFEFF/, '');
-  const records = [];
-  let row = [];
-  let field = '';
-  let quoted = false;
-  for (let index = 0; index < text.length; index++) {
-    const char = text[index];
-    if (quoted) {
-      if (char === '"' && text[index + 1] === '"') {
-        field += '"';
-        index++;
-      } else if (char === '"') {
-        quoted = false;
-      } else {
-        field += char;
-      }
-    } else if (char === '"' && field === '') {
-      quoted = true;
-    } else if (char === ';') {
-      row.push(field);
-      field = '';
-    } else if (char === '\n') {
-      row.push(field.replace(/\r$/, ''));
-      if (row.some(value => value !== '')) records.push(row);
-      row = [];
-      field = '';
-    } else {
-      field += char;
-    }
-  }
-  if (quoted) throw new Error('Unclosed CSV quote');
-  if (field || row.length) {
-    row.push(field.replace(/\r$/, ''));
-    records.push(row);
-  }
-  const [headers, ...values] = records;
-  if (!headers || requiredColumns.some(column => !headers.includes(column))) {
-    throw new Error('Admitad CSV columns are missing');
-  }
-  if (new Set(headers).size !== headers.length) throw new Error('Duplicate CSV columns');
-  return values.map((cells, index) => {
-    if (cells.length !== headers.length) throw new Error(`Malformed CSV row ${index + 2}`);
-    return Object.fromEntries(headers.map((header, position) => [header, cells[position]]));
-  });
-}
 
 function httpsUrl(value, allowedHost) {
   try {

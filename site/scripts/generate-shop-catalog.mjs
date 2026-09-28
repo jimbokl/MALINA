@@ -1,7 +1,7 @@
 import { readFile, rename, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseCsv } from './admitad-feed.mjs';
+import { parseCsv } from './admitad-csv.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const raspberryPrefix = 'Плодовые/Малина/';
