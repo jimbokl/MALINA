@@ -11,6 +11,7 @@ const dist = process.env.MALINA_TEST_DIST || fileURLToPath(new URL('../../dist/'
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const publicProducts = shopProducts.filter(product => !product.canonicalSlug || product.canonicalSlug === product.slug);
 const productHtml = product => readFile(join(dist, 'magazin', product.slug, 'index.html'), 'utf8');
+const escapeHtml = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
 
 async function shopSnapshot() {
   try {
@@ -21,16 +22,16 @@ async function shopSnapshot() {
   }
 }
 
-test('фид содержит 298 позиций, публичный каталог — 165 уникальных товаров', () => {
+test('фид содержит 298 позиций, публичный каталог — 160 уникальных товаров', () => {
   assert.equal(shopProducts.length, 298);
   assert.equal(shopProducts.filter(product => product.crop === 'raspberry').length, 121);
   assert.equal(shopProducts.filter(product => product.crop === 'strawberry').length, 177);
   assert.equal(new Set(shopProducts.map(product => String(product.id))).size, 298);
   assert.equal(new Set(shopProducts.map(product => product.slug)).size, 298);
-  assert.equal(shopProducts.filter(product => product.canonicalSlug !== product.slug).length, 133);
-  assert.equal(new Set(shopProducts.map(product => product.canonicalSlug || product.slug)).size, 165);
-  assert.equal(publicProducts.length, 165);
-  assert.equal(new Set(publicProducts.map(product => `${product.crop}\0${shopNameKey(product.name)}`)).size, 165);
+  assert.equal(shopProducts.filter(product => product.canonicalSlug !== product.slug).length, 138);
+  assert.equal(new Set(shopProducts.map(product => product.canonicalSlug || product.slug)).size, 160);
+  assert.equal(publicProducts.length, 160);
+  assert.equal(new Set(publicProducts.map(product => `${product.crop}\0${shopNameKey(product.name)}`)).size, 160);
   const slugs = new Set(shopProducts.map(product => product.slug));
   for (const product of shopProducts) {
     assert.ok(product.name?.trim(), `missing name: ${product.id}`);
@@ -38,11 +39,11 @@ test('фид содержит 298 позиций, публичный катал�
   }
 });
 
-test('магазин показывает 165 карточек и убирает повторные упаковки и артикулы', async () => {
+test('магазин показывает 160 карточек и убирает повторные упаковки и артикулы', async () => {
   const html = await readFile(join(dist, 'magazin', 'index.html'), 'utf8');
   const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
   assert.match(html, /<h1>Саженцы малины/);
-  assert.equal((html.match(/class="shop-card"/g) || []).length, 165);
+  assert.equal((html.match(/class="shop-card"/g) || []).length, 160);
   const offers = currentShopOffers(await shopSnapshot(), shopProducts);
   const inStockGroups = new Set(shopProducts.filter(product => offers.has(String(product.id))).map(product => product.canonicalSlug));
   assert.equal((html.match(/data-stock="in_stock"/g) || []).length, inStockGroups.size);
@@ -111,6 +112,7 @@ test('заказ доступен только для товаров в нали
     const offer = current.get(String(product.id)) || shopProducts.filter(item => item.canonicalSlug === product.slug).map(item => current.get(String(item.id))).find(Boolean);
     if (offer) {
       assert.ok(html.includes(`data-affiliate-offer="${offer.id}"`), product.slug);
+      assert.ok(html.includes(`<h2>${escapeHtml(offer.name.replace(/^Земляника садовая\s+/iu, 'Клубника '))}</h2>`), `active offer name: ${product.slug}`);
       assert.match(html, /Заказать у продавца/, product.slug);
       assert.match(html, /rel="sponsored nofollow noopener noreferrer"/, product.slug);
       if (process.env.SITE_URL) {
@@ -125,5 +127,15 @@ test('заказ доступен только для товаров в нали
       assert.ok(card, `missing card: ${product.slug}`);
       assert.match(card, /Нет в наличии/i, `card stock label: ${product.slug}`);
     }
+  }
+});
+
+test('товарная страница ведёт к подбору города без повторяющихся оговорок', async () => {
+  for (const product of publicProducts) {
+    const html = await productHtml(product);
+    assert.match(html, /<section id="regiony">[\s\S]*?href="\/podbor\/"/, `city picker: ${product.slug}`);
+    assert.doesNotMatch(html, /нет сверенных сведений о регионах допуска|Сейчас заказ этой позиции недоступен|Наличие может измениться при следующем обновлении/i, product.slug);
+    assert.doesNotMatch(html, /<dd>(?:|—)<\/dd>/, `empty variety fact: ${product.slug}`);
+    if (!product.lead) assert.doesNotMatch(html, /class="shop-product-lead"/, `generic hero lead: ${product.slug}`);
   }
 });

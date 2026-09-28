@@ -35,9 +35,13 @@ function merchantUrl(row) {
 export function shopNameKey(name) {
   const key = name.trim().normalize('NFKC').toLocaleLowerCase('ru')
     .replace(/\s+\d+\s*шт\.?\s*(?:[рp]\s*\d+)?\s*$/iu, '')
+    .replace(/\s+asf\s*$/iu, '')
     .replace(/\s+/g, ' ').trim();
   // Both labels refer to the verified cultivar Кимберли in our catalog.
-  return key === 'земляника садовая вима кимберли' ? 'земляника садовая кимберли' : key;
+  if (key === 'земляника садовая вима кимберли') return 'земляника садовая кимберли';
+  // The feed repeats the same Изобильная description under two categories.
+  if (key === 'малина ремонтантная изобильная') return 'малина изобильная';
+  return key;
 }
 
 export function buildCatalogManifest(csv, curatedProducts = [], previousProducts = []) {

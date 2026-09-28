@@ -47,3 +47,23 @@ test('verified Кимберли alias shares one page with the cultivar name', (
   assert.equal(products[1].canonicalSlug, products[1].slug);
   assert.equal(shopNameKey(products[0].name), shopNameKey(products[1].name));
 });
+
+test('ASF stock label does not create a second cultivar page', () => {
+  const csv = [header,
+    row('101', 'false', 'Саженцы земляники/Ремонтантные сорта', 'Земляника Фреска 1шт р9'),
+    row('102', 'true', 'Саженцы земляники/Ремонтантные сорта', 'Земляника Фреска ASF 1 шт р9')
+  ].join('\n');
+  const products = buildCatalogManifest(csv);
+  assert.equal(products[0].canonicalSlug, products[1].canonicalSlug);
+  assert.equal(shopNameKey(products[0].name), 'земляника фреска');
+});
+
+test('the duplicate Изобильная category label shares the existing page', () => {
+  const csv = [header,
+    row('101', 'false', 'Плодовые/Малина/Обыкновенная', 'Малина Изобильная'),
+    row('102', 'true', 'Плодовые/Малина/Ремонтантная', 'Малина ремонтантная Изобильная 1 шт')
+  ].join('\n');
+  const products = buildCatalogManifest(csv);
+  assert.equal(products[0].canonicalSlug, products[1].canonicalSlug);
+  assert.equal(shopNameKey(products[0].name), 'малина изобильная');
+});
