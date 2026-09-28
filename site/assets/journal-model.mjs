@@ -2,6 +2,13 @@ export const JOURNAL_STORAGE_KEY = 'malina.growerJournal.v1';
 export const JOURNAL_SCHEMA_VERSION = 1;
 export const MAX_JOURNAL_RECORDS = 500;
 
+export function journalCalendarCrop(search, records = []) {
+  const params = new URLSearchParams(search);
+  const entry = records.find(record => record.id === params.get('entry'));
+  const crop = entry?.crop ?? params.get('crop');
+  return crop === 'raspberry' || crop === 'strawberry' ? crop : '';
+}
+
 const fields = {
   cultivar: 100,
   region: 100,

@@ -1,5 +1,5 @@
 import { makeCalendar, calendarSources } from './calendar-model.mjs';
-import { JOURNAL_STORAGE_KEY, journalCalendarEvents, parseJournalFile } from './journal-model.mjs';
+import { JOURNAL_STORAGE_KEY, journalCalendarCrop, journalCalendarEvents, parseJournalFile } from './journal-model.mjs';
 
 const form = document.querySelector('#calendar-form');
 if (form) {
@@ -81,11 +81,18 @@ if (form) {
     showAllJournalEvents = false;
     renderJournalEvents();
   }
-  form.elements.crop.addEventListener('change', updateForm);
+  form.elements.crop.addEventListener('change', () => {
+    const url = new URL(location.href);
+    url.searchParams.set('crop', form.elements.crop.value);
+    history.replaceState(null, '', url);
+    updateForm();
+  });
   typeField.addEventListener('change', updateForm);
   form.elements.phase.addEventListener('change', updateForm);
   journalMore?.addEventListener('click', () => { showAllJournalEvents = !showAllJournalEvents; renderJournalEvents(); });
   window.addEventListener('storage', event => { if (event.key === JOURNAL_STORAGE_KEY) renderJournalEvents(); });
+  const linkedCrop = journalCalendarCrop(location.search);
+  if (linkedCrop) form.elements.crop.value = linkedCrop;
   updateForm();
 
   form.addEventListener('submit', event => {

@@ -154,6 +154,23 @@ test('заказ доступен только для товаров в нали
   }
 });
 
+test('страница сорта показывает наличие связанного товара', async () => {
+  const snapshot = await shopSnapshot();
+  const current = currentShopOffers(snapshot, shopProducts);
+  const linked = publicProducts.filter(product => product.cultivarSlug);
+  assert.ok(linked.length > 0);
+  for (const product of linked) {
+    const variants = shopProducts.filter(item => (item.canonicalSlug || item.slug) === product.slug);
+    const offer = variants.map(item => current.get(String(item.id))).find(Boolean);
+    const stock = shopStockState(snapshot, variants, current);
+    const html = await readFile(join(dist, 'sorta', product.cultivarSlug, 'index.html'), 'utf8');
+    const section = html.match(/<section class="section wrap shop-variety-link">[\s\S]*?<\/section>/)?.[0];
+    assert.ok(section, `missing offer on variety: ${product.cultivarSlug}`);
+    assert.ok(section.includes(`href="/magazin/${product.slug}/"`), `wrong product: ${product.cultivarSlug}`);
+    assert.match(section, offer ? /Есть в наличии/ : stock === 'out_of_stock' ? /Нет в наличии/ : /Наличие уточняется/, product.cultivarSlug);
+  }
+});
+
 test('сбой обновления фида не объявляет все товары отсутствующими', async () => {
   const temp = await mkdtemp(join(tmpdir(), 'malina-shop-failure-'));
   try {
@@ -172,6 +189,11 @@ test('сбой обновления фида не объявляет все то
     const page = await readFile(join(output, 'magazin', publicProducts[0].slug, 'index.html'), 'utf8');
     assert.match(page, /Наличие уточняется/);
     assert.doesNotMatch(page, /Нет в наличии|data-affiliate-offer=/);
+    const linked = publicProducts.find(product => product.cultivarSlug);
+    const variety = await readFile(join(output, 'sorta', linked.cultivarSlug, 'index.html'), 'utf8');
+    const section = variety.match(/<section class="section wrap shop-variety-link">[\s\S]*?<\/section>/)?.[0];
+    assert.match(section, /Наличие уточняется/);
+    assert.doesNotMatch(section, /Нет в наличии|Есть в наличии/);
   } finally {
     await rm(temp, { recursive: true, force: true });
   }

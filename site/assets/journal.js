@@ -1,5 +1,6 @@
 import {
   JOURNAL_STORAGE_KEY,
+  journalCalendarCrop,
   makeJournalRecord,
   mergeJournalRecords,
   parseJournalFile,
@@ -21,10 +22,17 @@ if (form && list && status && count && moreButton && cropFilter && cropFilterLab
   const cancel = document.querySelector('#grower-journal-cancel');
   const extra = document.querySelector('#grower-journal-extra');
   const exportButton = document.querySelector('#grower-journal-export');
+  const calendarLink = document.querySelector('.grower-journal-aside > a');
   let records = [];
   let editingId = '';
   let readable = true;
   let visibleCount = 4;
+
+  function updateCalendarLink(crop) {
+    if (calendarLink && (crop === 'raspberry' || crop === 'strawberry')) {
+      calendarLink.href = `/instrumenty/kalendar-uhoda/?crop=${crop}`;
+    }
+  }
 
   function announce(message, error = false) {
     status.textContent = message;
@@ -194,6 +202,7 @@ if (form && list && status && count && moreButton && cropFilter && cropFilterLab
     title.textContent = `Запись о ${cropParam === 'raspberry' ? 'малине' : 'клубнике'}`;
   }
   const entryParam = params.get('entry');
+  updateCalendarLink(journalCalendarCrop(location.search, records));
   if (entryParam && readable) {
     const ordered = [...records].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
     const index = ordered.findIndex(record => record.id === entryParam);
@@ -207,6 +216,7 @@ if (form && list && status && count && moreButton && cropFilter && cropFilterLab
   }
 
   form.elements.crop.addEventListener('change', () => {
+    updateCalendarLink(form.elements.crop.value);
     form.elements.cultivar.value = '';
     updateCultivarHint();
     if (form.dataset.step === 'start') {

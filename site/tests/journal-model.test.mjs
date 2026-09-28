@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  journalCalendarCrop,
   journalCalendarEvents,
   makeJournalRecord,
   mergeJournalRecords,
@@ -53,6 +54,15 @@ test('календарь показывает только записанные 
   const reloaded = parseJournalFile(serializeJournalFile([strawberry, raspberry, withoutDates])).records;
   assert.deepEqual(journalCalendarEvents(reloaded, 'raspberry'), raspberryEvents);
   assert.throws(() => journalCalendarEvents([strawberry], 'blueberry'), /культуру/);
+});
+
+test('переход журнал — календарь и ссылка на запись сохраняют нужную культуру', () => {
+  const strawberry = makeJournalRecord(base, { id: 'journal_route_strawberry', now: '2026-09-27T00:00:00.000Z' });
+  assert.equal(journalCalendarCrop('?crop=strawberry'), 'strawberry');
+  assert.equal(journalCalendarCrop('?crop=raspberry'), 'raspberry');
+  assert.equal(journalCalendarCrop(`?entry=${strawberry.id}`, [strawberry]), 'strawberry');
+  assert.equal(journalCalendarCrop(`?crop=raspberry&entry=${strawberry.id}`, [strawberry]), 'strawberry');
+  assert.equal(journalCalendarCrop('?crop=blueberry'), '');
 });
 
 test('незавершённый сезон можно сохранить и дополнить позже', () => {

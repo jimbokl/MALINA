@@ -490,7 +490,9 @@ function withShopLink(html, variety) {
   const product = publicShopProducts.find(item => item.cultivarSlug === variety.slug);
   if (!product) return html;
   const offer = shopOfferFor(product);
-  const section = `<section class="section wrap shop-variety-link"><div><span class="eyebrow">${shopPlantLabel(product)} СОРТА</span><h2>${e(variety.name)}: предложение и посадка</h2><p>На странице товара собраны описание, регионы допуска и шаги посадки.</p></div><a class="btn btn-dark" href="${shopProductPath(product)}">${offer ? `Посмотреть от ${e(shopPrice(offer))}` : 'Посмотреть товар'} ${arrow}</a></section>`;
+  const stock = shopStockFor(product);
+  const availability = offer ? `Есть в наличии · ${e(shopPrice(offer))}` : shopStockLabel(stock);
+  const section = `<section class="section wrap shop-variety-link"><div><span class="eyebrow">${shopPlantLabel(product)} СОРТА</span><h2>${e(variety.name)}: предложение и посадка</h2><p>На странице товара собраны описание, регионы допуска и шаги посадки.</p><p class="shop-variety-availability">${availability}</p></div><a class="btn btn-dark" href="${shopProductPath(product)}">Посмотреть товар ${arrow}</a></section>`;
   return html.replace('</main>', `${section}</main>`);
 }
 
