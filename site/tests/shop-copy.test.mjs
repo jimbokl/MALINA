@@ -54,3 +54,15 @@ test('bundle composition is taken from labeled seller lines', () => {
   assert.match(article.paragraphs.join(' '), /В описании продавца перечислены/);
   assert.doesNotMatch(article.paragraphs.join(' '), /шт\.горшок/);
 });
+
+test('shop cards surface seller age and compact pot notation without cultivar claims', () => {
+  const lead = buildShopLead({
+    crop: 'strawberry', name: 'Земляника садовая Богота 1шт.р9',
+    categoryId: 'Саженцы земляники/Поздние сорта',
+    description: 'Урожай 20 кг с куста. Возраст саженца1 годУсловия выращивания'
+  });
+  assert.match(lead, /Клубника Богота/);
+  assert.match(lead, /1 год/);
+  assert.match(lead, /1шт, р9/);
+  assert.doesNotMatch(lead, /20 кг|Урожай/);
+});

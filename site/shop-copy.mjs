@@ -34,8 +34,12 @@ function cropTerms(product) {
 }
 
 function offerNotations(name) {
-  const pattern = /(?:^|[\s,(])((?:фриго|frigo|ОКС|ЗКС|Р\s?9|P\s?9|кассет[\p{L}]*|контейнер[\p{L}]*|горш[\p{L}]*|\d+\s*(?:шт\.?|штук)))(?=$|[\s,).])/giu;
-  return [...name.matchAll(pattern)].map(match => clean(match[1], 40)).slice(0, 3);
+  const pattern = /(?:^|[^\p{L}\d])((?:фриго|frigo|ОКС|ЗКС|Р\s?9|P\s?9|кассет[\p{L}]*|контейнер[\p{L}]*|горш[\p{L}]*|\d+\s*(?:шт\.?|штук)))(?=$|[^\p{L}\d])/giu;
+  return [...name.matchAll(pattern)].map(match => clean(match[1], 40).replace(/\.$/u, '')).slice(0, 3);
+}
+
+function sellerAge(description) {
+  return String(description ?? '').match(/Возраст саженца\s*(\d{1,2})\s*(год|года|лет)/iu);
 }
 
 function quotedList(values) {
@@ -89,7 +93,7 @@ function sellerDetail(product, kind) {
     if (members.length) return `В описании продавца перечислены ${quotedList(members)}. Перед посадкой подпишите растения по этикеткам, чтобы сохранить состав набора.`;
     return 'На странице продавца проверьте состав набора и количество растений каждого наименования. Перед посадкой подпишите их по этикеткам.';
   }
-  const age = String(product.description ?? '').match(/Возраст саженца\s*(\d{1,2})\s*(год|года|лет)/iu);
+  const age = sellerAge(product.description);
   if (age) return `В описании продавца указан возраст саженца — ${age[1]} ${age[2]}. При получении сверьте этикетку и состояние посадочного материала с заказом.`;
   const notations = offerNotations(clean(product.name || product.expectedName));
   if (notations.length) return `В названии предложения указано ${quotedList(notations)}. Сверьте эти обозначения с комплектацией и форматом посадочного материала в магазине.`;
@@ -139,6 +143,23 @@ export function buildShopLead(product) {
   if (!name) throw new Error('Shop lead requires a product name');
   const kind = categoryKind(product);
   const terms = cropTerms(product);
-  if (kind === 'set') return `«${name}»: проверьте состав набора и количество растений в предложении продавца.`;
-  return `«${name}» — товар из раздела ${terms.section}. Сверьте формат и наличие у продавца.`;
+  if (kind === 'set') {
+    const count = name.match(/\b(\d+)\s*саженц[а-я]*/iu)?.[1];
+    const unit = count && Number(count) % 10 >= 2 && Number(count) % 10 <= 4 && (Number(count) % 100 < 12 || Number(count) % 100 > 14) ? 'саженца' : 'саженцев';
+    return count ? `«${name}»: ${count} ${unit} клубники; состав — в описании товара.` : `«${name}»: состав — в описании товара.`;
+  }
+  const age = sellerAge(product.description);
+  const notations = offerNotations(clean(product.name || product.expectedName));
+  if (age && notations.length) return `«${name}»: продавец указывает возраст саженца ${age[1]} ${age[2]}; в названии — ${notations.join(', ')}.`;
+  if (age) return `«${name}»: продавец указывает возраст саженца ${age[1]} ${age[2]}.`;
+  if (notations.length) return `«${name}»: в названии указано ${notations.join(', ')}.`;
+  const group = {
+    alpine: 'Альпийская земляника',
+    early: 'Ранняя клубника',
+    mid: 'Клубника среднего срока',
+    late: 'Поздняя клубника',
+    remontant: product.crop === 'raspberry' ? 'Ремонтантная малина' : 'Ремонтантная клубника',
+    ordinary: 'Обыкновенная малина'
+  }[kind];
+  return group ? `«${name}» — ${group.toLocaleLowerCase('ru')} в каталоге продавца. Посадка — в карточке товара.` : `«${name}» — товар из раздела ${terms.section}. Посадка — в карточке товара.`;
 }
