@@ -383,11 +383,15 @@ const shopDisplayName = product => (product.name || shopVariety(product)?.name |
 const shopHeadline = product => product.headline || shopDisplayName(product);
 const shopLead = product => product.lead || buildShopLead(product);
 const shopArticle = product => product.article || buildShopArticle(product);
+function shopIllustration(product) {
+  if (product.crop !== 'raspberry') return '/assets/strawberry-garden.webp';
+  if (/бл[еэ]к\s*джевел|черн(?:ая|оплодн|оплодная)/iu.test(product.name || '')) return '/assets/raspberry-black-garden.webp';
+  if (/ж[её]лт/iu.test(product.name || '')) return '/assets/raspberry-yellow-garden.webp';
+  return '/assets/raspberry-garden.webp';
+}
 function shopImage(product) {
   const feedItem = shopFeedItems.get(String(shopOfferFor(product)?.id || product.id));
-  const yellow = product.crop === 'raspberry' && /ж[её]лт/iu.test(product.name || '');
-  const black = product.crop === 'raspberry' && /бл[еэ]к\s*джевел|черн(?:ая|оплодн|оплодная)/iu.test(product.name || '');
-  const fallback = black ? '/assets/raspberry-black-garden.webp' : yellow ? '/assets/raspberry-yellow-garden.webp' : `/assets/${product.crop}-garden.webp`;
+  const fallback = shopIllustration(product);
   const local = feedItem?.imagePath || product.imagePath;
   if (/^\/assets\/shop\/\d+\.(?:jpg|png|webp)$/.test(local || '')) {
     return { src: local, alt: `Фото товара продавца: ${shopDisplayName(product)}`, caption: 'Фото товара из каталога продавца.' };
@@ -478,7 +482,7 @@ function shopLanding(product) {
     { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Главная', item: `${siteUrl}/` }, { '@type': 'ListItem', position: 2, name: 'Магазин', item: `${siteUrl}/magazin/` }, { '@type': 'ListItem', position: 3, name, item: `${siteUrl}${path}` }] }
   ] }).replaceAll('<', '\\u003c')}</script>` : '';
   const body = `<article class="shop-product"><header class="shop-product-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span><a href="/magazin/">Магазин</a><span> / </span>${e(name)}</div><span class="eyebrow">${e(shopCropLabel(product))} / ${shopPlantLabel(product)}</span><h1>${e(shopHeadline(product))}</h1>${product.lead ? `<p class="shop-product-lead">${e(lead)}</p>` : ''}<div class="shop-product-main"><figure class="shop-product-image"><img src="${e(image.src)}"${image.remote ? ` data-shop-remote="${e(image.remote)}" data-shop-remote-alt="${e(image.remoteAlt)}"` : ''} alt="${e(image.alt)}" width="900" height="720"><figcaption>${e(image.caption)}</figcaption></figure>${order}</div></div></header><div class="wrap shop-product-content"><div class="shop-product-article">${varietyBody}${editorial}<section id="regiony"><span class="eyebrow">02 / РЕГИОНЫ</span><h2>Где выращивать</h2>${regionBody}<p><a class="btn btn-outline" href="/podbor/">Проверить свой город ${arrow}</a></p></section>${planting}${checklist}${sources}</div>${aside}</div></article><section class="section wrap shop-related">${sectionHead('ЕЩЁ ПО ТЕМЕ', 'Похожие саженцы', '', '<a class="text-link" href="/magazin/">Весь магазин ↗</a>')}<div class="shop-grid">${related.map(shopCard).join('')}</div></section>`;
-  const socialImage = variety ? cultivarImage(variety).src : product.crop === 'raspberry' ? '/assets/raspberry-garden.webp' : '/assets/strawberry-garden.webp';
+  const socialImage = variety ? cultivarImage(variety).src : shopIllustration(product);
   const socialImageAlt = variety ? cultivarImage(variety).alt : `Иллюстрация: ${shopCropLabel(product).toLowerCase()}`;
   return layout({ title, description, path, active: 'shop', socialImage, socialImageAlt, script: `${schema}<script defer src="/assets/shop-filter.js"></script>`, body });
 }

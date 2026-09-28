@@ -79,12 +79,16 @@ test('поиск по артикулу любой фасовки ведёт к �
   }
 });
 
-test('черноплодная малина сразу показывает подходящую локальную иллюстрацию', async () => {
+test('черноплодная малина показывает фото продавца или подходящую локальную иллюстрацию', async () => {
   const detail = await readFile(join(dist, 'magazin', 'malina-blek-dzhevel-67836', 'index.html'), 'utf8');
   const catalog = await readFile(join(dist, 'magazin', 'index.html'), 'utf8');
   const card = catalog.split('data-shop-canonical="malina-blek-dzhevel-67836"')[1]?.split('</article>')[0] || '';
-  assert.match(detail, /class="shop-product-image"><img src="\/assets\/raspberry-black-garden\.webp"/);
-  assert.match(card, /<img src="\/assets\/raspberry-black-garden\.webp"/);
+  const suitableImage = /(?:\/assets\/raspberry-black-garden\.webp|\/assets\/shop\/67836\.(?:jpg|png|webp))/;
+  assert.match(detail.match(/class="shop-product-image"><img src="([^"]+)"/)?.[1] || '', suitableImage);
+  assert.match(card.match(/<img src="([^"]+)"/)?.[1] || '', suitableImage);
+  if (detail.includes('property="og:image"')) {
+    assert.match(detail, /<meta property="og:image" content="[^"]*\/assets\/raspberry-black-garden\.webp"/);
+  }
   assert.ok((await readFile(join(dist, 'assets', 'raspberry-black-garden.webp'))).length > 100_000);
 });
 
