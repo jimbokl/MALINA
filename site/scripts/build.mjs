@@ -460,7 +460,11 @@ function shopLanding(product) {
   const editorial = `<section class="shop-editorial"><span class="eyebrow">ПОДРОБНЕЕ О ПОЗИЦИИ</span><h2>${e(article.title)}</h2>${article.paragraphs.map(paragraph => `<p>${e(paragraph)}</p>`).join('')}</section>`;
   const planting = `<section id="posadka"><span class="eyebrow">03 / ПОСАДКА</span><h2>${e(product.planting.title)}</h2><ol class="shop-steps">${product.planting.steps.map(step => `<li>${e(step)}</li>`).join('')}</ol><p><a class="text-link" href="${e(product.planting.guideHref)}">Подробная инструкция по посадке ↗</a></p></section>`;
   const checklist = `<section><span class="eyebrow">04 / ПЕРЕД ЗАКАЗОМ</span><h2>Проверьте товар</h2><ul class="shop-checklist">${product.buyerChecklist.map(item => `<li>${e(item)}</li>`).join('')}</ul></section>`;
-  const sources = `<section class="shop-sources"><span class="eyebrow">ИСТОЧНИКИ</span><h2>Источники</h2><ul>${product.sources.map(source => `<li><a href="${e(source.url)}" target="_blank" rel="noopener noreferrer">${e(source.label)} ↗</a></li>`).join('')}</ul></section>`;
+  const sourceList = [
+    ...(product.merchantUrl ? [{ label: 'Описание товара у продавца', url: product.merchantUrl }] : []),
+    ...product.sources
+  ];
+  const sources = `<section class="shop-sources"><span class="eyebrow">ИСТОЧНИКИ</span><h2>Источники</h2><ul>${sourceList.map(source => `<li><a href="${e(source.url)}" target="_blank" rel="noopener noreferrer">${e(source.label)} ↗</a></li>`).join('')}</ul></section>`;
   const related = relatedShopProducts(product, publicShopProducts, shopOfferFor);
   const aside = `<aside class="shop-product-aside"><span class="eyebrow">ДАЛЬШЕ</span><h2>Подберите под свой сад</h2>${variety ? `<a href="/sorta/${e(product.cultivarSlug)}/">Описание и отзывы ${arrow}</a>` : ''}<a href="/podbor/">Подбор по городу ${arrow}</a><a href="${e(product.planting.guideHref)}">Посадка и уход ${arrow}</a></aside>`;
   const schema = siteUrl ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [

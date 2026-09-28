@@ -1,5 +1,6 @@
 // Transactional copy for feed-only products. A feed name and category identify
 // an offer; neither is evidence for cultivar traits or regional suitability.
+import { extractShopFeedFacts } from './shop-feed-facts.mjs';
 
 function clean(value, limit = 250) {
   return String(value ?? '')
@@ -118,6 +119,21 @@ function categoryTip(kind, product) {
   }
 }
 
+function sellerObservation(product) {
+  // The merchant's repeated planting template would make pages identical.
+  // Keep only concrete descriptions of the berries, bush or ripening group.
+  const facts = extractShopFeedFacts(product)
+    .filter(fact => ['fruit', 'bush', 'ripening'].includes(fact.kind))
+    .sort((left, right) => ['fruit', 'bush', 'ripening'].indexOf(left.kind) - ['fruit', 'bush', 'ripening'].indexOf(right.kind))
+    .slice(0, 2);
+  const intros = {
+    fruit: 'О ягодах продавец пишет',
+    bush: 'Куст в описании продавца',
+    ripening: 'О сроках созревания продавец пишет'
+  };
+  return facts.map(fact => `${intros[fact.kind]}: «${fact.text.replace(/[.!?]+$/u, '')}».`).join(' ');
+}
+
 /**
  * Build short buyer guidance for a feed-only offer. Only explicit commercial
  * details are extracted from the seller's description, never cultivar claims.
@@ -132,9 +148,10 @@ export function buildShopArticle(product) {
   const duplicateNote = product.duplicateName && id
     ? ` Это позиция продавца № ${id}; при совпадении названий сверяйте номер предложения.`
     : '';
+  const observation = sellerObservation(product);
   return {
     title: product.duplicateName && id ? `${name} — товар № ${id}` : name,
-    paragraphs: [categoryIntro(name, product, kind), sellerDetail(product, kind), categoryTip(kind, product) + duplicateNote]
+    paragraphs: [categoryIntro(name, product, kind), sellerDetail(product, kind), ...(observation ? [observation] : []), categoryTip(kind, product) + duplicateNote]
   };
 }
 

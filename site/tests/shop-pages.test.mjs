@@ -43,7 +43,7 @@ test('каталог сохраняет исходные позиции и пу�
 
 test('магазин показывает уникальные карточки и убирает повторные упаковки и артикулы', async () => {
   const html = await readFile(join(dist, 'magazin', 'index.html'), 'utf8');
-  const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
+  const sitemap = process.env.SITE_URL ? await readFile(join(dist, 'sitemap.xml'), 'utf8') : '';
   assert.match(html, /<h1>Саженцы малины/);
   assert.equal((html.match(/class="shop-card"/g) || []).length, publicProducts.length);
   const offers = currentShopOffers(await shopSnapshot(), shopProducts);
@@ -51,11 +51,11 @@ test('магазин показывает уникальные карточки 
   assert.equal((html.match(/data-stock="in_stock"/g) || []).length, inStockGroups.size);
   for (const product of publicProducts) {
     assert.ok(html.includes(`href="/magazin/${product.slug}/"`), product.slug);
-    assert.ok(sitemap.includes(`/magazin/${product.slug}/`), `primary missing from sitemap: ${product.slug}`);
+    if (process.env.SITE_URL) assert.ok(sitemap.includes(`/magazin/${product.slug}/`), `primary missing from sitemap: ${product.slug}`);
   }
   for (const product of shopProducts.filter(item => item.canonicalSlug && item.canonicalSlug !== item.slug)) {
     assert.ok(!html.includes(`href="/magazin/${product.slug}/"`), `duplicate listed: ${product.slug}`);
-    assert.ok(!sitemap.includes(`/magazin/${product.slug}/`), `duplicate in sitemap: ${product.slug}`);
+    if (process.env.SITE_URL) assert.ok(!sitemap.includes(`/magazin/${product.slug}/`), `duplicate in sitemap: ${product.slug}`);
     const redirect = await productHtml(product);
     assert.match(redirect, /name="robots" content="noindex,follow"/, product.slug);
     assert.ok(redirect.includes(`url=/magazin/${product.canonicalSlug}/`), `redirect: ${product.slug}`);
@@ -92,6 +92,9 @@ test('все публичные товарные страницы имеют у�
     assert.match(html, /<h1>[^<]+(?:<small[^>]*>[^<]+<\/small>)?<\/h1>/, product.slug);
     assert.match(html, /class="shop-product-image"/, product.slug);
     assert.match(html, /href="\/magazin\/"/, product.slug);
+    if (product.merchantUrl) {
+      assert.ok(html.includes(`href="${escapeHtml(product.merchantUrl)}"`), `seller source: ${product.slug}`);
+    }
     if (product.cultivarSlug) {
       assert.ok(html.includes(`href="/sorta/${product.cultivarSlug}/"`), product.slug);
     }

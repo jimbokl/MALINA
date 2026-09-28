@@ -159,6 +159,16 @@ const curatedShopProducts = [
 ];
 
 const catalog = JSON.parse(readFileSync(new URL('./shop-catalog.json', import.meta.url), 'utf8'));
+// A copied seller description can describe a different cultivar. Suppress its
+// cultivar details when the same substantial opening appears on distinct cards.
+const merchantDescriptionOwners = new Map();
+for (const product of catalog) {
+  const opening = String(product.description ?? '').trim().slice(0, 350);
+  if (opening.length < 300) continue;
+  const owners = merchantDescriptionOwners.get(opening) || new Set();
+  owners.add(product.canonicalSlug || product.slug);
+  merchantDescriptionOwners.set(opening, owners);
+}
 const curatedById = new Map(curatedShopProducts.map(product => [product.id, product]));
 const normalizeCultivarName = name => name.normalize('NFKC').toLocaleLowerCase('ru')
   .replaceAll('ё', 'е').replace(/\s+/gu, ' ').trim();
@@ -204,6 +214,7 @@ export const shopProducts = catalog.map(product => {
   const cultivarSlug = matchShopCultivar(product) || product.cultivarSlug;
   return {
     ...product,
+    merchantDescriptionShared: (merchantDescriptionOwners.get(String(product.description ?? '').trim().slice(0, 350))?.size || 0) > 1,
     cultivarSlug,
     planting: product.crop === 'raspberry' ? raspberryPlanting : strawberryPlanting,
     buyerChecklist: product.crop === 'raspberry' ? raspberryBuyerChecklist : strawberryBuyerChecklist,

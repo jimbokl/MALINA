@@ -1,6 +1,25 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { buildShopArticle, buildShopLead } from '../shop-copy.mjs';
+import { shopProducts } from '../shop-products.mjs';
+
+test('shared merchant descriptions are marked before cultivar claims can be published', () => {
+  const canonical = shopProducts.filter(product => product.canonicalSlug === product.slug);
+  const shared = canonical.filter(product => product.merchantDescriptionShared);
+  assert.deepEqual(shared.map(product => product.id).sort(), ['68617', '72207', '7607', '8760']);
+  assert.equal(canonical.find(product => product.id === '68612').merchantDescriptionShared, false);
+});
+
+test('product article adds seller-specific traits without using a copied cultivar description', () => {
+  const balzam = shopProducts.find(product => product.id === '73551');
+  const article = buildShopArticle(balzam);
+  assert.match(article.paragraphs.join(' '), /О ягодах продавец пишет: «Плоды темные, рубиново-алые/);
+  assert.match(article.paragraphs.join(' '), /Куст в описании продавца: «Кустарник раскидистый»/);
+  const bohema = shopProducts.find(product => product.id === '7607');
+  const bohemaArticle = buildShopArticle(bohema);
+  assert.equal(bohemaArticle.paragraphs.length, 3);
+  assert.doesNotMatch(bohemaArticle.paragraphs.join(' '), /О ягодах продавец пишет|Куст в описании продавца/);
+});
 
 test('feed copy uses only offer identity and commercial notation, not unreviewed cultivar claims', () => {
   const product = {
