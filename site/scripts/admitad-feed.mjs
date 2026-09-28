@@ -84,27 +84,32 @@ function matchesIdentity(row, curated) {
 }
 
 function publicProduct(row, curated) {
-  if (row.available !== 'true' || !/^\d+$/.test(row.id)) return null;
+  if (!/^\d+$/.test(row.id)) return null;
   if (!matchesIdentity(row, curated)) return null;
+  const name = row.name.trim();
+  if (!name || name.length > 250) return null;
+  const picture = httpsUrl(row.picture, 'agrosemfond.ru');
+  const identity = {
+    id: row.id,
+    name,
+    imageUrl: picture?.href || null
+  };
+  if (row.available === 'false') return { ...identity, availability: 'out_of_stock' };
+  if (row.available !== 'true') return null;
   const affiliate = httpsUrl(row.url, 'rzekl.com');
   const merchant = affiliate && httpsUrl(affiliate.searchParams.get('ulp'), 'agrosemfond.ru');
   if (!merchant) return null;
-  const picture = httpsUrl(row.picture, 'agrosemfond.ru');
   const price = Number(row.price.replace(',', '.'));
   if (!Number.isFinite(price) || price <= 0 || price > 10_000_000 ||
       !/^\d+(?:[.,]\d{1,2})?$/.test(row.price) || row.currencyId !== 'RUR') return null;
   const priceMinor = Math.round(price * 100);
-  const name = row.name.trim();
-  if (!name || name.length > 250) return null;
   return {
-    id: row.id,
-    name,
+    ...identity,
     priceMinor,
     currency: 'RUB',
     availability: 'in_stock',
     merchantUrl: merchant.href,
-    affiliateUrl: affiliate.href,
-    imageUrl: picture?.href || null
+    affiliateUrl: affiliate.href
   };
 }
 
@@ -154,8 +159,8 @@ export async function writeSnapshot(path, snapshot) {
   await rename(temporary, path);
 }
 
-async function downloadImage(url, fetcher = fetch) {
-  const response = await fetcher(url, { redirect: 'manual', signal: AbortSignal.timeout(15_000) });
+async function downloadImage(url, fetcher = fetch, signal = AbortSignal.timeout(15_000)) {
+  const response = await fetcher(url, { redirect: 'manual', signal });
   if (!response.ok || response.status >= 300) throw new Error(`Image HTTP ${response.status}`);
   const size = Number(response.headers.get('content-length'));
   if (Number.isFinite(size) && size > 5_000_000) throw new Error('Image exceeds size limit');
@@ -172,18 +177,34 @@ async function downloadImage(url, fetcher = fetch) {
 export async function cacheImages(products, directory, fetcher = fetch) {
   await mkdir(directory, { recursive: true });
   const current = new Set();
+  const globalDeadline = AbortSignal.timeout(45_000);
+  const groups = new Map();
   for (const product of products) {
-    if (!product.imageUrl) continue;
-    try {
-      const { bytes, type } = await downloadImage(product.imageUrl, fetcher);
-      const filename = `${product.id}.${type}`;
-      await writeFile(join(directory, filename), bytes);
-      product.imagePath = `/assets/shop/${filename}`;
-      current.add(filename);
-    } catch {
-      // The editorial page can use an illustration, never a missing product photo.
+    if (product.imageUrl) {
+      if (!groups.has(product.imageUrl)) groups.set(product.imageUrl, []);
+      groups.get(product.imageUrl).push(product);
     }
   }
+  const entries = [...groups];
+  let next = 0;
+  async function worker() {
+    while (next < entries.length && !globalDeadline.aborted) {
+      const [url, groupedProducts] = entries[next++];
+      try {
+        const signal = AbortSignal.any([globalDeadline, AbortSignal.timeout(6_000)]);
+        const { bytes, type } = await downloadImage(url, fetcher, signal);
+        await Promise.all(groupedProducts.map(async product => {
+          const filename = `${product.id}.${type}`;
+          await writeFile(join(directory, filename), bytes);
+          product.imagePath = `/assets/shop/${filename}`;
+          current.add(filename);
+        }));
+      } catch {
+        // A valid remote URL remains in the snapshot for a browser fallback.
+      }
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(12, entries.length) }, worker));
   for (const filename of await readdir(directory)) {
     if (/^\d+\.(?:jpg|png|webp)$/.test(filename) && !current.has(filename)) {
       await rm(join(directory, filename));
@@ -200,7 +221,7 @@ async function main() {
     const snapshot = buildSnapshot(feed, shopProducts);
     await cacheImages(snapshot.products, join(root, 'db', 'public', 'shop-images'));
     await writeSnapshot(output, snapshot);
-    process.stdout.write(`Admitad snapshot: ${snapshot.products.length} curated available products\n`);
+    process.stdout.write(`Admitad snapshot: ${snapshot.products.length} catalog products, ${snapshot.products.filter(product => product.availability === 'in_stock').length} available\n`);
   } catch (error) {
     // A failed refresh must withdraw price and outbound ordering links.
     await writeSnapshot(output, { checkedAt: null, expiresAt: null, products: [] });

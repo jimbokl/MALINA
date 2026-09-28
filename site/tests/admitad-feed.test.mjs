@@ -16,16 +16,20 @@ test('CSV parser preserves quoted semicolons and embedded newlines', () => {
   assert.equal(parsed[0].description, 'Описание;\nс точкой с запятой');
 });
 
-test('snapshot includes only current approved products with separate safe URLs', () => {
+test('snapshot preserves unavailable products without price or order links', () => {
   const input = [header, row({ id: '101' }), row({ id: '102', available: 'false' }),
     row({ id: '103' }), row({ id: '104', link: 'https://rzekl.com/g/a?ulp=https%3A%2F%2Fevil.example%2F' }),
     row({ id: '105', price: '399,50' })].join('\n');
   const now = new Date('2026-09-28T12:00:00Z');
   const snapshot = buildSnapshot(input, [approved('101'), approved('102'), approved('104'), approved('105')], now);
-  assert.deepEqual(snapshot.products.map(product => product.id), ['101', '105']);
+  assert.deepEqual(snapshot.products.map(product => product.id), ['101', '102', '105']);
   assert.equal(snapshot.products[0].merchantUrl, 'https://agrosemfond.ru/catalog/gerakl');
   assert.equal(snapshot.products[0].affiliateUrl.startsWith('https://rzekl.com/g/'), true);
-  assert.equal(snapshot.products[1].priceMinor, 39950);
+  assert.equal(snapshot.products[1].availability, 'out_of_stock');
+  assert.equal('priceMinor' in snapshot.products[1], false);
+  assert.equal('affiliateUrl' in snapshot.products[1], false);
+  assert.equal('merchantUrl' in snapshot.products[1], false);
+  assert.equal(snapshot.products[2].priceMinor, 39950);
   assert.equal(snapshot.expiresAt, '2026-09-30T00:00:00.000Z');
 });
 
