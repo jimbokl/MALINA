@@ -8,7 +8,7 @@ on:
     - cron: '23 3 * * *'
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -33,7 +33,7 @@ jobs:
           rustup default stable
           rustup target add wasm32-unknown-unknown
           cargo install wasm-pack --version 0.13.1 --locked
-      - name: Refresh curated Admitad products
+      - name: Refresh Admitad catalog and offers
         env:
           ADMITAD_FEED_URL: ${{ secrets.ADMITAD_FEED_URL }}
         run: node site/scripts/admitad-feed.mjs
@@ -44,6 +44,15 @@ jobs:
           REVIEW_API_URL: ${{ vars.REVIEW_API_URL }}
           VOTE_API_URL: ${{ vars.VOTE_API_URL }}
         run: npm run build
+      - name: Verify generated pages and catalog
+        run: npm test
+      - name: Save refreshed catalog
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          git add site/shop-catalog.json
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name='MALINA catalog bot' -c user.email='actions@users.noreply.github.com' commit -m 'Refresh Admitad shop catalog'
+          git push origin HEAD:main
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

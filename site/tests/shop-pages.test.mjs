@@ -22,16 +22,16 @@ async function shopSnapshot() {
   }
 }
 
-test('фид содержит 298 позиций, публичный каталог — 160 уникальных товаров', () => {
-  assert.equal(shopProducts.length, 298);
-  assert.equal(shopProducts.filter(product => product.crop === 'raspberry').length, 121);
-  assert.equal(shopProducts.filter(product => product.crop === 'strawberry').length, 177);
-  assert.equal(new Set(shopProducts.map(product => String(product.id))).size, 298);
-  assert.equal(new Set(shopProducts.map(product => product.slug)).size, 298);
-  assert.equal(shopProducts.filter(product => product.canonicalSlug !== product.slug).length, 138);
-  assert.equal(new Set(shopProducts.map(product => product.canonicalSlug || product.slug)).size, 160);
-  assert.equal(publicProducts.length, 160);
-  assert.equal(new Set(publicProducts.map(product => `${product.crop}\0${shopNameKey(product.name)}`)).size, 160);
+test('каталог сохраняет исходные позиции и публикует одну страницу на товар', () => {
+  assert.ok(shopProducts.length >= 298);
+  assert.ok(shopProducts.filter(product => product.crop === 'raspberry').length >= 121);
+  assert.ok(shopProducts.filter(product => product.crop === 'strawberry').length >= 177);
+  assert.equal(new Set(shopProducts.map(product => String(product.id))).size, shopProducts.length);
+  assert.equal(new Set(shopProducts.map(product => product.slug)).size, shopProducts.length);
+  assert.ok(shopProducts.filter(product => product.canonicalSlug !== product.slug).length >= 138);
+  assert.equal(new Set(shopProducts.map(product => product.canonicalSlug || product.slug)).size, publicProducts.length);
+  assert.ok(publicProducts.length > 0);
+  assert.equal(new Set(publicProducts.map(product => `${product.crop}\0${shopNameKey(product.name)}`)).size, publicProducts.length);
   const slugs = new Set(shopProducts.map(product => product.slug));
   for (const product of shopProducts) {
     assert.ok(product.name?.trim(), `missing name: ${product.id}`);
@@ -39,11 +39,11 @@ test('фид содержит 298 позиций, публичный катал�
   }
 });
 
-test('магазин показывает 160 карточек и убирает повторные упаковки и артикулы', async () => {
+test('магазин показывает уникальные карточки и убирает повторные упаковки и артикулы', async () => {
   const html = await readFile(join(dist, 'magazin', 'index.html'), 'utf8');
   const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
   assert.match(html, /<h1>Саженцы малины/);
-  assert.equal((html.match(/class="shop-card"/g) || []).length, 160);
+  assert.equal((html.match(/class="shop-card"/g) || []).length, publicProducts.length);
   const offers = currentShopOffers(await shopSnapshot(), shopProducts);
   const inStockGroups = new Set(shopProducts.filter(product => offers.has(String(product.id))).map(product => product.canonicalSlug));
   assert.equal((html.match(/data-stock="in_stock"/g) || []).length, inStockGroups.size);
@@ -88,13 +88,17 @@ test('все публичные товарные страницы имеют у�
   }
 });
 
-test('исходный снимок содержит 298 позиций, из них 22 в наличии', async () => {
+test('снимок содержит только известные позиции и не раскрывает цену недоступных товаров', async () => {
   const snapshot = await shopSnapshot();
-  if (!snapshot?.checkedAt?.startsWith('2026-09-28')) return;
-  assert.equal(snapshot.products.length, 298);
-  assert.deepEqual(new Set(snapshot.products.map(product => String(product.id))), new Set(shopProducts.map(product => String(product.id))));
-  assert.equal(snapshot.products.filter(product => product.availability === 'in_stock').length, 22);
-  assert.equal(snapshot.products.filter(product => product.availability === 'out_of_stock').length, 276);
+  if (!snapshot?.checkedAt) return;
+  assert.ok(snapshot.products.length <= shopProducts.length);
+  const knownIds = new Set(shopProducts.map(product => String(product.id)));
+  assert.equal(new Set(snapshot.products.map(product => String(product.id))).size, snapshot.products.length);
+  for (const product of snapshot.products) assert.ok(knownIds.has(String(product.id)), product.id);
+  if (snapshot.checkedAt === '2026-09-28T07:31:51.523Z') {
+    assert.equal(snapshot.products.length, 298);
+    assert.equal(snapshot.products.filter(product => product.availability === 'in_stock').length, 22);
+  }
   for (const product of snapshot.products.filter(product => product.availability === 'out_of_stock')) {
     assert.equal(product.affiliateUrl, undefined, `unavailable affiliate URL: ${product.id}`);
     assert.equal(product.merchantUrl, undefined, `unavailable merchant URL: ${product.id}`);

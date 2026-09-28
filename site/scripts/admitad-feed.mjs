@@ -1,4 +1,4 @@
-import { mkdir, readdir, rename, rm, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -213,15 +213,19 @@ export async function cacheImages(products, directory, fetcher = fetch) {
 }
 
 async function main() {
-  const { shopProducts } = await import('../shop-products.mjs');
+  const catalogPath = join(root, 'site', 'shop-catalog.json');
   const output = process.env.SHOP_OFFERS_PATH || join(root, 'db', 'public', 'shop-offers.json');
   try {
     if (!process.env.ADMITAD_FEED_URL) throw new Error('ADMITAD_FEED_URL is unset');
     const feed = await fetchFeed(process.env.ADMITAD_FEED_URL);
-    const snapshot = buildSnapshot(feed, shopProducts);
+    const { buildCatalogManifest, curatedCatalogProducts, writeCatalogManifest } = await import('./generate-shop-catalog.mjs');
+    const previous = JSON.parse(await readFile(catalogPath, 'utf8'));
+    const catalog = buildCatalogManifest(feed, curatedCatalogProducts, previous, { stableNewSlugs: true });
+    const snapshot = buildSnapshot(feed, catalog);
     await cacheImages(snapshot.products, join(root, 'db', 'public', 'shop-images'));
+    await writeCatalogManifest(catalogPath, catalog);
     await writeSnapshot(output, snapshot);
-    process.stdout.write(`Admitad snapshot: ${snapshot.products.length} catalog products, ${snapshot.products.filter(product => product.availability === 'in_stock').length} available\n`);
+    process.stdout.write(`Admitad snapshot: ${catalog.length} catalog products, ${snapshot.products.filter(product => product.availability === 'in_stock').length} available\n`);
   } catch (error) {
     // A failed refresh must withdraw price and outbound ordering links.
     await writeSnapshot(output, { checkedAt: null, expiresAt: null, products: [] });

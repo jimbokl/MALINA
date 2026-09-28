@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { buildCatalogManifest, shopNameKey } from '../scripts/generate-shop-catalog.mjs';
+import { buildSnapshot } from '../scripts/admitad-feed.mjs';
 
 const header = 'available;categoryId;currencyId;description;id;modified_time;name;picture;price;type;url';
 const link = 'https://rzekl.com/g/a?ulp=https%3A%2F%2Fagrosemfond.ru%2Fcatalog%2Fdali';
@@ -58,6 +59,12 @@ test('ASF stock label does not create a second cultivar page', () => {
   assert.equal(shopNameKey(products[0].name), 'земляника фреска');
 });
 
+test('pack and ASF suffixes collapse in either order', () => {
+  assert.equal(shopNameKey('Земляника Фреска ASF 1 шт р9'), shopNameKey('Земляника Фреска 1 шт р9 ASF'));
+  assert.equal(shopNameKey('Земляника Фреска 1 шт р9 ASF'), 'земляника фреска');
+  assert.equal(shopNameKey('Малина Жёлтый гигант'), shopNameKey('Малина Желтый гигант'));
+});
+
 test('the duplicate Изобильная category label shares the existing page', () => {
   const csv = [header,
     row('101', 'false', 'Плодовые/Малина/Обыкновенная', 'Малина Изобильная'),
@@ -66,4 +73,52 @@ test('the duplicate Изобильная category label shares the existing page
   const products = buildCatalogManifest(csv);
   assert.equal(products[0].canonicalSlug, products[1].canonicalSlug);
   assert.equal(shopNameKey(products[0].name), 'малина изобильная');
+});
+
+test('refresh adds new products, merges new pack variants, and retains missing pages without offers', () => {
+  const initial = buildCatalogManifest([header,
+    row('101', 'true'),
+    row('102', 'false', 'Саженцы земляники/Ранние сорта', 'Земляника садовая Дали 1 шт.р9')
+  ].join('\n'));
+  const refreshedFeed = [header,
+    row('102', 'true', 'Саженцы земляники/Ранние сорта', 'Земляника садовая Дали 1 шт.р9'),
+    row('103', 'false', 'Саженцы земляники/Ранние сорта', 'Земляника садовая Дали ASF'),
+    row('104', 'true', 'Плодовые/Малина/Обыкновенная', 'Малина Новинка')
+  ].join('\n');
+  const refreshed = buildCatalogManifest(refreshedFeed, [], initial, { stableNewSlugs: true });
+  assert.equal(refreshed.length, 4);
+  assert.equal(refreshed.filter(product => product.canonicalSlug === product.slug).length, 2);
+  assert.equal(refreshed.find(product => product.id === '102').canonicalSlug, initial.find(product => product.id === '101').slug);
+  assert.equal(refreshed.find(product => product.id === '103').canonicalSlug, initial.find(product => product.id === '101').slug);
+  assert.equal(refreshed.find(product => product.id === '104').slug, 'tovar-104');
+  assert.equal(refreshed.find(product => product.id === '101').merchantUrl, null);
+  const snapshot = buildSnapshot(refreshedFeed, refreshed);
+  assert.deepEqual(snapshot.products.map(product => product.id).sort(), ['102', '103', '104']);
+});
+
+test('seller reuse of an ID cannot replace an existing product page or activate its offer', () => {
+  const original = buildCatalogManifest([header, row('101', 'true')].join('\n'));
+  const changedFeed = [header, row('101', 'true', 'Саженцы земляники/Ранние сорта', 'Земляника садовая Другой сорт')].join('\n');
+  const refreshed = buildCatalogManifest(changedFeed, [], original, { stableNewSlugs: true });
+  assert.equal(refreshed.length, 1);
+  assert.equal(refreshed[0].slug, original[0].slug);
+  assert.equal(refreshed[0].name, original[0].name);
+  assert.equal(refreshed[0].merchantUrl, null);
+  assert.deepEqual(buildSnapshot(changedFeed, refreshed).products, []);
+});
+
+test('bad offer links and repeated IDs do not block unrelated catalog updates', () => {
+  const initial = buildCatalogManifest([header, row('101', 'true')].join('\n'));
+  const csv = [header,
+    row('101', 'true'),
+    row('101', 'true', 'Саженцы земляники/Ранние сорта', 'Земляника садовая Чужой сорт'),
+    row('102', 'true', 'Плодовые/Малина/Обыкновенная', 'Малина Новинка', 'https://example.com/not-an-offer'),
+    row('103', 'true', 'Плодовые/Малина/Обыкновенная', 'Малина Надёжная')
+  ].join('\n');
+  const refreshed = buildCatalogManifest(csv, [], initial, { stableNewSlugs: true });
+  assert.equal(refreshed.length, 3);
+  assert.equal(refreshed.find(product => product.id === '101').name, initial[0].name);
+  assert.equal(refreshed.find(product => product.id === '102').merchantUrl, null);
+  assert.equal(refreshed.find(product => product.id === '103').slug, 'tovar-103');
+  assert.deepEqual(buildSnapshot(csv, refreshed).products.map(product => product.id), ['103']);
 });
