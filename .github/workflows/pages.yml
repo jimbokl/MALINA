@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: '23 3 * * *'
 
 permissions:
   contents: read
@@ -31,6 +33,10 @@ jobs:
           rustup default stable
           rustup target add wasm32-unknown-unknown
           cargo install wasm-pack --version 0.13.1 --locked
+      - name: Refresh curated Admitad products
+        env:
+          ADMITAD_FEED_URL: ${{ secrets.ADMITAD_FEED_URL }}
+        run: node site/scripts/admitad-feed.mjs
       - name: Build informational site
         env:
           SITE_URL: https://malinaklubnika.ru

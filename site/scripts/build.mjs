@@ -1,4 +1,4 @@
-import { mkdir, writeFile, copyFile, readFile, rm } from 'node:fs/promises';
+import { mkdir, writeFile, copyFile, readFile, rm, readdir } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -15,6 +15,8 @@ import { validateVoteSnapshot } from '../assets/vote-model.js';
 import { pageStructuredData } from '../structured-data.mjs';
 import { raspberryFacets, raspberryFacetVarieties } from '../catalog-facets.mjs';
 import { getComparisonYields } from '../assets/comparison-model.mjs';
+import { shopProducts } from '../shop-products.mjs';
+import { currentShopOffers } from '../shop-model.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const out = process.env.MALINA_BUILD_OUT || join(root, 'dist');
@@ -27,6 +29,11 @@ const reviewApiUrl = process.env.REVIEW_API_URL || '';
 const reviewsEnabled = Boolean(reviewApiUrl);
 const voteApiUrl = resolveVoteApi(process.env.VOTE_API_URL, reviewApiUrl);
 const voteSnapshot = validateVoteSnapshot(JSON.parse(await readFile(join(root, 'db', 'public', 'votes.json'), 'utf8')), varieties.map(v => v.slug));
+const shopSnapshot = await readFile(join(root, 'db', 'public', 'shop-offers.json'), 'utf8').then(JSON.parse).catch(error => {
+  if (error.code === 'ENOENT') return null;
+  throw error;
+});
+const shopOffers = currentShopOffers(shopSnapshot, shopProducts);
 const ymCounterId = process.env.YM_COUNTER_ID || '';
 if (ymCounterId && !/^[1-9]\d*$/.test(ymCounterId)) throw new Error('YM_COUNTER_ID must be a positive integer');
 if (reviewApiUrl && !/^https:\/\/[^\s]+\/api\/reviews$/.test(reviewApiUrl) && !/^http:\/\/localhost:\d+\/api\/reviews$/.test(reviewApiUrl) && !/^http:\/\/127\.0\.0\.1:\d+\/api\/reviews$/.test(reviewApiUrl)) throw new Error('REVIEW_API_URL must be HTTPS /api/reviews, except localhost development');
@@ -41,15 +48,15 @@ const withSiteBase = html => {
   return siteBase ? versioned.replace(/\b(href|src)="\/(?!\/)/g, `$1="${siteBase}/`) : versioned;
 };
 const withCssBase = css => siteBase ? css.replace(/url\((['"])\/(?!\/)/g, `url($1${siteBase}/`) : css;
-const paths = ['/', '/malina/', '/klubnika/', '/sorta/', ...raspberryFacets.map(facet => facet.path), '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/raschet-kapelnogo-poliva/', '/instrumenty/ekonomika-posadki/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/instrumenty/kalendar-uhoda/', '/instrumenty/proverka-rasteniya/', '/instrumenty/zhurnal-uchastka/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/about/', '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...varieties.map(v => `/sorta/${v.slug}/`), ...articles.map(article => `/zhurnal/${article.slug}/`)];
+const paths = ['/', '/malina/', '/klubnika/', '/sorta/', '/magazin/', ...shopProducts.map(product => `/magazin/${product.slug}/`), ...raspberryFacets.map(facet => facet.path), '/sravnenie/malina/', '/sravnenie/klubnika/', '/rating/', '/podbor/', '/instrumenty/', '/instrumenty/raschet-sazhencev/', '/instrumenty/raschet-shpalery/', '/instrumenty/raschet-kapelnogo-poliva/', '/instrumenty/ekonomika-posadki/', '/instrumenty/obrezka-maliny/', '/instrumenty/glubina-posadki/', '/instrumenty/vybor-mulchi/', '/instrumenty/kalendar-uhoda/', '/instrumenty/proverka-rasteniya/', '/instrumenty/zhurnal-uchastka/', '/otzyvy/', '/goroda/', '/guide/', '/in-vitro/', '/about/', '/zhurnal/', '/zhurnal/malina/', '/zhurnal/klubnika/', ...varieties.map(v => `/sorta/${v.slug}/`), ...articles.map(article => `/zhurnal/${article.slug}/`)];
 const e = (value) => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 const arrow = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const latestCatalogReview = [reviewedAt, ...varieties.map(v => v.reviewedAt).filter(Boolean)].sort((a, b) => a.split('.').reverse().join('-').localeCompare(b.split('.').reverse().join('-'))).at(-1);
 const leaf = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M9 33C9 20 20 11 39 8c-1 18-9 29-22 30-4 0-8-2-8-5Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 42c7-13 17-21 28-28M17 31l-1-10m10 2 10 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 const cropMark = (crop, className = '', alt = '') => `<img class="${className}" src="/assets/${crop}-mark.webp" alt="${alt}" width="560" height="560">`;
 const brand = `<a class="brand" href="/" aria-label="МАЛИНА — КЛУБНИКА — на главную"><span class="brand-marks" aria-hidden="true">${cropMark('raspberry', 'brand-mark raspberry')}${cropMark('strawberry', 'brand-mark strawberry')}</span><span class="brand-name">МАЛИНА<span class="brand-dot"> — </span>КЛУБНИКА<small>ягодный навигатор</small></span></a>`;
-function header(active = '') { return `<header class="site-header"><div class="header-inner wrap">${brand}<nav class="desktop-nav" aria-label="Основное меню"><a class="${active === 'crops' ? 'active' : ''}" href="/malina/">Культуры</a><a class="${active === 'catalog' ? 'active' : ''}" href="/sorta/">Каталог сортов</a><a class="${active === 'rating' ? 'active' : ''}" href="/rating/">Рейтинг</a><a class="${active === 'journal' ? 'active' : ''}" href="/zhurnal/">Журнал</a><a class="${active === 'cities' ? 'active' : ''}" href="/goroda/">Города</a><a class="${active === 'reviews' ? 'active' : ''}" href="/otzyvy/">Отзывы</a><a class="${active === 'guide' ? 'active' : ''}" href="/guide/">Как выбрать</a></nav><a class="header-action" href="/podbor/">Подобрать сорт ${arrow}</a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Открыть меню"><span></span><span></span></button></div><nav id="mobile-nav" class="mobile-nav" aria-label="Мобильное меню" hidden><a href="/malina/">Малина</a><a href="/klubnika/">Клубника</a><a href="/sorta/">Каталог сортов</a><a href="/rating/">Рейтинг сортов</a><a href="/zhurnal/">Журнал</a><a href="/instrumenty/">Инструменты</a><a href="/goroda/">Города</a><a href="/otzyvy/">Отзывы</a><a href="/guide/">Как выбрать</a><a href="/in-vitro/">Что такое In Vitro</a><a href="/proverka-partii/">Проверить документы на саженцы</a><a href="/podbor/">Подобрать сорт</a><a href="/about/">О проекте</a></nav></header>`; }
-function footer() { return `<footer class="site-footer"><div class="wrap footer-grid"><div>${brand}<p>Понятный выбор ягодных культур и сортов. Работаем для садоводов всей России и открыто показываем источники данных.</p></div><div><h2>Изучить</h2><a href="/malina/">Малина</a><a href="/klubnika/">Клубника</a><a href="/sorta/">Каталог сортов</a><a href="/rating/">Рейтинг сортов</a><a href="/zhurnal/">Журнал</a><a href="/instrumenty/">Инструменты</a><a href="/goroda/">Города</a><a href="/otzyvy/">Отзывы</a><a href="/podbor/">Подбор</a></div><div><h2>Проект</h2><a href="/guide/">Как выбрать</a><a href="/in-vitro/">Что такое In Vitro</a><a href="/proverka-partii/">Проверить документы на саженцы</a><a href="/about/">О данных и источниках</a></div></div><div class="wrap footer-bottom"><span>© ${new Date().getFullYear()} МАЛИНА — КЛУБНИКА</span><span>Сделано с вниманием к фактам и саду.</span></div></footer>`; }
+function header(active = '') { return `<header class="site-header"><div class="header-inner wrap">${brand}<nav class="desktop-nav" aria-label="Основное меню"><a class="${active === 'crops' ? 'active' : ''}" href="/malina/">Культуры</a><a class="${active === 'catalog' ? 'active' : ''}" href="/sorta/">Каталог сортов</a><a class="${active === 'shop' ? 'active' : ''}" href="/magazin/">Магазин</a><a class="${active === 'rating' ? 'active' : ''}" href="/rating/">Рейтинг</a><a class="${active === 'journal' ? 'active' : ''}" href="/zhurnal/">Журнал</a><a class="${active === 'cities' ? 'active' : ''}" href="/goroda/">Города</a><a class="${active === 'reviews' ? 'active' : ''}" href="/otzyvy/">Отзывы</a></nav><a class="header-action" href="/podbor/">Подобрать сорт ${arrow}</a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Открыть меню"><span></span><span></span></button></div><nav id="mobile-nav" class="mobile-nav" aria-label="Мобильное меню" hidden><a href="/malina/">Малина</a><a href="/klubnika/">Клубника</a><a href="/sorta/">Каталог сортов</a><a href="/magazin/">Магазин</a><a href="/rating/">Рейтинг сортов</a><a href="/zhurnal/">Журнал</a><a href="/instrumenty/">Инструменты</a><a href="/goroda/">Города</a><a href="/otzyvy/">Отзывы</a><a href="/guide/">Как выбрать</a><a href="/in-vitro/">Что такое In Vitro</a><a href="/proverka-partii/">Проверить документы на саженцы</a><a href="/podbor/">Подобрать сорт</a><a href="/about/">О проекте</a></nav></header>`; }
+function footer() { return `<footer class="site-footer"><div class="wrap footer-grid"><div>${brand}<p>Понятный выбор ягодных культур и сортов. Работаем для садоводов всей России и открыто показываем источники данных.</p></div><div><h2>Изучить</h2><a href="/malina/">Малина</a><a href="/klubnika/">Клубника</a><a href="/sorta/">Каталог сортов</a><a href="/magazin/">Магазин</a><a href="/rating/">Рейтинг сортов</a><a href="/zhurnal/">Журнал</a><a href="/instrumenty/">Инструменты</a><a href="/goroda/">Города</a><a href="/otzyvy/">Отзывы</a><a href="/podbor/">Подбор</a></div><div><h2>Проект</h2><a href="/guide/">Как выбрать</a><a href="/in-vitro/">Что такое In Vitro</a><a href="/proverka-partii/">Проверить документы на саженцы</a><a href="/about/">О данных и источниках</a></div></div><div class="wrap footer-bottom"><span>© ${new Date().getFullYear()} МАЛИНА — КЛУБНИКА</span><span>Сделано с вниманием к фактам и саду.</span></div></footer>`; }
 function layout({ title, description, path, active, body, script = '', socialType = 'website', socialImage = '/assets/berries-hero.webp', socialImageAlt = 'Иллюстрация малины и клубники для ягодного журнала', socialImageWidth = 1536, socialImageHeight = 1024, publishedTime = '', modifiedTime = publishedTime, section = '' }) {
   const canonical = siteUrl ? `<link rel="canonical" href="${siteUrl}${path}">` : '';
   const pageUrl = siteUrl ? `${siteUrl}${path}` : '';
@@ -319,6 +326,11 @@ await mkdir(join(out, 'data'), { recursive: true });
 run('cargo', ['run', '--quiet', '--manifest-path', 'crates/catalog_tool/Cargo.toml', '--', 'export-public', '--db', catalogDb, '--out', join(out, 'data', 'catalog.json')]);
 const publicCatalog = JSON.parse(await readFile(join(out, 'data', 'catalog.json'), 'utf8'));
 const publicCultivars = new Map(publicCatalog.cultivars.map(cultivar => [cultivar.slug, cultivar]));
+if (new Set(shopProducts.map(product => product.slug)).size !== shopProducts.length ||
+    new Set(shopProducts.map(product => String(product.id))).size !== shopProducts.length ||
+    shopProducts.some(product => !varieties.some(variety => variety.slug === product.cultivarSlug && variety.cropKey === product.crop) || !publicCultivars.has(product.cultivarSlug))) {
+  throw new Error('Shop manifest must have unique IDs/slugs and published cultivar matches');
+}
 const raspberryComparison = comparePage('raspberry');
 const strawberryComparison = comparePage('strawberry');
 const isCurrent = value => value && Number.isFinite(Date.parse(String(value).replace(' ', 'T') + 'Z')) && Date.parse(String(value).replace(' ', 'T') + 'Z') > Date.now();
@@ -336,6 +348,71 @@ function withCommerce(html, variety) {
   const batchCards = batches.map(batch => `<article class="commerce-card"><span class="eyebrow">СОБСТВЕННАЯ ПАРТИЯ</span><h3>Партия ${e(batch.batch_code)}</h3><p>${e(batch.provenance_summary)}</p><p>Готовых растений: ${e(batch.quantity_available)}. Получение: ${e(batch.pickup_locality)}, ${e(batch.pickup_region_name)}.</p><p>${e(batch.pickup_terms)}</p><small>Проверено: ${e(batch.checked_at.slice(0, 10))}.</small></article>`).join('');
   const section = `<section class="section wrap commerce-section"><span class="eyebrow">РЕАЛЬНЫЕ ПРЕДЛОЖЕНИЯ</span><h2>Где получить саженец</h2><div class="commerce-grid">${offerCards}${batchCards}</div></section>`;
   return html.replace('</main>', `${section}</main>`).replace('Проверенных предложений на сайте пока нет.', 'Проверенные предложения показаны ниже.');
+}
+
+const shopProductPath = product => `/magazin/${product.slug}/`;
+const shopPrice = offer => new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 2 }).format(offer.priceMinor / 100);
+const shopCropLabel = product => product.crop === 'raspberry' ? 'Малина' : 'Клубника';
+const shopPlantLabel = product => product.crop === 'raspberry' ? 'САЖЕНЕЦ' : 'РАССАДА';
+const shopSeedlingLabel = product => product.crop === 'raspberry' ? 'Саженец малины' : 'Рассада клубники';
+const shopVariety = product => varieties.find(variety => variety.slug === product.cultivarSlug);
+const shopImage = (product, offer) => offer?.imagePath
+  ? { src: offer.imagePath, alt: `Фото предложения продавца: ${shopVariety(product).name}`, caption: 'Фото товара из каталога продавца.' }
+  : cultivarImage(shopVariety(product));
+
+function shopCard(product) {
+  const offer = shopOffers.get(String(product.id));
+  const image = shopImage(product, offer);
+  return `<article class="shop-card"><a class="shop-card-image" href="${shopProductPath(product)}" aria-label="Подробнее: ${e(product.headline)}"><img src="${e(image.src)}" alt="${e(image.alt)}" width="800" height="640" loading="lazy" decoding="async"></a><div class="shop-card-body"><span class="eyebrow">${e(shopCropLabel(product))} / ${shopPlantLabel(product)}</span><h3><a href="${shopProductPath(product)}">${e(shopVariety(product).name)}</a></h3><p>${e(product.lead)}</p><div class="shop-card-bottom"><strong>${offer ? e(shopPrice(offer)) : 'Изучить сорт'}</strong><a href="${shopProductPath(product)}">Описание и заказ ${arrow}</a></div></div></article>`;
+}
+
+function shopIndex() {
+  const current = shopProducts.filter(product => shopOffers.has(String(product.id)));
+  const unavailable = shopProducts.filter(product => !shopOffers.has(String(product.id)));
+  const groups = [{ crop: 'raspberry', heading: 'Саженцы малины' }, { crop: 'strawberry', heading: 'Рассада клубники' }];
+  const sections = groups.map(group => {
+    const selected = [...current, ...unavailable].filter(product => product.crop === group.crop);
+    return `<section class="section wrap shop-section" id="${group.crop === 'raspberry' ? 'malina' : 'klubnika'}">${sectionHead('ВЫБРАТЬ И ПОСАДИТЬ', group.heading, 'Описание сорта, регионы допуска и порядок посадки — на странице каждого товара.')}<div class="shop-grid">${selected.map(shopCard).join('')}</div></section>`;
+  }).join('');
+  const schema = siteUrl ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [
+    { '@type': 'CollectionPage', name: 'Магазин саженцев малины и рассады клубники', url: `${siteUrl}/magazin/`, mainEntity: { '@type': 'ItemList', itemListElement: shopProducts.map((product, index) => ({ '@type': 'ListItem', position: index + 1, name: `${shopSeedlingLabel(product)} «${shopVariety(product).name}»`, url: `${siteUrl}${shopProductPath(product)}` })) } },
+    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Главная', item: `${siteUrl}/` }, { '@type': 'ListItem', position: 2, name: 'Магазин', item: `${siteUrl}/magazin/` }] }
+  ] }).replaceAll('<', '\\u003c')}</script>` : '';
+  return layout({ title: 'Магазин саженцев малины и клубники', description: 'Саженцы малины и рассада клубники: карточки сортов, фото, регионы допуска, посадка и актуальные предложения продавца.', path: '/magazin/', active: 'shop', script: schema, body: `<section class="simple-hero shop-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span>Магазин</div><span class="eyebrow">МАЛИНА — КЛУБНИКА / МАГАЗИН</span><h1>Саженцы малины<br><em>и рассада клубники.</em></h1><p>Выберите сорт, проверьте регионы допуска и подготовьте место для посадки. Заказ оформляется у продавца.</p><div class="shop-hero-links"><a href="#malina">Малина ${arrow}</a><a href="#klubnika">Клубника ${arrow}</a></div></div></section>${sections}<section class="inline-cta wrap"><div><span class="eyebrow light">ЕЩЁ НЕ ОПРЕДЕЛИЛИСЬ</span><h2>Сначала подберите сорт для своего города.</h2></div><a class="btn btn-cream" href="/podbor/">Открыть подбор ${arrow}</a></section>` });
+}
+
+function shopLanding(product) {
+  const variety = shopVariety(product);
+  const catalog = publicCultivars.get(product.cultivarSlug);
+  const offer = shopOffers.get(String(product.id));
+  const image = shopImage(product, offer);
+  const regionNumbers = [...new Set((catalog.admissions || []).map(admission => admission.admission_region_number))].sort((a, b) => a - b);
+  const regionNames = regionNumbers.map(number => publicCatalog.regions.find(region => region.admission_region_number === number)?.admission_region_name).filter(Boolean);
+  const regionText = regionNumbers.length === 12 ? 'во всех 12 регионах допуска' : `в регионах: ${regionNames.join(', ')}`;
+  const regionSource = catalog.admissions?.[0]?.source_url;
+  const regionBody = regionNumbers.length
+    ? `<p>По Госреестру РФ 2024 года сорт допущен ${e(regionText)}. Условия своего города и участка можно проверить в подборе.</p><p><a class="text-link" href="${e(regionSource)}" target="_blank" rel="noopener noreferrer">Посмотреть запись Госреестра ↗</a></p>`
+    : `<p>Для этого сорта начните с условий своего города: сроки сезона, место посадки и опыт садоводов помогут принять решение.</p>`;
+  const order = offer
+    ? `<div class="shop-order"><span class="eyebrow">ПРЕДЛОЖЕНИЕ ПРОДАВЦА</span><h2>${e(shopSeedlingLabel(product))} «${e(variety.name)}»</h2><p class="shop-order-price">${e(shopPrice(offer))}</p><p>Продавец: Агросемфонд · обновлено ${e(shopSnapshot.checkedAt.slice(0, 10).split('-').reverse().join('.'))}</p><a class="btn btn-dark" href="${e(offer.affiliateUrl)}" target="_blank" rel="sponsored nofollow noopener noreferrer" data-affiliate-offer="${e(offer.id)}" data-cultivar="${e(product.cultivarSlug)}">Заказать у продавца ${arrow}</a><small>Партнёрская ссылка. Оформление и доставка — на сайте продавца.</small></div>`
+    : `<div class="shop-order shop-order-empty"><span class="eyebrow">ПРЕДЛОЖЕНИЕ ПРОДАВЦА</span><h2>Предложение сейчас недоступно</h2><p>Посмотрите описание сорта и сравните условия выращивания.</p><a class="btn btn-outline" href="/sorta/${e(product.cultivarSlug)}/">Открыть карточку сорта ${arrow}</a></div>`;
+  const related = shopProducts.filter(item => item.slug !== product.slug && item.crop === product.crop).slice(0, 3);
+  const path = shopProductPath(product);
+  const title = `${shopSeedlingLabel(product)} «${variety.name}»: описание, фото, посадка и регионы`;
+  const description = `${product.headline}. Фото товара, регионы допуска, как посадить и актуальное предложение продавца.`;
+  const schema = siteUrl ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [
+    offer ? { '@type': 'Product', name: `${shopSeedlingLabel(product)} «${variety.name}»`, description: product.lead, image: offer.imagePath ? `${siteUrl}${siteBase}${offer.imagePath}` : undefined, url: `${siteUrl}${path}`, offers: { '@type': 'Offer', url: offer.merchantUrl, price: (offer.priceMinor / 100).toFixed(2), priceCurrency: 'RUB', availability: 'https://schema.org/InStock', seller: { '@type': 'Organization', name: 'Агросемфонд' } } } : { '@type': 'WebPage', name: title, description, url: `${siteUrl}${path}` },
+    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Главная', item: `${siteUrl}/` }, { '@type': 'ListItem', position: 2, name: 'Магазин', item: `${siteUrl}/magazin/` }, { '@type': 'ListItem', position: 3, name: variety.name, item: `${siteUrl}${path}` }] }
+  ] }).replaceAll('<', '\\u003c')}</script>` : '';
+  return layout({ title, description, path, active: 'shop', socialImage: cultivarImage(variety).src, socialImageAlt: cultivarImage(variety).alt, script: schema, body: `<article class="shop-product"><header class="shop-product-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span><a href="/magazin/">Магазин</a><span> / </span>${e(variety.name)}</div><span class="eyebrow">${e(shopCropLabel(product))} / ${shopPlantLabel(product)}</span><h1>${e(product.headline)}</h1><p class="shop-product-lead">${e(product.lead)}</p><div class="shop-product-main"><figure class="shop-product-image"><img src="${e(image.src)}" alt="${e(image.alt)}" width="900" height="720"><figcaption>${e(image.caption)}</figcaption></figure>${order}</div></div></header><div class="wrap shop-product-content"><div class="shop-product-article"><section><span class="eyebrow">01 / СОРТ</span><h2>Что важно знать о «${e(variety.name)}»</h2><p>${e(variety.note)}</p><dl class="shop-facts"><div><dt>Культура</dt><dd>${e(shopCropLabel(product))}</dd></div><div><dt>Плодоношение</dt><dd>${e(variety.fruitingLabel)}</dd></div><div><dt>Срок</dt><dd>${e(variety.period)}</dd></div><div><dt>Место</dt><dd>${e(variety.place)}</dd></div></dl><p><a class="text-link" href="/sorta/${e(product.cultivarSlug)}/">Полная карточка сорта и отзывы ↗</a></p></section><section id="regiony"><span class="eyebrow">02 / РЕГИОНЫ</span><h2>Где выращивать</h2>${regionBody}<p><a class="btn btn-outline" href="/podbor/">Проверить свой город ${arrow}</a></p></section><section id="posadka"><span class="eyebrow">03 / ПОСАДКА</span><h2>${e(product.planting.title)}</h2><ol class="shop-steps">${product.planting.steps.map(step => `<li>${e(step)}</li>`).join('')}</ol><p><a class="text-link" href="${e(product.planting.guideHref)}">Подробная инструкция по посадке ↗</a></p></section><section><span class="eyebrow">04 / ПЕРЕД ЗАКАЗОМ</span><h2>Проверьте товар</h2><ul class="shop-checklist">${product.buyerChecklist.map(item => `<li>${e(item)}</li>`).join('')}</ul></section><section class="shop-sources"><span class="eyebrow">ИСТОЧНИКИ</span><h2>Откуда сведения о сорте и посадке</h2><ul>${product.sources.map(source => `<li><a href="${e(source.url)}" target="_blank" rel="noopener noreferrer">${e(source.label)} ↗</a></li>`).join('')}</ul></section></div><aside class="shop-product-aside"><span class="eyebrow">ДАЛЬШЕ</span><h2>Подберите под свой сад</h2><p>Сравните сорт с другими и посмотрите опыт садоводов.</p><a href="/sorta/${e(product.cultivarSlug)}/">Описание и отзывы ${arrow}</a><a href="/podbor/">Подбор по городу ${arrow}</a><a href="${e(product.planting.guideHref)}">Посадка и уход ${arrow}</a></aside></div></article><section class="section wrap shop-related">${sectionHead('ЕЩЁ ПО ТЕМЕ', 'Похожие саженцы', '', '<a class="text-link" href="/magazin/">Весь магазин ↗</a>')}<div class="shop-grid">${related.map(shopCard).join('')}</div></section>` });
+}
+
+function withShopLink(html, variety) {
+  const product = shopProducts.find(item => item.cultivarSlug === variety.slug);
+  if (!product) return html;
+  const offer = shopOffers.get(String(product.id));
+  const section = `<section class="section wrap shop-variety-link"><div><span class="eyebrow">САЖЕНЕЦ СОРТА</span><h2>${e(variety.name)}: предложение и посадка</h2><p>На странице товара собраны описание, регионы допуска и шаги посадки.</p></div><a class="btn btn-dark" href="${shopProductPath(product)}">${offer ? `Посмотреть от ${e(shopPrice(offer))}` : 'Посмотреть товар'} ${arrow}</a></section>`;
+  return html.replace('</main>', `${section}</main>`);
 }
 
 function withEvidence(html, variety) {
@@ -486,11 +563,19 @@ const plantObservation = layout({
 });
 
 const rating = layout({ title: 'Рейтинг сортов малины и клубники — рекомендации садоводов', description: 'Какие сорта малины и клубники рекомендуют читатели. Голосование, число рекомендаций и прозрачная методика рейтинга.', path: '/rating/', active: 'rating', body: ratingBody(varieties, voteSnapshot, voteApiUrl) });
-const pages = new Map([['/', home], ['/malina/', withCropReading(cropPage('raspberry'), 'raspberry')], ['/klubnika/', withCropReading(cropPage('strawberry'), 'strawberry')], ['/sorta/', catalog], ...raspberryFacets.map(facet => [facet.path, raspberryFacetPage(facet)]), ['/sravnenie/malina/', raspberryComparison], ['/sravnenie/klubnika/', strawberryComparison], ['/rating/', rating], ['/podbor/', pickerPage], ['/instrumenty/', toolsIndex], ['/instrumenty/raschet-sazhencev/', plantingCalculator], ['/instrumenty/raschet-shpalery/', trellisCalculator], ['/instrumenty/raschet-kapelnogo-poliva/', dripCalculator], ['/instrumenty/ekonomika-posadki/', economicsCalculator], ['/instrumenty/obrezka-maliny/', pruningHelper], ['/instrumenty/glubina-posadki/', depthHelper], ['/instrumenty/vybor-mulchi/', mulchHelper], ['/instrumenty/kalendar-uhoda/', careCalendar], ['/instrumenty/proverka-rasteniya/', plantObservation], ['/instrumenty/zhurnal-uchastka/', growerJournal], ...cities.map(city => [`/podbor/${city.slug}/`, cityPickerPage(city)]), ['/otzyvy/', reviews], ['/goroda/', cityDirectory], ['/guide/', guide], ['/in-vitro/', inVitro], ['/proverka-partii/', lotChecklist], ['/about/', about], ['/zhurnal/', articleCollection()], ['/zhurnal/malina/', articleCollection('raspberry')], ['/zhurnal/klubnika/', articleCollection('strawberry')], ...varieties.map(v => [`/sorta/${v.slug}/`, withCultivarReviews(withCommerce(withEvidence(withRelatedReading(withCropReading(varietyPage(v), v.cropKey), v), v), v), v)]), ...articles.map(article => [articlePath(article), articlePage(article)])]);
+const pages = new Map([['/', home], ['/malina/', withCropReading(cropPage('raspberry'), 'raspberry')], ['/klubnika/', withCropReading(cropPage('strawberry'), 'strawberry')], ['/sorta/', catalog], ['/magazin/', shopIndex()], ...shopProducts.map(product => [shopProductPath(product), shopLanding(product)]), ...raspberryFacets.map(facet => [facet.path, raspberryFacetPage(facet)]), ['/sravnenie/malina/', raspberryComparison], ['/sravnenie/klubnika/', strawberryComparison], ['/rating/', rating], ['/podbor/', pickerPage], ['/instrumenty/', toolsIndex], ['/instrumenty/raschet-sazhencev/', plantingCalculator], ['/instrumenty/raschet-shpalery/', trellisCalculator], ['/instrumenty/raschet-kapelnogo-poliva/', dripCalculator], ['/instrumenty/ekonomika-posadki/', economicsCalculator], ['/instrumenty/obrezka-maliny/', pruningHelper], ['/instrumenty/glubina-posadki/', depthHelper], ['/instrumenty/vybor-mulchi/', mulchHelper], ['/instrumenty/kalendar-uhoda/', careCalendar], ['/instrumenty/proverka-rasteniya/', plantObservation], ['/instrumenty/zhurnal-uchastka/', growerJournal], ...cities.map(city => [`/podbor/${city.slug}/`, cityPickerPage(city)]), ['/otzyvy/', reviews], ['/goroda/', cityDirectory], ['/guide/', guide], ['/in-vitro/', inVitro], ['/proverka-partii/', lotChecklist], ['/about/', about], ['/zhurnal/', articleCollection()], ['/zhurnal/malina/', articleCollection('raspberry')], ['/zhurnal/klubnika/', articleCollection('strawberry')], ...varieties.map(v => [`/sorta/${v.slug}/`, withShopLink(withCultivarReviews(withCommerce(withEvidence(withRelatedReading(withCropReading(varietyPage(v), v.cropKey), v), v), v), v), v)]), ...articles.map(article => [articlePath(article), articlePage(article)])]);
 for (const [path, html] of pages) { const dir = join(out, path); await mkdir(dir, { recursive: true }); await writeFile(join(dir, 'index.html'), withSiteBase(html)); }
 await mkdir(join(out, 'assets'), { recursive: true });
 await writeFile(join(out, 'assets', 'site.css'), withCssBase(await readFile(join(root, 'site', 'assets', 'site.css'), 'utf8')));
 for (const asset of ['site.js', 'picker-filter.mjs', 'picker-place.mjs', 'picker-wizard.js', 'votes.js', 'picker-compare.js', 'picker-memo.js', 'vote-model.js', 'verified-selector.js', 'admissions.js', 'admissions-model.mjs', 'reviews.js', 'review-geo.js', 'cities.js', 'comparison.js', 'comparison-model.mjs', 'lot-checklist.js', 'planting.js', 'planting-model.mjs', 'trellis.js', 'trellis-model.mjs', 'drip.js', 'drip-model.mjs', 'economics.js', 'economics-model.mjs', 'pruning.js', 'pruning-model.mjs', 'depth.js', 'depth-model.mjs', 'mulch.js', 'mulch-model.mjs', 'calendar.js', 'calendar-model.mjs', 'plant-observation.js', 'plant-observation-model.mjs', 'journal.js', 'journal-model.mjs', 'favicon.svg', 'berries-hero.webp', 'raspberry-garden.webp', 'raspberry-yellow-garden.webp', 'strawberry-garden.webp', 'raspberry-mark.webp', 'strawberry-mark.webp', ...new Set(articles.flatMap(article => [article.heroImage?.file, ...article.sections.map(section => section.image?.file)].filter(Boolean))), ...Object.values(varietyMedia).map(image => image.file)]) await copyFile(join(root, 'site', 'assets', asset), join(out, 'assets', asset));
+for (const offer of shopOffers.values()) {
+  if (!offer.imagePath) continue;
+  const filename = offer.imagePath.split('/').at(-1);
+  const source = join(root, 'db', 'public', 'shop-images', filename);
+  const target = join(out, 'assets', 'shop', filename);
+  await mkdir(join(out, 'assets', 'shop'), { recursive: true });
+  await copyFile(source, target);
+}
 await copyFile(join(root, 'db', 'public', 'reviews.json'), join(out, 'data', 'reviews.json'));
 await writeFile(join(out, 'data', 'cities.json'), JSON.stringify(cities) + '\n');
 await writeFile(join(out, 'data', 'votes.json'), JSON.stringify(voteSnapshot) + '\n');

@@ -409,6 +409,29 @@ class CatalogTests(unittest.TestCase):
         self.connection.execute("UPDATE cultivars SET editorial_status='withdrawn' WHERE id=1")
         self.assertEqual(catalog.public_snapshot(self.connection)["cultivars"], [])
 
+    def test_affiliate_tracking_url_is_separate_from_seller_product_url(self) -> None:
+        self.add_source_and_cultivar()
+        self.publish_identity()
+        self.connection.execute(
+            "INSERT INTO sellers(display_name, website_url, review_status, reviewed_by, reviewed_at) "
+            "VALUES ('Test Seller', 'https://seller.example', 'verified', 'editor', '2026-09-24 12:00:00')"
+        )
+        self.connection.execute(
+            "INSERT INTO offers(seller_id, cultivar_id, product_name, kind, destination_url, "
+            "affiliate_url, checked_at, expires_at, editorial_status, reviewed_by, reviewed_at) "
+            "VALUES (1, 1, 'Test plant', 'affiliate', 'https://seller.example/plants/polka', "
+            "'https://rzekl.com/g/track?ulp=https%3A%2F%2Fseller.example%2Fplants%2Fpolka', "
+            "'2026-09-24 12:00:00', '2999-01-01 00:00:00', 'published', 'editor', "
+            "'2026-09-24 12:00:00')"
+        )
+        offer = catalog.public_snapshot(self.connection)["cultivars"][0]["offers"][0]
+        self.assertEqual(offer["destination_url"], "https://seller.example/plants/polka")
+        self.assertTrue(offer["affiliate_url"].startswith("https://rzekl.com/g/"))
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.connection.execute(
+                "UPDATE offers SET affiliate_url='https://rzekl.com.evil.test/g/track'"
+            )
+
     def test_own_batch_requires_real_ready_stock_and_hides_internal_document(self) -> None:
         self.add_source_and_cultivar()
         self.publish_identity()
