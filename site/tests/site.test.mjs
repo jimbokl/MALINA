@@ -192,7 +192,7 @@ test('разметка каталога, сортов и журнала соот
     t.skip('локальная сборка без SITE_URL не содержит публичной разметки');
     return;
   }
-  const origin = 'https://malinaklubnika.ru';
+  const origin = new URL(catalogHtml.match(/<link rel="canonical" href="([^"]+)"/)?.[1]).origin;
   const schemaAt = async path => {
     const html = await readFile(join(root, path, 'index.html'), 'utf8');
     const json = html.match(/<script type="application\/ld\+json">([^<]+)<\/script>/)?.[1];

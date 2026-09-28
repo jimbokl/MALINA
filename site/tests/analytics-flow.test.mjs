@@ -27,12 +27,15 @@ class Element {
   focus() {}
 }
 
-function harness({ path, counter = '', base = '', nodes = new Map(), referrer = '' }) {
+function harness({ path, counter = '', base = '', nodes = new Map(), referrer = '', storage = new Map() }) {
   const calls = [];
   const appended = [];
   const location = new URL(`https://example.test${path}`);
   const document = new Element();
   const window = new Element({ ym: (...args) => calls.push(args) });
+  let reloads = 0;
+  window.localStorage = { getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value) };
+  window.location = { reload: () => { reloads += 1; } };
   document.documentElement = { dataset: { ymCounter: counter, siteBase: base } };
   document.referrer = referrer;
   document.head = { append: element => appended.push(element) };
@@ -64,7 +67,7 @@ function harness({ path, counter = '', base = '', nodes = new Map(), referrer = 
   };
   runInNewContext(source.replace(/\bimport\s*\(/g, '__import('), context);
   const goals = () => calls.filter(call => call[1] === 'reachGoal').map(call => ({ name: call[2], params: JSON.parse(JSON.stringify(call[3])) }));
-  return { calls, goals, appended, document, window, observers };
+  return { calls, goals, appended, document, window, observers, storage, reloads: () => reloads };
 }
 
 function target(selectors, fields = {}) {
@@ -82,6 +85,23 @@ test('collector remains inert without a configured counter', async () => {
   await state.window.dispatchEvent({ type: 'unhandledrejection', reason: Error('PRIVATE_ERROR') });
   assert.equal(state.appended.length, 0);
   assert.deepEqual(state.calls, []);
+});
+
+test('cookie notice opt out persists and prevents Metrica on the next page', async () => {
+  const disable = new Element();
+  const notice = new Element();
+  notice.querySelector = selector => selector.includes('disable') ? disable : null;
+  const storage = new Map();
+  const nodes = new Map([['#cookie-notice', notice]]);
+  const first = harness({ path: '/', counter: '12345', nodes, storage });
+  assert.equal(first.appended.length, 1);
+  await disable.dispatchEvent({ type: 'click' });
+  assert.equal(storage.get('malina:analytics-choice'), 'disabled');
+  assert.equal(first.reloads(), 1);
+  const next = harness({ path: '/sorta/polka/', counter: '12345', nodes, storage });
+  assert.equal(next.appended.length, 0);
+  assert.deepEqual(next.calls, []);
+  assert.equal(notice.hidden, true);
 });
 
 test('configured page hit, cultivar and technical error goals omit query and error details', async () => {

@@ -1,7 +1,42 @@
 const menuButton = document.querySelector('.menu-toggle');
+const analyticsChoiceKey = 'malina:analytics-choice';
+const cookieNoticeKey = 'malina:cookie-notice';
+function readSitePreference(key) {
+  try { return window.localStorage.getItem(key); } catch { return null; }
+}
+function saveSitePreference(key, value) {
+  try { window.localStorage.setItem(key, value); } catch { /* The current page still responds. */ }
+}
+const cookieNotice = document.querySelector('#cookie-notice');
+if (cookieNotice && (readSitePreference(cookieNoticeKey) === 'dismissed' || readSitePreference(analyticsChoiceKey) === 'disabled')) {
+  cookieNotice.hidden = true;
+}
+cookieNotice?.querySelector('[data-cookie-action="dismiss"]')?.addEventListener('click', () => {
+  saveSitePreference(cookieNoticeKey, 'dismissed');
+  cookieNotice.hidden = true;
+});
+cookieNotice?.querySelector('[data-cookie-action="disable"]')?.addEventListener('click', () => {
+  saveSitePreference(analyticsChoiceKey, 'disabled');
+  saveSitePreference(cookieNoticeKey, 'dismissed');
+  window.location.reload();
+});
+const cookieToggle = document.querySelector('[data-cookie-toggle]');
+if (cookieToggle) {
+  const updateCookieToggle = () => {
+    const disabled = readSitePreference(analyticsChoiceKey) === 'disabled';
+    cookieToggle.textContent = disabled ? 'Включить аналитику' : 'Отключить аналитику';
+    const status = document.querySelector('#cookie-policy-status');
+    if (status) status.textContent = disabled ? 'Аналитика отключена в этом браузере.' : 'Аналитика включена в этом браузере.';
+  };
+  updateCookieToggle();
+  cookieToggle.addEventListener('click', () => {
+    saveSitePreference(analyticsChoiceKey, readSitePreference(analyticsChoiceKey) === 'disabled' ? 'enabled' : 'disabled');
+    window.location.reload();
+  });
+}
 // Goals are inert until a real Yandex Metrica counter is configured in the page.
 const ymCounter = Number(document.documentElement.dataset.ymCounter || 0);
-const analyticsEnabled = Number.isSafeInteger(ymCounter) && ymCounter > 0;
+const analyticsEnabled = Number.isSafeInteger(ymCounter) && ymCounter > 0 && readSitePreference(analyticsChoiceKey) !== 'disabled';
 const pagePath = location.pathname;
 const siteBase = document.documentElement.dataset.siteBase || '';
 const routePath = siteBase && pagePath.startsWith(`${siteBase}/`) ? pagePath.slice(siteBase.length) : pagePath;
