@@ -278,9 +278,12 @@ if (form && list && status && count && moreButton && cropFilter && cropFilterLab
         announce('Условия перенесены; добавьте наблюдения нового сезона и сохраните.');
       } else if (button.dataset.action === 'delete') {
         if (!confirm(`Удалить запись «${source.cultivar}», сезон ${source.season}?`)) return;
+        const previousPosition = [...list.children].indexOf(button.closest('.grower-journal-entry'));
         persist(records.filter(record => record.id !== source.id));
         if (editingId === source.id) resetForm();
         announce('Запись удалена.');
+        (list.children[Math.min(previousPosition, list.children.length - 1)]?.matches('.grower-journal-entry')
+          ? list.children[Math.min(previousPosition, list.children.length - 1)] : cropFilter).focus();
       }
     } catch (error) { announce(error.message || 'Не удалось изменить запись.', true); }
   });

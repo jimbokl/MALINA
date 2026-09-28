@@ -79,6 +79,15 @@ test('поиск по артикулу любой фасовки ведёт к �
   }
 });
 
+test('черноплодная малина сразу показывает подходящую локальную иллюстрацию', async () => {
+  const detail = await readFile(join(dist, 'magazin', 'malina-blek-dzhevel-67836', 'index.html'), 'utf8');
+  const catalog = await readFile(join(dist, 'magazin', 'index.html'), 'utf8');
+  const card = catalog.split('data-shop-canonical="malina-blek-dzhevel-67836"')[1]?.split('</article>')[0] || '';
+  assert.match(detail, /class="shop-product-image"><img src="\/assets\/raspberry-black-garden\.webp"/);
+  assert.match(card, /<img src="\/assets\/raspberry-black-garden\.webp"/);
+  assert.ok((await readFile(join(dist, 'assets', 'raspberry-black-garden.webp'))).length > 100_000);
+});
+
 test('все публичные товарные страницы имеют уникальный заголовок и свой canonical', async () => {
   const titles = new Set();
   for (const product of publicProducts) {

@@ -71,8 +71,10 @@
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload)
       });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'Не удалось отправить сообщение.');
+      let data;
+      try { data = await response.json(); }
+      catch { throw new Error('Не удалось отправить сообщение. Попробуйте позже.'); }
+      if (!response.ok) throw new Error(typeof data?.error === 'string' ? data.error : 'Не удалось отправить сообщение. Попробуйте позже.');
       window.malinaTrackReviewSubmitted?.(data.status, Boolean(payload.parent_id));
       feedback.textContent = data.status === 'published'
         ? 'Спасибо! Сообщение опубликовано.'
@@ -82,7 +84,14 @@
       sendingForm.reset();
       if (sendingForm === form && sort) form.elements.cultivar_name.value = sort;
       if (sendingForm === form && (city || region)) form.elements.region.value = city || region;
-      if (data.status === 'published') await loadReviews(payload.parent_id ?? null);
+      if (data.status === 'published') {
+        await loadReviews(payload.parent_id ?? null);
+        if (payload.parent_id != null) {
+          status.textContent = 'Ответ опубликован.';
+          const parent = [...list.querySelectorAll('[data-review-id]')].find(item => item.dataset.reviewId === String(payload.parent_id));
+          parent?.querySelector(':scope > .review-thread > summary, :scope > .review-reply-button')?.focus();
+        }
+      }
     } catch (error) {
       feedback.textContent = error instanceof Error ? error.message : 'Не удалось отправить сообщение.';
     } finally {
@@ -108,7 +117,7 @@
     submit.textContent = 'Отправить ответ';
     const note = document.createElement('p');
     note.className = 'reviews-smallprint';
-    note.textContent = 'Имя, регион и ответ появятся на сайте после проверки JEV.';
+    note.textContent = 'После проверки ответ появится в обсуждении.';
     fields.append(submit, note);
     const feedback = document.createElement('p');
     feedback.className = 'review-status';
@@ -169,16 +178,17 @@
       button.className = 'review-reply-button';
       button.textContent = 'Ответить';
       button.setAttribute('aria-expanded', 'false');
-      button.setAttribute('aria-controls', 'review-reply-form-' + review.id);
       button.addEventListener('click', () => {
         const existing = article.querySelector(':scope > .review-reply-form');
         if (existing) {
           existing.remove();
           button.setAttribute('aria-expanded', 'false');
+          button.removeAttribute('aria-controls');
           return;
         }
         article.insertBefore(makeReplyForm(review), article.querySelector(':scope > .review-thread'));
         button.setAttribute('aria-expanded', 'true');
+        button.setAttribute('aria-controls', 'review-reply-form-' + review.id);
         article.querySelector(':scope > .review-reply-form input')?.focus();
       });
       article.append(button);

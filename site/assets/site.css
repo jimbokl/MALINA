@@ -651,3 +651,43 @@
   .cookie-notice-actions button{font-size:13px;padding:8px 11px;min-height:42px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* QA polish: keep catalog paths available without pushing the first result down. */
+.catalog-hero{padding-bottom:35px}
+.catalog-hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(350px,.85fr);align-items:end;gap:clamp(30px,5vw,80px)}
+.catalog-hero-art{display:grid;grid-template-columns:1.15fr .85fr;align-items:end;gap:12px;height:310px;min-height:0;overflow:hidden}
+.catalog-hero-art img{display:block;width:100%;height:310px;min-height:0;object-fit:cover}
+.catalog-hero-art img:last-child{height:235px}
+.catalog-hero .breadcrumbs{margin-bottom:26px}
+.catalog-hero h1{font-size:clamp(65px,6vw,88px);line-height:1.04;margin:13px 0}
+.catalog-hero p{line-height:1.55;margin-bottom:0}
+.catalog-section{padding-top:25px}
+.catalog-section .result-line{padding:12px 0}
+.catalog-more-paths{margin:0 0 13px;border:1px solid var(--line);background:#f4f5ec}
+.catalog-more-paths summary{cursor:pointer;padding:13px 17px;color:var(--wine);font-size:13px;font-weight:800}
+.catalog-more-paths summary:focus-visible{outline:3px solid var(--berry);outline-offset:3px}
+.catalog-more-paths-content{padding:0 17px 17px}
+.catalog-more-paths .comparison-entry{margin:0 0 15px}
+.catalog-more-paths .catalog-shortcuts{margin-bottom:0}
+.catalog-source{display:none;margin:0 0 12px;color:#496d52;font-size:11px;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+#catalog-results[data-view="facts"] .catalog-source{display:inline-block}
+@media(max-width:700px){
+  .catalog-hero .wrap{display:block}
+  .catalog-hero-art{display:none}
+  .catalog-hero{padding-bottom:27px}
+  .catalog-hero .breadcrumbs{margin-bottom:19px}
+  .catalog-hero h1{font-size:clamp(40px,10.5vw,50px);margin:10px 0}
+  .catalog-section{padding-top:22px}
+  .catalog-rating-link{margin-bottom:15px}
+  .catalog-rating-link p{margin-top:6px}
+  .catalog-view-switch{flex-wrap:wrap;padding-top:9px}
+  .catalog-view-switch span{width:100%}
+  .shop-filter label{flex:1 1 100%;min-width:0}
+}
+@media(max-width:480px){
+  .city-grid{grid-template-columns:1fr}
+  .city-card{min-height:0;gap:12px;padding:19px}
+  .city-card h2{font-size:27px;margin:4px 0}
+  .city-card .eyebrow{font-size:10px}
+  .city-card-link{font-size:12px}
+}
