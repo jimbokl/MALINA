@@ -36,3 +36,14 @@ test('package and pot suffixes collapse into one page while offers remain separa
   assert.equal(refreshed[0].canonicalSlug, first[0].slug);
   assert.equal(refreshed[1].canonicalSlug, first[0].slug);
 });
+
+test('verified Кимберли alias shares one page with the cultivar name', () => {
+  const csv = [header,
+    row('101', 'false', 'Саженцы земляники/Ранние сорта', 'Земляника садовая Вима Кимберли 1 шт.р9'),
+    row('102', 'true', 'Саженцы земляники/Ранние сорта', 'Земляника садовая Кимберли')
+  ].join('\n');
+  const products = buildCatalogManifest(csv);
+  assert.equal(products[0].canonicalSlug, products[1].slug);
+  assert.equal(products[1].canonicalSlug, products[1].slug);
+  assert.equal(shopNameKey(products[0].name), shopNameKey(products[1].name));
+});

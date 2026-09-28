@@ -21,16 +21,16 @@ async function shopSnapshot() {
   }
 }
 
-test('фид содержит 298 позиций, публичный каталог — 166 уникальных товаров', () => {
+test('фид содержит 298 позиций, публичный каталог — 165 уникальных товаров', () => {
   assert.equal(shopProducts.length, 298);
   assert.equal(shopProducts.filter(product => product.crop === 'raspberry').length, 121);
   assert.equal(shopProducts.filter(product => product.crop === 'strawberry').length, 177);
   assert.equal(new Set(shopProducts.map(product => String(product.id))).size, 298);
   assert.equal(new Set(shopProducts.map(product => product.slug)).size, 298);
-  assert.equal(shopProducts.filter(product => product.canonicalSlug !== product.slug).length, 132);
-  assert.equal(new Set(shopProducts.map(product => product.canonicalSlug || product.slug)).size, 166);
-  assert.equal(publicProducts.length, 166);
-  assert.equal(new Set(publicProducts.map(product => `${product.crop}\0${shopNameKey(product.name)}`)).size, 166);
+  assert.equal(shopProducts.filter(product => product.canonicalSlug !== product.slug).length, 133);
+  assert.equal(new Set(shopProducts.map(product => product.canonicalSlug || product.slug)).size, 165);
+  assert.equal(publicProducts.length, 165);
+  assert.equal(new Set(publicProducts.map(product => `${product.crop}\0${shopNameKey(product.name)}`)).size, 165);
   const slugs = new Set(shopProducts.map(product => product.slug));
   for (const product of shopProducts) {
     assert.ok(product.name?.trim(), `missing name: ${product.id}`);
@@ -38,11 +38,11 @@ test('фид содержит 298 позиций, публичный катал�
   }
 });
 
-test('магазин показывает 166 карточек и убирает повторные упаковки и артикулы', async () => {
+test('магазин показывает 165 карточек и убирает повторные упаковки и артикулы', async () => {
   const html = await readFile(join(dist, 'magazin', 'index.html'), 'utf8');
   const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
   assert.match(html, /<h1>Саженцы малины/);
-  assert.equal((html.match(/class="shop-card"/g) || []).length, 166);
+  assert.equal((html.match(/class="shop-card"/g) || []).length, 165);
   const offers = currentShopOffers(await shopSnapshot(), shopProducts);
   const inStockGroups = new Set(shopProducts.filter(product => offers.has(String(product.id))).map(product => product.canonicalSlug));
   assert.equal((html.match(/data-stock="in_stock"/g) || []).length, inStockGroups.size);

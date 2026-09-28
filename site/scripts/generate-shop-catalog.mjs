@@ -33,9 +33,11 @@ function merchantUrl(row) {
 // Feed entries for the same plant may differ only by pack size or pot code.
 // Keep every SKU in the manifest, but publish one landing page per plant name.
 export function shopNameKey(name) {
-  return name.trim().normalize('NFKC').toLocaleLowerCase('ru')
+  const key = name.trim().normalize('NFKC').toLocaleLowerCase('ru')
     .replace(/\s+\d+\s*шт\.?\s*(?:[рp]\s*\d+)?\s*$/iu, '')
     .replace(/\s+/g, ' ').trim();
+  // Both labels refer to the verified cultivar Кимберли in our catalog.
+  return key === 'земляника садовая вима кимберли' ? 'земляника садовая кимберли' : key;
 }
 
 export function buildCatalogManifest(csv, curatedProducts = [], previousProducts = []) {
