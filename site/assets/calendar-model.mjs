@@ -1,9 +1,11 @@
 export const calendarSources = Object.freeze({
   raspberryPlanting: { label: 'Россельхозцентр · посадка малины', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/severo-kavkazskiy/respublika-severnaya-osetiya-alaniya/malina/' },
+  raspberryPlantingSeason: { label: 'Россельхозцентр · сроки посадки малины', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/severo-kavkazskiy/stavropolskiy-kray/osennyaya-posadka-maliny-organizuem-yagodnik-ratsionalno/' },
   raspberryCare: { label: 'Россельхозцентр · уход за малиной весной', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/severo-kavkazskiy/respublika-ingushetiya/ukhod-za-malinoy-vesnoy/' },
   raspberryHarvest: { label: 'Россельхозцентр · уход за малиной в июле', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/dalnevostochnyy/khabarovskiy-kray-i-eao/ukhazhivaem-pravilno-za-malinoy-v-iyule/' },
   raspberryPruning: { label: 'Россельхозцентр · обрезка малины', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/tsentralnyy-okrug/tulskaya-oblast/obrezka-maliny-osenyu/' },
   strawberryPlanting: { label: 'Россельхозцентр · посадка клубники', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/sibirskiy/omskaya-oblast/osennyaya-posadka-sadovoy-zemlyaniki/' },
+  strawberryPlantingSeason: { label: 'Россельхозцентр · сроки работ с клубникой', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/uralskiy/kurganskaya-oblast/na-zametku-sadovodu/' },
   strawberryCare: { label: 'Россельхозцентр · уход за клубникой', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/sibirskiy/omskaya-oblast/vyrashchivanie-i-pravilnyy-ukhod-za-sadovoy-zemlyanikoy/' },
   strawberryFrost: { label: 'Россельхозцентр · возвратные заморозки', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/privolzhskiy/respublika-bashkortostan/informatsionnyy-listok-rosselkhoztsentra-vozvratnye-vesennie-kholoda/' },
   strawberryHarvest: { label: 'Россельхозцентр · сбор ягод', url: 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/sibirskiy/omskaya-oblast/raboty-v-sadu-i-ogorode-v-iyule/' },

@@ -323,6 +323,11 @@
 .calendar-journal{border-top:1px solid var(--line);padding-block:52px}.calendar-journal-header{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:end}.calendar-journal h2{font:400 clamp(2rem,4vw,3.2rem)/1.1 var(--serif);margin:12px 0}.calendar-journal-header p{max-width:55ch;line-height:1.65;color:#405443;margin:0 0 8px}.calendar-journal-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;list-style:none;padding:0;margin:25px 0 0}.calendar-journal-list:empty{display:none}.calendar-journal-list li{display:flex;flex-direction:column;gap:7px;min-width:0;padding:19px 22px;background:#fffdf8;border:1px solid var(--line);overflow-wrap:anywhere}.calendar-journal-list time{font-size:12px;font-weight:800;color:var(--wine)}.calendar-journal-list strong{font:400 1.5rem/1.2 var(--serif)}.calendar-journal-list span{font-size:14px;line-height:1.5;color:#405443}.calendar-journal-empty{padding:20px 22px;background:#e8eddf;margin:25px 0 0}.calendar-journal-empty[hidden],.calendar-journal-more[hidden]{display:none}.calendar-journal-actions{display:flex;flex-wrap:wrap;gap:16px 25px;align-items:center;margin-top:22px}.calendar-journal-more{border:0;background:transparent;padding:8px 0;color:var(--wine);font-size:13px;font-weight:800;text-decoration:underline;text-underline-offset:4px;cursor:pointer}.calendar-journal-actions a{color:var(--wine);font-size:13px;font-weight:800}.calendar-journal-actions a:focus-visible,.calendar-journal-more:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
 .calendar-journal-list a{margin-top:4px;color:var(--wine);font-size:13px;font-weight:800;text-underline-offset:4px}.calendar-journal-list a:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
 .calendar-optional{border:1px solid #cbd3c5;background:#fffdf8}.calendar-optional summary{padding:14px 16px;color:var(--wine);font-size:13px;font-weight:800;cursor:pointer}.calendar-optional summary:focus-visible{outline:3px solid var(--wine);outline-offset:2px}.calendar-optional>div{display:grid;gap:16px;padding:0 16px 16px}
+.season-planner{padding-block:42px 68px}.season-planner-heading{display:flex;align-items:end;justify-content:space-between;gap:32px}.season-planner-heading h2{font:400 clamp(2rem,4.5vw,3.6rem)/1.05 var(--serif);margin:10px 0 0}.season-planner-heading p{max-width:38ch;margin:0 0 5px;line-height:1.65}.season-planner-controls{display:grid;gap:18px;margin-top:28px;padding:20px;background:#e8eddf}.season-control-group{display:flex;flex-wrap:wrap;gap:8px}.season-control-group button,.season-month{min-height:44px;padding:9px 15px;border:1px solid #c9d5c5;background:var(--paper);color:var(--green);font-size:13px;font-weight:800}.season-control-group button[aria-pressed="true"],.season-month[aria-pressed="true"]{background:var(--wine);border-color:var(--wine);color:#fff}.season-control-group button:hover,.season-month:hover{border-color:var(--wine)}.season-months{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:5px}.season-month{padding-inline:4px;white-space:nowrap}.season-planner-result{margin-top:30px}.season-planner-result-head{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--line);padding-bottom:12px}.season-planner-result-head p{margin:0;font-size:13px;font-weight:800;color:var(--green)}.season-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:17px}.season-card{display:flex;flex-direction:column;gap:11px;min-width:0;padding:24px;background:var(--paper);border:1px solid var(--line)}.season-card[hidden]{display:none}.season-card-top{display:flex;justify-content:space-between;gap:12px;align-items:start}.season-card .eyebrow{color:var(--berry)}.season-window{font-size:12px;font-weight:800;color:var(--green);text-align:right}.season-card h3{font:400 clamp(1.45rem,2.5vw,1.85rem)/1.17 var(--serif);margin:0}.season-card p{font-size:14px;line-height:1.6;margin:0}.season-card p strong{color:var(--green)}.season-card-links{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}.season-card-links a,.season-planner-next a{color:var(--wine);font-size:13px;font-weight:800;text-decoration:underline;text-underline-offset:4px}.season-empty{padding:24px;background:#e8eddf;margin:17px 0 0}.season-empty[hidden]{display:none}.season-planner-next{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:24px}.season-planner button:focus-visible,.season-planner a:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
+.strawberry-planting-hero .btn{margin-top:14px}.strawberry-planting-section{padding-block:52px}.strawberry-window-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:26px}.strawberry-window{display:flex;flex-direction:column;gap:15px;min-width:0;padding:28px;border:1px solid var(--line);background:var(--paper)}.strawberry-window h3,.strawberry-planting-check h2,.strawberry-planting-next h2{font:400 clamp(1.8rem,3vw,2.7rem)/1.12 var(--serif);margin:0}.strawberry-window p{margin:0;line-height:1.65}.strawberry-window p strong{color:var(--green)}.strawberry-window-links{display:flex;flex-wrap:wrap;gap:12px 22px;margin-top:auto;padding-top:15px;border-top:1px solid var(--line)}.strawberry-window-links a,.strawberry-planting-check a{font-size:14px;font-weight:800;color:var(--wine);text-decoration:underline;text-underline-offset:4px}.strawberry-planting-check{display:grid;grid-template-columns:minmax(220px,1fr) minmax(0,1.5fr);gap:20px 45px;padding-block:44px;border-block:1px solid var(--line)}.strawberry-planting-check h2{margin-top:10px}.strawberry-planting-check ol{margin:0;padding-left:25px;line-height:1.75}.strawberry-planting-check li+li{margin-top:9px}.strawberry-planting-check p{grid-column:2;margin:0}.strawberry-planting-next{padding-block:46px 68px}.strawberry-planting-next h2{margin:12px 0 23px}.strawberry-planting-next>div{display:flex;flex-wrap:wrap;gap:12px}.strawberry-planting-next>div a{display:inline-flex;gap:12px;align-items:center;padding:16px 18px;border:1px solid var(--line);background:var(--paper);font-weight:800;color:var(--wine)}.strawberry-planting-next a:hover,.strawberry-window a:hover{text-decoration:underline}
+@media(max-width:1000px){.season-months{grid-template-columns:repeat(6,minmax(0,1fr))}}
+@media(max-width:760px){.season-planner{padding-block:27px 40px}.season-planner-heading{display:block}.season-planner-heading p{margin:12px 0 0}.season-planner-controls{padding:13px;margin-top:20px}.season-control-group button{flex:1 1 auto}.season-months{grid-template-columns:repeat(4,minmax(0,1fr))}.season-card-grid{grid-template-columns:1fr}.season-card{padding:19px}.season-card-top{flex-wrap:wrap}.season-window{text-align:left}}
+@media(max-width:760px){.strawberry-planting-section{padding-block:32px}.strawberry-window-grid{grid-template-columns:1fr;margin-top:20px}.strawberry-window{padding:21px}.strawberry-planting-check{display:block;padding-block:33px}.strawberry-planting-check ol{margin:20px 0}.strawberry-planting-next{padding-block:35px 50px}.strawberry-planting-next>div{display:grid}.strawberry-planting-next>div a{min-height:55px}}
 .calendar-sequence{margin-top:20px}.calendar-sequence summary{color:var(--wine);font-size:14px;font-weight:800;cursor:pointer}.calendar-sequence summary:focus-visible{outline:3px solid var(--wine);outline-offset:3px}
 @media(max-width:760px){.calendar-journal{padding-block:36px}.calendar-journal-header,.calendar-journal-list{grid-template-columns:1fr}.calendar-journal-header{gap:7px}}
 
@@ -517,3 +522,82 @@
 .shop-filter{display:flex;align-items:end;flex-wrap:wrap;gap:14px;padding-top:28px}.shop-filter label{display:grid;gap:7px;min-width:min(100%,240px);font-size:13px;font-weight:800}.shop-filter input,.shop-filter select{min-height:47px;padding:10px 13px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit}.shop-filter input:focus,.shop-filter select:focus{outline:2px solid var(--wine);outline-offset:2px}.shop-filter p{margin:0 0 11px;color:var(--muted)}.shop-sku{display:block;margin:-4px 0 12px;color:var(--muted);font-size:12px}.shop-card[data-stock="out_of_stock"] .shop-card-bottom strong{color:var(--muted);font-size:17px}.shop-card[hidden],.shop-section[hidden]{display:none}
 @media(max-width:760px){.shop-hero{padding:18px 0 28px}.shop-hero .wrap{display:block}.shop-hero .breadcrumbs{margin-bottom:16px}.shop-hero h1{font-size:clamp(42px,11vw,64px);margin:8px 0 12px}.shop-hero-links{margin-top:18px}.shop-section{padding-block:35px}.shop-grid,.shop-product-main,.shop-product-content{grid-template-columns:1fr}.shop-product-hero{padding-bottom:38px}.shop-product-main{gap:14px;margin-top:25px}.shop-product-content{padding-top:38px;padding-bottom:35px}.shop-product-aside{position:static}.shop-variety-link{display:block;padding:23px}.shop-variety-link .btn{margin-top:18px}.shop-card-image{aspect-ratio:3/2}.shop-product-article section{margin-bottom:28px;padding-bottom:24px}}
 @media(max-width:560px){.shop-grid{grid-template-columns:1fr}.shop-card-body{padding:20px}.shop-product-hero h1{font-size:clamp(37px,10vw,53px)}.shop-product-image img{aspect-ratio:4/3}.shop-facts{grid-template-columns:1fr 1fr}.shop-order{padding:24px}.shop-card-bottom{align-items:center}.shop-card-bottom strong{font-size:19px}}
+
+/* Berry calendar: a warm, readable garden planner. */
+.calendar-hero{padding:0;background:#f5eede;overflow:hidden}
+.calendar-hero-inner{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;min-height:395px;gap:18px}
+.calendar-hero-copy{position:relative;z-index:1;padding:30px 0 38px}
+.calendar-hero .breadcrumbs{font-size:12px;margin-bottom:30px}
+.calendar-hero .eyebrow{color:#8c5758}
+.calendar-hero h1{font:400 clamp(3.3rem,6vw,5.7rem)/.98 var(--serif);letter-spacing:-.055em;margin:12px 0 19px}
+.calendar-hero h1 em{color:#993a55}
+.calendar-hero p{font-size:18px;line-height:1.55;max-width:460px;color:#4b5143}
+.calendar-hero-link{display:inline-flex;align-items:center;gap:22px;min-height:50px;margin-top:23px;padding:12px 20px;border-radius:999px;background:var(--wine);color:#fff;font-size:15px;font-weight:800}
+.calendar-hero-link:hover{background:#75273d}
+.calendar-hero-link:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+.calendar-hero-art{align-self:stretch;min-height:395px;margin-right:calc((min(1320px,100vw - 80px) - 100vw)/2)}
+.calendar-hero-art img{width:100%;height:100%;object-fit:cover;object-position:82% center}
+.season-planner{padding-block:57px 76px}
+.season-planner-heading{align-items:end}
+.season-planner-heading h2{font:400 clamp(2.35rem,4.5vw,3.8rem)/1.05 var(--serif)}
+.season-planner-heading p{font-size:16px;color:#4e5c4d}
+.season-planner-controls{gap:25px;margin-top:29px;padding:27px 30px 30px;border:1px solid #e4d8c7;border-radius:25px;background:linear-gradient(145deg,#fbf4ea,#f6eadf);box-shadow:0 12px 30px rgba(92,63,47,.055)}
+.season-control-group{gap:9px}
+.season-control-group::before,.season-months::before{display:block;width:100%;margin-bottom:3px;color:#675950;font-size:14px;font-weight:800;letter-spacing:.01em}
+.season-control-group:first-child::before{content:"Что выращиваете?"}
+.season-months::before{content:"Выберите месяц";grid-column:1/-1}
+.season-kinds::before{content:"Какая работа нужна?"}
+.season-control-group button,.season-month{min-height:51px;padding:12px 19px;border:1px solid #dcc8bc;border-radius:999px;background:#fffdf9;color:#4c332f;font-size:15px;font-weight:700;line-height:1.2;transition:background .15s,border-color .15s,transform .15s}
+.season-control-group button:hover,.season-month:hover{border-color:#ae536b;background:#fff8f5;transform:translateY(-1px)}
+.season-control-group button[aria-pressed="true"],.season-month[aria-pressed="true"]{background:var(--wine);border-color:var(--wine);color:#fff;box-shadow:0 4px 10px rgba(77,24,38,.18)}
+.season-months{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px}
+.season-month{width:100%;padding-inline:8px;white-space:normal}
+.season-planner-result{margin-top:38px}
+.season-planner-result-head{padding-bottom:15px;border-color:#d9d4c7}
+.season-planner-result-head .eyebrow{font-size:13px;color:#7a4251}
+.season-planner-result-head p{font-size:15px;color:#4d4b3f}
+.season-card-grid{gap:18px;margin-top:21px}
+.season-card{--card-accent:#a65a68;--card-wash:#f8e9eb;position:relative;gap:14px;padding:30px;border:1px solid #e4d8c9;border-radius:20px;background:#fffdf9;box-shadow:0 6px 20px rgba(71,49,38,.04);overflow:hidden}
+.season-card::before{content:"";position:absolute;inset:0 0 auto;height:5px;background:var(--card-accent)}
+.season-card[data-kind="planting"]{--card-accent:#a15a3c;--card-wash:#f8eadf}
+.season-card[data-kind="pruning"]{--card-accent:#667f64;--card-wash:#eaf0e6}
+.season-card[data-kind="harvest"]{--card-accent:#ae425c;--card-wash:#fbe9ed}
+.season-card[data-kind="care"]{--card-accent:#75765c;--card-wash:#f1f0df}
+.season-card-top{justify-content:flex-start;align-items:center;gap:12px}
+.season-card-mark{display:grid;place-items:center;flex:0 0 45px;width:45px;height:45px;border-radius:50%;background:var(--card-wash);color:var(--card-accent);font-size:23px;line-height:1}
+.season-card .eyebrow{color:var(--card-accent);font-size:12px;letter-spacing:.11em}
+.season-card h3{font:400 clamp(1.85rem,2.9vw,2.45rem)/1.1 var(--serif);letter-spacing:-.03em;margin:0}
+.season-window{align-self:flex-start;padding:7px 13px;border-radius:999px;background:var(--card-wash);color:var(--card-accent);font-size:13px;text-align:left;line-height:1.35}
+.season-card p{font-size:16px;line-height:1.57;color:#465046}
+.season-card p strong{color:#253b2d}
+.season-card-trigger{padding:13px 15px;border-left:3px solid var(--card-accent);border-radius:0 9px 9px 0;background:#f8f4ec}
+.season-card-links{align-items:center;gap:12px 18px;padding-top:19px;margin-top:auto;border-color:#e8dfd2}
+.season-card-links a{font-size:14px}
+.season-card-links a:first-child{display:inline-flex;align-items:center;min-height:45px;padding:10px 17px;border-radius:999px;background:var(--wine);color:#fff;text-decoration:none}
+.season-card-links a:first-child:hover{background:#75273d}
+.season-card-links a:last-child{color:#756866}
+.season-planner-next{gap:10px;margin-top:27px}
+.season-planner-next a{display:inline-flex;align-items:center;min-height:44px;padding:9px 14px;border:1px solid #e2d5c7;border-radius:999px;background:#fbf5eb;font-size:14px;text-decoration:none}
+.season-planner-next a:hover{background:#f4e4dc;border-color:#bc8990}
+.season-empty{border-radius:15px;background:#fbf1e5;font-size:16px}
+@media(max-width:1050px){.season-months{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:760px){
+  .calendar-hero-inner{display:block;min-height:0}
+  .calendar-hero-copy{padding:23px 0 22px}
+  .calendar-hero .breadcrumbs{margin-bottom:21px}
+  .calendar-hero h1{font-size:clamp(3.1rem,10vw,4.5rem)}
+  .calendar-hero p{font-size:17px}
+  .calendar-hero-art{height:210px;min-height:0;margin:0 calc((100vw - 100%)/-2);overflow:hidden}
+  .calendar-hero-art img{object-position:80% 59%}
+  .season-planner{padding-block:38px 53px}
+  .season-planner-heading p{margin-top:13px;font-size:15px}
+  .season-planner-controls{padding:21px 17px;gap:24px;border-radius:19px}
+  .season-control-group button{flex:1 1 auto}
+  .season-months{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .season-month{min-height:49px;font-size:14px}
+  .season-card-grid{grid-template-columns:1fr}
+  .season-card{padding:24px;gap:12px}
+  .season-card-top{flex-wrap:nowrap}
+  .season-window{text-align:left}
+}
+@media(max-width:370px){.season-month{font-size:13px;padding-inline:4px}.season-card{padding:20px}.season-control-group button{padding-inline:12px}}

@@ -1,5 +1,65 @@
 import { makeCalendar, calendarSources } from './calendar-model.mjs';
+import { seasonMonths, selectSeasonActivities } from './season-planner-model.mjs';
 import { JOURNAL_STORAGE_KEY, journalCalendarCrop, journalCalendarEvents, parseJournalFile } from './journal-model.mjs';
+
+const planner = document.querySelector('#season-planner');
+if (planner) {
+  const query = new URLSearchParams(location.search);
+  const validCrop = ['all', 'raspberry', 'strawberry'];
+  const validKind = ['all', 'planting', 'pruning', 'harvest', 'care'];
+  const requestedMonth = Number(query.get('month'));
+  const state = {
+    crop: validCrop.includes(query.get('crop')) ? query.get('crop') : 'all',
+    kind: validKind.includes(query.get('kind')) ? query.get('kind') : 'all',
+    month: Number.isInteger(requestedMonth) && requestedMonth >= 1 && requestedMonth <= 12
+      ? requestedMonth : new Date().getMonth() + 1
+  };
+  const cards = [...planner.querySelectorAll('[data-season-id]')];
+  const label = planner.querySelector('#season-result-label');
+  const count = planner.querySelector('#season-result-count');
+  const empty = planner.querySelector('#season-empty');
+
+  function renderPlanner() {
+    const visible = new Set(selectSeasonActivities(state).map(activity => activity.id));
+    for (const card of cards) card.hidden = !visible.has(card.dataset.seasonId);
+    for (const button of planner.querySelectorAll('[data-season-crop]')) button.setAttribute('aria-pressed', String(button.dataset.seasonCrop === state.crop));
+    for (const button of planner.querySelectorAll('[data-season-kind]')) button.setAttribute('aria-pressed', String(button.dataset.seasonKind === state.kind));
+    for (const button of planner.querySelectorAll('[data-month]')) button.setAttribute('aria-pressed', String(Number(button.dataset.month) === state.month));
+    const month = seasonMonths.find(item => item.number === state.month);
+    label.textContent = `МЕСЯЦ / ${month.label.toUpperCase()}`;
+    const amount = visible.size;
+    count.textContent = `${amount} ${amount === 1 ? 'работа' : amount < 5 && amount > 1 ? 'работы' : 'работ'}`;
+    empty.hidden = amount !== 0;
+  }
+
+  function choose(key, value) {
+    state[key] = value;
+    const url = new URL(location.href);
+    for (const field of ['crop', 'kind', 'month']) {
+      if (field === 'crop' && state.crop === 'all' || field === 'kind' && state.kind === 'all') url.searchParams.delete(field);
+      else url.searchParams.set(field, String(state[field]));
+    }
+    history.replaceState(null, '', url);
+    renderPlanner();
+    if (key === 'crop' && state.crop !== 'all') {
+      const phaseForm = document.querySelector('#calendar-form');
+      if (phaseForm && phaseForm.elements.crop.value !== state.crop) {
+        phaseForm.elements.crop.value = state.crop;
+        phaseForm.elements.crop.dispatchEvent(new Event('change'));
+      }
+    }
+  }
+
+  planner.addEventListener('click', event => {
+    const crop = event.target.closest('[data-season-crop]');
+    const kind = event.target.closest('[data-season-kind]');
+    const month = event.target.closest('[data-month]');
+    if (crop) choose('crop', crop.dataset.seasonCrop);
+    else if (kind) choose('kind', kind.dataset.seasonKind);
+    else if (month) choose('month', Number(month.dataset.month));
+  });
+  renderPlanner();
+}
 
 const form = document.querySelector('#calendar-form');
 if (form) {

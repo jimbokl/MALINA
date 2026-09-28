@@ -361,11 +361,16 @@ test('календарь доступен из инструментов, сод�
   const index = await readFile(join(root, 'instrumenty', 'index.html'), 'utf8');
   const html = await readFile(join(root, 'instrumenty', 'kalendar-uhoda', 'index.html'), 'utf8');
   assert.match(index, /href="\/instrumenty\/kalendar-uhoda\/"/);
-  assert.match(html, /<h1>Как ухаживать<br><em>за растениями/);
+  assert.match(html, /<h1>Календарь<br><em>ягодника/);
+  assert.match(html, /data-season-crop="strawberry"/);
+  assert.match(html, /data-season-kind="planting"/);
+  assert.match(html, /data-month="9"/);
+  assert.match(html, /data-season-id="strawberry-plant-late"/);
+  assert.match(html, /Когда начинать:/);
   assert.match(html, /name="type"/);
   assert.match(html, /name="phase"/);
   assert.match(html, /name="frostForecast"/);
-  assert.match(html, /Уход зависит от состояния растения/);
+  assert.match(html, /Что происходит на участке/);
   assert.match(html, /id="calendar-journal"/);
   assert.match(html, /ФАКТИЧЕСКИЕ ДАТЫ/);
   assert.match(html, /id="calendar-journal-list"/);
@@ -374,6 +379,31 @@ test('календарь доступен из инструментов, сод�
   assert.doesNotMatch(html, /RHS|rhs\.org\.uk/i);
   assert.match(html, /src="\/assets\/calendar\.js\?v=[a-f0-9]+"/);
   await access(join(root, 'assets', 'calendar-model.mjs'));
+  await access(join(root, 'assets', 'season-planner-model.mjs'));
+});
+
+test('срок посадки клубники имеет отдельный ответ и ведёт в календарь', async () => {
+  const index = await readFile(join(root, 'instrumenty', 'index.html'), 'utf8');
+  const html = await readFile(join(root, 'instrumenty', 'kogda-sazhat-klubniku', 'index.html'), 'utf8');
+  assert.match(index, /href="\/instrumenty\/kogda-sazhat-klubniku\/"/);
+  assert.match(html, /<title>Когда сажать клубнику: весной, летом и осенью/);
+  assert.match(html, /<h1>Когда сажать<br><em>клубнику/);
+  assert.match(html, /Посадить весной/);
+  assert.match(html, /Пересадить укоренённые усы/);
+  assert.match(html, /kind=planting&amp;month=5|kind=planting&month=5/);
+  assert.match(html, /href="\/podbor\/moscow\/"/);
+  assert.match(html, /href="\/instrumenty\/kogda-sazhat-klubniku-v-podmoskove\/"/);
+});
+
+test('срок посадки клубники для Москвы и Подмосковья опирается на местный источник', async () => {
+  const html = await readFile(join(root, 'instrumenty', 'kogda-sazhat-klubniku-v-podmoskove', 'index.html'), 'utf8');
+  const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8').catch(() => '');
+  assert.match(html, /<title>Когда сажать клубнику в Подмосковье и Москве/);
+  assert.match(html, /<h1>Когда сажать клубнику<br><em>в Подмосковье/);
+  assert.match(html, /ВТОРАЯ ПОЛОВИНА АВГУСТА/);
+  assert.match(html, /timacad\.ru\/stati\/timiriazevka-otkryvaet-sezon-posadki/);
+  assert.match(html, /href="\/instrumenty\/kalendar-uhoda\/\?crop=strawberry&amp;kind=planting&amp;month=8"/);
+  if (process.env.SITE_URL) assert.match(sitemap, /\/instrumenty\/kogda-sazhat-klubniku-v-podmoskove\//);
 });
 
 test('помощник осмотра доступен из инструментов и не выдаёт диагноз или обработку', async () => {
