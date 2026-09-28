@@ -87,6 +87,17 @@ test('collector remains inert without a configured counter', async () => {
   assert.deepEqual(state.calls, []);
 });
 
+test('review conversion records only publication state and reply kind', () => {
+  const state = harness({ path: '/otzyvy/', counter: '12345' });
+  state.window.malinaTrackReviewSubmitted('published', true);
+  state.window.malinaTrackReviewSubmitted('PRIVATE_STATUS', false);
+  assert.deepEqual(state.goals(), [
+    { name: 'review_submitted', params: { page_type: 'other', kind: 'reply', publication_state: 'published' } },
+    { name: 'review_submitted', params: { page_type: 'other', kind: 'review', publication_state: 'other' } }
+  ]);
+  assert.doesNotMatch(JSON.stringify(state.calls), /PRIVATE_STATUS/);
+});
+
 test('cookie notice opt out persists and prevents Metrica on the next page', async () => {
   const disable = new Element();
   const notice = new Element();

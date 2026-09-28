@@ -69,6 +69,12 @@ function trackGoal(goal, params = {}) {
     window.ym(ymCounter, 'reachGoal', goal, { page_type: pageType, ...params });
   }
 }
+window.malinaTrackReviewSubmitted = (status, isReply) => {
+  trackGoal('review_submitted', {
+    kind: isReply === true ? 'reply' : 'review',
+    publication_state: ['published', 'pending_human_review'].includes(status) ? status : 'other'
+  });
+};
 if (cultivarPath) {
   const crop = document.querySelector('.variety-hero-art.raspberry') ? 'raspberry'
     : document.querySelector('.variety-hero-art.strawberry') ? 'strawberry' : 'unknown';

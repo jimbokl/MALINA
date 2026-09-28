@@ -73,6 +73,7 @@
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Не удалось отправить сообщение.');
+      window.malinaTrackReviewSubmitted?.(data.status, Boolean(payload.parent_id));
       feedback.textContent = data.status === 'published'
         ? 'Спасибо! Сообщение опубликовано.'
         : data.status === 'pending_human_review'
