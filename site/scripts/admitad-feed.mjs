@@ -8,7 +8,7 @@ export { parseCsv } from './admitad-csv.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const maxFeedBytes = 60 * 1024 * 1024;
-const freshnessMs = 36 * 60 * 60 * 1000;
+const freshnessMs = 12 * 60 * 60 * 1000;
 
 function httpsUrl(value, allowedHost) {
   try {
@@ -178,7 +178,9 @@ async function main() {
     for (const [source, envName] of [['agrosemfond', 'ADMITAD_FEED_URL'], ['garshinka', 'ADMITAD_FEED_URL_GARSHINKA']]) {
       try {
         if (!process.env[envName]) throw new Error(`${envName} is unset`);
-        feeds.push({ source, csv: await fetchFeed(process.env[envName]) });
+        const csv = await fetchFeed(process.env[envName]);
+        parseCsv(csv); // Reject a broken source without withdrawing healthy sellers.
+        feeds.push({ source, csv });
       } catch (error) {
         process.stderr.write(`Admitad ${source} refresh failed: ${/^Admitad returned HTTP \d{3}$/.test(error.message) ? error.message : 'feed unavailable'}\n`);
       }
@@ -193,7 +195,8 @@ async function main() {
     await cacheImages(snapshot.products, join(root, 'db', 'public', 'shop-images'));
     await writeCatalogManifest(catalogPath, catalog);
     await writeSnapshot(output, snapshot);
-    process.stdout.write(`Admitad snapshot: ${catalog.length} catalog products, ${snapshot.products.filter(product => product.availability === 'in_stock').length} available, ${feeds.map(feed => feed.source).join(', ')}\n`);
+    const sourceCounts = feeds.map(feed => `${feed.source}: ${snapshot.products.filter(product => product.source === feed.source).length} products, ${snapshot.products.filter(product => product.source === feed.source && product.availability === 'in_stock').length} available`);
+    process.stdout.write(`Admitad snapshot: ${catalog.length} catalog products; ${sourceCounts.join('; ')}\n`);
   } catch (error) {
     // A failed refresh must withdraw price and outbound ordering links.
     await writeSnapshot(output, { checkedAt: null, expiresAt: null, products: [] });

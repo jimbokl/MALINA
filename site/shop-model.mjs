@@ -14,7 +14,7 @@ export function shopSnapshotIsCurrent(snapshot, now = new Date()) {
   const checked = Date.parse(snapshot.checkedAt);
   const expires = Date.parse(snapshot.expiresAt);
   const moment = now.getTime();
-  return Number.isFinite(checked) && Number.isFinite(expires) && checked <= moment && expires > moment && expires - checked <= 36 * 60 * 60 * 1000;
+  return Number.isFinite(checked) && Number.isFinite(expires) && checked <= moment && expires > moment && expires - checked <= 12 * 60 * 60 * 1000;
 }
 
 export function shopStockState(snapshot, variants, offers, now = new Date()) {

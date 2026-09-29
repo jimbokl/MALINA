@@ -36,6 +36,18 @@ test('feed text stays separate from curated heading, and snapshot expires', () =
   assert.deepEqual(currentCoupons(snapshot, new Date('2026-10-01T00:00:01Z')), []);
 });
 
+test('a coupon feed change or disappearance replaces the old promotion', () => {
+  const first = buildCouponSnapshot([{ source: 'garshinka', csv: csv(row('851479')) }], now);
+  const changed = buildCouponSnapshot([{ source: 'garshinka', csv: csv(row('851479', {
+    description: 'Новые условия: бонусами можно оплатить до 10% заказа.'
+  })) }], now);
+  const removed = buildCouponSnapshot([{ source: 'garshinka', csv: csv() }], now);
+  assert.notEqual(changed.coupons[0].description, first.coupons[0].description);
+  assert.deepEqual(removed.coupons, []);
+  assert.deepEqual(currentCoupons({ ...first, checkedAt: '2026-10-01T00:00:00Z' }, now), []);
+  assert.deepEqual(currentCoupons({ ...first, expiresAt: '2026-10-03T00:00:00Z' }, now), []);
+});
+
 test('rejects wrong seller, future offer, missing terms and non-affiliate links', () => {
   const snapshot = buildCouponSnapshot([{ source: 'garshinka', csv: csv(
     row('851479', { site: 'https://evil.example/' }),

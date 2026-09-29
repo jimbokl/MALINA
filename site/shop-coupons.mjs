@@ -47,8 +47,12 @@ export function normalizeCoupon(row, sourceId, now = new Date()) {
 }
 
 export function currentCoupons(snapshot, now = new Date()) {
-  if (!snapshot || !Array.isArray(snapshot.coupons) ||
-      !Number.isFinite(Date.parse(snapshot.expiresAt)) || Date.parse(snapshot.expiresAt) <= now.getTime()) return [];
+  if (!snapshot || !Array.isArray(snapshot.coupons)) return [];
+  const checked = Date.parse(snapshot.checkedAt);
+  const expires = Date.parse(snapshot.expiresAt);
+  if (!Number.isFinite(checked) || !Number.isFinite(expires) ||
+      checked > now.getTime() || expires <= now.getTime() ||
+      expires - checked > 12 * 60 * 60 * 1000) return [];
   const seen = new Set();
   return snapshot.coupons.filter(coupon => {
     if (!coupon || seen.has(coupon.id)) return false;

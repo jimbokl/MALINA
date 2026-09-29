@@ -1,3 +1,75 @@
+// Pages is static: remove expired prices and promotions even if the next deploy fails.
+function refreshShopFreshness() {
+  const now = Date.now();
+  const offersExpire = Date.parse(document.documentElement.dataset.shopOffersExpires || '');
+  if (Number.isFinite(offersExpire) && offersExpire <= now) {
+    for (const price of document.querySelectorAll('[data-shop-live-price]')) {
+      price.textContent = 'Наличие уточняется';
+      price.removeAttribute('data-shop-live-price');
+    }
+    for (const card of document.querySelectorAll('[data-shop-card][data-stock="in_stock"]')) {
+      card.dataset.stock = 'unknown';
+    }
+    for (const order of document.querySelectorAll('[data-shop-live-order]')) {
+      const eyebrow = document.createElement('span');
+      eyebrow.className = 'eyebrow';
+      eyebrow.textContent = 'ПРЕДЛОЖЕНИЕ ПРОДАВЦА';
+      const heading = document.createElement('h2');
+      heading.textContent = 'Наличие уточняется';
+      order.replaceChildren(eyebrow, heading);
+      order.classList.add('shop-order-empty');
+      order.removeAttribute('data-shop-live-order');
+    }
+    document.querySelectorAll('[data-shop-offer-schema]').forEach(node => node.remove());
+    document.querySelector('[data-shop-stock]')?.dispatchEvent(new Event('change'));
+  }
+
+  const couponsExpire = Date.parse(document.documentElement.dataset.shopCouponsExpires || '');
+  const allCouponsExpired = Number.isFinite(couponsExpire) && couponsExpire <= now;
+  let couponDates = [];
+  try { couponDates = JSON.parse(document.documentElement.dataset.shopCouponDates || '[]'); }
+  catch { couponDates = []; }
+  const activeSources = new Set(allCouponsExpired ? [] : couponDates
+    .filter(coupon => !coupon.end || Date.parse(coupon.end) > now)
+    .map(coupon => coupon.source));
+  document.querySelectorAll('[data-shop-coupon-banner]').forEach(node => {
+    node.hidden = activeSources.size === 0;
+  });
+  document.querySelectorAll('[data-shop-coupon-source]').forEach(node => {
+    node.hidden = !activeSources.has(node.dataset.shopCouponSource);
+  });
+  const cards = [...document.querySelectorAll('[data-shop-coupon]')];
+  for (const card of cards) {
+    const ends = Date.parse(card.dataset.couponEnd || '');
+    if (allCouponsExpired || (Number.isFinite(ends) && ends <= now)) card.hidden = true;
+  }
+  document.querySelectorAll('[data-shop-coupon-group]').forEach(group => {
+    group.hidden = [...group.querySelectorAll('[data-shop-coupon]')].every(card => card.hidden);
+  });
+  if (cards.length && cards.every(card => card.hidden)) {
+    if (!document.querySelector('[data-shop-coupon-empty]')) {
+      const section = document.createElement('section');
+      section.className = 'section wrap';
+      section.dataset.shopCouponEmpty = '';
+      const title = document.createElement('h2');
+      title.textContent = 'Пока нет действующих акций';
+      const link = document.createElement('a');
+      link.className = 'btn btn-dark';
+      link.href = '/magazin/';
+      link.textContent = 'Открыть каталог';
+      section.append(title, link);
+      document.querySelector('main')?.append(section);
+    }
+  }
+}
+if (document.querySelector('[data-shop-live-price], [data-shop-live-order], [data-shop-coupon], [data-shop-coupon-banner], [data-shop-coupon-source]')) {
+  refreshShopFreshness();
+  window.setInterval(refreshShopFreshness, 60_000);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) refreshShopFreshness();
+  });
+}
+
 const menuButton = document.querySelector('.menu-toggle');
 const analyticsChoiceKey = 'malina:analytics-choice';
 const cookieNoticeKey = 'malina:cookie-notice';

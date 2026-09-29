@@ -6,7 +6,7 @@ const now = new Date('2026-09-28T12:00:00Z');
 const merchantUrl = 'https://agrosemfond.ru/catalog/gusar/';
 const affiliateUrl = `https://rzekl.com/g/abc/?ulp=${encodeURIComponent(merchantUrl)}`;
 const product = { id: '67762', name: 'Малина Гусар', availability: 'in_stock', priceMinor: 39900, currency: 'RUB', merchantUrl, affiliateUrl, imagePath: '/assets/shop/67762.jpg' };
-const snapshot = { checkedAt: '2026-09-28T11:00:00Z', expiresAt: '2026-09-29T11:00:00Z', products: [product] };
+const snapshot = { checkedAt: '2026-09-28T11:00:00Z', expiresAt: '2026-09-28T23:00:00Z', products: [product] };
 
 test('актуальный проверенный товар доступен для страницы и заказа', () => {
   const offers = currentShopOffers(snapshot, [{ id: '67762' }], now);

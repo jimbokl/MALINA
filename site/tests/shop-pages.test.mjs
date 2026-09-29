@@ -230,6 +230,40 @@ test('сбой обновления фида не объявляет все то
   }
 });
 
+test('свежие цены и акции несут срок действия для уже открытой страницы', async () => {
+  const temp = await mkdtemp(join(tmpdir(), 'malina-shop-fresh-'));
+  try {
+    const checkedAt = new Date();
+    const expiresAt = new Date(checkedAt.getTime() + 12 * 60 * 60 * 1000);
+    const product = shopProducts.find(item => String(item.id) === '67762');
+    assert.ok(product);
+    const merchantUrl = 'https://agrosemfond.ru/catalog/gusar/';
+    const offer = { id: String(product.id), source: 'agrosemfond', name: 'Саженец малины Гусар',
+      availability: 'in_stock', priceMinor: 44950, currency: 'RUB', merchantUrl,
+      affiliateUrl: `https://rzekl.com/g/abc/?ulp=${encodeURIComponent(merchantUrl)}` };
+    const offerPath = join(temp, 'offers.json');
+    const couponPath = join(temp, 'coupons.json');
+    const output = join(temp, 'dist');
+    await writeFile(offerPath, JSON.stringify({ checkedAt: checkedAt.toISOString(), expiresAt: expiresAt.toISOString(), products: [offer] }));
+    await writeFile(couponPath, JSON.stringify({ checkedAt: checkedAt.toISOString(), expiresAt: expiresAt.toISOString(), coupons: [
+      { id: 'garshinka-851479', source: 'garshinka', seller: 'Гаршинка', title: '5000 бонусов за подписку на рассылку',
+        description: 'Бонусы за подписку на рассылку магазина.', affiliateUrl: 'https://codeaven.com/g/offer?i=123', dateEnd: expiresAt.toISOString() }
+    ] }));
+    execFileSync(process.execPath, [join(root, 'site', 'scripts', 'build.mjs')], {
+      cwd: root, env: { ...process.env, MALINA_BUILD_OUT: output, MALINA_SHOP_SNAPSHOT: offerPath, MALINA_COUPONS_SNAPSHOT: couponPath }, stdio: 'pipe'
+    });
+    const catalog = await readFile(join(output, 'magazin', 'index.html'), 'utf8');
+    const page = await readFile(join(output, 'magazin', product.canonicalSlug || product.slug, 'index.html'), 'utf8');
+    assert.match(catalog, /data-shop-offers-expires="[^"]+"/);
+    assert.match(catalog, /data-shop-live-price[^>]*>449,50/);
+    assert.match(page, /data-shop-live-order/);
+    assert.match(catalog, /data-shop-coupon-dates="[^"]+"/);
+    assert.match(catalog, /data-shop-coupon-banner/);
+  } finally {
+    await rm(temp, { recursive: true, force: true });
+  }
+});
+
 test('товарная страница ведёт к подбору города без повторяющихся оговорок', async () => {
   for (const product of publicProducts) {
     const html = await productHtml(product);

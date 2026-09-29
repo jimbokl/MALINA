@@ -30,7 +30,7 @@ test('snapshot preserves unavailable products without price or order links', () 
   assert.equal('affiliateUrl' in snapshot.products[1], false);
   assert.equal('merchantUrl' in snapshot.products[1], false);
   assert.equal(snapshot.products[2].priceMinor, 39950);
-  assert.equal(snapshot.expiresAt, '2026-09-30T00:00:00.000Z');
+  assert.equal(snapshot.expiresAt, '2026-09-29T00:00:00.000Z');
 });
 
 test('duplicate product ID is withdrawn even if both rows look valid', () => {
@@ -70,4 +70,17 @@ test('second seller snapshot uses its own affiliate, merchant and image hosts', 
   assert.equal(snapshot.products[0].source, 'garshinka');
   assert.equal(snapshot.products[0].merchantUrl, 'https://www.garshinka.ru/product/gusar');
   assert.equal(snapshot.products[0].imageUrl, 'https://img.garshinka.ru/gusar.jpg');
+});
+
+test('each new feed replaces price and stock without carrying an old order link', () => {
+  const now = new Date('2026-09-29T12:00:00Z');
+  const first = buildSnapshot([header, row({ id: '101', price: '399' })].join('\n'), [approved('101')], now);
+  const changed = buildSnapshot([header, row({ id: '101', price: '449,50' })].join('\n'), [approved('101')], now);
+  const unavailable = buildSnapshot([header, row({ id: '101', available: 'false' })].join('\n'), [approved('101')], now);
+  const removed = buildSnapshot(header, [approved('101')], now);
+  assert.equal(first.products[0].priceMinor, 39900);
+  assert.equal(changed.products[0].priceMinor, 44950);
+  assert.equal(unavailable.products[0].availability, 'out_of_stock');
+  assert.equal('affiliateUrl' in unavailable.products[0], false);
+  assert.deepEqual(removed.products, []);
 });

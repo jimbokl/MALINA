@@ -7,7 +7,7 @@ import { normalizeCoupon } from '../shop-coupons.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const columns = ['id', 'site', 'advcampaign_id', 'description', 'species', 'promocode',
   'gotolink', 'date_start', 'date_end', 'has_affiliate_link'];
-const freshnessMs = 36 * 60 * 60 * 1000;
+const freshnessMs = 12 * 60 * 60 * 1000;
 
 export function buildCouponSnapshot(feeds, now = new Date()) {
   const coupons = [];
@@ -41,14 +41,16 @@ async function main() {
     try {
       const value = process.env[envName];
       if (!value || new URL(value).searchParams.get('advcampaigns') !== campaign) throw new Error('missing or wrong campaign');
-      feeds.push({ source, csv: await fetchFeed(value) });
+      const csv = await fetchFeed(value);
+      parseCsv(csv, columns); // Isolate a malformed feed from the other seller.
+      feeds.push({ source, csv });
     } catch {
       process.stderr.write(`Admitad coupons ${source}: feed unavailable\n`);
     }
   }
   const snapshot = buildCouponSnapshot(feeds);
   await writeSnapshot(output, snapshot);
-  process.stdout.write(`Admitad coupons: ${snapshot.coupons.length} reviewed offers from ${feeds.length} feeds\n`);
+  process.stdout.write(`Admitad coupons: ${snapshot.coupons.length} reviewed offers; ${feeds.map(feed => `${feed.source}: ${snapshot.coupons.filter(coupon => coupon.source === feed.source).length}`).join('; ') || 'no available feeds'}\n`);
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) await main();

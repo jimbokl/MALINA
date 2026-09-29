@@ -342,6 +342,7 @@
 .observation-aside p,.observation-basis p{line-height:1.7;color:#405443}
 .observation-result{margin-top:28px;padding:30px;background:#f1f0e6;border-left:4px solid var(--green);outline:none}
 .observation-result[hidden]{display:none}
+.shop-coupon-banner[hidden],.coupon-card[hidden],.coupon-group[hidden],.shop-coupon-link[hidden]{display:none!important}
 .observation-result h2{font-size:clamp(1.7rem,3vw,2.5rem)}
 .observation-result h3{font:400 1.5rem/1.2 var(--serif);margin:24px 0 8px}
 .observation-result p,.observation-result li{line-height:1.65}
