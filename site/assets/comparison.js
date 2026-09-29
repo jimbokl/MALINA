@@ -28,6 +28,9 @@ if (root) {
   const place = params.getAll('city').length > 1 || params.getAll('region').length > 1
     ? { city: null, region: null, reason: 'conflicting-place' }
     : resolveComparisonPlace({ city, region, cities: comparisonData.cities, regions: comparisonData.regions });
+  const placeLabel = place.region
+    ? [place.city && `города «${place.city.name}»`, `региона «${place.region.name_ru}»`].filter(Boolean).join(', ')
+    : '';
   for (const input of choices) {
     const link = input.closest('.comparison-choice')?.querySelector('a');
     if (link) link.href = cultivarHref(input.value, { city, region, siteBase });
@@ -35,9 +38,9 @@ if (root) {
   if (city || region) {
     context.hidden = false;
     if (place.region?.admission_region_number) {
-      context.textContent = `Сравниваем сорта для ${[place.city?.name, place.region.name_ru].filter(Boolean).join(', ')}. Мы отметили, какие из них есть в официальном списке для этого региона.`;
+      context.textContent = `Сравниваем сорта для ${placeLabel}. Мы отметили, какие из них есть в официальном списке для этого региона.`;
     } else if (place.region) {
-      context.textContent = `Сравниваем сорта для ${[place.city?.name, place.region.name_ru].filter(Boolean).join(', ')}. Для этого места мы пока не можем сверить официальный список.`;
+      context.textContent = `Сравниваем сорта для ${placeLabel}. Для этого места мы пока не можем сверить официальный список.`;
     } else {
       context.textContent = 'Не получилось найти этот город или регион. Проверьте название и попробуйте ещё раз.';
     }
@@ -108,9 +111,9 @@ if (root) {
           if (!Number.isInteger(place.region.admission_region_number)) {
             td.textContent = 'Пока не можем сверить';
           } else if (!admission) {
-            td.textContent = `Для ${place.region.name_ru} записи нет`;
+            td.textContent = `Для региона «${place.region.name_ru}» записи нет`;
           } else {
-            td.textContent = `Есть для ${place.region.name_ru}`;
+            td.textContent = `Есть для региона «${place.region.name_ru}»`;
             remember(`${admission.source_url}${admission.source_pdf_page ? `#page=${admission.source_pdf_page}` : ''}`,
               `${item.name}: официальный список`,
               `Регион № ${admission.admission_region_number} · запись ${admission.registry_entry_code} · издание ${admission.edition_as_of.slice(0, 4)}`);

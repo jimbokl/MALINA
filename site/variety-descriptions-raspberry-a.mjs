@@ -15,8 +15,8 @@ export const raspberryDescriptionsA = Object.freeze({
   // https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/ra/app00006387e.shtml
   // https://www.ontario.ca/page/raspberry-variety-description
   'joan-j': Object.freeze([
-    'Джоан Джи узнаётся по побегам без шипов: собирать с них ягоды и ухаживать за кустом удобнее. Это ремонтантная малина, плодоносящая на побегах текущего года. Плоды красные, ширококонические, средней плотности и сравнительно короткие. Осеннее плодоношение начинается рано, а ягоды ценят за хорошее качество.',
-    'Сорт вывели в Великобритании от скрещивания Joan Squire и Terri-Louise. Его главное удобство особенно заметно во время сбора: можно раздвигать побеги и снимать ягоды без постоянной встречи с шипами. Раннее осеннее плодоношение делает Джоан Джи интересной для тех, кто выращивает ремонтантную малину ради урожая на новых стеблях. После сбора такие стебли можно полностью вырезать, оставив место весеннему приросту.'
+    'Джоан Джей узнаётся по побегам без шипов: собирать с них ягоды и ухаживать за кустом удобнее. Это ремонтантная малина, плодоносящая на побегах текущего года. Плоды красные, ширококонические, средней плотности и сравнительно короткие. Осеннее плодоношение начинается рано, а ягоды ценят за хорошее качество.',
+    'Сорт вывели в Великобритании от скрещивания Joan Squire и Terri-Louise. Его главное удобство особенно заметно во время сбора: можно раздвигать побеги и снимать ягоды без постоянной встречи с шипами. Раннее осеннее плодоношение делает Джоан Джей интересной для тех, кто выращивает ремонтантную малину ради урожая на новых стеблях. После сбора такие стебли можно полностью вырезать, оставив место весеннему приросту.'
   ]),
   // https://vstisp.org/vstisp/images/stories/Yagody/zhuravlik.htm
   zhuravlik: Object.freeze([
@@ -127,4 +127,31 @@ export const raspberryDescriptionsA = Object.freeze({
     'Рубиновое ожерелье — ремонтантная малина с удлинёнными ягодами яркого рубинового цвета. Они весят примерно 4,2–5,6 г, форма ближе к вытянутому цилиндру. Мякоть нежная, вкус кисло-сладкий. Сорт выбирают, когда хочется заметную по цвету и форме ягоду на побегах этого года, а не привычный короткий малиновый конус.',
     'Куст средней силы роста, немного раскидистый; шипы есть по всей длине побегов. Для сбора лучше оставить к нему свободный подход, чтобы легко дотянуться до ягод, не цепляясь за соседние растения. При однолетнем выращивании побеги после сезона полностью срезают. Мы бы выбирали Рубиновое ожерелье ради его ярких удлинённых ягод: они хорошо выделяются на кусте и оживляют тарелку свежей малины в конце сезона.'
   ])
+});
+
+// Direct source pages used for the prose. The cultivar data may also link to
+// a broader catalogue; these links let readers verify the exact description.
+export const raspberryAdditionalSourcesA = Object.freeze({
+  zhuravlik: Object.freeze([{ url: 'https://vstisp.org/vstisp/images/stories/Yagody/zhuravlik.htm', label: 'ФНЦ Садоводства · Журавлик' }]),
+  beglyanka: Object.freeze([{ url: 'https://vstisp.org/vstisp/images/stories/Yagody/beglyanka.htm', label: 'ФНЦ Садоводства · Беглянка' }]),
+  meteor: Object.freeze([{ url: 'https://vstisp.org/vstisp/images/stories/Yagody/meteor.htm', label: 'ФНЦ Садоводства · Метеор' }]),
+  solnyshko: Object.freeze([{ url: 'https://vstisp.org/vstisp/images/stories/Yagody/solnyshko.htm', label: 'ФНЦ Садоводства · Солнышко' }]),
+  peresvet: Object.freeze([{ url: 'https://vstisp.org/vstisp/images/stories/Yagody/peresvet.htm', label: 'ФНЦ Садоводства · Пересвет' }]),
+  'poklon-kazakovu': Object.freeze([{ url: 'https://vstisp.org/vstisp/index.php/11-icetheme/sample-news/1453-poklon-kazakovu', label: 'ФНЦ Садоводства · Поклон Казакову' }]),
+  'podarok-kashinu': Object.freeze([{ url: 'https://vstisp.org/vstisp/index.php/11-icetheme/sample-news/1454-podarok-kashinu', label: 'ФНЦ Садоводства · Подарок Кашину' }]),
+  medvezhonok: Object.freeze([{ url: 'https://vstisp.org/vstisp/index.php/11-icetheme/sample-news/1455-medvezhonok', label: 'ФНЦ Садоводства · Медвежонок' }]),
+  skromnitsa: Object.freeze([{ url: 'https://vstisp.org/vstisp/images/stories/Yagody/skromnitsa.htm', label: 'ФНЦ Садоводства · Скромница' }]),
+  'krasa-rossii': Object.freeze([{ url: 'https://www.sibirskiy-oazis.ru/krasa_rossii.html', label: 'Сибирский оазис · Краса России' }]),
+  balzam: Object.freeze([{ url: 'https://vstisp.org/vstisp/images/stories/Yagody/balzam.htm', label: 'ФНЦ Садоводства · Бальзам' }]),
+  'zheltyy-gigant': Object.freeze([
+    { url: 'https://ssaa.ru/structur/riz/sbornik_selek_i_sort_2026.pdf', label: 'Самарский ГАУ · коллекционный опыт 2025 года' },
+    { url: 'https://sadnikitina.ru/catalog/malina/seedling/zheltyj-gigant/', label: 'Питомник Никитина · Жёлтый гигант' }
+  ]),
+  abrikosovaya: Object.freeze([{ url: 'https://vstisp.org/vstisp/images/stories/Yagody/abrikosovoye.htm', label: 'ФНЦ Садоводства · Абрикосовая' }]),
+  gerakl: Object.freeze([{ url: 'https://vstisp.org/vstisp/images/stories/Yagody/gerakl.htm', label: 'ФНЦ Садоводства · Геракл' }]),
+  evraziya: Object.freeze([{ url: 'https://vstisp.org/vstisp/images/stories/Yagody/evrazia.htm', label: 'ФНЦ Садоводства · Евразия' }]),
+  'zhar-ptitsa': Object.freeze([{ url: 'https://vstisp.org/vstisp/index.php/11-icetheme/sample-news/1452-zhar-ptitsa', label: 'ФНЦ Садоводства · Жар-птица' }]),
+  'oranzhevoe-chudo': Object.freeze([{ url: 'https://vstisp.org/vstisp/images/stories/Yagody/oranzhevoyechyudo.htm', label: 'ФНЦ Садоводства · Оранжевое чудо' }]),
+  pingvin: Object.freeze([{ url: 'https://vstisp.org/vstisp/images/Opisanie_genistochnikov.pdf', label: 'ФНЦ Садоводства · описание Пингвина' }]),
+  'rubinovoe-ozherele': Object.freeze([{ url: 'https://vstisp.org/vstisp/images/stories/Yagody/rubinovoyeozherelye.htm', label: 'ФНЦ Садоводства · Рубиновое ожерелье' }])
 });

@@ -53,7 +53,7 @@ if (form && results && memo) {
     sources.replaceChildren();
 
     memo.querySelector('#picker-memo-title').textContent = `«${name}»: ваша памятка`;
-    memo.querySelector('#picker-memo-lead').textContent = `Мы подобрали этот сорт для ${selection.region}. Перед посадкой посмотрите, подходит ли ему именно ваш участок.`;
+    memo.querySelector('#picker-memo-lead').textContent = `Мы подобрали этот сорт для региона «${selection.region}». Перед посадкой посмотрите, подходит ли ему именно ваш участок.`;
     addFact('Культура', crop === 'raspberry' ? 'Малина' : 'Клубника');
     addFact('Тип плодоношения', card.dataset.fruitingLabel);
     addFact('Когда ждать ягоды', card.dataset.periodLabel);
@@ -92,7 +92,7 @@ if (form && results && memo) {
       : 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/sibirskiy/omskaya-oblast/osennyaya-posadka-sadovoy-zemlyaniki/');
     addLink('Повторить подбор на сайте', new URL(location.pathname, location.origin).href);
     const madeAt = new Intl.DateTimeFormat('ru-RU', { dateStyle: 'long' }).format(new Date());
-    memo.querySelector('#picker-memo-date').textContent = `Составили памятку ${madeAt}.`;
+    memo.querySelector('#picker-memo-date').textContent = `Составили памятку ${madeAt}`;
     memo.hidden = false;
     document.body.classList.add('picker-memo-ready');
     memo.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });

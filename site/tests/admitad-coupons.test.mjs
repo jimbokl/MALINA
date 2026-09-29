@@ -58,11 +58,15 @@ test('rejects wrong seller, future offer, missing terms and non-affiliate links'
   assert.deepEqual(other.coupons, []);
 });
 
-test('generated coupon page and catalog expose the route without feed credentials', async () => {
+test('coupon route is generated and linked only while promotions are current', async () => {
   const root = join(import.meta.dirname, '..', '..', 'dist');
   const page = await readFile(join(root, 'magazin', 'akcii', 'index.html'), 'utf8');
   const catalog = await readFile(join(root, 'magazin', 'index.html'), 'utf8');
   assert.match(page, /<h1>Акции и бонусы/);
-  assert.match(catalog, /href="\/magazin\/akcii\/"/);
+  if (/<meta name="robots" content="noindex,follow">/.test(page)) {
+    assert.doesNotMatch(catalog, /href="\/magazin\/akcii\/"/);
+  } else {
+    assert.match(catalog, /href="\/magazin\/akcii\/"/);
+  }
   assert.doesNotMatch(page, /ctg453a3q0|export\.admitad\.com/);
 });

@@ -155,6 +155,18 @@ if (form) {
   if (linkedCrop) form.elements.crop.value = linkedCrop;
   updateForm();
 
+  planner?.addEventListener('click', event => {
+    const link = event.target.closest('[data-calendar-crop]');
+    if (!link) return;
+    form.elements.crop.value = link.dataset.calendarCrop;
+    form.elements.phase.value = link.dataset.calendarPhase;
+    if (link.dataset.calendarPhase === 'flowers') form.elements.frostForecast.checked = true;
+    else form.elements.frostForecast.checked = false;
+    updateForm();
+    if (link.dataset.calendarType) typeField.value = link.dataset.calendarType;
+    updateForm();
+  });
+
   form.addEventListener('submit', event => {
     event.preventDefault();
     const plan = makeCalendar({

@@ -63,7 +63,7 @@ if (form) {
     const heading = document.createElement('strong');
     heading.textContent = 'Есть в списке для вашего региона';
     const explanation = document.createElement('p');
-    explanation.textContent = `Сорт включён в список для ${selectedRegionName || region.name_ru}.`;
+    explanation.textContent = `Сорт включён в список для региона «${selectedRegionName || region.name_ru}».`;
     badge.append(heading, explanation);
     badge.hidden = false;
   };
@@ -114,7 +114,7 @@ if (form) {
       const heading = document.createElement('h3');
       heading.textContent = cultivar.canonical_name;
       const explanation = document.createElement('p');
-      explanation.textContent = `Сорт включён в официальный список для ${region.name_ru}.`;
+      explanation.textContent = `Сорт включён в официальный список для региона «${region.name_ru}».`;
       const cultivarLink = document.createElement('a');
       cultivarLink.href = cultivarHref(cultivar.slug);
       cultivarLink.textContent = 'Открыть сорт ↗';
