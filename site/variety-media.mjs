@@ -2,6 +2,22 @@
 // Illustration provenance: docs/SOURCES.md. Photo provenance: docs/VARIETY_PHOTOS.md.
 // A photo is used only when its own source identifies the cultivar and permits publication.
 export const varietyPhotoSources = Object.freeze({
+  'nashe-podmoskove': Object.freeze({
+    file: 'variety-photo-nashe-podmoskovie.webp',
+    sourcePage: 'https://www.agronauka-sv.ru/jour/article/view/883',
+    originalUrl: 'https://pdfs.semanticscholar.org/9a32/5dd36827a0a9af4d5e3e8b06c6058312cca2.pdf',
+    originalSha256: 'dbbc6df41dea4bf1e111c247926af52670ab8a6622e07deeac90d18d9b5546fa',
+    sourcePanelSha256: '4fbe4a46b59f9204517e8e05e2c4e788cf4a4036fd7ed0b5fb7a4d14f2c91e1c',
+    sha256: 'a59eaba5e6388a49ec2c88882081421eae0e53b5abf51064155914beef2c5c4b',
+    author: 'М. Т. Упадышев и соавторы, «Аграрная наука Евро-Северо-Востока», 2021',
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    identityEvidence: 'Рисунок 2 статьи «Особенности формирования полевого репозитория земляники садовой» прямо подписан «Сорт Наше Подмосковье».',
+    width: 574,
+    height: 383,
+    captionChange: 'рисунок 2, перекодировано',
+    transformation: 'Встроенный JPEG рисунка 2 перекодирован в WebP без кадрирования и увеличения.'
+  }),
   'zheltyy-gigant': Object.freeze({
     file: 'variety-photo-yellow-giant-fruit.webp',
     sourcePage: 'https://agroecoinfo.ru/STATYI/2022/5/st_525.pdf#page=5',
@@ -700,7 +716,7 @@ export const varietyMedia = Object.freeze({
   rumba: { file: 'variety-photo-rumba.webp', crop: 'strawberry', kind: 'photo' },
   elsanta: { file: 'variety-photo-elsanta.webp', crop: 'strawberry', kind: 'photo' },
   borovitskaya: { file: 'variety-borovitskaya.webp', crop: 'strawberry' },
-  'nashe-podmoskove': { file: 'variety-nashe-podmoskovye.webp', crop: 'strawberry' },
+  'nashe-podmoskove': { file: 'variety-photo-nashe-podmoskovie.webp', crop: 'strawberry', kind: 'photo' },
   darenka: { file: 'variety-darenka.webp', crop: 'strawberry' },
   'zenga-zengana': { file: 'variety-photo-zenga-zengana.webp', crop: 'strawberry', kind: 'photo' },
   'desnyanka-kokinskaya': { file: 'variety-desnyanka-kokinskaya.webp', crop: 'strawberry' },

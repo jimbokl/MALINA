@@ -8,6 +8,7 @@ import { varieties, reviewedAt } from '../data.mjs';
 import { articles, editorialReviewedAt, editorialReviewedIso, editorialAuthor } from '../editorial.mjs';
 import { cities } from '../cities.mjs';
 import { cultivarImage, cultivarSupplementalImages, varietyMedia } from '../variety-media.mjs';
+import { externalVarietyPhotoReferences } from '../variety-photo-references.mjs';
 import { evidenceSection } from '../evidence.mjs';
 import { admissionSection } from '../admissions.mjs';
 import { voteWidget, voteFreshness, ratingBody, resolveVoteApi } from '../votes.mjs';
@@ -323,7 +324,8 @@ function renderVarietySources(v) {
     { url: v.source, label: v.sourceLabel },
     ...(v.secondarySource ? [{ url: v.secondarySource, label: v.secondarySourceLabel }] : []),
     ...(v.additionalSources ?? []),
-    ...(admission ? [{ url: `${admission.source_url}${admission.source_pdf_page ? `#page=${admission.source_pdf_page}` : ''}`, label: `Госреестр России · запись ${admission.registry_entry_code}` }] : [])
+    ...(admission ? [{ url: `${admission.source_url}${admission.source_pdf_page ? `#page=${admission.source_pdf_page}` : ''}`, label: `Госреестр России · запись ${admission.registry_entry_code}` }] : []),
+    ...(externalVarietyPhotoReferences[v.slug] ? [{ url: externalVarietyPhotoReferences[v.slug].url, label: `Фото сорта · ${externalVarietyPhotoReferences[v.slug].publisher}` }] : [])
   ].filter((source, index, all) => source.url && all.findIndex((item) => item.url === source.url) === index);
   return sources.map((source) => `<a class="btn btn-outline" href="${e(source.url)}" target="_blank" rel="noopener noreferrer">${e(source.label)} ↗</a>`).join('');
 }

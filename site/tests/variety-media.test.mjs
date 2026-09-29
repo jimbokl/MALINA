@@ -6,10 +6,21 @@ import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
 import { varieties } from '../data.mjs';
 import { cultivarImage, cultivarSupplementalImages, varietyMedia, varietyPhotoSources, varietySupplementalPhotoSources } from '../variety-media.mjs';
+import { externalVarietyPhotoReferences } from '../variety-photo-references.mjs';
 
 const assetsDir = new URL('../assets/', import.meta.url);
 // The approved image was visually checked: ripe berries are yellow/gold, not red.
 const approvedYellowImageSha256 = 'd4bf84d2ee483aa44f5d63120291f0107f41b35cec5e3d7ca756919260d4cb6d';
+
+test('внешние фотоссылки ведут к оригиналам и не считаются правом на публикацию', () => {
+  for (const [slug, reference] of Object.entries(externalVarietyPhotoReferences)) {
+    assert.ok(varieties.some((variety) => variety.slug === slug), slug);
+    assert.match(reference.url, /^https:\/\//, slug);
+    assert.doesNotMatch(reference.url, /rhs\.org\.uk/i, slug);
+    assert.ok(reference.publisher.trim(), slug);
+    assert.equal(varietyPhotoSources[slug], undefined, `${slug}: внешняя ссылка не должна подменять фото сайта`);
+  }
+});
 
 test('проверенная жёлтая иллюстрация не заменена другим изображением', async () => {
   const bytes = await readFile(new URL('raspberry-yellow-garden.webp', assetsDir));
@@ -65,8 +76,8 @@ test('фото сорта имеют подтверждённый источни
     const variety = varieties.find((item) => item.slug === slug);
     assert.ok(variety, slug);
     assert.equal(source.file, media.file, slug);
-    assert.match(source.sourcePage, /^https:\/\/(?:commons\.wikimedia\.org\/wiki\/File:|pmc\.ncbi\.nlm\.nih\.gov\/articles\/PMC\d+\/(?:#|$)|horticulturejournal\.usamv\.ro\/pdf\/2024\/issue_1\/Art2\.pdf#page=3|jbiochemtech\.com\/storage\/models\/article\/[^/]+\/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology\.pdf#page=[45]$|biosel\.elpub\.ru\/jour\/article\/download\/(?:143\/139#page=4|116\/115#page=9)$|www\.flickr\.com\/photos\/graibeard\/3220923545\/|agroecoinfo\.ru\/STATYI\/2022\/5\/st_525\.pdf#page=5$)/, slug);
-    assert.match(source.originalUrl, /^https:\/\/(?:upload\.wikimedia\.org\/wikipedia\/commons\/|cdn\.ncbi\.nlm\.nih\.gov\/pmc\/|pmc\.ncbi\.nlm\.nih\.gov\/articles\/instance\/11125040\/bin\/plants-13-01419-s001\.zip$|www\.ebi\.ac\.uk\/europepmc\/webservices\/rest\/PMC10305725\/supplementaryFiles$|horticulturejournal\.usamv\.ro\/pdf\/2024\/issue_1\/Art2\.pdf$|jbiochemtech\.com\/storage\/models\/article\/[^/]+\/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology\.pdf$|biosel\.elpub\.ru\/jour\/article\/download\/(?:143\/139|116\/115)$|live\.staticflickr\.com\/3128\/3220923545_c22ae77719_b\.jpg$|mdpi-res\.com\/d_attachment\/(?:foods\/foods-11-00640\/article_deploy\/foods-11-00640|plants\/plants-13-01419\/article_deploy\/plants-13-01419)\.pdf$|agroecoinfo\.ru\/STATYI\/2022\/5\/st_525\.pdf$)/, slug);
+    assert.match(source.sourcePage, /^https:\/\/(?:www\.agronauka-sv\.ru\/jour\/article\/view\/883$|commons\.wikimedia\.org\/wiki\/File:|pmc\.ncbi\.nlm\.nih\.gov\/articles\/PMC\d+\/(?:#|$)|horticulturejournal\.usamv\.ro\/pdf\/2024\/issue_1\/Art2\.pdf#page=3|jbiochemtech\.com\/storage\/models\/article\/[^/]+\/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology\.pdf#page=[45]$|biosel\.elpub\.ru\/jour\/article\/download\/(?:143\/139#page=4|116\/115#page=9)$|www\.flickr\.com\/photos\/graibeard\/3220923545\/|agroecoinfo\.ru\/STATYI\/2022\/5\/st_525\.pdf#page=5$)/, slug);
+    assert.match(source.originalUrl, /^https:\/\/(?:pdfs\.semanticscholar\.org\/9a32\/5dd36827a0a9af4d5e3e8b06c6058312cca2\.pdf$|upload\.wikimedia\.org\/wikipedia\/commons\/|cdn\.ncbi\.nlm\.nih\.gov\/pmc\/|pmc\.ncbi\.nlm\.nih\.gov\/articles\/instance\/11125040\/bin\/plants-13-01419-s001\.zip$|www\.ebi\.ac\.uk\/europepmc\/webservices\/rest\/PMC10305725\/supplementaryFiles$|horticulturejournal\.usamv\.ro\/pdf\/2024\/issue_1\/Art2\.pdf$|jbiochemtech\.com\/storage\/models\/article\/[^/]+\/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology\.pdf$|biosel\.elpub\.ru\/jour\/article\/download\/(?:143\/139|116\/115)$|live\.staticflickr\.com\/3128\/3220923545_c22ae77719_b\.jpg$|mdpi-res\.com\/d_attachment\/(?:foods\/foods-11-00640\/article_deploy\/foods-11-00640|plants\/plants-13-01419\/article_deploy\/plants-13-01419)\.pdf$|agroecoinfo\.ru\/STATYI\/2022\/5\/st_525\.pdf$)/, slug);
     assert.ok(source.identityEvidence.length >= 20, slug);
     assert.match(source.author, /\S{3,}/, slug);
     assert.match(source.license, /^(?:CC(?: BY|0)|Условия журнала)/, slug);
