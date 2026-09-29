@@ -578,7 +578,7 @@ function withVarietySourcesAtEnd(html) {
 function withSupplementalPhotos(html, variety) {
   const photos = cultivarSupplementalImages(variety);
   if (!photos.length) return html;
-  const gallery = `<section class="section wrap variety-photo-gallery" aria-label="Фото сорта"><div><span class="eyebrow">ФОТО СОРТА</span><h2>${e(variety.name)} на фото</h2></div><div class="variety-photo-gallery-grid">${photos.map(photo => `<figure><img src="${photo.src}" alt="${e(photo.alt)}" width="${photo.width}" height="${photo.height}" loading="lazy"><figcaption>${e(photo.shortCaption)}</figcaption></figure>`).join('')}</div></section>`;
+  const gallery = `<section class="section wrap variety-photo-gallery" aria-label="Фото сорта"><div><span class="eyebrow">ФОТО СОРТА</span><h2>${e(variety.name)} на фото</h2></div><div class="variety-photo-gallery-grid">${photos.map(photo => `<figure><img src="${photo.src}" alt="${e(photo.alt)}" width="${photo.width}" height="${photo.height}" style="max-width:${photo.width + 24}px" loading="lazy"><figcaption>${e(photo.shortCaption)}</figcaption></figure>`).join('')}</div></section>`;
   const sourceStart = html.indexOf('<section class="section wrap source-panel">');
   if (sourceStart < 0) throw new Error(`Variety sources panel is missing: ${variety.slug}`);
   const source = html.slice(sourceStart).replace('</div><div class="source-actions">', `${photos.map(photo => `<div class="photo-attribution">${photo.caption}</div>`).join('')}</div><div class="source-actions">`);

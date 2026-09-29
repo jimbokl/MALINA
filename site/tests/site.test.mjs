@@ -136,7 +136,7 @@ test('восемь сортов партии 27 сентября показыв�
   }
 });
 
-test('каждый жёлтый сорт малины использует жёлтую иллюстрацию в каталоге и карточке', async () => {
+test('каждый жёлтый сорт малины использует жёлтый снимок или иллюстрацию в каталоге и карточке', async () => {
   const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
   const yellow = catalog.cultivars.filter(cultivar =>
     cultivar.crop_slug === 'raspberry'
@@ -148,9 +148,13 @@ test('каждый жёлтый сорт малины использует жё�
   const cityQuery = new URLSearchParams({ city: 'Тула', region: 'Тульская область' }).toString().replaceAll('&', '&amp;');
   for (const cultivar of yellow) {
     const detailHtml = await readFile(join(root, 'sorta', cultivar.slug, 'index.html'), 'utf8');
-    assert.match(detailHtml, /<figure class="variety-hero-art[^"]*"><img src="\/assets\/raspberry-yellow-garden\.webp" alt="Иллюстрация жёлтой малины/);
-    assert.ok(catalogHtml.includes(`<a href="/sorta/${cultivar.slug}/"><img src="/assets/raspberry-yellow-garden.webp" alt="Иллюстрация жёлтой малины`), `каталог: ${cultivar.slug}`);
-    assert.ok(cityHtml.includes(`<a href="/sorta/${cultivar.slug}/?${cityQuery}"><img src="/assets/raspberry-yellow-garden.webp" alt="Иллюстрация жёлтой малины`), `подбор города: ${cultivar.slug}`);
+    const photo = cultivar.slug === 'zheltyy-gigant';
+    const file = photo ? 'variety-photo-yellow-giant-fruit.webp' : 'raspberry-yellow-garden.webp';
+    const alt = photo ? 'Фото жёлтой малины' : 'Иллюстрация жёлтой малины';
+    await access(join(root, 'assets', file));
+    assert.ok(detailHtml.includes(`<img src="/assets/${file}" alt="${alt}`), `карточка: ${cultivar.slug}`);
+    assert.ok(catalogHtml.includes(`<a href="/sorta/${cultivar.slug}/"><img src="/assets/${file}" alt="${alt}`), `каталог: ${cultivar.slug}`);
+    assert.ok(cityHtml.includes(`<a href="/sorta/${cultivar.slug}/?${cityQuery}"><img src="/assets/${file}" alt="${alt}`), `подбор города: ${cultivar.slug}`);
   }
 });
 

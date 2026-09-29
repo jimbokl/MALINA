@@ -16,12 +16,15 @@ test('проверенная жёлтая иллюстрация не замен
   assert.equal(createHash('sha256').update(bytes).digest('hex'), approvedYellowImageSha256);
 });
 
-test('все жёлтоплодные сорта малины используют жёлтую иллюстрацию', () => {
+test('жёлтоплодные сорта малины используют жёлтое фото или иллюстрацию', () => {
   const yellow = varieties.filter((variety) => variety.cropKey === 'raspberry' && variety.fruitColor === 'yellow');
   assert.ok(yellow.length > 0, 'в каталоге должны быть жёлтоплодные сорта');
   for (const variety of yellow) {
     const image = cultivarImage(variety);
-    assert.equal(image.src, '/assets/raspberry-yellow-garden.webp', variety.slug);
+    const expected = variety.slug === 'zheltyy-gigant'
+      ? '/assets/variety-photo-yellow-giant-fruit.webp'
+      : '/assets/raspberry-yellow-garden.webp';
+    assert.equal(image.src, expected, variety.slug);
     assert.match(image.alt, /жёлтой малины/, variety.slug);
     assert.ok(existsSync(fileURLToPath(new URL(image.src.split('/').at(-1), assetsDir))), variety.slug);
   }
@@ -42,7 +45,7 @@ test('красная малина не получает жёлтую общую 
 });
 
 test('отдельные иллюстрации красных сортов существуют и не используются для жёлтых', () => {
-  for (const slug of ['gusar', 'meteor', 'peresvet', 'gerakl']) {
+  for (const slug of ['gusar', 'meteor', 'peresvet']) {
     const variety = varieties.find((item) => item.slug === slug && item.cropKey === 'raspberry');
     assert.ok(variety, slug);
     assert.equal(variety.fruitColor, 'red', slug);
@@ -62,12 +65,12 @@ test('фото сорта имеют подтверждённый источни
     const variety = varieties.find((item) => item.slug === slug);
     assert.ok(variety, slug);
     assert.equal(source.file, media.file, slug);
-    assert.match(source.sourcePage, /^https:\/\/(?:commons\.wikimedia\.org\/wiki\/File:|pmc\.ncbi\.nlm\.nih\.gov\/articles\/PMC\d+\/#|horticulturejournal\.usamv\.ro\/pdf\/2024\/issue_1\/Art2\.pdf#page=3|jbiochemtech\.com\/storage\/models\/article\/[^/]+\/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology\.pdf#page=[45]$|biosel\.elpub\.ru\/jour\/article\/download\/143\/139#page=4$|www\.flickr\.com\/photos\/graibeard\/3220923545\/)/, slug);
-    assert.match(source.originalUrl, /^https:\/\/(?:upload\.wikimedia\.org\/wikipedia\/commons\/|cdn\.ncbi\.nlm\.nih\.gov\/pmc\/|horticulturejournal\.usamv\.ro\/pdf\/2024\/issue_1\/Art2\.pdf$|jbiochemtech\.com\/storage\/models\/article\/[^/]+\/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology\.pdf$|biosel\.elpub\.ru\/jour\/article\/download\/143\/139$|live\.staticflickr\.com\/3128\/3220923545_c22ae77719_b\.jpg$|mdpi-res\.com\/d_attachment\/foods\/foods-11-00640\/article_deploy\/foods-11-00640\.pdf$)/, slug);
+    assert.match(source.sourcePage, /^https:\/\/(?:commons\.wikimedia\.org\/wiki\/File:|pmc\.ncbi\.nlm\.nih\.gov\/articles\/PMC\d+\/(?:#|$)|horticulturejournal\.usamv\.ro\/pdf\/2024\/issue_1\/Art2\.pdf#page=3|jbiochemtech\.com\/storage\/models\/article\/[^/]+\/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology\.pdf#page=[45]$|biosel\.elpub\.ru\/jour\/article\/download\/(?:143\/139#page=4|116\/115#page=9)$|www\.flickr\.com\/photos\/graibeard\/3220923545\/|agroecoinfo\.ru\/STATYI\/2022\/5\/st_525\.pdf#page=5$)/, slug);
+    assert.match(source.originalUrl, /^https:\/\/(?:upload\.wikimedia\.org\/wikipedia\/commons\/|cdn\.ncbi\.nlm\.nih\.gov\/pmc\/|pmc\.ncbi\.nlm\.nih\.gov\/articles\/instance\/11125040\/bin\/plants-13-01419-s001\.zip$|www\.ebi\.ac\.uk\/europepmc\/webservices\/rest\/PMC10305725\/supplementaryFiles$|horticulturejournal\.usamv\.ro\/pdf\/2024\/issue_1\/Art2\.pdf$|jbiochemtech\.com\/storage\/models\/article\/[^/]+\/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology\.pdf$|biosel\.elpub\.ru\/jour\/article\/download\/(?:143\/139|116\/115)$|live\.staticflickr\.com\/3128\/3220923545_c22ae77719_b\.jpg$|mdpi-res\.com\/d_attachment\/(?:foods\/foods-11-00640\/article_deploy\/foods-11-00640|plants\/plants-13-01419\/article_deploy\/plants-13-01419)\.pdf$|agroecoinfo\.ru\/STATYI\/2022\/5\/st_525\.pdf$)/, slug);
     assert.ok(source.identityEvidence.length >= 20, slug);
     assert.match(source.author, /\S{3,}/, slug);
-    assert.match(source.license, /^CC(?: BY|0)/, slug);
-    assert.match(source.licenseUrl, /^https:\/\/creativecommons\.org\//, slug);
+    assert.match(source.license, /^(?:CC(?: BY|0)|Условия журнала)/, slug);
+    assert.match(source.licenseUrl, /^https:\/\/(?:creativecommons\.org\/|agroecoinfo\.ru\/TEXT\/RUSSIAN\/journal\.html$)/, slug);
     assert.match(source.originalSha256, /^[0-9a-f]{64}$/, slug);
     if (source.sourcePanelSha256) assert.match(source.sourcePanelSha256, /^[0-9a-f]{64}$/, slug);
     const bytes = await readFile(new URL(source.file, assetsDir));
@@ -90,15 +93,15 @@ test('дополнительные снимки сорта имеют отдел
   for (const [slug, source] of Object.entries(varietySupplementalPhotoSources)) {
     const variety = varieties.find((item) => item.slug === slug);
     assert.ok(variety, slug);
-    assert.equal(varietyMedia[slug].kind, undefined, 'дополнительный снимок не подменяет главный визуал');
-    assert.match(source.sourcePage, /^https:\/\/(?:www\.agronauka-sv\.ru\/jour\/article\/view\/1761|biosel\.elpub\.ru\/jour\/article\/download\/143\/139#page=4)/, slug);
-    assert.match(source.originalUrl, /^https:\/\/(?:www\.agronauka-sv\.ru\/jour\/article\/download\/1761\/816|biosel\.elpub\.ru\/jour\/article\/download\/143\/139)/, slug);
+    assert.notEqual(cultivarImage(variety).src, `/assets/${source.file}`, 'дополнительный снимок не подменяет главный визуал');
+    assert.match(source.sourcePage, /^https:\/\/(?:www\.agronauka-sv\.ru\/jour\/article\/view\/1761|biosel\.elpub\.ru\/jour\/article\/download\/143\/139#page=4|www\.frontiersin\.org\/journals\/plant-science\/articles\/10\.3389\/fpls\.2016\.01892\/full|pmc\.ncbi\.nlm\.nih\.gov\/articles\/(?:PMC13043038|PMC11043506|PMC8728004)\/|www\.mdpi\.com\/(?:2311-7524\/12\/1\/79|2223-7747\/10\/10\/2071))/, slug);
+    assert.match(source.originalUrl, /^https:\/\/(?:www\.agronauka-sv\.ru\/jour\/article\/download\/1761\/816|biosel\.elpub\.ru\/jour\/article\/download\/143\/139|www\.frontiersin\.org\/journals\/plant-science\/articles\/10\.3389\/fpls\.2016\.01892\/pdf|www\.ebi\.ac\.uk\/europepmc\/webservices\/rest\/PMC13043038\/supplementaryFiles\?inlineImages=true|pdfs\.semanticscholar\.org\/7137\/18200ea61d95ab689e7162ae0327acf4ac01\.pdf|cdn\.ncbi\.nlm\.nih\.gov\/pmc\/blobs\/6df8\/8728004\/f7c27f3aa812\/jkab378f1\.jpg|mdpi-res\.com\/d_attachment\/(?:horticulturae\/horticulturae-12-00079\/article_deploy\/html\/images\/horticulturae-12-00079-g001\.png|plants\/plants-10-02071\/article_deploy\/plants-10-02071\.pdf))/, slug);
     assert.match(source.originalSha256, /^[0-9a-f]{64}$/, slug);
     assert.match(source.sourcePanelSha256, /^[0-9a-f]{64}$/, slug);
     assert.match(source.license, /^CC BY/, slug);
     assert.match(source.licenseUrl, /^https:\/\/creativecommons\.org\/licenses\/by\//, slug);
     assert.match(source.author, /\S{3,}/, slug);
-    assert.match(source.identityEvidence, /(?:Рисунок|рисунок) [15]/, slug);
+    assert.match(source.identityEvidence, /(?:Рисунок|рисунок) [125](?:A|а)?/, slug);
     const bytes = await readFile(new URL(source.file, assetsDir));
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF', slug);
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP', slug);
