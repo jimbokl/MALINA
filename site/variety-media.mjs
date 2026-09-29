@@ -382,6 +382,22 @@ export const varietyPhotoSources = Object.freeze({
 // These cultivar-identified photographs accompany the illustration in the detail page.
 // They are not used as the cover image when the source shows a specimen or a disease symptom.
 export const varietySupplementalPhotoSources = Object.freeze({
+  'double-gold': Object.freeze({
+    file: 'variety-photo-double-gold-patent.webp',
+    sourcePage: 'https://patents.google.com/patent/USPP24811P3/en',
+    originalUrl: 'https://patentimages.storage.googleapis.com/56/1e/77/b1bfc0931d208a/USPP24811.pdf',
+    originalSha256: '4ef1e9a2c92831822e2887b6268bdc08a368ded8436982297e2e18f25b532359',
+    sha256: 'b2d3fd1902175f011b59c532a2c2b556bdbe4e7cec97be4b177534469fb034c2',
+    author: 'Courtney A. Weber / Cornell University; USPTO',
+    license: 'Патентная публикация USPTO',
+    licenseUrl: 'https://www.uspto.gov/terms-use-uspto-websites',
+    identityEvidence: 'Патент USPP24811P3 прямо называет сорт Double Gold; подпись FIG. 1 обозначает фотографию его плодов.',
+    width: 1000,
+    height: 947,
+    photoDetail: 'плоды на чёрно-белом патентном снимке',
+    captionChange: 'рисунок 1, кадрировано и уменьшено',
+    transformation: 'С листа 1 патента выделена фотография плодов, уменьшена до 1000 × 947 и перекодирована в WebP; снимок чёрно-белый.'
+  }),
   prelude: Object.freeze({
     file: 'variety-photo-prelude-patent.webp',
     sourcePage: 'https://patents.google.com/patent/USPP11747P2/en',

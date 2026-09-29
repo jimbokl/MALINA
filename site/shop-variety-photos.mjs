@@ -12,6 +12,8 @@ export const shopVarietyPhotoIds = Object.freeze({
   'zhar-ptitsa': '72373',
   pingvin: 'g-295527',
   'rubinovoe-ozherele': '71156',
+  'zolotaya-osen': '73611',
+  'zolotye-kupola': '73625',
   pshehiba: '9124',
   karamelka: 'g-302172',
   samohval: 'g-302175',

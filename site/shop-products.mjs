@@ -217,7 +217,18 @@ const cultivarSources = slug => {
 };
 
 export const shopProducts = catalog.map(product => {
-  const cultivarSlug = matchShopCultivar(product) || product.cultivarSlug;
+  // These two yellow-fruited offers name the cultivar exactly. Our cultivar
+  // records have no verified fruiting type yet, so the generic remontant
+  // guard above cannot establish the link on its own.
+  const yellowRaspberryCultivar = product.source === 'agrosemfond'
+    && product.crop === 'raspberry'
+    && product.name === 'Малина ремонтантная Золотая осень'
+    && product.id === '73611' ? 'zolotaya-osen'
+    : product.source === 'agrosemfond'
+      && product.crop === 'raspberry'
+      && product.name === 'Малина ремонтантная Золотые купола'
+      && product.id === '73625' ? 'zolotye-kupola' : null;
+  const cultivarSlug = matchShopCultivar(product) || product.cultivarSlug || yellowRaspberryCultivar;
   return {
     ...product,
     merchantDescriptionShared: (merchantDescriptionOwners.get(String(product.description ?? '').trim().slice(0, 350))?.size || 0) > 1,
