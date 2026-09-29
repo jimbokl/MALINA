@@ -18,6 +18,7 @@ import { getComparisonYields } from '../assets/comparison-model.mjs';
 import { shopProducts } from '../shop-products.mjs';
 import { currentShopOffers, shopStockState } from '../shop-model.mjs';
 import { buildShopArticle, buildShopLead } from '../shop-copy.mjs';
+import { sourceFor } from './admitad-sources.mjs';
 import { relatedShopProducts } from '../shop-related.mjs';
 import { seasonActivities, seasonMonths } from '../assets/season-planner-model.mjs';
 import { calendarSources } from '../assets/calendar-model.mjs';
@@ -49,8 +50,10 @@ for (const product of shopProducts) {
   if (!shopVariantsByCanonical.has(canonical)) shopVariantsByCanonical.set(canonical, []);
   shopVariantsByCanonical.get(canonical).push(product);
 }
-const shopOfferFor = product => shopOffers.get(String(product.id))
-  || shopProducts.filter(item => item.canonicalSlug === product.slug).map(item => shopOffers.get(String(item.id))).find(Boolean);
+const shopOffersFor = product => (shopVariantsByCanonical.get(product.canonicalSlug || product.slug) || [product])
+  .map(item => shopOffers.get(String(item.id))).filter(Boolean)
+  .sort((left, right) => left.priceMinor - right.priceMinor);
+const shopOfferFor = product => shopOffersFor(product)[0];
 const shopStockFor = product => shopStockState(shopSnapshot, shopVariantsByCanonical.get(product.slug) || [product], shopOffers);
 const shopStockLabel = state => state === 'out_of_stock' ? 'Нет в наличии' : 'Наличие уточняется';
 const ymCounterId = process.env.YM_COUNTER_ID || '';
@@ -393,12 +396,12 @@ function shopImage(product) {
   const feedItem = shopFeedItems.get(String(shopOfferFor(product)?.id || product.id));
   const fallback = shopIllustration(product);
   const local = feedItem?.imagePath || product.imagePath;
-  if (/^\/assets\/shop\/\d+\.(?:jpg|png|webp)$/.test(local || '')) {
+  if (/^\/assets\/shop\/(?:g-)?\d+\.(?:jpg|png|webp)$/.test(local || '')) {
     return { src: local, alt: `Фото товара продавца: ${shopDisplayName(product)}`, caption: 'Фото товара из каталога продавца.' };
   }
   try {
     const remote = new URL(feedItem?.imageUrl || '');
-    if (remote.protocol === 'https:' && remote.hostname === 'agrosemfond.ru') {
+    if (remote.protocol === 'https:' && remote.hostname === sourceFor(feedItem || product)?.imageHost) {
       return { src: fallback, remote: remote.href, remoteAlt: `Фото товара продавца: ${shopDisplayName(product)}`, alt: `Иллюстрация: ${shopCropLabel(product).toLowerCase()}`, caption: 'Иллюстрация культуры.' };
     }
   } catch {}
@@ -436,10 +439,10 @@ function shopLanding(product) {
   const variety = shopVariety(product);
   const catalog = product.cultivarSlug ? publicCultivars.get(product.cultivarSlug) : null;
   const offer = shopOfferFor(product);
+  const availableOffers = shopOffersFor(product);
   const stock = shopStockFor(product);
   const image = shopImage(product);
   const name = shopDisplayName(product);
-  const offerName = offer?.name.replace(/^Земляника садовая\s+/iu, 'Клубника ');
   const article = shopArticle(product);
   const lead = shopLead(product);
   const path = shopProductPath(product);
@@ -456,7 +459,7 @@ function shopLanding(product) {
     ? `<p>По Госреестру РФ 2024 года сорт допущен ${e(regionText)}.</p>${regionSource ? `<p><a class="text-link" href="${e(regionSource)}" target="_blank" rel="noopener noreferrer">Запись Госреестра ↗</a></p>` : ''}`
     : '';
   const order = offer
-    ? `<div class="shop-order"><span class="eyebrow">ПРЕДЛОЖЕНИЕ ПРОДАВЦА</span><h2>${e(offerName)}</h2><p class="shop-sku">Артикул ${e(offer.id)}</p><p class="shop-order-price">${e(shopPrice(offer))}</p><p>Продавец: Агросемфонд · обновлено ${e(shopSnapshot.checkedAt.slice(0, 10).split('-').reverse().join('.'))}</p><a class="btn btn-dark" href="${e(offer.affiliateUrl)}" target="_blank" rel="sponsored nofollow noopener noreferrer" data-affiliate-offer="${e(offer.id)}"${product.cultivarSlug ? ` data-cultivar="${e(product.cultivarSlug)}"` : ''}>Заказать у продавца ${arrow}</a><small>Партнёрская ссылка · заказ на сайте продавца.</small></div>`
+    ? `<div class="shop-order"><span class="eyebrow">${availableOffers.length > 1 ? 'ПРЕДЛОЖЕНИЯ ПРОДАВЦОВ' : 'ПРЕДЛОЖЕНИЕ ПРОДАВЦА'}</span>${availableOffers.map(item => `<div class="shop-offer-choice"><h2>${e(sourceFor(item).seller)}</h2><p class="shop-sku">${e(item.name.replace(/^Земляника садовая\s+/iu, 'Клубника '))} · артикул ${e(item.id)}</p><p class="shop-order-price">${e(shopPrice(item))}</p><a class="btn btn-dark" href="${e(item.affiliateUrl)}" target="_blank" rel="sponsored nofollow noopener noreferrer" data-affiliate-offer="${e(item.id)}"${product.cultivarSlug ? ` data-cultivar="${e(product.cultivarSlug)}"` : ''}>Заказать у продавца ${arrow}</a></div>`).join('')}<small>Партнёрские ссылки · обновлено ${e(shopSnapshot.checkedAt.slice(0, 10).split('-').reverse().join('.'))} · заказ на сайте продавца.</small></div>`
     : `<div class="shop-order shop-order-empty"><span class="eyebrow">ПРЕДЛОЖЕНИЕ ПРОДАВЦА</span><h2>${shopStockLabel(stock)}</h2></div>`;
   const varietyFacts = variety
     ? [['Культура', shopCropLabel(product)], ['Плодоношение', variety.fruitingLabel === shopCropLabel(product) ? '' : variety.fruitingLabel], ['Срок', variety.period], ['Место', variety.place]]
@@ -477,7 +480,7 @@ function shopLanding(product) {
   const related = relatedShopProducts(product, publicShopProducts, shopOfferFor);
   const aside = `<aside class="shop-product-aside"><span class="eyebrow">ДАЛЬШЕ</span><h2>Подберите под свой сад</h2>${variety ? `<a href="/sorta/${e(product.cultivarSlug)}/">Описание и отзывы ${arrow}</a>` : ''}<a href="/podbor/">Подбор по городу ${arrow}</a><a href="${e(product.planting.guideHref)}">Посадка и уход ${arrow}</a></aside>`;
   const schema = siteUrl ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [
-    offer ? { '@type': 'Product', name, description, image: productImage, url: `${siteUrl}${path}`, sku: String(offer.id), offers: { '@type': 'Offer', url: offer.merchantUrl, price: (offer.priceMinor / 100).toFixed(2), priceCurrency: 'RUB', availability: 'https://schema.org/InStock', seller: { '@type': 'Organization', name: 'Агросемфонд' } } }
+    offer ? { '@type': 'Product', name, description, image: productImage, url: `${siteUrl}${path}`, offers: availableOffers.map(item => ({ '@type': 'Offer', url: item.merchantUrl, price: (item.priceMinor / 100).toFixed(2), priceCurrency: 'RUB', availability: 'https://schema.org/InStock', seller: { '@type': 'Organization', name: sourceFor(item).seller } })) }
       : { '@type': 'WebPage', name: title, description, url: `${siteUrl}${path}` },
     { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Главная', item: `${siteUrl}/` }, { '@type': 'ListItem', position: 2, name: 'Магазин', item: `${siteUrl}/magazin/` }, { '@type': 'ListItem', position: 3, name, item: `${siteUrl}${path}` }] }
   ] }).replaceAll('<', '\\u003c')}</script>` : '';

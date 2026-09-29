@@ -1,4 +1,6 @@
-const productImagePattern = /^\/assets\/shop\/\d+\.(?:jpg|png|webp)$/;
+import { sourceFor } from './scripts/admitad-sources.mjs';
+
+const productImagePattern = /^\/assets\/shop\/(?:g-)?\d+\.(?:jpg|png|webp)$/;
 
 function secureUrl(value, host) {
   try {
@@ -29,9 +31,12 @@ export function currentShopOffers(snapshot, manifest, now = new Date()) {
   const valid = new Map();
   for (const offer of snapshot.products) {
     if (!offer || !products.has(String(offer.id)) || valid.has(String(offer.id))) continue;
-    const affiliate = secureUrl(offer.affiliateUrl, 'rzekl.com');
-    const merchant = secureUrl(offer.merchantUrl, 'agrosemfond.ru');
-    const trackedMerchant = affiliate && secureUrl(affiliate.searchParams.get('ulp'), 'agrosemfond.ru');
+    const product = products.get(String(offer.id));
+    const source = sourceFor(product);
+    if (!source || (offer.source || 'agrosemfond') !== source.id) continue;
+    const affiliate = secureUrl(offer.affiliateUrl, source.affiliateHost);
+    const merchant = secureUrl(offer.merchantUrl, source.merchantHost);
+    const trackedMerchant = affiliate && secureUrl(affiliate.searchParams.get('ulp'), source.merchantHost);
     if (!affiliate || !merchant || !trackedMerchant || trackedMerchant.href !== merchant.href) continue;
     if (offer.availability !== 'in_stock' || offer.currency !== 'RUB' || !Number.isSafeInteger(offer.priceMinor) || offer.priceMinor <= 0) continue;
     if (typeof offer.name !== 'string' || !offer.name.trim() || offer.name.length > 250) continue;

@@ -2,10 +2,9 @@ import { readFile, rename, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseCsv } from './admitad-csv.mjs';
+import { admitadSources, sourceProductId } from './admitad-sources.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const raspberryPrefix = 'Плодовые/Малина/';
-const strawberryPrefix = 'Саженцы земляники/';
 export const curatedCatalogProducts = [
   { id: '67762', slug: 'gusar-sazhenec', crop: 'raspberry', expectedName: 'Гусар', cultivarSlug: 'gusar' },
   { id: '71131', slug: 'gerakl-sazhenec', crop: 'raspberry', expectedName: 'Геракл', cultivarSlug: 'gerakl' },
@@ -27,12 +26,12 @@ function slugify(name, id) {
   return `${base || 'tovar'}-${id}`;
 }
 
-function merchantUrl(row) {
+function merchantUrl(row, source) {
   try {
     const tracked = new URL(row.url);
-    if (tracked.protocol !== 'https:' || tracked.hostname !== 'rzekl.com') return null;
+    if (tracked.protocol !== 'https:' || tracked.hostname !== source.affiliateHost) return null;
     const merchant = new URL(tracked.searchParams.get('ulp'));
-    if (merchant.protocol !== 'https:' || merchant.hostname !== 'agrosemfond.ru' ||
+    if (merchant.protocol !== 'https:' || merchant.hostname !== source.merchantHost ||
         merchant.username || merchant.password || merchant.port) return null;
     return merchant.href;
   } catch { return null; }
@@ -40,43 +39,60 @@ function merchantUrl(row) {
 
 // Feed entries for the same plant may differ only by pack size or pot code.
 // Keep every SKU in the manifest, but publish one landing page per plant name.
-export function shopNameKey(name) {
+export function shopNameKey(name, sourceId = 'agrosemfond') {
   let key = name.trim().normalize('NFKC').toLocaleLowerCase('ru').replaceAll('ё', 'е').replace(/\s+/g, ' ');
   let previous;
   do {
     previous = key;
     key = key.replace(/\s+\d+\s*шт\.?\s*(?:[рp]\s*\d+)?\s*$/iu, '')
+      .replace(/\s+\d+\s*шт\.[рp]\s*\d+\s*$/iu, '')
       .replace(/\s+asf\s*$/iu, '').trim();
   } while (key !== previous);
   // Both labels refer to the verified cultivar Кимберли in our catalog.
-  if (key === 'земляника садовая вима кимберли') return 'земляника садовая кимберли';
+  if (key === 'земляника садовая вима кимберли') key = 'земляника садовая кимберли';
   // The feed repeats the same Изобильная description under two categories.
   if (key === 'малина ремонтантная изобильная') return 'малина изобильная';
+  key = key.replace(/^земляника(?: садовая)? /u, 'клубника ')
+    .replace(/^малина (?:ремонтантная|бесшипая|крупноплодная) /u, 'малина ')
+    .replace(/^малиновое дерево \(малина штамбовая\) /u, 'малина ')
+    .replace(/\s*\(лицензионная\)|\s*\(от автора сорта!\)|\s+от автора сорта/gu, '')
+    .replace(/\s*\(поздняя\)/u, '')
+    .trim();
+  if (sourceId === 'garshinka') {
+    let previous;
+    do {
+      previous = key;
+      key = key.replace(/\s+(?:с кислинкой|с кисл\.|среднего срока|сладко-кислая|сладко-карамельная|цветочно-сладкая|слабошипная|малошипная|бесшипная|малоусая|многоусая|безусая|ампельная|крупноплодная|высокоурожайная|урожайная|морозостойкая|зимостойкая|среднепоздняя|среднеспелая|среднеранняя|средне-ранняя|позднеспелая|суперранняя|ультраранняя|полуремонтантная|ремонтантная|ремонтатная|крупная|сладкая|сочная|медовая|плотная|красная|желтая|черная|ранняя|поздняя|очень)$/u, '').trim();
+    } while (key !== previous);
+  }
   return key;
 }
 
-export function buildCatalogManifest(csv, curatedProducts = [], previousProducts = [], { stableNewSlugs = false } = {}) {
+export function buildCatalogManifest(csv, curatedProducts = [], previousProducts = [], { stableNewSlugs = false, source: sourceId = 'agrosemfond' } = {}) {
+  const source = admitadSources[sourceId];
+  if (!source) throw new Error('Unknown Admitad source');
   const curatedById = new Map(curatedProducts.map(product => [String(product.id), product]));
   const previousById = new Map(previousProducts.map(product => [String(product.id), product]));
   if (previousById.size !== previousProducts.length) throw new Error('Duplicate previous catalog IDs');
-  const incoming = parseCsv(csv).filter(row => row.categoryId.startsWith(raspberryPrefix) || row.categoryId.startsWith(strawberryPrefix));
+  const incoming = parseCsv(csv).filter(row => source.crop(row.categoryId, row.name));
   const ids = new Set();
   const ambiguousIds = new Set();
   const selectedById = new Map();
   for (const row of incoming) {
     if (!/^\d+$/.test(row.id) || !row.name.trim() || row.name.length > 250) continue;
-    if (ids.has(row.id)) {
-      ambiguousIds.add(row.id);
-      selectedById.delete(row.id);
+    const id = sourceProductId(source, row.id);
+    if (ids.has(id)) {
+      ambiguousIds.add(id);
+      selectedById.delete(id);
       continue;
     }
-    ids.add(row.id);
-    if (ambiguousIds.has(row.id)) continue;
-    const previous = previousById.get(row.id);
-    const crop = row.categoryId.startsWith(raspberryPrefix) ? 'raspberry' : 'strawberry';
+    ids.add(id);
+    if (ambiguousIds.has(id)) continue;
+    const previous = previousById.get(id);
+    const crop = source.crop(row.categoryId, row.name);
     // A reused seller ID must not silently replace an existing variety page.
-    if (previous && (previous.crop !== crop || shopNameKey(previous.name) !== shopNameKey(row.name))) continue;
-    selectedById.set(row.id, { ...row, crop, merchantUrl: merchantUrl(row) });
+    if (previous && (previous.crop !== crop || shopNameKey(previous.name, previous.source) !== shopNameKey(row.name, sourceId))) continue;
+    selectedById.set(id, { ...row, id, crop, source: sourceId, merchantUrl: merchantUrl(row, source) });
   }
   for (const previous of previousProducts) {
     if (!selectedById.has(String(previous.id))) {
@@ -87,7 +103,7 @@ export function buildCatalogManifest(csv, curatedProducts = [], previousProducts
   const names = new Map();
   const groups = new Map();
   for (const row of selected) {
-    const name = shopNameKey(row.name);
+    const name = shopNameKey(row.name, row.source);
     names.set(name, (names.get(name) || 0) + 1);
     const key = `${row.crop}\u0000${name}`;
     if (!groups.has(key)) groups.set(key, []);
@@ -98,21 +114,22 @@ export function buildCatalogManifest(csv, curatedProducts = [], previousProducts
   const primaryIds = new Map([...groups].map(([key, rows]) => {
     const curated = rows.find(row => curatedById.has(row.id));
     const bareName = row => shopNameKey(row.name) === row.name.trim().normalize('NFKC').toLocaleLowerCase('ru').replaceAll('ё', 'е');
-    const byStableName = (left, right) => Number(!bareName(left)) - Number(!bareName(right)) || Number(left.id) - Number(right.id);
+    const byStableName = (left, right) => Number(!bareName(left)) - Number(!bareName(right)) || String(left.id).localeCompare(String(right.id), 'en', { numeric: true });
     const oldCanonical = rows.filter(row => previousById.get(row.id)?.canonicalSlug === slugById.get(row.id))
       .sort(byStableName)[0];
     const bare = rows.filter(bareName).sort(byStableName)[0];
-    return [key, (curated || oldCanonical || bare || [...rows].sort((left, right) => Number(left.id) - Number(right.id))[0]).id];
+    return [key, (curated || oldCanonical || bare || [...rows].sort(byStableName)[0]).id];
   }));
   const products = selected.map(row => {
     const crop = row.crop;
     const curated = curatedById.get(row.id);
     if (curated && curated.crop !== crop) throw new Error(`Curated crop differs for ${row.id}`);
-    const nameKey = shopNameKey(row.name);
+    const nameKey = shopNameKey(row.name, row.source);
     const groupKey = `${crop}\u0000${nameKey}`;
     const duplicate = groups.get(groupKey).length > 1;
     return {
       id: row.id,
+      source: row.source || 'agrosemfond',
       slug: slugById.get(row.id),
       name: row.name.trim(),
       expectedName: curated?.expectedName || (row.carriedOver ? row.expectedName : row.name.trim()),
@@ -130,7 +147,7 @@ export function buildCatalogManifest(csv, curatedProducts = [], previousProducts
     throw new Error('Duplicate shop catalog slugs');
   }
   return products.sort((left, right) => left.crop.localeCompare(right.crop) ||
-    left.name.localeCompare(right.name, 'ru') || Number(left.id) - Number(right.id));
+    left.name.localeCompare(right.name, 'ru') || String(left.id).localeCompare(String(right.id), 'en', { numeric: true }));
 }
 
 export async function writeCatalogManifest(path, products) {

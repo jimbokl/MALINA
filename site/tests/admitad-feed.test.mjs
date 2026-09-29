@@ -54,3 +54,20 @@ test('identity accepts Russian case and ё/е normalization', () => {
   const snapshot = buildSnapshot(input, [{ id: '101', expectedName: 'елка', crop: 'raspberry' }]);
   assert.equal(snapshot.products.length, 1);
 });
+
+test('second seller snapshot uses its own affiliate, merchant and image hosts', () => {
+  const link = 'https://codeaven.com/g/a?ulp=https%3A%2F%2Fwww.garshinka.ru%2Fproduct%2Fgusar';
+  const input = [header,
+    row({ id: '101', name: 'Малина Гусар', category: 'Плодовые растения/Малина', link,
+      picture: 'https://img.garshinka.ru/gusar.jpg' }),
+    row({ id: '102', name: 'Малина Гусар', category: 'Плодовые растения/Малина', price: '0', link })
+  ].join('\n');
+  const snapshot = buildSnapshot(input, [
+    { id: 'g-101', expectedName: 'Гусар', crop: 'raspberry' },
+    { id: 'g-102', expectedName: 'Гусар', crop: 'raspberry' }
+  ], new Date('2026-09-28T12:00:00Z'), 'garshinka');
+  assert.deepEqual(snapshot.products.map(product => product.id), ['g-101']);
+  assert.equal(snapshot.products[0].source, 'garshinka');
+  assert.equal(snapshot.products[0].merchantUrl, 'https://www.garshinka.ru/product/gusar');
+  assert.equal(snapshot.products[0].imageUrl, 'https://img.garshinka.ru/gusar.jpg');
+});

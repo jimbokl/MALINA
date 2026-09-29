@@ -44,8 +44,7 @@ test('verified Кимберли alias shares one page with the cultivar name', (
     row('102', 'true', 'Саженцы земляники/Ранние сорта', 'Земляника садовая Кимберли')
   ].join('\n');
   const products = buildCatalogManifest(csv);
-  assert.equal(products[0].canonicalSlug, products[1].slug);
-  assert.equal(products[1].canonicalSlug, products[1].slug);
+  assert.equal(products[0].canonicalSlug, products[1].canonicalSlug);
   assert.equal(shopNameKey(products[0].name), shopNameKey(products[1].name));
 });
 
@@ -56,13 +55,29 @@ test('ASF stock label does not create a second cultivar page', () => {
   ].join('\n');
   const products = buildCatalogManifest(csv);
   assert.equal(products[0].canonicalSlug, products[1].canonicalSlug);
-  assert.equal(shopNameKey(products[0].name), 'земляника фреска');
+  assert.equal(shopNameKey(products[0].name), 'клубника фреска');
 });
 
 test('pack and ASF suffixes collapse in either order', () => {
   assert.equal(shopNameKey('Земляника Фреска ASF 1 шт р9'), shopNameKey('Земляника Фреска 1 шт р9 ASF'));
-  assert.equal(shopNameKey('Земляника Фреска 1 шт р9 ASF'), 'земляника фреска');
+  assert.equal(shopNameKey('Земляника Фреска 1 шт р9 ASF'), 'клубника фреска');
   assert.equal(shopNameKey('Малина Жёлтый гигант'), shopNameKey('Малина Желтый гигант'));
+});
+
+test('second seller adds offers to a shared plant page and keeps new products distinct', () => {
+  const old = buildCatalogManifest([header, row('101', 'true', 'Плодовые/Малина/Обыкновенная', 'Малина Гусар')].join('\n'));
+  const garshinkaLink = 'https://codeaven.com/g/a?ulp=https%3A%2F%2Fwww.garshinka.ru%2Fproduct%2Fgusar';
+  const second = [header,
+    row('101', 'true', 'Плодовые растения/Малина', 'Малина Гусар красная', garshinkaLink),
+    row('102', 'true', 'Плодовые растения/Клубника и земляника', 'Клубника Аврора', garshinkaLink),
+    row('103', 'true', 'Плодовые растения/Клубника и земляника', 'Земклуника Находка', garshinkaLink),
+    row('104', 'true', 'Плодовые растения/Малина', 'Малина-клен душистая', garshinkaLink)
+  ].join('\n');
+  const combined = buildCatalogManifest(second, [], old, { source: 'garshinka', stableNewSlugs: true });
+  assert.equal(combined.length, 3);
+  assert.equal(combined.find(product => product.id === 'g-101').canonicalSlug, old[0].slug);
+  assert.equal(combined.find(product => product.id === 'g-102').canonicalSlug, 'tovar-g-102');
+  assert.equal(combined.find(product => product.id === 'g-101').source, 'garshinka');
 });
 
 test('the duplicate Изобильная category label shares the existing page', () => {

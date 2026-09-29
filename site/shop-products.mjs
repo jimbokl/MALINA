@@ -3,6 +3,7 @@
 // Growing advice and cultivar traits below are backed by the linked Russian sources.
 import { readFileSync } from 'node:fs';
 import { varieties } from './data.mjs';
+import { shopNameKey } from './scripts/generate-shop-catalog.mjs';
 const raspberryPlanting = {
   title: 'Как посадить малину',
   guideHref: '/zhurnal/posadka-maliny/',
@@ -182,7 +183,11 @@ export function matchShopCultivar(product) {
   const name = normalizeCultivarName(product.name);
   let cultivarName;
   let qualifier;
-  if (product.crop === 'raspberry' && product.categoryId.startsWith('Плодовые/Малина/')) {
+  if (product.source === 'garshinka') {
+    const key = shopNameKey(product.name, 'garshinka');
+    cultivarName = key.replace(/^(?:малина|клубника) /u, '');
+    qualifier = /\bремонтантная\b/iu.test(product.name) ? 'ремонтантная' : null;
+  } else if (product.crop === 'raspberry' && product.categoryId.startsWith('Плодовые/Малина/')) {
     const match = name.match(/^малина (?:(бесшипая|крупноплодная|ремонтантная) )?(.+)$/u);
     qualifier = match?.[1];
     cultivarName = match?.[2];

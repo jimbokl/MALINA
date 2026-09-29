@@ -36,6 +36,7 @@ jobs:
       - name: Refresh Admitad catalog and offers
         env:
           ADMITAD_FEED_URL: ${{ secrets.ADMITAD_FEED_URL }}
+          ADMITAD_FEED_URL_GARSHINKA: ${{ secrets.ADMITAD_FEED_URL_GARSHINKA }}
         run: node site/scripts/admitad-feed.mjs
       - name: Build informational site
         env:

@@ -44,3 +44,13 @@ test('подменённая ссылка продавца и трекера о�
     assert.equal(currentShopOffers({ ...snapshot, products: [{ ...product, ...changed }] }, [{ id: '67762' }], now).size, 0);
   }
 });
+
+test('предложение второго магазина проверяется по своему продавцу', () => {
+  const sellerUrl = 'https://www.garshinka.ru/product/gusar';
+  const offer = { ...product, id: 'g-101', source: 'garshinka',
+    merchantUrl: sellerUrl, affiliateUrl: `https://codeaven.com/g/a?ulp=${encodeURIComponent(sellerUrl)}`,
+    imagePath: '/assets/shop/g-101.jpg' };
+  const second = { ...snapshot, products: [offer] };
+  assert.equal(currentShopOffers(second, [{ id: 'g-101', source: 'garshinka' }], now).get('g-101')?.imagePath, '/assets/shop/g-101.jpg');
+  assert.equal(currentShopOffers({ ...second, products: [{ ...offer, affiliateUrl }] }, [{ id: 'g-101', source: 'garshinka' }], now).size, 0);
+});

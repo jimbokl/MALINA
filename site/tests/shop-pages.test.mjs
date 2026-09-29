@@ -33,7 +33,7 @@ test('каталог сохраняет исходные позиции и пу�
   assert.ok(shopProducts.filter(product => product.canonicalSlug !== product.slug).length >= 138);
   assert.equal(new Set(shopProducts.map(product => product.canonicalSlug || product.slug)).size, publicProducts.length);
   assert.ok(publicProducts.length > 0);
-  assert.equal(new Set(publicProducts.map(product => `${product.crop}\0${shopNameKey(product.name)}`)).size, publicProducts.length);
+  assert.equal(new Set(publicProducts.map(product => `${product.crop}\0${shopNameKey(product.name, product.source)}`)).size, publicProducts.length);
   const slugs = new Set(shopProducts.map(product => product.slug));
   for (const product of shopProducts) {
     assert.ok(product.name?.trim(), `missing name: ${product.id}`);
@@ -83,7 +83,7 @@ test('черноплодная малина показывает фото про
   const detail = await readFile(join(dist, 'magazin', 'malina-blek-dzhevel-67836', 'index.html'), 'utf8');
   const catalog = await readFile(join(dist, 'magazin', 'index.html'), 'utf8');
   const card = catalog.split('data-shop-canonical="malina-blek-dzhevel-67836"')[1]?.split('</article>')[0] || '';
-  const suitableImage = /(?:\/assets\/raspberry-black-garden\.webp|\/assets\/shop\/67836\.(?:jpg|png|webp))/;
+  const suitableImage = /(?:\/assets\/raspberry-black-garden\.webp|\/assets\/shop\/(?:67836|g-237289)\.(?:jpg|png|webp))/;
   assert.match(detail.match(/class="shop-product-image"><img src="([^"]+)"/)?.[1] || '', suitableImage);
   assert.match(card.match(/<img src="([^"]+)"/)?.[1] || '', suitableImage);
   if (detail.includes('property="og:image"')) {
@@ -149,7 +149,7 @@ test('заказ доступен только для товаров в нали
     const stock = shopStockState(snapshot, variants, current);
     if (offer) {
       assert.ok(html.includes(`data-affiliate-offer="${offer.id}"`), product.slug);
-      assert.ok(html.includes(`<h2>${escapeHtml(offer.name.replace(/^Земляника садовая\s+/iu, 'Клубника '))}</h2>`), `active offer name: ${product.slug}`);
+      assert.ok(html.includes(escapeHtml(offer.name.replace(/^Земляника садовая\s+/iu, 'Клубника '))), `active offer name: ${product.slug}`);
       assert.match(html, /Заказать у продавца/, product.slug);
       assert.match(html, /rel="sponsored nofollow noopener noreferrer"/, product.slug);
       if (process.env.SITE_URL) {
@@ -167,10 +167,28 @@ test('заказ доступен только для товаров в нали
   }
 });
 
+test('два продавца одного растения показываются на общей странице с разными ссылками', async () => {
+  const offers = currentShopOffers(await shopSnapshot(), shopProducts);
+  for (const product of publicProducts) {
+    const variants = shopProducts.filter(item => (item.canonicalSlug || item.slug) === product.slug);
+    const active = variants.map(item => offers.get(String(item.id))).filter(Boolean);
+    if (new Set(active.map(item => item.source)).size < 2) continue;
+    const html = await productHtml(product);
+    assert.match(html, /ПРЕДЛОЖЕНИЯ ПРОДАВЦОВ/, product.slug);
+    assert.match(html, /<h2>Агросемфонд<\/h2>/, product.slug);
+    assert.match(html, /<h2>Гаршинка<\/h2>/, product.slug);
+    for (const offer of active) {
+      assert.ok(html.includes(`data-affiliate-offer="${offer.id}"`), `offer ${offer.id}: ${product.slug}`);
+      assert.ok(html.includes(`href="${escapeHtml(offer.affiliateUrl)}"`), `tracking link ${offer.id}: ${product.slug}`);
+    }
+  }
+});
+
 test('страница сорта показывает наличие связанного товара', async () => {
   const snapshot = await shopSnapshot();
   const current = currentShopOffers(snapshot, shopProducts);
-  const linked = publicProducts.filter(product => product.cultivarSlug);
+  const seenCultivars = new Set();
+  const linked = publicProducts.filter(product => product.cultivarSlug && !seenCultivars.has(product.cultivarSlug) && seenCultivars.add(product.cultivarSlug));
   assert.ok(linked.length > 0);
   for (const product of linked) {
     const variants = shopProducts.filter(item => (item.canonicalSlug || item.slug) === product.slug);

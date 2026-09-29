@@ -2,6 +2,7 @@ import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promise
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseCsv } from './admitad-csv.mjs';
+import { admitadSources, sourceProductId } from './admitad-sources.mjs';
 
 export { parseCsv } from './admitad-csv.mjs';
 
@@ -24,10 +25,8 @@ function normalizedName(value) {
   return value.normalize('NFKC').toLocaleLowerCase('ru-RU').replaceAll('ё', 'е').replace(/\s+/g, ' ').trim();
 }
 
-function matchesIdentity(row, curated) {
-  const categoryPrefix = curated.crop === 'raspberry' ? 'Плодовые/Малина/'
-    : curated.crop === 'strawberry' ? 'Саженцы земляники/' : null;
-  if (!categoryPrefix || !row.categoryId.startsWith(categoryPrefix)) return false;
+function matchesIdentity(row, curated, source) {
+  if (source.crop(row.categoryId, row.name) !== curated.crop) return false;
   if (typeof curated.expectedName !== 'string' || !curated.expectedName.trim()) return false;
   const name = normalizedName(row.name);
   const expected = normalizedName(curated.expectedName);
@@ -38,21 +37,22 @@ function matchesIdentity(row, curated) {
   return !/[\p{L}\p{N}]/u.test(before) && !/[\p{L}\p{N}]/u.test(after);
 }
 
-function publicProduct(row, curated) {
+function publicProduct(row, curated, source) {
   if (!/^\d+$/.test(row.id)) return null;
-  if (!matchesIdentity(row, curated)) return null;
+  if (!matchesIdentity(row, curated, source)) return null;
   const name = row.name.trim();
   if (!name || name.length > 250) return null;
-  const picture = httpsUrl(row.picture, 'agrosemfond.ru');
+  const picture = httpsUrl(row.picture, source.imageHost);
   const identity = {
-    id: row.id,
+    id: sourceProductId(source, row.id),
+    source: source.id,
     name,
     imageUrl: picture?.href || null
   };
   if (row.available === 'false') return { ...identity, availability: 'out_of_stock' };
   if (row.available !== 'true') return null;
-  const affiliate = httpsUrl(row.url, 'rzekl.com');
-  const merchant = affiliate && httpsUrl(affiliate.searchParams.get('ulp'), 'agrosemfond.ru');
+  const affiliate = httpsUrl(row.url, source.affiliateHost);
+  const merchant = affiliate && httpsUrl(affiliate.searchParams.get('ulp'), source.merchantHost);
   if (!merchant) return null;
   const price = Number(row.price.replace(',', '.'));
   if (!Number.isFinite(price) || price <= 0 || price > 10_000_000 ||
@@ -68,21 +68,24 @@ function publicProduct(row, curated) {
   };
 }
 
-export function buildSnapshot(csv, curatedProducts, now = new Date()) {
+export function buildSnapshot(csv, curatedProducts, now = new Date(), sourceId = 'agrosemfond') {
+  const source = admitadSources[sourceId];
+  if (!source) throw new Error('Unknown Admitad source');
   const allowed = new Map(curatedProducts.map(product => [String(product.id), product]));
   if (allowed.size !== curatedProducts.length) throw new Error('Duplicate curated product IDs');
   const selected = new Map();
   const seen = new Set();
   for (const row of parseCsv(csv)) {
-    if (!allowed.has(row.id)) continue;
-    if (seen.has(row.id)) {
-      selected.delete(row.id); // An ambiguous ID cannot be published.
-      allowed.delete(row.id);
+    const id = sourceProductId(source, row.id);
+    if (!allowed.has(id)) continue;
+    if (seen.has(id)) {
+      selected.delete(id); // An ambiguous ID cannot be published.
+      allowed.delete(id);
       continue;
     }
-    seen.add(row.id);
-    const product = publicProduct(row, allowed.get(row.id));
-    if (product) selected.set(row.id, product);
+    seen.add(id);
+    const product = publicProduct(row, allowed.get(id), source);
+    if (product) selected.set(id, product);
   }
   return {
     checkedAt: now.toISOString(),
@@ -161,7 +164,7 @@ export async function cacheImages(products, directory, fetcher = fetch) {
   }
   await Promise.all(Array.from({ length: Math.min(12, entries.length) }, worker));
   for (const filename of await readdir(directory)) {
-    if (/^\d+\.(?:jpg|png|webp)$/.test(filename) && !current.has(filename)) {
+    if (/^(?:g-)?\d+\.(?:jpg|png|webp)$/.test(filename) && !current.has(filename)) {
       await rm(join(directory, filename));
     }
   }
@@ -171,16 +174,26 @@ async function main() {
   const catalogPath = join(root, 'site', 'shop-catalog.json');
   const output = process.env.SHOP_OFFERS_PATH || join(root, 'db', 'public', 'shop-offers.json');
   try {
-    if (!process.env.ADMITAD_FEED_URL) throw new Error('ADMITAD_FEED_URL is unset');
-    const feed = await fetchFeed(process.env.ADMITAD_FEED_URL);
+    const feeds = [];
+    for (const [source, envName] of [['agrosemfond', 'ADMITAD_FEED_URL'], ['garshinka', 'ADMITAD_FEED_URL_GARSHINKA']]) {
+      try {
+        if (!process.env[envName]) throw new Error(`${envName} is unset`);
+        feeds.push({ source, csv: await fetchFeed(process.env[envName]) });
+      } catch (error) {
+        process.stderr.write(`Admitad ${source} refresh failed: ${/^Admitad returned HTTP \d{3}$/.test(error.message) ? error.message : 'feed unavailable'}\n`);
+      }
+    }
+    if (!feeds.length) throw new Error('No Admitad feeds available');
     const { buildCatalogManifest, curatedCatalogProducts, writeCatalogManifest } = await import('./generate-shop-catalog.mjs');
-    const previous = JSON.parse(await readFile(catalogPath, 'utf8'));
-    const catalog = buildCatalogManifest(feed, curatedCatalogProducts, previous, { stableNewSlugs: true });
-    const snapshot = buildSnapshot(feed, catalog);
+    let catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
+    for (const feed of feeds) catalog = buildCatalogManifest(feed.csv, curatedCatalogProducts, catalog, { stableNewSlugs: true, source: feed.source });
+    const now = new Date();
+    const products = feeds.flatMap(feed => buildSnapshot(feed.csv, catalog.filter(product => product.source === feed.source), now, feed.source).products);
+    const snapshot = { checkedAt: now.toISOString(), expiresAt: new Date(now.getTime() + freshnessMs).toISOString(), products };
     await cacheImages(snapshot.products, join(root, 'db', 'public', 'shop-images'));
     await writeCatalogManifest(catalogPath, catalog);
     await writeSnapshot(output, snapshot);
-    process.stdout.write(`Admitad snapshot: ${catalog.length} catalog products, ${snapshot.products.filter(product => product.availability === 'in_stock').length} available\n`);
+    process.stdout.write(`Admitad snapshot: ${catalog.length} catalog products, ${snapshot.products.filter(product => product.availability === 'in_stock').length} available, ${feeds.map(feed => feed.source).join(', ')}\n`);
   } catch (error) {
     // A failed refresh must withdraw price and outbound ordering links.
     await writeSnapshot(output, { checkedAt: null, expiresAt: null, products: [] });
