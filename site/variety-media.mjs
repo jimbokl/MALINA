@@ -382,6 +382,54 @@ export const varietyPhotoSources = Object.freeze({
 // These cultivar-identified photographs accompany the illustration in the detail page.
 // They are not used as the cover image when the source shows a specimen or a disease symptom.
 export const varietySupplementalPhotoSources = Object.freeze({
+  dzholi: Object.freeze({
+    file: 'variety-photo-joly-patent.webp',
+    sourcePage: 'https://patents.google.com/patent/USPP23126P3/en',
+    originalUrl: 'https://patentimages.storage.googleapis.com/f8/37/60/62da27a13cb3cd/USPP23126.pdf',
+    originalSha256: '9d195a25fe469620a646e7ea7c5bb7a689429b6b02314ef4f5c470ba253a4dc0',
+    sha256: '21e32731287b7c23eb2796f1212934946490dfc44bee0e62b52d2617a29d194f',
+    author: 'Michelangelo Leis, Alessio Martinelli, Gianfranco Castagnoli; CIV',
+    license: 'Патентная публикация USPTO',
+    licenseUrl: 'https://www.uspto.gov/terms-use-uspto-websites',
+    identityEvidence: 'Патент USPP23126P3 прямо называет сорт JOLY; подпись FIG. 4 обозначает фотографию его плодов.',
+    width: 960,
+    height: 652,
+    photoDetail: 'плоды на патентном снимке',
+    captionChange: 'рисунок 4, кадрировано',
+    transformation: 'С листа 4 патента выделена фотография плодов и перекодирована в WebP; снимок чёрно-белый.'
+  }),
+  malga: Object.freeze({
+    file: 'variety-photo-malga-patent.webp',
+    sourcePage: 'https://patents.google.com/patent/USPP28310P3/en',
+    originalUrl: 'https://patentimages.storage.googleapis.com/da/f4/18/44f7c06b1edad7/USPP28310.pdf',
+    originalSha256: '96030549993e55be3182c694fc635f0067fba9e2614ec7072a1d51ce9e0f284e',
+    sha256: 'd06e0b98397842e684def4931dfde77f7db5328ce4dcd7ef4a451b795c304a5e',
+    author: 'Zenti Franco; New Fruits SAS',
+    license: 'Патентная публикация USPTO',
+    licenseUrl: 'https://www.uspto.gov/terms-use-uspto-websites',
+    identityEvidence: 'Патент USPP28310P3 прямо называет сорт MALGA; подпись FIG. 2 обозначает крупный снимок его плодов.',
+    width: 1100,
+    height: 711,
+    photoDetail: 'плоды на патентном снимке',
+    captionChange: 'рисунок 2, кадрировано',
+    transformation: 'С листа 2 патента выделена фотография плодов и перекодирована в WebP; снимок чёрно-белый.'
+  }),
+  aniya: Object.freeze({
+    file: 'variety-photo-ania-patent.webp',
+    sourcePage: 'https://patents.google.com/patent/USPP32221P3/en',
+    originalUrl: 'https://patentimages.storage.googleapis.com/30/ef/cc/5c5a7f6645e5b9/USPP32221.pdf',
+    originalSha256: 'aa0ab55f75c4ca9dd19a6a12438f753ac986763abda3ccd6b7b9dd838e07a8be',
+    sha256: '5a5becb71715dfb9810c7abf0700c972f4e156db891727d690ee4c7f95785c5a',
+    author: 'Alessio Martinelli, Michelangelo Leis; CIV',
+    license: 'Патентная публикация USPTO',
+    licenseUrl: 'https://www.uspto.gov/terms-use-uspto-websites',
+    identityEvidence: 'Патент USPP32221P3 прямо называет сорт CIVRH612; оригинатор CIV подтверждает торговое название ANIA для этого сорта; FIG. 4 показывает его плоды.',
+    width: 1100,
+    height: 780,
+    photoDetail: 'плоды на патентном снимке',
+    captionChange: 'рисунок 4, кадрировано',
+    transformation: 'С листа 4 патента выделена фотография плодов и перекодирована в WebP; снимок чёрно-белый.'
+  }),
   kimberli: Object.freeze({
     file: 'variety-photo-kimberli-microplants.webp',
     sourcePage: 'https://openbiotechnologyjournal.com/contents/volumes/V20/e18740707455704/e18740707455704.pdf#page=5',
