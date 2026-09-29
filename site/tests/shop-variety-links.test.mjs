@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { varieties } from '../data.mjs';
 import { matchShopCultivar, shopProducts } from '../shop-products.mjs';
+import { shopVarietyPhotoIds } from '../shop-variety-photos.mjs';
 
 const raspberry = name => ({ name, crop: 'raspberry', categoryId: 'Плодовые/Малина/Обыкновенная' });
 const strawberry = name => ({ name, crop: 'strawberry', categoryId: 'Саженцы земляники/Средние сорта' });
@@ -43,4 +44,16 @@ test('linked shop SKUs use published cultivar identities and retain editorial so
     assert.equal(shopProducts.find(product => product.id === id)?.cultivarSlug, slug);
   }
   assert.equal(shopProducts.find(product => product.id === '67833')?.cultivarSlug, null);
+});
+
+test('seller photos chosen for cultivar pages belong to that exact cultivar', () => {
+  const ids = new Set();
+  for (const [slug, id] of Object.entries(shopVarietyPhotoIds)) {
+    assert.ok(varieties.some(variety => variety.slug === slug), `unknown cultivar: ${slug}`);
+    assert.ok(!ids.has(id), `reused seller photo: ${id}`);
+    ids.add(id);
+    const product = shopProducts.find(item => item.id === id);
+    assert.ok(product, `missing seller product: ${id}`);
+    assert.equal(product.cultivarSlug, slug, `seller photo is for a different cultivar: ${id}`);
+  }
 });

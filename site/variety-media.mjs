@@ -382,6 +382,57 @@ export const varietyPhotoSources = Object.freeze({
 // These cultivar-identified photographs accompany the illustration in the detail page.
 // They are not used as the cover image when the source shows a specimen or a disease symptom.
 export const varietySupplementalPhotoSources = Object.freeze({
+  prelude: Object.freeze({
+    file: 'variety-photo-prelude-patent.webp',
+    sourcePage: 'https://patents.google.com/patent/USPP11747P2/en',
+    originalUrl: 'https://patentimages.storage.googleapis.com/3b/e1/9c/c6b0bb82ded75e/USPP11747.pdf',
+    originalSha256: 'd8ee74697a58a65e77a897cd0ff768899abb899f6eeed8e3238738fcefeae54c',
+    sourcePanelSha256: '74a03da42dfcf0da71d260190a66a18e01c8371bcb6fd1ee977cd04cdd654e46',
+    sha256: '4bbb98f673cf3f1c13735c543979d47dff112fefcc58139978142c7de191ebfc',
+    author: 'John C. Sanford, Kevin E. Maloney, Jack E. Reich, Donald K. Ourecky; Cornell Research Foundation',
+    license: 'Патентная публикация USPTO',
+    licenseUrl: 'https://www.uspto.gov/terms-use-uspto-websites',
+    identityEvidence: 'Патент USPP11747P2 прямо называет сорт Prelude; подпись FIG. 2 обозначает фотографию его плодов.',
+    width: 1100,
+    height: 715,
+    photoDetail: 'плоды на чёрно-белом патентном снимке',
+    captionChange: 'рисунок 2, кадрировано и уменьшено',
+    transformation: 'С листа 2 патента выделена фотография плодов (1428 × 928), уменьшена до 1100 × 715 и перекодирована в WebP; снимок чёрно-белый.'
+  }),
+  encore: Object.freeze({
+    file: 'variety-photo-encore-patent.webp',
+    sourcePage: 'https://patents.google.com/patent/USPP11746P2/en',
+    originalUrl: 'https://patentimages.storage.googleapis.com/ff/50/b7/51a9b0e6d929e8/USPP11746.pdf',
+    originalSha256: 'e8048b78ae143356a0d58345444e95f305b5510ce9705a90acfc2752e1bb598b',
+    sourcePanelSha256: 'aacdcf16bd248461e9d6ce196b4e1b07e5448917232e8c7b395aa8c87e62ed68',
+    sha256: '779d4c92ef06a318a4ee916b3f4cd0946ba599beba56777aabe9b648471cdfe1',
+    author: 'John C. Sanford, Kevin E. Maloney, Jack E. Reich, Donald K. Ourecky; Cornell Research Foundation',
+    license: 'Патентная публикация USPTO',
+    licenseUrl: 'https://www.uspto.gov/terms-use-uspto-websites',
+    identityEvidence: 'Патент USPP11746P2 прямо называет сорт Encore; подпись FIG. 2 обозначает фотографию типичной кисти его плодов.',
+    width: 1100,
+    height: 720,
+    photoDetail: 'кисть плодов на чёрно-белом патентном снимке',
+    captionChange: 'рисунок 2, кадрировано и уменьшено',
+    transformation: 'С листа 2 патента выделена фотография кисти плодов (1432 × 937), уменьшена до 1100 × 720 и перекодирована в WebP; снимок чёрно-белый.'
+  }),
+  solovushka: Object.freeze({
+    file: 'variety-photo-solovushka-frost-flowers.webp',
+    sourcePage: 'https://www.intechopen.com/chapters/73090',
+    originalUrl: 'https://cdnintech.com/media/chapter/73090/1512345123/media/F5.png',
+    originalSha256: '8a4844e1537ee0735403c76ac547a3fa47b27d5dd2ab87a72799958dff00e207',
+    sourcePanelSha256: '0d84c420d9f1b7d3b4a2212c8708ac00fdf198572fd4c25ed374ff3b0c01efe1',
+    sha256: '149a23a24c2ecc23d509ef74bf1db968ffcc999975c7a7d58eddf8cd452ddfb0',
+    author: 'З. Е. Ожерельева и соавторы, IntechOpen, 2021',
+    license: 'CC BY 3.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/3.0/',
+    identityEvidence: 'Рисунок 5: подпись прямо определяет панель (a) как цветки сорта Solovushka после воздействия −2,5 °C.',
+    width: 367,
+    height: 329,
+    photoDetail: 'цветки после морозного эксперимента',
+    captionChange: 'рисунок 5, панель a, кадрировано',
+    transformation: 'Из рисунка 5 выделена левая панель (a) 367 × 329; перекодирована в WebP без увеличения. Фото цветков, а не ягод.'
+  }),
   dzholi: Object.freeze({
     file: 'variety-photo-joly-patent.webp',
     sourcePage: 'https://patents.google.com/patent/USPP23126P3/en',

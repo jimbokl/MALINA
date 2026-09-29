@@ -16,6 +16,7 @@ import { pageStructuredData } from '../structured-data.mjs';
 import { raspberryFacets, raspberryFacetVarieties } from '../catalog-facets.mjs';
 import { getComparisonYields } from '../assets/comparison-model.mjs';
 import { shopProducts } from '../shop-products.mjs';
+import { shopVarietyPhotoIds } from '../shop-variety-photos.mjs';
 import { currentShopOffers, shopStockState } from '../shop-model.mjs';
 import { currentCoupons } from '../shop-coupons.mjs';
 import { buildShopArticle, buildShopLead } from '../shop-copy.mjs';
@@ -555,7 +556,12 @@ function withShopLink(html, variety) {
   const offer = shopOfferFor(product);
   const stock = shopStockFor(product);
   const availability = offer ? `Есть в наличии · ${e(shopPrice(offer))}` : shopStockLabel(stock);
-  const section = `<section class="section wrap shop-variety-link"><div><span class="eyebrow">${shopPlantLabel(product)} СОРТА</span><h2>${e(variety.name)}: предложение и посадка</h2><p>Мы собрали в карточке саженца советы по посадке и свежие сведения о наличии.</p><p class="shop-variety-availability"${offer ? ' data-shop-live-price' : ''}>${availability}</p></div><a class="btn btn-dark" href="${shopProductPath(product)}">Посмотреть товар ${arrow}</a></section>`;
+  const photoProduct = shopProducts.find(item => item.id === shopVarietyPhotoIds[variety.slug] && item.cultivarSlug === variety.slug);
+  const photoFeedItem = photoProduct && shopFeedItems.get(String(photoProduct.id));
+  const photoPath = photoFeedItem?.imagePath;
+  const photo = /^\/assets\/shop\/(?:g-)?\d+\.(?:jpg|png|webp)$/.test(photoPath || '')
+    ? `<figure class="shop-variety-photo"><img src="${e(photoPath)}" alt="Саженец «${e(variety.name)}» в каталоге магазина «${e(sourceFor(photoProduct).seller)}»" width="400" height="400" loading="lazy"><figcaption>Фото саженца из магазина «${e(sourceFor(photoProduct).seller)}».</figcaption></figure>` : '';
+  const section = `<section class="section wrap shop-variety-link">${photo}<div><span class="eyebrow">${shopPlantLabel(product)} СОРТА</span><h2>${e(variety.name)}: предложение и посадка</h2><p>Мы собрали в карточке саженца советы по посадке и свежие сведения о наличии.</p><p class="shop-variety-availability"${offer ? ' data-shop-live-price' : ''}>${availability}</p></div><a class="btn btn-dark" href="${shopProductPath(product)}">Посмотреть товар ${arrow}</a></section>`;
   return withVarietySourcesAtEnd(html.replace('</main>', `${section}</main>`));
 }
 

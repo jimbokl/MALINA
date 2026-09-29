@@ -94,15 +94,15 @@ test('дополнительные снимки сорта имеют отдел
     const variety = varieties.find((item) => item.slug === slug);
     assert.ok(variety, slug);
     assert.notEqual(cultivarImage(variety).src, `/assets/${source.file}`, 'дополнительный снимок не подменяет главный визуал');
-    if (['dzholi', 'malga', 'aniya'].includes(slug)) {
-      const patents = { dzholi: 'USPP23126P3', malga: 'USPP28310P3', aniya: 'USPP32221P3' };
+    if (['dzholi', 'malga', 'aniya', 'prelude', 'encore'].includes(slug)) {
+      const patents = { dzholi: 'USPP23126P3', malga: 'USPP28310P3', aniya: 'USPP32221P3', prelude: 'USPP11747P2', encore: 'USPP11746P2' };
       assert.equal(source.sourcePage, `https://patents.google.com/patent/${patents[slug]}/en`);
       assert.match(source.originalUrl, /^https:\/\/patentimages\.storage\.googleapis\.com\/[^/]+\/[^/]+\/[^/]+\/[^/]+\/USPP\d+\.pdf$/);
       assert.equal(source.licenseUrl, 'https://www.uspto.gov/terms-use-uspto-websites');
       assert.match(source.identityEvidence, /FIG\. [24].*плод/);
     } else {
-      assert.match(source.sourcePage, /^https:\/\/(?:www\.agronauka-sv\.ru\/jour\/article\/view\/1761|biosel\.elpub\.ru\/jour\/article\/download\/143\/139#page=4|www\.frontiersin\.org\/journals\/plant-science\/articles\/10\.3389\/fpls\.2016\.01892\/full|pmc\.ncbi\.nlm\.nih\.gov\/articles\/(?:PMC13043038|PMC11043506|PMC8728004)\/|www\.mdpi\.com\/(?:2311-7524\/12\/1\/79|2223-7747\/10\/10\/2071)|openbiotechnologyjournal\.com\/contents\/volumes\/V20\/e18740707455704\/e18740707455704\.pdf#page=5)/, slug);
-      assert.match(source.originalUrl, /^https:\/\/(?:www\.agronauka-sv\.ru\/jour\/article\/download\/1761\/816|biosel\.elpub\.ru\/jour\/article\/download\/143\/139|www\.frontiersin\.org\/journals\/plant-science\/articles\/10\.3389\/fpls\.2016\.01892\/pdf|www\.ebi\.ac\.uk\/europepmc\/webservices\/rest\/PMC13043038\/supplementaryFiles\?inlineImages=true|pdfs\.semanticscholar\.org\/7137\/18200ea61d95ab689e7162ae0327acf4ac01\.pdf|cdn\.ncbi\.nlm\.nih\.gov\/pmc\/blobs\/6df8\/8728004\/f7c27f3aa812\/jkab378f1\.jpg|mdpi-res\.com\/d_attachment\/(?:horticulturae\/horticulturae-12-00079\/article_deploy\/html\/images\/horticulturae-12-00079-g001\.png|plants\/plants-10-02071\/article_deploy\/plants-10-02071\.pdf)|openbiotechnologyjournal\.com\/contents\/volumes\/V20\/e18740707455704\/e18740707455704\.pdf)/, slug);
+      assert.match(source.sourcePage, /^https:\/\/(?:www\.intechopen\.com\/chapters\/73090|www\.agronauka-sv\.ru\/jour\/article\/view\/1761|biosel\.elpub\.ru\/jour\/article\/download\/143\/139#page=4|www\.frontiersin\.org\/journals\/plant-science\/articles\/10\.3389\/fpls\.2016\.01892\/full|pmc\.ncbi\.nlm\.nih\.gov\/articles\/(?:PMC13043038|PMC11043506|PMC8728004)\/|www\.mdpi\.com\/(?:2311-7524\/12\/1\/79|2223-7747\/10\/10\/2071)|openbiotechnologyjournal\.com\/contents\/volumes\/V20\/e18740707455704\/e18740707455704\.pdf#page=5)/, slug);
+      assert.match(source.originalUrl, /^https:\/\/(?:cdnintech\.com\/media\/chapter\/73090\/1512345123\/media\/F5\.png|www\.agronauka-sv\.ru\/jour\/article\/download\/1761\/816|biosel\.elpub\.ru\/jour\/article\/download\/143\/139|www\.frontiersin\.org\/journals\/plant-science\/articles\/10\.3389\/fpls\.2016\.01892\/pdf|www\.ebi\.ac\.uk\/europepmc\/webservices\/rest\/PMC13043038\/supplementaryFiles\?inlineImages=true|pdfs\.semanticscholar\.org\/7137\/18200ea61d95ab689e7162ae0327acf4ac01\.pdf|cdn\.ncbi\.nlm\.nih\.gov\/pmc\/blobs\/6df8\/8728004\/f7c27f3aa812\/jkab378f1\.jpg|mdpi-res\.com\/d_attachment\/(?:horticulturae\/horticulturae-12-00079\/article_deploy\/html\/images\/horticulturae-12-00079-g001\.png|plants\/plants-10-02071\/article_deploy\/plants-10-02071\.pdf)|openbiotechnologyjournal\.com\/contents\/volumes\/V20\/e18740707455704\/e18740707455704\.pdf)/, slug);
       assert.match(source.sourcePanelSha256, /^[0-9a-f]{64}$/, slug);
       assert.match(source.license, /^CC BY/, slug);
       assert.match(source.licenseUrl, /^https:\/\/creativecommons\.org\/licenses\/by\//, slug);
@@ -159,6 +159,20 @@ test('Фестивальная сохраняет иллюстрацию обл�
   const [image] = cultivarSupplementalImages(festivalnaya);
   assert.match(image.alt, /поражённые антракнозом/);
   assert.match(image.shortCaption, /поражённые антракнозом/);
+});
+
+test('Соловушка показывает фото цветков после морозного опыта с источником и лицензией', async () => {
+  const variety = varieties.find((item) => item.slug === 'solovushka' && item.cropKey === 'strawberry');
+  assert.ok(variety);
+  assert.equal(cultivarImage(variety).src, '/assets/variety-solovushka.webp');
+  const [photo] = cultivarSupplementalImages(variety);
+  assert.equal(photo.src, '/assets/variety-photo-solovushka-frost-flowers.webp');
+  assert.match(photo.shortCaption, /цветки после морозного эксперимента/);
+  assert.match(photo.caption, /intechopen\.com\/chapters\/73090/);
+  assert.match(photo.caption, /creativecommons\.org\/licenses\/by\/3\.0/);
+  assert.doesNotMatch(photo.alt, /ягод/);
+  const bytes = await readFile(new URL('variety-photo-solovushka-frost-flowers.webp', assetsDir));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), varietySupplementalPhotoSources.solovushka.sha256);
 });
 
 test('фото Альбы и Азии взяты только из соответствующих подписанных панелей статьи', () => {
