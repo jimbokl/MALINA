@@ -26,6 +26,7 @@ import { calendarSources } from '../assets/calendar-model.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const out = process.env.MALINA_BUILD_OUT || join(root, 'dist');
+const shopImagesDir = process.env.MALINA_SHOP_IMAGES_DIR || join(root, 'db', 'public', 'shop-images');
 const catalogDb = process.env.MALINA_CATALOG_DB || join(root, 'db', 'local', 'catalog.sqlite3');
 const siteUrl = process.env.SITE_URL?.replace(/\/$/, '') || '';
 const requestedBase = process.env.SITE_BASE || '/';
@@ -787,7 +788,7 @@ for (const asset of ['site.js', 'shop-filter.js', 'picker-filter.mjs', 'picker-p
 for (const item of shopFeedItems.values()) {
   if (!item.imagePath) continue;
   const filename = item.imagePath.split('/').at(-1);
-  const source = join(root, 'db', 'public', 'shop-images', filename);
+  const source = join(shopImagesDir, filename);
   const target = join(out, 'assets', 'shop', filename);
   await mkdir(join(out, 'assets', 'shop'), { recursive: true });
   await copyFile(source, target);

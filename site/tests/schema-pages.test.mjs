@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -17,6 +17,9 @@ const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&
 test('разметка различает справку о сорте, видимый товар и устаревшее предложение', async () => {
   const temp = await mkdtemp(join(tmpdir(), 'malina-schema-'));
   try {
+    const imagesDir = join(temp, 'shop-images');
+    await mkdir(imagesDir);
+    await copyFile(join(root, 'site', 'assets', 'raspberry-garden.webp'), join(imagesDir, '67762.webp'));
     const checkedAt = new Date();
     const expiresAt = new Date(checkedAt.getTime() + 6 * 60 * 60 * 1000);
     const merchantUrl = 'https://agrosemfond.ru/catalog/gusar/';
@@ -25,7 +28,7 @@ test('разметка различает справку о сорте, види
     assert.ok(unavailable.length > 0);
     const snapshot = { checkedAt: checkedAt.toISOString(), expiresAt: expiresAt.toISOString(), products: [
       { id: '67762', source: 'agrosemfond', name: 'Саженец малины Гусар', availability: 'in_stock',
-        priceMinor: 44950, currency: 'RUB', merchantUrl, affiliateUrl, imagePath: '/assets/shop/67762.jpg' },
+        priceMinor: 44950, currency: 'RUB', merchantUrl, affiliateUrl, imagePath: '/assets/shop/67762.webp' },
       ...unavailable.map(product => ({ id: product.id, source: product.source, availability: 'out_of_stock' }))
     ] };
     const snapshotPath = join(temp, 'offers.json');
@@ -33,7 +36,7 @@ test('разметка различает справку о сорте, види
     await writeFile(snapshotPath, JSON.stringify(snapshot));
     execFileSync(process.execPath, [join(root, 'site', 'scripts', 'build.mjs')], {
       cwd: root, env: { ...process.env, SITE_URL: origin, SITE_BASE: '/', MALINA_BUILD_OUT: output,
-        MALINA_SHOP_SNAPSHOT: snapshotPath }, stdio: 'pipe'
+        MALINA_SHOP_SNAPSHOT: snapshotPath, MALINA_SHOP_IMAGES_DIR: imagesDir }, stdio: 'pipe'
     });
 
     for (const variety of varieties) {
@@ -51,8 +54,8 @@ test('разметка различает справку о сорте, види
     const product = availableGraph.find(node => node['@type'] === 'Product');
     assert.equal(page.mainEntity['@id'], product['@id']);
     assert.equal(product.url, `${origin}/magazin/gusar-sazhenec/`);
-    assert.equal(product.image, `${origin}/assets/shop/67762.jpg`);
-    assert.match(availableHtml, /class="shop-product-image"><img src="\/assets\/shop\/67762\.jpg"/);
+    assert.equal(product.image, `${origin}/assets/shop/67762.webp`);
+    assert.match(availableHtml, /class="shop-product-image"><img src="\/assets\/shop\/67762\.webp"/);
     assert.equal(product.offers.length, 1);
     assert.equal(product.offers[0].url, affiliateUrl);
     assert.equal(product.offers[0].price, '449.50');
@@ -75,7 +78,7 @@ test('разметка различает справку о сорте, види
     const staleOutput = join(temp, 'stale');
     execFileSync(process.execPath, [join(root, 'site', 'scripts', 'build.mjs')], {
       cwd: root, env: { ...process.env, SITE_URL: origin, SITE_BASE: '/', MALINA_BUILD_OUT: staleOutput,
-        MALINA_SHOP_SNAPSHOT: snapshotPath }, stdio: 'pipe'
+        MALINA_SHOP_SNAPSHOT: snapshotPath, MALINA_SHOP_IMAGES_DIR: imagesDir }, stdio: 'pipe'
     });
     const staleHtml = await readFile(join(staleOutput, 'magazin', 'gusar-sazhenec', 'index.html'), 'utf8');
     const [staleGraph] = graphs(staleHtml);
