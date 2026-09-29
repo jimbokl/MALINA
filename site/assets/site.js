@@ -142,21 +142,22 @@ function trackGoal(goal, params = {}) {
   }
 }
 window.malinaTrackReviewSubmitted = (status, isReply) => {
+  if (status !== 'published' && status !== 'pending_human_review') return;
   trackGoal('review_submitted', {
     kind: isReply === true ? 'reply' : 'review',
-    publication_state: ['published', 'pending_human_review'].includes(status) ? status : 'other'
+    publication_state: status
   });
 };
 if (cultivarPath) {
   const crop = document.querySelector('.variety-hero-art.raspberry') ? 'raspberry'
     : document.querySelector('.variety-hero-art.strawberry') ? 'strawberry' : 'unknown';
   trackGoal('cultivar_view', { crop, cultivar: cultivarPath[1] });
-  const pickerLink = document.querySelector('#variety-picker-link');
-  const reviewsNextLink = document.querySelector('#reviews-next-link');
+}
+if (cultivarPath || /^\/magazin\/[a-z0-9-]+\/$/.test(routePath)) {
   const params = new URLSearchParams(location.search);
-  const city = params.get('city')?.trim();
-  const region = params.get('region')?.trim();
-  if (pickerLink && city) {
+  const city = params.getAll('city').length === 1 ? params.get('city')?.trim() : '';
+  const region = params.getAll('region').length === 1 ? params.get('region')?.trim() : '';
+  if (city && region) {
     fetch(`${siteBase}/data/cities.json`).then(response => {
       if (!response.ok) throw new Error('city routes unavailable');
       return response.json();
@@ -164,11 +165,22 @@ if (cultivarPath) {
       if (!Array.isArray(cities)) return;
       const normalize = value => String(value || '').trim().toLocaleLowerCase('ru-RU').replace(/ё/g, 'е');
       const matches = cities.filter(item => normalize(item.name) === normalize(city) &&
-        (!region || normalize(item.region) === normalize(region)));
+        normalize(item.region) === normalize(region));
       if (matches.length === 1 && safeId(matches[0].slug)) {
         const cityPickerPath = `${siteBase}/podbor/${matches[0].slug}/`;
-        pickerLink.href = cityPickerPath;
-        if (reviewsNextLink) reviewsNextLink.href = cityPickerPath;
+        for (const link of document.querySelectorAll('main a[href]')) {
+          const url = new URL(link.href, location.origin);
+          if (url.origin !== location.origin) continue;
+          const path = siteBase && url.pathname.startsWith(`${siteBase}/`)
+            ? url.pathname.slice(siteBase.length) : url.pathname;
+          if (path === '/podbor/') {
+            link.href = cityPickerPath;
+          } else if (/^\/(?:sorta|magazin)\/[a-z0-9-]+\/$/.test(path)) {
+            url.searchParams.set('city', matches[0].name);
+            url.searchParams.set('region', matches[0].region);
+            link.href = `${url.pathname}${url.search}${url.hash}`;
+          }
+        }
       }
     }).catch(() => {});
   }
@@ -317,12 +329,7 @@ if (pickerForm) {
   const ruleStatus = document.querySelector('#verified-status');
   if (ruleStatus && typeof MutationObserver !== 'undefined') {
     new MutationObserver(() => {
-      const message = ruleStatus.textContent;
-      const outcome = message === 'Регион не сопоставлен с районированием Госреестра.' ? 'unmapped_region'
-        : message.startsWith('В Госреестре:') || message.startsWith('В Госреестре нет записей') ? 'no_verified_rule'
-          : message === 'Регион не найден в справочнике.' ? 'unknown_region'
-            : message === 'Не удалось загрузить данные Госреестра. Попробуйте позже.' ? 'load_error'
-              : /^\d+ сорт(?:а|ов)? с проверенн(?:ым|ыми) региональн(?:ым|ыми) правил(?:ом|ами) для региона /.test(message) ? 'verified_rule' : '';
+      const outcome = ruleStatus.dataset.outcome || '';
       if (!outcome || outcome === lastRuleOutcome) return;
       lastRuleOutcome = outcome;
       trackGoal(outcome === 'load_error' ? 'selector_error'

@@ -108,7 +108,7 @@ test('новые сорта клубники есть в SQLite, каталог�
     assert.equal(record.crop_slug, 'strawberry');
     assert.ok(record.observations.every(item => item.source_key), `Нет источника наблюдения: ${variety.slug}`);
     const detailHtml = await readFile(join(root, 'sorta', variety.slug, 'index.html'), 'utf8');
-    assert.match(detailHtml, /Иллюстрация клубники/);
+    assert.match(detailHtml, /(?:Фото сорта|Иллюстрация клубники)/);
     assert.ok(detailHtml.includes(variety.source));
     assert.ok(catalogHtml.includes(`href="/sorta/${variety.slug}/"`));
     const image = cultivarImage(variety);
@@ -116,26 +116,18 @@ test('новые сорта клубники есть в SQLite, каталог�
   }
 });
 
-test('восемь сортов партии 27 сентября получили отдельные иллюстрации своей культуры', async () => {
-  const expected = {
-    salyut: '/assets/variety-salyut.webp',
-    'yubileinaya-kulikova': '/assets/variety-yubileinaya-kulikova.webp',
-    arisha: '/assets/variety-arisha.webp',
-    vityaz: '/assets/variety-vityaz.webp',
-    slavutich: '/assets/variety-slavutich.webp',
-    rusich: '/assets/variety-rusich.webp',
-    alfa: '/assets/variety-alfa.webp',
-    solovushka: '/assets/variety-solovushka.webp'
-  };
+test('восемь сортов партии 27 сентября показывают свои актуальные изображения во всех входах', async () => {
+  const slugs = ['salyut', 'yubileinaya-kulikova', 'arisha', 'vityaz', 'slavutich', 'rusich', 'alfa', 'solovushka'];
   const bySlug = new Map(varieties.map(variety => [variety.slug, variety]));
   const catalogHtml = await readFile(join(root, 'sorta', 'index.html'), 'utf8');
   const cityHtml = await readFile(join(root, 'podbor', 'tula', 'index.html'), 'utf8');
   const cityQuery = new URLSearchParams({ city: 'Тула', region: 'Тульская область' }).toString().replaceAll('&', '&amp;');
-  for (const [slug, src] of Object.entries(expected)) {
+  for (const slug of slugs) {
     const variety = bySlug.get(slug);
     assert.ok(variety, `Нет карточки сорта: ${slug}`);
     const media = cultivarImage(variety);
-    assert.equal(media.src, src, `сопоставление изображения: ${slug}`);
+    const src = media.src;
+    assert.match(src, /^\/assets\/variety-(?:photo-)?[a-z-]+\.webp$/);
     await access(join(root, src.slice(1)));
     const detailHtml = await readFile(join(root, 'sorta', slug, 'index.html'), 'utf8');
     assert.ok(detailHtml.includes(`<img src="${src}"`), `карточка: ${slug}`);
@@ -375,7 +367,8 @@ test('календарь доступен из инструментов, сод�
   assert.match(html, /ФАКТИЧЕСКИЕ ДАТЫ/);
   assert.match(html, /id="calendar-journal-list"/);
   assert.match(html, /href="\/instrumenty\/zhurnal-uchastka\/\?crop=raspberry"/);
-  assert.match(html, /Россельхозцентр · малина/);
+  assert.match(html, /class="section wrap calendar-basis"/);
+  assert.match(html, /Россельхозцентр · обрезка малины/);
   assert.doesNotMatch(html, /RHS|rhs\.org\.uk/i);
   assert.match(html, /src="\/assets\/calendar\.js\?v=[a-f0-9]+"/);
   await access(join(root, 'assets', 'calendar-model.mjs'));
@@ -444,7 +437,7 @@ test('карточки сортов показывают только прове
   assert.match(polka, /<dt>Тип основания<\/dt><dd>Справочный источник<\/dd>/);
   assert.match(polka, /<time datetime="2026-09-26">26\.09\.2026<\/time>/);
   assert.match(polka, /Описание сорта/);
-  assert.match(elan, /Оригинатор отмечает повторное плодоношение и выращивание в контейнерах/);
+  assert.match(elan, /Элан можно посадить в контейнер на солнечном месте\. Ягоды у него появляются повторно в течение сезона/);
   assert.doesNotMatch(joan, /id="osnovaniya"/);
   assert.doesNotMatch(polka, /internal_sample_ref|private\/lot/);
   assert.match(karamelka, /Средняя масса ягоды — 3,8 г, максимальная — 8,0 г/);
@@ -463,7 +456,8 @@ test('каталог переключает иллюстрации и харак
   assert.match(html, /data-catalog-view="facts" aria-pressed="false">Характеристики/);
   assert.match(html, /id="catalog-results" data-view="illustrations"/);
   assert.match(html, /catalog-facts/);
-  assert.match(html, /Источник:/);
+  assert.doesNotMatch(html, /class="catalog-source"/);
+  assert.match(html, /Подробнее о сорте/);
   assert.match(html, /Иллюстрация (малины|клубники)/);
   const js = await readFile(join(root, 'assets', 'site.js'), 'utf8');
   assert.match(js, /results\.dataset\.view = view/);
@@ -476,7 +470,9 @@ test('сравнение сортов отдаёт полезный HTML, ист
     assert.match(html, new RegExp(`Сравнить сорта<br><em>${crop}\\.`));
     assert.match(html, /<details class="comparison-chooser" id="comparison-chooser"><summary>Изменить сорта для сравнения<\/summary>/);
     assert.ok(html.indexOf('id="comparison-rows"') < html.indexOf('id="comparison-chooser"'), 'результат сравнения расположен до длинного списка сортов');
-    assert.match(html, /Сравните характеристики сортов и откройте источник в любой строке/);
+    assert.match(html, /Поставьте сорта рядом: так легче увидеть, чем они отличаются/);
+    assert.match(html, /<details class="comparison-sources" id="comparison-sources"><summary>Источники и подробности сравнения<\/summary>/);
+    assert.doesNotMatch(html.match(/<tbody id="comparison-rows">([\s\S]*?)<\/tbody>/)?.[1] ?? "", /comparison-source|проверено/);
     assert.match(html, /comparison-data/);
     assert.match(html, /comparison\.js/);
     assert.match(html, /проверено 26\.09\.2026/);
@@ -489,7 +485,8 @@ test('сравнение сортов отдаёт полезный HTML, ист
     assert.ok(data.regions.some(region => region.name_ru === 'Тульская область' && region.admission_region_number === 3));
     assert.ok(data.varieties.every(item => Array.isArray(item.admissions)));
     assert.ok(data.varieties.every(item => item.yieldObservation === null || item.yieldObservation?.evidence), 'в сравнение попадают только урожайности с публичным паспортом');
-    assert.match(html, /Урожайность в источнике/);
+    assert.match(html, /<th scope="row">Урожайность<\/th>/);
+    assert.match(html, /Есть ли сорт в официальном списке/);
     assert.ok(data.varieties.some(item => item.yieldObservation), 'проверенные результаты урожайности доступны сравнению');
     const htmlReviewedDates = new Set([...html.matchAll(/проверено (\d{2}\.\d{2}\.\d{4})/g)].map(match => match[1]));
     assert.ok([...new Set(data.varieties.slice(0, 4).map(item => item.reviewedAt))].every(date => htmlReviewedDates.has(date)), 'серверный HTML показывает даты первых четырёх сортов');
@@ -500,7 +497,7 @@ test('сравнение сортов отдаёт полезный HTML, ист
   }
   const script = await readFile(join(root, 'assets', 'comparison.js'), 'utf8');
   assert.match(script, /resolveComparisonPlace/);
-  assert.match(script, /Строка Госреестра/);
+  assert.match(script, /comparison-sources/);
   assert.match(script, /item\.reviewedAt \|\| root\.dataset\.reviewedAt/);
   assert.match(script, /selected\.length < 2 && chooser/);
   const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8').catch(() => '');
@@ -532,12 +529,12 @@ test('карточки Русича и Зенги Зенганы показыв�
   };
   for (const [slug, values] of Object.entries(expected)) {
     const html = await readFile(join(root, 'sorta', slug, 'index.html'), 'utf8');
-    const facts = html.match(/<section class="section wrap facts-section">([\s\S]*?)<\/section>/)?.[1];
-    assert.ok(facts, slug);
-    assert.match(facts, /Результаты исследований/);
-    for (const value of values) assert.ok(facts.includes(value), `${slug}: ${value}`);
-    assert.match(facts, /Московская область указана в заголовке публикации/);
-    assert.match(facts, /vniispk\.ru\/pages\/activities\/science-activities\/conference-2008\/publ-2008-25/);
+    const sources = html.slice(html.indexOf('id="osnovaniya"'));
+    assert.ok(sources, slug);
+    assert.match(sources, /Урожайность в испытаниях/);
+    for (const value of values) assert.ok(sources.includes(value), `${slug}: ${value}`);
+    assert.match(sources, /Московская область указана в заголовке публикации/);
+    assert.match(sources, /vniispk\.ru\/pages\/activities\/science-activities\/conference-2008\/publ-2008-25/);
   }
 });
 
@@ -567,7 +564,7 @@ test('журнал содержит проверяемые статьи, авт�
       assert.match(html, /<meta property="og:image:width" content="1536">/);
       assert.match(html, /<meta property="og:image:height" content="1024">/);
     }
-    assert.match(html, /Автор: <a href="\/about\/">Редакция МАЛИНА — КЛУБНИКА<\/a>/);
+    assert.match(html, /Подготовили: <a href="\/about\/">Редакция МАЛИНА — КЛУБНИКА<\/a>/);
     assert.ok(html.includes(`<time datetime="${publishedIso}">`));
     assert.ok(html.includes(`<time datetime="${reviewedIso}">`));
     if (process.env.SITE_URL) {
@@ -627,10 +624,10 @@ test('материал о Frigo связывает сроки хранения �
   assert.equal(frigo.reviewedIso, '2026-09-27');
   const html = await readFile(join(root, 'zhurnal', 'klubnika-frigo-chto-proverit', 'index.html'), 'utf8');
   assert.match(html, /Почему срок хранения не задаёт дату урожая/);
-  assert.match(html, /В японском опыте Yano и коллег с горшечной рассадой/);
+  assert.match(html, /В опыте с горшечной рассадой трёхдневное охлаждение меняло сроки появления и цветения первого цветка/);
   assert.match(html, /состояние цветочной почки перед хранением, дату подъёма и режим хранения/);
   assert.match(html, /jstage\.jst\.go\.jp\/article\/hrj\/23\/4\/23_271/);
-  assert.match(html, /практические шаги связаны с источниками выше/);
+  assert.match(html, /Мы написали материал по публикациям ниже и сверили по ним факты и цифры/);
   assert.doesNotMatch(html, /Исходные изображения и текст источников не перепечатаны/);
 });
 
@@ -641,7 +638,7 @@ test('статья о посадке объясняет различия кул�
   assert.match(html, /href="#section-6"/);
   assert.match(html, /сердечко видно/);
   assert.match(html, /Уточните сроки посадки и зимовки по погоде вашего участка/);
-  assert.match(html, /Как подготовлен материал/);
+  assert.match(html, /Как мы готовили материал/);
   assert.match(html, /David T\. Handley · Bulletin #2067: Growing Strawberries/);
   assert.match(html, /University of Illinois Extension · Growing Raspberries/);
   if (process.env.SITE_URL) assert.match(html, /"@type":"BreadcrumbList"/);
@@ -720,12 +717,32 @@ test('карточки показывают источник и границы �
     assert.match(html, /name="description" content="[^"]*(описание сорта|урожайность)[^"]*отзывы садоводов/);
     const variety = varieties.find(item => route === `/sorta/${item.slug}/`);
     assert.match(html, /КРАТКО О СОРТЕ/);
-    assert.match(html, /Иллюстрация (малины|жёлтой малины|клубники)/);
+    assert.match(html, /(?:Фото сорта|Иллюстрация (?:малины|жёлтой малины|клубники))/);
     assert.ok(html.includes(variety.source));
+    assert.match(html, /Если хотите проверить/);
+    assert.match(html, /Мы написали описание по этим материалам и сверили по ним факты и цифры/);
+    assert.ok(html.lastIndexOf('class="section wrap source-panel"') > html.lastIndexOf('id="reviews-root"'), variety.slug);
+    assert.doesNotMatch(variety.note, /^(?:в госреестре|по данным|согласно|источник|официальный допуск|сорт указан)/iu, variety.slug);
+    assert.doesNotMatch(html, /<p class="lead">В Госреестре/);
     assert.doesNotMatch(html, /RHS|rhs\.org\.uk/i);
     assert.match(html, /id="reviews-root"[^>]*data-cultivar=/);
     assert.match(html, /Отзывы о сорте/);
     assert.match(html, /name="cultivar_name" value=/);
+  }
+});
+
+test('точные фотографии Дарёнки и Фестивальной открываются в карточке с подписью и авторством', async () => {
+  for (const [slug, filename, detail] of [
+    ['darenka', 'variety-photo-darenka.webp', 'фрагмент гербарного образца с ягодами'],
+    ['festivalnaya', 'variety-photo-festivalnaya-anthracnose.webp', 'ягоды, поражённые антракнозом']
+  ]) {
+    const html = await readFile(join(root, 'sorta', slug, 'index.html'), 'utf8');
+    assert.match(html, /class="section wrap variety-photo-gallery"/);
+    assert.ok(html.includes(`/assets/${filename}`), slug);
+    assert.ok(html.includes(`Фото сорта: ${detail}`), slug);
+    assert.ok(html.indexOf(`/assets/${filename}`) < html.lastIndexOf('class="section wrap source-panel"'), slug);
+    assert.match(html.slice(html.lastIndexOf('class="section wrap source-panel"')), /class="photo-attribution"/);
+    await access(join(root, 'assets', filename));
   }
 });
 
@@ -759,7 +776,7 @@ test('Азия опубликована с ограничением италья
   const asia = catalog.cultivars.find(row => row.slug === 'aziya');
   assert.ok(asia);
   assert.match(html, /Geoplant Vivai · Asia NF421/);
-  assert.match(html, /Иллюстрация клубники/);
+  assert.match(html, /Фото сорта/);
   assert.ok(asia.observations.every(row => row.source_key === 'geoplant-asia-nf421'));
   assert.equal(asia.recommendations.length, 0);
 });
@@ -770,8 +787,8 @@ test('Мурано и Альба опубликованы с исходными 
     const html = await readFile(join(root, 'sorta', slug, 'index.html'), 'utf8');
     const cultivar = catalog.cultivars.find(row => row.slug === slug);
     assert.ok(cultivar);
-    assert.match(html, /Иллюстрация клубники/);
-    assert.match(html, /ПРОИСХОЖДЕНИЕ ДАННЫХ/);
+    assert.match(html, /Фото сорта/);
+    assert.match(html, /Если хотите проверить/);
     assert.ok(cultivar.observations.length >= 2);
     assert.ok(cultivar.observations.every(row => row.source_key === sourceKey));
     assert.equal(cultivar.recommendations.length, 0);
@@ -818,6 +835,27 @@ test('город передаёт регион в подбор и показыв
   assert.match(js, /conditionsNote\.hidden = openQuestions\.length === 0/);
 });
 
+test('городской SEO сохраняет адреса и индексирует только страницу с отдельным местным материалом', async () => {
+  const moscow = await readFile(join(root, 'podbor/moscow/index.html'), 'utf8');
+  const tula = await readFile(join(root, 'podbor/tula/index.html'), 'utf8');
+  const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8').catch(() => '');
+  assert.match(moscow, /Тимирязевская академия/);
+  assert.match(moscow, /Когда пересаживать укоренённые розетки/);
+  assert.doesNotMatch(moscow, /<meta name="robots" content="noindex,follow">/);
+  assert.match(tula, /<meta name="robots" content="noindex,follow">/);
+  assert.match(tula, /data-city="Тула" data-region="Тульская область"/);
+  for (const city of cities) {
+    const html = await readFile(join(root, 'podbor', city.slug, 'index.html'), 'utf8');
+    const published = city.slug === 'moscow';
+    assert.equal(html.includes('<meta name="robots" content="noindex,follow">'), !published, city.slug);
+    if (process.env.SITE_URL) {
+      const canonical = published ? `/podbor/${city.slug}/` : '/podbor/';
+      assert.ok(html.includes(`<link rel="canonical" href="${process.env.SITE_URL}${canonical}">`), city.slug);
+      assert.equal(sitemap.includes(`<loc>${process.env.SITE_URL}/podbor/${city.slug}/</loc>`), published, city.slug);
+    }
+  }
+});
+
 test('город сохраняется в переходе к сорту и его отзывам даже без JavaScript', async () => {
   const tula = await readFile(join(root, '/podbor/tula/', 'index.html'), 'utf8');
   const query = new URLSearchParams({ city: 'Тула', region: 'Тульская область' }).toString().replaceAll('&', '&amp;');
@@ -851,7 +889,7 @@ test('подбор даёт быстрый результат и сохраня�
   assert.match(compareJs, /picker:location-change/);
   assert.match(verifiedJs, /form\.dataset\.activeCity/);
   assert.match(verifiedJs, /picker:location-change/);
-  assert.match(verifiedJs, /recordWord\(admissions\.count\)/);
+  assert.match(verifiedJs, /admissions\.count/);
   assert.match(comparison, /tabindex="0" role="region" aria-label="Таблица сравнения сортов/);
 });
 
@@ -974,16 +1012,16 @@ test('официальный допуск для Тулы виден с исто
   const html = await readFile(join(root, 'sorta', 'gusar', 'index.html'), 'utf8');
   assert.match(html, /id="gosreestr"/);
   assert.match(html, /gossortrf\.ru\/upload\/[^" ]+#page=418/);
-  assert.match(html, /По изданию реестра на 2024-05-31/);
+  assert.match(html, /Госреестр России · запись 9902171/);
+  assert.doesNotMatch(html, /По изданию реестра на 2024-05-31/);
   for (const city of ['kaliningrad', 'tula', 'kazan']) {
     const cityHtml = await readFile(join(root, 'podbor', city, 'index.html'), 'utf8');
-    assert.match(cityHtml, /Гусар · допуск в Госреестре/);
-    assert.match(cityHtml, /9902171/);
-    assert.match(cityHtml, /#page=418/);
-    assert.match(cityHtml, /издание на 2024-05-31, запись 9902171/);
+    assert.match(cityHtml, /<h3>Гусар<\/h3>/);
+    assert.match(cityHtml, /href="\/sorta\/gusar\/\?city=/);
+    assert.match(cityHtml, /Госреестр России · список сортов/);
   }
   const unrelatedCity = await readFile(join(root, 'podbor', 'arkhangelsk', 'index.html'), 'utf8');
-  assert.doesNotMatch(unrelatedCity, /Гусар · допуск в Госреестре/);
+  assert.doesNotMatch(unrelatedCity, /<h3>Гусар<\/h3>/);
 });
 
 test('официальный допуск Фестивальной охватывает регионы 1–11 без обещаний для участка', async () => {
@@ -995,16 +1033,20 @@ test('официальный допуск Фестивальной охваты�
   assert.deepEqual(festivalnaya.observations, []);
   for (const [city, zone] of [['arkhangelsk', 1], ['belgorod', 5], ['astraxan', 8], ['ufa', 9], ['novosibirsk', 10], ['irkutsk', 11]]) {
     const cityHtml = await readFile(join(root, 'podbor', city, 'index.html'), 'utf8');
-    assert.match(cityHtml, /Фестивальная · допуск в Госреестре/);
-    assert.match(cityHtml, /#page=415/);
+    assert.match(cityHtml, /<h3>Фестивальная<\/h3>/);
+    assert.match(cityHtml, /href="\/sorta\/festivalnaya\/\?city=/);
     const cityRecord = cities.find(item => item.slug === city);
     assert.equal(catalog.regions.find(region => region.name_ru === cityRecord.region)?.admission_region_number, zone);
   }
   const farEastHtml = await readFile(join(root, 'podbor', 'vladivostok', 'index.html'), 'utf8');
-  assert.doesNotMatch(farEastHtml, /Фестивальная · допуск в Госреестре/);
+  assert.doesNotMatch(farEastHtml, /<h3>Фестивальная<\/h3>/);
   const varietyHtml = await readFile(join(root, 'sorta', 'festivalnaya', 'index.html'), 'utf8');
-  assert.match(varietyHtml, /Запись Госреестра подтверждает название и регионы допуска/);
-  assert.match(varietyHtml, /Иллюстрация клубники/);
+  assert.match(varietyHtml, /<p class="lead">У Фестивальной ароматные ягоды: под Уфой их запах оценили высоко, а первые ягоды собирали уже в середине июня\./);
+  assert.match(varietyHtml, /В испытании под Уфой в 2019–2021 годах аромат ягод оценили в 4,9 балла из 5/);
+  assert.match(varietyHtml, /Башкирский ГАУ · испытание сортов клубники 2019–2021/);
+  assert.match(varietyHtml, /Если хотите проверить/);
+  assert.doesNotMatch(varietyHtml, /<p class="lead">В Госреестре/);
+  assert.match(varietyHtml, /(?:Фото сорта|Иллюстрация клубники)/);
   assert.match(varietyHtml, /Урожайность<\/span><strong>—<\/strong>/);
 });
 
@@ -1026,12 +1068,12 @@ test('проверенные допуски малины связывают со
     const city = cities.find(item => item.slug === slug);
     assert.equal(catalog.regions.find(region => region.name_ru === city.region)?.admission_region_number, zone);
     const html = await readFile(join(root, 'podbor', slug, 'index.html'), 'utf8');
-    assert.match(html, /Пингвин · допуск в Госреестре/);
-    assert.match(html, /#page=419/);
+    assert.match(html, /<h3>Пингвин<\/h3>/);
+    assert.match(html, /href="\/sorta\/pingvin\/\?city=/);
   }
   for (const [slug, variety] of [['kaliningrad', 'Метеор'], ['tula', 'Пересвет']]) {
     const html = await readFile(join(root, 'podbor', slug, 'index.html'), 'utf8');
-    assert.match(html, new RegExp(`${variety} · допуск в Госреестре`));
+    assert.match(html, new RegExp(`<h3>${variety}</h3>`));
   }
 });
 
@@ -1072,7 +1114,7 @@ test('Похвалинка связана с красной иллюстраци
   assert.equal(yubileinayaFacts.plant_productivity_g.value_number, 2750.2);
   assert.equal(yubileinayaFacts.plant_productivity_g.unit, 'г/куст');
   const yubileinayaHtml = await readFile(join(root, 'sorta', 'yubileinaya-kulikova', 'index.html'), 'utf8');
-  assert.match(yubileinayaHtml, /урожайность составила 16,2 т\/га, биологическая продуктивность куста — 2750,2 г/);
+  assert.match(yubileinayaHtml, /урожайность — 16,2 т\/га, биологическая продуктивность куста — 2750,2 г/);
 
   const arisha = catalog.cultivars.find(item => item.slug === 'arisha');
   assert.deepEqual(arisha.admissions.map(item => item.admission_region_number), [9]);
@@ -1094,15 +1136,15 @@ test('Похвалинка связана с красной иллюстраци
 
   const html = await readFile(join(root, 'sorta', 'pohvalinka', 'index.html'), 'utf8');
   assert.match(html, /Похвалинка/);
-  assert.match(html, /Урожайность[\s\S]{0,100}194 ц\/га по данным заявителя/);
+  assert.match(html, /Урожайность 194 ц\/га приведена заявителем сорта/);
   assert.match(html, /8456207/);
   assert.match(html, /#page=418/);
   assert.match(html, /src="\/assets\/variety-pohvalinka\.webp" alt="Иллюстрация малины/);
   const tula = await readFile(join(root, 'podbor', 'tula', 'index.html'), 'utf8');
-  assert.match(tula, /Похвалинка · допуск в Госреестре/);
+  assert.match(tula, /<h3>Похвалинка<\/h3>/);
 });
 
-test('три сорта клубники связаны с опытом ФНЦ Садоводства, Госреестром и отдельными иллюстрациями', async () => {
+test('три сорта клубники связаны с опытом ФНЦ Садоводства, Госреестром и подписанными изображениями', async () => {
   const catalog = JSON.parse(await readFile(join(root, 'data', 'catalog.json'), 'utf8'));
   const expected = {
     darenka: { regions: [3, 4, 10, 11], code: '9705077', yield: 10.3, localRule: false },
@@ -1125,7 +1167,12 @@ test('три сорта клубники связаны с опытом ФНЦ �
       item.evidence.place_text === 'Оренбургская область' && item.evidence.period_from === '2020' && item.evidence.period_to === '2021'));
 
     const html = await readFile(join(root, 'sorta', slug, 'index.html'), 'utf8');
-    assert.match(html, new RegExp(`src="/assets/variety-${slug}\\.webp" alt="Иллюстрация клубники`));
+    if (slug === 'zenga-zengana') {
+      assert.match(html, /src="\/assets\/variety-photo-zenga-zengana\.webp" alt="Фото клубники сорта «Зенга Зенгана»"/);
+      assert.match(html, /commons\.wikimedia\.org\/wiki\/File:Fragaria_ananassa_Senga_Sengana/);
+    } else {
+      assert.match(html, new RegExp(`src="/assets/variety-${slug}\\.webp" alt="Иллюстрация клубники`));
+    }
     assert.match(html, /Salimova\.pdf/);
     assert.match(html, /#page=414/);
     assert.match(html, new RegExp(facts.code));
@@ -1140,9 +1187,8 @@ test('допуск Вима Кимберли показывается для Ц�
   assert.deepEqual(kimberli.recommendations, []);
   for (const city of ['tula', 'belgorod']) {
     const html = await readFile(join(root, 'podbor', city, 'index.html'), 'utf8');
-    assert.match(html, /Кимберли · допуск в Госреестре/);
-    assert.match(html, /9154051/);
-    assert.match(html, /#page=414/);
+    assert.match(html, /<h3>Кимберли<\/h3>/);
+    assert.match(html, /href="\/sorta\/kimberli\/\?city=/);
   }
 });
 
@@ -1154,9 +1200,8 @@ test('допуск Самохвала из реестра распростран
   assert.deepEqual(samohval.recommendations.map(item => item.region_code), ['leningrad-oblast']);
   for (const city of ['tula', 'kaliningrad']) {
     const html = await readFile(join(root, 'podbor', city, 'index.html'), 'utf8');
-    assert.match(html, /Самохвал · допуск в Госреестре/);
-    assert.match(html, /8456205/);
-    assert.match(html, /#page=419/);
+    assert.match(html, /<h3>Самохвал<\/h3>/);
+    assert.match(html, /href="\/sorta\/samohval\/\?city=/);
   }
 });
 
@@ -1164,13 +1209,13 @@ test('город показывает подбор и один сворачив�
   const tula = await readFile(join(root, 'podbor', 'tula', 'index.html'), 'utf8');
   const query = new URLSearchParams({ city: 'Тула', region: 'Тульская область' }).toString().replaceAll('&', '&amp;');
   assert.ok(tula.indexOf('id="picker-form"') < tula.indexOf('class="section wrap verified-section"'));
-  assert.match(tula, /<details class="verified-details"><summary>Посмотреть записи Госреестра<\/summary>/);
+  assert.match(tula, /<details class="verified-details"><summary>Посмотреть сорта и основания<\/summary>/);
   assert.equal((tula.match(/class="section wrap verified-section"/g) || []).length, 1);
   assert.doesNotMatch(tula, /class="section wrap city-evidence"/);
   assert.ok(tula.includes(`href="/sorta/abrikosovaya/?${query}#gosreestr"`));
   assert.ok(tula.includes(`href="/sorta/abrikosovaya/?${query}#otzyvy"`));
   const arkhangelsk = await readFile(join(root, 'podbor', 'arkhangelsk', 'index.html'), 'utf8');
-  assert.doesNotMatch(arkhangelsk, /Абрикосовая · допуск в Госреестре/);
+  assert.doesNotMatch(arkhangelsk, /<h3>Абрикосовая<\/h3>/);
 });
 
 test('страница отзывов содержит простую форму и публичный снимок без служебных данных', async () => {

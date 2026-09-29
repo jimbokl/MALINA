@@ -11,18 +11,31 @@ if (form) {
     const heading = document.createElement('h2'); heading.textContent = advice.title;
     const context = document.createElement('p'); context.textContent = advice.context;
     const cards = document.createElement('div'); cards.className = 'mulch-options';
+    const usedSources = new Set();
     for (const option of advice.options) {
       const card = document.createElement('article'); card.className = 'mulch-option';
       if (option.status) { const status = document.createElement('span'); status.className = 'eyebrow'; status.textContent = option.status; card.append(status); }
       const title = document.createElement('h3'); title.textContent = option.material;
       card.append(title);
-      for (const [label, value] of [['Зачем', option.benefit], ['Что делать', option.maintenance], ['Граница', option.limit]]) {
+      for (const [label, value] of [['Чем поможет', option.benefit], ['Что делать', option.maintenance], ['На что обратить внимание', option.limit]]) {
         const paragraph = document.createElement('p'); const strong = document.createElement('strong'); strong.textContent = `${label}: `; paragraph.append(strong, document.createTextNode(value)); card.append(paragraph);
       }
-      const source = document.createElement('a'); source.href = mulchSources[option.source].url; source.textContent = `Открыть источник: ${mulchSources[option.source].label} ↗`; source.target = '_blank'; source.rel = 'noopener noreferrer'; card.append(source); cards.append(card);
+      usedSources.add(option.source);
+      cards.append(card);
     }
-    if (advice.source) { const source = document.createElement('a'); source.href = mulchSources[advice.source].url; source.textContent = `Основание: ${mulchSources[advice.source].label} ↗`; source.target = '_blank'; source.rel = 'noopener noreferrer'; cards.append(source); }
+    if (advice.source) usedSources.add(advice.source);
     const next = document.createElement('a'); next.href = advice.next.url; next.textContent = `${advice.next.label} →`; next.className = 'text-link';
-    result.replaceChildren(heading, context, cards, next); result.hidden = false; result.focus();
+    const sources = document.createElement('details');
+    const summary = document.createElement('summary'); summary.textContent = 'Источники и подробности';
+    const list = document.createElement('ul');
+    for (const key of usedSources) {
+      const item = mulchSources[key];
+      if (!item) continue;
+      const row = document.createElement('li');
+      const link = document.createElement('a'); link.href = item.url; link.textContent = item.label; link.target = '_blank'; link.rel = 'noopener noreferrer';
+      row.append(link); list.append(row);
+    }
+    sources.append(summary, list);
+    result.replaceChildren(heading, context, cards, next, sources); result.hidden = false; result.focus();
   });
 }

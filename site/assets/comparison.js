@@ -18,6 +18,8 @@ if (root) {
   const tableWrap = root.querySelector('.comparison-table-wrap');
   const context = root.querySelector('#comparison-context');
   const chooser = root.querySelector('#comparison-chooser');
+  const sources = root.querySelector('#comparison-sources');
+  const sourceList = sources?.querySelector('ul');
   const siteBase = document.documentElement.dataset.siteBase || '';
   const verbForms = count => count === 1 ? 'сорт' : count > 1 && count < 5 ? 'сорта' : 'сортов';
   let notice = '';
@@ -33,16 +35,20 @@ if (root) {
   if (city || region) {
     context.hidden = false;
     if (place.region?.admission_region_number) {
-      const zone = place.region.admission_region_number;
-      context.textContent = `Место сравнения: ${[place.city?.name, place.region.name_ru].filter(Boolean).join(', ')}. Ниже показаны записи Госреестра для региона допуска № ${zone}.`;
+      context.textContent = `Сравниваем сорта для ${[place.city?.name, place.region.name_ru].filter(Boolean).join(', ')}. Мы отметили, какие из них есть в официальном списке для этого региона.`;
     } else if (place.region) {
-      context.textContent = `Место сравнения: ${[place.city?.name, place.region.name_ru].filter(Boolean).join(', ')}. Номер региона допуска для него не сопоставлен.`;
+      context.textContent = `Сравниваем сорта для ${[place.city?.name, place.region.name_ru].filter(Boolean).join(', ')}. Для этого места мы пока не можем сверить официальный список.`;
     } else {
-      context.textContent = `Для указанного места регион сравнения не определён: ${[city, region].filter(Boolean).join(', ')}.`;
+      context.textContent = 'Не получилось найти этот город или регион. Проверьте название и попробуйте ещё раз.';
     }
   }
 
   function update() {
+    const evidence = new Map();
+    const remember = (url, label, detail = '') => {
+      if (!url || !label) return;
+      evidence.set(`${url}|${label}`, { url, label, detail });
+    };
     choices.forEach(input => { input.checked = selection.includes(input.value); });
     const selected = selection.map(slug => varieties.find(item => item.slug === slug)).filter(Boolean);
     status.textContent = notice || (selected.length < 2
@@ -75,14 +81,8 @@ if (root) {
         const item = selected[column];
         const td = document.createElement('td');
         if (index < factRows[column].length) {
-          td.append(document.createTextNode(factRows[column][index][1] || 'Нет проверенных данных'));
-          const source = document.createElement('a');
-          source.className = 'comparison-source';
-          source.href = item.source;
-          source.target = '_blank';
-          source.rel = 'noopener noreferrer';
-          source.textContent = `${item.sourceLabel} · проверено ${item.reviewedAt || root.dataset.reviewedAt} ↗`;
-          td.append(source);
+          td.textContent = factRows[column][index][1] || 'Пока нет данных';
+          remember(item.source, `${item.name}: ${item.sourceLabel}`, `Проверено ${item.reviewedAt || root.dataset.reviewedAt}`);
         } else if (index === factRows[column].length) {
           const studies = getComparisonYields(item);
           if (!studies.length) {
@@ -96,34 +96,24 @@ if (root) {
               study.append(value);
               if (yieldData.context) {
                 const detail = document.createElement('small');
-                detail.textContent = yieldData.context;
+                detail.textContent = yieldData.context.split(' · ')[0];
                 study.append(detail);
               }
-              const source = document.createElement('a');
-              source.className = 'comparison-source';
-              source.href = yieldData.sourceUrl;
-              source.target = '_blank';
-              source.rel = 'noopener noreferrer';
-              source.textContent = `${yieldData.sourceTitle}${yieldData.sourceLocator ? ` · ${yieldData.sourceLocator}` : ''} ↗`;
-              study.append(source);
+              remember(yieldData.sourceUrl, `${item.name}: ${yieldData.sourceTitle}`, [yieldData.context, yieldData.sourceLocator].filter(Boolean).join(' · '));
               td.append(study);
             }
           }
         } else {
           const admission = admissionForPlace(item, place);
           if (!Number.isInteger(place.region.admission_region_number)) {
-            td.append(document.createTextNode('Номер региона допуска не сопоставлен.'));
+            td.textContent = 'Пока не можем сверить';
           } else if (!admission) {
-            td.append(document.createTextNode(`В Госреестре 2024 года допуск для региона № ${place.region.admission_region_number} не указан.`));
+            td.textContent = `Для ${place.region.name_ru} записи нет`;
           } else {
-            td.append(document.createTextNode(`Регион № ${admission.admission_region_number} · запись ${admission.registry_entry_code} · издание ${admission.edition_as_of.slice(0, 4)}.`));
-            const source = document.createElement('a');
-            source.className = 'comparison-source';
-            source.href = `${admission.source_url}${admission.source_pdf_page ? `#page=${admission.source_pdf_page}` : ''}`;
-            source.target = '_blank';
-            source.rel = 'noopener noreferrer';
-            source.textContent = 'Строка Госреестра ↗';
-            td.append(source);
+            td.textContent = `Есть для ${place.region.name_ru}`;
+            remember(`${admission.source_url}${admission.source_pdf_page ? `#page=${admission.source_pdf_page}` : ''}`,
+              `${item.name}: официальный список`,
+              `Регион № ${admission.admission_region_number} · запись ${admission.registry_entry_code} · издание ${admission.edition_as_of.slice(0, 4)}`);
           }
         }
         tr.append(td);
@@ -132,6 +122,21 @@ if (root) {
     }
     table.hidden = selected.length < 2;
     tableWrap.hidden = selected.length < 2;
+    if (sources && sourceList) {
+      sourceList.replaceChildren();
+      for (const item of evidence.values()) {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = item.url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = item.label;
+        li.append(link);
+        if (item.detail) li.append(document.createTextNode(` · ${item.detail}`));
+        sourceList.append(li);
+      }
+      sources.hidden = selected.length < 2 || !evidence.size;
+    }
     if (selected.length < 2 && chooser) chooser.open = true;
     const next = comparisonHref(cropKey, selection, location.search, siteBase);
     history.replaceState(null, '', next);

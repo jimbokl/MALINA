@@ -51,10 +51,10 @@ test('официальные допуски остаются видимыми п
   runInNewContext(source.replace(/\bimport\s*\(/g, '__import('), context);
   await listeners.get('submit')({ preventDefault() {} });
 
-  assert.match(status.textContent, /В Госреестре: 1 запись о допуске сортов/);
+  assert.match(status.textContent, /Мы нашли 1 сорт из официального списка/);
   assert.equal(results.children.length, 1);
-  assert.equal(results.children[0].children[0].textContent, 'Гусар · допуск в Госреестре');
-  assert.equal(results.children[0].children[2].href, '/sorta/gusar/?region=%D0%A2%D1%83%D0%BB%D1%8C%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C#gosreestr');
+  assert.equal(results.children[0].children[0].textContent, 'Гусар');
+  assert.equal(results.children[0].children[2].href, '/sorta/gusar/?region=%D0%A2%D1%83%D0%BB%D1%8C%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C');
 
   await listeners.get('picker:location-change')();
   assert.equal(results.children.length, 0);

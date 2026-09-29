@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { relatedShopProducts } from '../shop-related.mjs';
+import { relatedShopProducts, outOfStockNextProducts } from '../shop-related.mjs';
 
 test('related products show available offers of the same crop and prefer the same category', () => {
   const products = [
@@ -23,4 +23,36 @@ test('related products rotate with the current page instead of repeating the fir
   const offerFor = () => true;
   assert.deepEqual(relatedShopProducts(products[0], products, offerFor).map(product => product.slug), ['b', 'c', 'd']);
   assert.deepEqual(relatedShopProducts(products[2], products, offerFor).map(product => product.slug), ['d', 'e', 'a']);
+});
+
+test('out of stock path prefers another available offer of the same cultivar', () => {
+  const products = [
+    { slug: 'missing', crop: 'raspberry', cultivarSlug: 'gusar', source: 'seller-a' },
+    { slug: 'other-crop', crop: 'strawberry', cultivarSlug: 'gusar' },
+    { slug: 'same-seller', crop: 'raspberry', cultivarSlug: 'gusar', source: 'seller-a' },
+    { slug: 'same-cultivar', crop: 'raspberry', cultivarSlug: 'gusar', source: 'seller-b' },
+    { slug: 'other-cultivar', crop: 'raspberry', cultivarSlug: 'gerakl' }
+  ];
+  const offerFor = item => item.slug !== 'missing' ? { source: item.source } : null;
+  assert.deepEqual(outOfStockNextProducts(products[0], products, offerFor, () => true), {
+    kind: 'same_cultivar', products: [products[3], products[2]]
+  });
+});
+
+test('out of stock path uses available catalogued cultivars only, then picker', () => {
+  const products = [
+    { slug: 'missing', crop: 'strawberry', cultivarSlug: 'aziya' },
+    { slug: 'no-offer', crop: 'strawberry', cultivarSlug: 'alba' },
+    { slug: 'unverified', crop: 'strawberry', cultivarSlug: null },
+    { slug: 'verified', crop: 'strawberry', cultivarSlug: 'alba' },
+    { slug: 'wrong-crop', crop: 'raspberry', cultivarSlug: 'gusar' }
+  ];
+  const offerFor = item => item.slug !== 'missing' && item.slug !== 'no-offer';
+  const isVerified = item => item.slug === 'verified';
+  assert.deepEqual(outOfStockNextProducts(products[0], products, offerFor, isVerified), {
+    kind: 'other_cultivars', products: [products[3]]
+  });
+  assert.deepEqual(outOfStockNextProducts(products[0], products, () => null, isVerified), {
+    kind: 'picker', products: []
+  });
 });

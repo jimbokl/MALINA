@@ -34,5 +34,5 @@ export function recommendationLabel(count) {
 }
 
 export function snapshotDate(asOf) {
-  return new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).format(new Date(asOf)) + ' UTC';
+  return new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(asOf));
 }

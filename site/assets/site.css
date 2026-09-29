@@ -695,3 +695,28 @@
   .city-card .eyebrow{font-size:10px}
   .city-card-link{font-size:12px}
 }
+
+/* Mobile choice flow: readable city actions, compact results and a visible offer. */
+@media(max-width:700px){
+  .city-directory-tools input,.region-input{font-size:16px;min-height:52px}
+  .city-card-actions{width:100%;gap:0}
+  .city-card-link{display:flex;align-items:center;min-height:44px;padding:9px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.3}
+  .city-card-primary{font-size:15px}
+  #picker-results .variety-card{padding:18px}
+  #picker-results .variety-card-media{margin:12px 0 14px}
+  #picker-results .variety-card-media img{aspect-ratio:16/9}
+  #picker-results .variety-card-bottom a{display:inline-flex;align-items:center;min-height:44px;font-size:13px;line-height:1.3}
+  .shop-product-main .shop-order{order:-1}
+  .shop-product-main .shop-product-image img{aspect-ratio:16/10}
+  .shop-product-hero h1{overflow-wrap:anywhere}
+}
+
+.variety-photo-gallery{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:38px;align-items:start;padding-block:30px 65px}
+.variety-photo-gallery h2{font-family:var(--serif);font-size:clamp(31px,3vw,44px);letter-spacing:-.04em;margin:12px 0}
+.variety-photo-gallery p{max-width:390px;line-height:1.65;color:var(--muted)}
+.variety-photo-gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px}
+.variety-photo-gallery figure{margin:0;background:#fffdf8;border:1px solid var(--line);padding:12px}
+.variety-photo-gallery img{display:block;width:100%;height:auto;max-height:390px;object-fit:contain;background:#f4f1e8}
+.variety-photo-gallery figcaption{padding:11px 2px 3px;color:#60705f;font-size:12px;line-height:1.45}
+.photo-attribution{margin-top:14px;font-size:13px;line-height:1.55}
+@media(max-width:700px){.variety-photo-gallery{grid-template-columns:1fr;gap:20px;padding-block:15px 45px}.variety-photo-gallery-grid{grid-template-columns:1fr}}

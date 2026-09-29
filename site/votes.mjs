@@ -19,7 +19,7 @@ export function voteWidget(v, snapshot, api) {
 }
 
 export function voteFreshness(snapshot) {
-  return `<p class="vote-freshness" data-vote-freshness>Снимок рекомендаций: <time datetime="${e(snapshot.as_of)}">${e(snapshotDate(snapshot.as_of))}</time></p>`;
+  return `<p class="vote-freshness" data-vote-freshness>Голоса на <time datetime="${e(snapshot.as_of)}">${e(snapshotDate(snapshot.as_of))}</time></p>`;
 }
 
 export function ratingBody(varieties, snapshot, api) {

@@ -93,7 +93,7 @@ test('в статическом HTML есть рейтинг, реальные �
     const html = await readFile(new URL(`../../dist/sorta/${variety.slug}/index.html`, import.meta.url), 'utf8');
     assert.match(html, new RegExp(`data-vote-widget="${variety.slug}"`));
     assert.match(html, /aria-pressed="false"/);
-    assert.match(html, /data-vote-freshness/);
+    assert.doesNotMatch(html, /data-vote-freshness/);
     const count = data.votes.find(v => v.cultivar_slug === variety.slug).count;
     assert.ok(html.includes(recommendationLabel(count)));
     assert.ok(rating.includes(`data-rating-slug="${variety.slug}"`));

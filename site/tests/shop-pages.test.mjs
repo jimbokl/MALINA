@@ -264,6 +264,50 @@ test('свежие цены и акции несут срок действия �
   }
 });
 
+test('распроданный товар ведёт к тому же сорту, затем к другому сорту или подбору', async () => {
+  const temp = await mkdtemp(join(tmpdir(), 'malina-shop-next-'));
+  try {
+    const checkedAt = new Date();
+    const expiresAt = new Date(checkedAt.getTime() + 6 * 60 * 60 * 1000);
+    const active = [
+      { id: 'g-300164', source: 'garshinka', name: 'Малина Геракл ремонтантная красная (лицензионная)',
+        merchantUrl: 'https://www.garshinka.ru/product/gerakl', affiliateHost: 'codeaven.com' },
+      { id: '67762', source: 'agrosemfond', name: 'Малина крупноплодная Гусар',
+        merchantUrl: 'https://agrosemfond.ru/catalog/gusar/', affiliateHost: 'rzekl.com' }
+    ].map(item => ({
+      id: item.id, source: item.source, name: item.name, availability: 'in_stock',
+      priceMinor: 44950, currency: 'RUB', merchantUrl: item.merchantUrl,
+      affiliateUrl: `https://${item.affiliateHost}/g/abc/?ulp=${encodeURIComponent(item.merchantUrl)}`
+    }));
+    const unavailableGroups = ['gerakl-sazhenec', 'zheltyy-gigant-sazhenec', 'aziya-sazhenec'];
+    const unavailable = shopProducts
+      .filter(item => unavailableGroups.includes(item.canonicalSlug || item.slug))
+      .map(item => ({ id: item.id, source: item.source, availability: 'out_of_stock' }));
+    const snapshotPath = join(temp, 'offers.json');
+    const output = join(temp, 'dist');
+    await writeFile(snapshotPath, JSON.stringify({ checkedAt: checkedAt.toISOString(), expiresAt: expiresAt.toISOString(), products: [...active, ...unavailable] }));
+    execFileSync(process.execPath, [join(root, 'site', 'scripts', 'build.mjs')], {
+      cwd: root, env: { ...process.env, MALINA_BUILD_OUT: output, MALINA_SHOP_SNAPSHOT: snapshotPath }, stdio: 'pipe'
+    });
+    const readPage = slug => readFile(join(output, 'magazin', slug, 'index.html'), 'utf8');
+    const sameCultivar = await readPage('gerakl-sazhenec');
+    assert.match(sameCultivar, /data-shop-next-step="same_cultivar"/);
+    assert.match(sameCultivar, /href="\/magazin\/tovar-g-300164\/"/);
+    assert.doesNotMatch(sameCultivar, /data-affiliate-offer=/);
+    const otherCultivars = await readPage('zheltyy-gigant-sazhenec');
+    assert.match(otherCultivars, /data-shop-next-step="other_cultivars"/);
+    assert.match(otherCultivars, /href="\/magazin\/gusar-sazhenec\/"/);
+    assert.doesNotMatch(otherCultivars, /data-affiliate-offer=/);
+    const picker = await readPage('aziya-sazhenec');
+    assert.match(picker, /data-shop-next-step="picker"/);
+    assert.match(picker, /href="\/podbor\/"/);
+    assert.match(picker, /href="\/sorta\/\?crop=strawberry"/);
+    assert.doesNotMatch(picker, /data-affiliate-offer=/);
+  } finally {
+    await rm(temp, { recursive: true, force: true });
+  }
+});
+
 test('товарная страница ведёт к подбору города без повторяющихся оговорок', async () => {
   for (const product of publicProducts) {
     const html = await productHtml(product);

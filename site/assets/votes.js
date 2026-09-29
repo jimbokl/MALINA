@@ -84,7 +84,7 @@ async function mountVotes() {
   function freshness(live) {
     if (!snapshot) return;
     document.querySelectorAll('[data-vote-freshness]').forEach(node => {
-      node.textContent = `${live ? 'Рекомендации обновлены' : 'Снимок рекомендаций'}: ${snapshotDate(snapshot.as_of)}`;
+      node.textContent = `${live ? 'Голоса обновлены' : 'Голоса на'} ${snapshotDate(snapshot.as_of)}`;
     });
   }
   cropFilter?.addEventListener('change', () => {

@@ -38,9 +38,9 @@ export function getComparisonFacts(variety) {
   return [
     ['Культура', variety.crop],
     ['Тип плодоношения', variety.fruitingLabel || null],
-    ['Период по источнику', variety.period || null],
-    ['Указанное место выращивания', variety.place || null],
-    ['Что сообщает источник', variety.note || null]
+    ['Когда созревает', variety.period || null],
+    ['Где изучали сорт', variety.place || null],
+    ['Коротко о сорте', variety.note || null]
   ];
 }
 
@@ -81,8 +81,8 @@ export function getComparisonYield(variety) {
 }
 
 export function getComparisonLabels(includeAdmissions = false) {
-  const labels = ['Культура', 'Тип плодоношения', 'Период по источнику', 'Указанное место выращивания', 'Что сообщает источник', 'Урожайность в источнике'];
-  return includeAdmissions ? [...labels, 'Допуск в Госреестре'] : labels;
+  const labels = ['Культура', 'Тип плодоношения', 'Когда созревает', 'Где изучали сорт', 'Коротко о сорте', 'Урожайность'];
+  return includeAdmissions ? [...labels, 'Есть ли сорт в официальном списке'] : labels;
 }
 
 const normalizePlace = value => String(value || '').trim().toLocaleLowerCase('ru-RU').replace(/\s+/g, ' ');

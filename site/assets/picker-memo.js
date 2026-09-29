@@ -52,33 +52,33 @@ if (form && results && memo) {
     steps.replaceChildren();
     sources.replaceChildren();
 
-    memo.querySelector('#picker-memo-title').textContent = `Сорт «${name}»: памятка после подбора`;
-    memo.querySelector('#picker-memo-lead').textContent = `Регион: ${selection.region}. Проверьте условия участка и данные о сорте перед посадкой.`;
+    memo.querySelector('#picker-memo-title').textContent = `«${name}»: ваша памятка`;
+    memo.querySelector('#picker-memo-lead').textContent = `Мы подобрали этот сорт для ${selection.region}. Перед посадкой посмотрите, подходит ли ему именно ваш участок.`;
     addFact('Культура', crop === 'raspberry' ? 'Малина' : 'Клубника');
     addFact('Тип плодоношения', card.dataset.fruitingLabel);
-    addFact('Срок по описанию сорта', card.dataset.periodLabel);
-    addFact('Место по описанию сорта', card.dataset.placeLabel);
+    addFact('Когда ждать ягоды', card.dataset.periodLabel);
+    addFact('Где выращивать', card.dataset.placeLabel);
 
     const items = [
-      'Сверьте название сорта и его свойства с первоисточником. Перед покупкой запросите происхождение и состояние конкретной партии саженцев.',
+      'Перед покупкой уточните у продавца название сорта, состояние саженца и что именно входит в заказ.',
       selection.light === 'unknown'
-        ? 'Проверьте освещённость места перед выбором сорта.'
+        ? 'Посмотрите, сколько солнца бывает на месте посадки.'
         : selection.light === 'shade'
-          ? 'Вы отметили заметную тень. Сопоставьте её с описанием места выращивания сорта.'
-          : 'Вы отметили солнечное место. Сверьте его с описанием сорта и наблюдением на своём участке.',
+          ? 'Вы отметили тень. Посмотрите, хватит ли сорту света на этом месте.'
+          : 'Вы отметили солнечное место. Посмотрите, не пересыхает ли там почва.',
       selection.drainage === 'wet'
         ? 'После дождя вода долго стоит: сначала разберитесь с отводом воды.'
         : 'Посмотрите, задерживается ли вода после дождя.'
     ];
     if (crop === 'raspberry') {
-      if (card.dataset.fruiting === 'summer') items.push('Для летней малины после сбора вырезают отплодоносившие побеги у земли, сохраняя молодые побеги для следующего сезона. Подтвердите тип сорта до обрезки.');
-      else if (card.dataset.fruiting === 'remontant') items.push('Для ремонтантной малины схема обрезки зависит от цели: один поздний урожай или два. Сначала выберите схему и проверьте местные условия.');
-      else items.push('Перед обрезкой уточните тип плодоношения сорта по первоисточнику. Без него нельзя выбрать схему.');
+      if (card.dataset.fruiting === 'summer') items.push('У летней малины после сбора вырежьте отплодоносившие побеги у земли, а молодые оставьте на следующий год.');
+      else if (card.dataset.fruiting === 'remontant') items.push('У ремонтантной малины сначала решите, нужен один поздний урожай или два: от этого зависит обрезка.');
+      else items.push('Перед обрезкой узнайте, на каких побегах этот сорт даёт ягоды.');
       items.push('При посадке найдите прежнюю отметку грунта на побеге и прикройте верхние корни. Для микроплантов нужна инструкция к партии.');
     } else {
       items.push('При посадке основание сердечка оставляют у поверхности, а корни закрывают грунтом. Для микроплантов после In Vitro нужна инструкция к партии.');
     }
-    if (selection.shelter !== 'unknown') items.push('Сверьте план зимнего укрытия с особенностями сорта и участка.');
+    if (selection.shelter !== 'unknown') items.push('Подумайте заранее, понадобится ли этому сорту укрытие на вашем участке.');
     for (const item of items) {
       const li = document.createElement('li');
       li.textContent = item;
@@ -92,7 +92,7 @@ if (form && results && memo) {
       : 'https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/sibirskiy/omskaya-oblast/osennyaya-posadka-sadovoy-zemlyaniki/');
     addLink('Повторить подбор на сайте', new URL(location.pathname, location.origin).href);
     const madeAt = new Intl.DateTimeFormat('ru-RU', { dateStyle: 'long' }).format(new Date());
-    memo.querySelector('#picker-memo-date').textContent = `Памятка создана ${madeAt}. Описание сорта проверено ${card.dataset.reviewedAt}.`;
+    memo.querySelector('#picker-memo-date').textContent = `Составили памятку ${madeAt}.`;
     memo.hidden = false;
     document.body.classList.add('picker-memo-ready');
     memo.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });

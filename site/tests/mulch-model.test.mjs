@@ -8,7 +8,7 @@ test('мульча различает системы клубники и зим�
   const winter = compareMulch({ crop: 'strawberry', system: 'day-neutral', goal: 'winter' });
   assert.match(june.options[0].material, /Солома/);
   assert.match(neutral.options[0].material, /Плёночная/);
-  assert.match(winter.options[0].limit, /Не является обычной летней/);
+  assert.match(winter.options[0].limit, /Летом не укрывайте соломой сами растения/);
   assert.notEqual(june.options[0].source, neutral.options[0].source);
 });
 

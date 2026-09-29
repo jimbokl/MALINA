@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
 import { varieties } from '../data.mjs';
-import { cultivarImage, varietyMedia } from '../variety-media.mjs';
+import { cultivarImage, cultivarSupplementalImages, varietyMedia, varietyPhotoSources, varietySupplementalPhotoSources } from '../variety-media.mjs';
 
 const assetsDir = new URL('../assets/', import.meta.url);
 // The approved image was visually checked: ripe berries are yellow/gold, not red.
@@ -42,12 +42,166 @@ test('красная малина не получает жёлтую общую 
 });
 
 test('отдельные иллюстрации красных сортов существуют и не используются для жёлтых', () => {
-  for (const slug of ['gusar', 'meteor', 'peresvet', 'polana', 'atlant', 'gerakl']) {
+  for (const slug of ['gusar', 'meteor', 'peresvet', 'gerakl']) {
     const variety = varieties.find((item) => item.slug === slug && item.cropKey === 'raspberry');
     assert.ok(variety, slug);
     assert.equal(variety.fruitColor, 'red', slug);
     assert.equal(varietyMedia[slug].fruitColor, 'red', slug);
     assert.equal(cultivarImage(variety).src, `/assets/variety-${slug}.webp`, slug);
     assert.ok(existsSync(fileURLToPath(new URL(`variety-${slug}.webp`, assetsDir))), slug);
+  }
+});
+
+test('фото сорта имеют подтверждённый источник, условия публикации и проверенный файл', async () => {
+  const photoSlugs = Object.entries(varietyMedia).filter(([, media]) => media.kind === 'photo').map(([slug]) => slug);
+  assert.ok(photoSlugs.length >= 2);
+  assert.deepEqual(photoSlugs.sort(), Object.keys(varietyPhotoSources).sort());
+  for (const slug of photoSlugs) {
+    const media = varietyMedia[slug];
+    const source = varietyPhotoSources[slug];
+    const variety = varieties.find((item) => item.slug === slug);
+    assert.ok(variety, slug);
+    assert.equal(source.file, media.file, slug);
+    assert.match(source.sourcePage, /^https:\/\/(?:commons\.wikimedia\.org\/wiki\/File:|pmc\.ncbi\.nlm\.nih\.gov\/articles\/PMC\d+\/#|horticulturejournal\.usamv\.ro\/pdf\/2024\/issue_1\/Art2\.pdf#page=3|jbiochemtech\.com\/storage\/models\/article\/[^/]+\/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology\.pdf#page=[45]$|biosel\.elpub\.ru\/jour\/article\/download\/143\/139#page=4$|www\.flickr\.com\/photos\/graibeard\/3220923545\/)/, slug);
+    assert.match(source.originalUrl, /^https:\/\/(?:upload\.wikimedia\.org\/wikipedia\/commons\/|cdn\.ncbi\.nlm\.nih\.gov\/pmc\/|horticulturejournal\.usamv\.ro\/pdf\/2024\/issue_1\/Art2\.pdf$|jbiochemtech\.com\/storage\/models\/article\/[^/]+\/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology\.pdf$|biosel\.elpub\.ru\/jour\/article\/download\/143\/139$|live\.staticflickr\.com\/3128\/3220923545_c22ae77719_b\.jpg$|mdpi-res\.com\/d_attachment\/foods\/foods-11-00640\/article_deploy\/foods-11-00640\.pdf$)/, slug);
+    assert.ok(source.identityEvidence.length >= 20, slug);
+    assert.match(source.author, /\S{3,}/, slug);
+    assert.match(source.license, /^CC(?: BY|0)/, slug);
+    assert.match(source.licenseUrl, /^https:\/\/creativecommons\.org\//, slug);
+    assert.match(source.originalSha256, /^[0-9a-f]{64}$/, slug);
+    if (source.sourcePanelSha256) assert.match(source.sourcePanelSha256, /^[0-9a-f]{64}$/, slug);
+    const bytes = await readFile(new URL(source.file, assetsDir));
+    assert.equal(bytes.toString('ascii', 0, 4), 'RIFF', slug);
+    assert.equal(bytes.toString('ascii', 8, 12), 'WEBP', slug);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), source.sha256, slug);
+    const image = cultivarImage(variety);
+    assert.equal(image.src, `/assets/${source.file}`, slug);
+    assert.match(image.alt, /^Фото /, slug);
+    assert.match(image.shortCaption, /^Фото сорта/, slug);
+    assert.ok(!image.shortCaption.includes('<'), slug);
+    assert.match(image.caption, /<a href=/, slug);
+    assert.ok(!image.captionText.includes('<'), slug);
+    assert.equal(image.width, source.width ?? 960, slug);
+    assert.equal(image.height, source.height ?? 640, slug);
+  }
+});
+
+test('дополнительные снимки сорта имеют отдельный источник и сверенный файл', async () => {
+  for (const [slug, source] of Object.entries(varietySupplementalPhotoSources)) {
+    const variety = varieties.find((item) => item.slug === slug);
+    assert.ok(variety, slug);
+    assert.equal(varietyMedia[slug].kind, undefined, 'дополнительный снимок не подменяет главный визуал');
+    assert.match(source.sourcePage, /^https:\/\/(?:www\.agronauka-sv\.ru\/jour\/article\/view\/1761|biosel\.elpub\.ru\/jour\/article\/download\/143\/139#page=4)/, slug);
+    assert.match(source.originalUrl, /^https:\/\/(?:www\.agronauka-sv\.ru\/jour\/article\/download\/1761\/816|biosel\.elpub\.ru\/jour\/article\/download\/143\/139)/, slug);
+    assert.match(source.originalSha256, /^[0-9a-f]{64}$/, slug);
+    assert.match(source.sourcePanelSha256, /^[0-9a-f]{64}$/, slug);
+    assert.match(source.license, /^CC BY/, slug);
+    assert.match(source.licenseUrl, /^https:\/\/creativecommons\.org\/licenses\/by\//, slug);
+    assert.match(source.author, /\S{3,}/, slug);
+    assert.match(source.identityEvidence, /(?:Рисунок|рисунок) [15]/, slug);
+    const bytes = await readFile(new URL(source.file, assetsDir));
+    assert.equal(bytes.toString('ascii', 0, 4), 'RIFF', slug);
+    assert.equal(bytes.toString('ascii', 8, 12), 'WEBP', slug);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), source.sha256, slug);
+    const [image] = cultivarSupplementalImages(variety);
+    assert.ok(image, slug);
+    assert.equal(image.src, `/assets/${source.file}`, slug);
+    assert.equal(image.width, source.width, slug);
+    assert.equal(image.height, source.height, slug);
+    assert.match(image.shortCaption, /^Фото сорта:/, slug);
+    assert.match(image.caption, /<a href=/, slug);
+  }
+});
+
+test('Дарёнка сохраняет иллюстрацию обложки и получает фото гербарного образца', () => {
+  const darenka = varieties.find((item) => item.slug === 'darenka');
+  assert.ok(darenka);
+  assert.equal(cultivarImage(darenka).src, '/assets/variety-darenka.webp');
+  assert.match(varietySupplementalPhotoSources.darenka.identityEvidence, /Рисунок 5.*Дарёнка/);
+  assert.match(cultivarSupplementalImages(darenka)[0].shortCaption, /гербарного образца с ягодами/);
+});
+
+test('Фестивальная сохраняет иллюстрацию обложки, а больные ягоды честно подписаны', () => {
+  const festivalnaya = varieties.find((item) => item.slug === 'festivalnaya');
+  assert.ok(festivalnaya);
+  assert.equal(cultivarImage(festivalnaya).src, '/assets/variety-festivalnaya.webp');
+  assert.match(varietySupplementalPhotoSources.festivalnaya.identityEvidence, /панель В.*Фестивальная.*антракноз/);
+  const [image] = cultivarSupplementalImages(festivalnaya);
+  assert.match(image.alt, /поражённые антракнозом/);
+  assert.match(image.shortCaption, /поражённые антракнозом/);
+});
+
+test('фото Альбы и Азии взяты только из соответствующих подписанных панелей статьи', () => {
+  for (const [slug, panel] of [['alba', 'a'], ['aziya', 'b']]) {
+    const variety = varieties.find((item) => item.slug === slug && item.cropKey === 'strawberry');
+    assert.ok(variety);
+    const source = varietyPhotoSources[slug];
+    assert.match(source.identityEvidence, new RegExp(`панель ${panel}`));
+    assert.match(source.captionChange, new RegExp(`панель ${panel}`));
+    assert.match(cultivarImage(variety).captionText, new RegExp(`панель ${panel}`));
+    assert.equal(cultivarImage(variety).width, source.width);
+  }
+});
+
+test('Кембридж Фаворит использует здоровые ягоды с подписанной панели Б, а Фестивальная остаётся иллюстрацией', () => {
+  const source = varietyPhotoSources['cambridge-favourite'];
+  assert.match(source.identityEvidence, /панель Б.*Cambridge Favourite.*здоровые красные ягоды/);
+  assert.match(source.captionChange, /панель Б/);
+  assert.equal(varietyMedia['cambridge-favourite'].kind, 'photo');
+  assert.notEqual(varietyMedia.festivalnaya.kind, 'photo');
+});
+
+test('фото Хонея точно помечено как снимок незрелых ягод', () => {
+  const honey = varieties.find((item) => item.slug === 'honey');
+  assert.ok(honey);
+  const image = cultivarImage(honey);
+  assert.match(image.alt, /незрелые ягоды/);
+  assert.match(image.captionText, /незрелые ягоды/);
+});
+
+test('фото Польки взято только из подписанной панели научной статьи', () => {
+  const polka = varieties.find((item) => item.slug === 'polka' && item.cropKey === 'raspberry');
+  assert.ok(polka);
+  const source = varietyPhotoSources.polka;
+  assert.match(source.identityEvidence, /панель C.*Polka/);
+  assert.match(source.transformation, /панель C/);
+  const image = cultivarImage(polka);
+  assert.match(image.captionText, /панель C, кадрировано/);
+});
+
+test('снимок Атланта подписан сортом и показывает красные ягоды', () => {
+  const atlant = varieties.find((item) => item.slug === 'atlant' && item.cropKey === 'raspberry');
+  assert.ok(atlant);
+  assert.equal(atlant.fruitColor, 'red');
+  assert.match(varietyPhotoSources.atlant.identityEvidence, /Атлант.*красные/);
+  assert.equal(cultivarImage(atlant).src, '/assets/variety-photo-atlant.webp');
+});
+
+test('снимок Херитейдж подписан сортом и лицензирован на Flickr', () => {
+  const heritage = varieties.find((item) => item.slug === 'heritage' && item.cropKey === 'raspberry');
+  assert.ok(heritage);
+  assert.equal(heritage.fruitColor, 'red');
+  assert.match(varietyPhotoSources.heritage.identityEvidence, /Heritage.*CC BY-SA 2\.0/);
+  assert.equal(cultivarImage(heritage).src, '/assets/variety-photo-heritage.webp');
+});
+
+test('фото Альбиона взято из подписанной панели со спелыми ягодами', () => {
+  const albion = varieties.find((item) => item.slug === 'albion' && item.cropKey === 'strawberry');
+  assert.ok(albion);
+  const source = varietyPhotoSources.albion;
+  assert.match(source.identityEvidence, /Albion.*B/);
+  assert.match(source.transformation, /панель B/);
+  assert.match(cultivarImage(albion).captionText, /панель B/);
+});
+
+test('пять фото сортов ФНЦ соответствуют подписанным рисункам статьи', () => {
+  for (const [slug, figure] of [['slavutich', 3], ['vityaz', 4], ['tsaritsa', 5], ['alfa', 6], ['bereginya', 7]]) {
+    const variety = varieties.find((item) => item.slug === slug && item.cropKey === 'strawberry');
+    assert.ok(variety, slug);
+    const source = varietyPhotoSources[slug];
+    assert.match(source.identityEvidence, new RegExp(`Figure ${figure}`), slug);
+    assert.match(source.captionChange, new RegExp(`рисунок ${figure}`), slug);
+    assert.match(cultivarImage(variety).captionText, new RegExp(`рисунок ${figure}`), slug);
+    assert.equal(source.originalSha256, '6b5585cd4373f9727005093e4f87279ad3237f4075a9c9b0476441bfd81962ac', slug);
   }
 });

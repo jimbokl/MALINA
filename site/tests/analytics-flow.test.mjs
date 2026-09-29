@@ -87,13 +87,15 @@ test('collector remains inert without a configured counter', async () => {
   assert.deepEqual(state.calls, []);
 });
 
-test('review conversion records only publication state and reply kind', () => {
+test('review conversion records accepted status and reply kind without counting rejection', () => {
   const state = harness({ path: '/otzyvy/', counter: '12345' });
   state.window.malinaTrackReviewSubmitted('published', true);
+  state.window.malinaTrackReviewSubmitted('pending_human_review', false);
+  state.window.malinaTrackReviewSubmitted('rejected', false);
   state.window.malinaTrackReviewSubmitted('PRIVATE_STATUS', false);
   assert.deepEqual(state.goals(), [
     { name: 'review_submitted', params: { page_type: 'other', kind: 'reply', publication_state: 'published' } },
-    { name: 'review_submitted', params: { page_type: 'other', kind: 'review', publication_state: 'other' } }
+    { name: 'review_submitted', params: { page_type: 'other', kind: 'review', publication_state: 'pending_human_review' } }
   ]);
   assert.doesNotMatch(JSON.stringify(state.calls), /PRIVATE_STATUS/);
 });
@@ -240,12 +242,12 @@ test('selector start, regional rule outcomes, error and completion send no form 
   await tick();
   await picker.dispatchEvent({ type: 'focusin' });
   await picker.dispatchEvent({ type: 'focusin' });
-  status.textContent = 'Регион не сопоставлен с районированием Госреестра.';
+  status.dataset.outcome = 'unmapped_region';
   state.observers[0].callback();
   state.observers[0].callback();
-  status.textContent = 'Не удалось загрузить данные Госреестра. Попробуйте позже.';
+  status.dataset.outcome = 'load_error';
   state.observers[0].callback();
-  status.textContent = '1 сорт с проверенным региональным правилом для региона «PRIVATE_REGION».';
+  status.dataset.outcome = 'verified_rule';
   state.observers[0].callback();
   await picker.dispatchEvent({ type: 'submit', preventDefault() {}, stopImmediatePropagation() {} });
   assert.deepEqual(state.goals(), [

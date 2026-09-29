@@ -58,8 +58,8 @@ test('seller age is attributed and a duplicate offer gets a distinct title', () 
     description: 'ПрименениеУрожайность 10 кг. Возраст саженца1 годУсловия выращиванияСолнце.'
   });
   assert.equal(article.title, 'Малина Атлант — товар № 123456');
-  assert.match(article.paragraphs.join(' '), /В описании продавца указан возраст саженца — 1 год/);
-  assert.match(article.paragraphs.join(' '), /схему ухода и обрезки/);
+  assert.match(article.paragraphs.join(' '), /Продавец указывает возраст саженца: 1 год/);
+  assert.match(article.paragraphs.join(' '), /рекомендации по обрезке/);
   assert.doesNotMatch(article.paragraphs.join(' '), /10 кг|Урожайность/);
 });
 
@@ -70,7 +70,7 @@ test('bundle composition is taken from labeled seller lines', () => {
     description: 'Состав набора:\nЗемляника садовая Априка 1 шт.горшок 0,5 л.\nЗемляника садовая Арианна 1 шт.горшок 0,5 л.\nЗемляника садовая Альба 1 шт.горшок 0,5 л.'
   });
   assert.match(article.paragraphs.join(' '), /Априка.*Арианна.*Альба/);
-  assert.match(article.paragraphs.join(' '), /В описании продавца перечислены/);
+  assert.match(article.paragraphs.join(' '), /В набор входят/);
   assert.doesNotMatch(article.paragraphs.join(' '), /шт\.горшок/);
 });
 
