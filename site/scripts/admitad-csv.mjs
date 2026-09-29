@@ -1,6 +1,6 @@
-const requiredColumns = ['available', 'categoryId', 'currencyId', 'id', 'name', 'picture', 'price', 'url'];
+const productColumns = ['available', 'categoryId', 'currencyId', 'id', 'name', 'picture', 'price', 'url'];
 
-export function parseCsv(input) {
+export function parseCsv(input, requiredColumns = productColumns) {
   const text = input.replace(/^\uFEFF/, '');
   const records = [];
   let row = [];

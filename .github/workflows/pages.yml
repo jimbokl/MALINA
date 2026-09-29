@@ -38,6 +38,11 @@ jobs:
           ADMITAD_FEED_URL: ${{ secrets.ADMITAD_FEED_URL }}
           ADMITAD_FEED_URL_GARSHINKA: ${{ secrets.ADMITAD_FEED_URL_GARSHINKA }}
         run: node site/scripts/admitad-feed.mjs
+      - name: Refresh Admitad coupons
+        env:
+          ADMITAD_COUPONS_URL_GARSHINKA: ${{ secrets.ADMITAD_COUPONS_URL_GARSHINKA }}
+          ADMITAD_COUPONS_URL_AGROSEMFOND: ${{ secrets.ADMITAD_COUPONS_URL_AGROSEMFOND }}
+        run: node site/scripts/admitad-coupons.mjs
       - name: Build informational site
         env:
           SITE_URL: http://malinaklubnika.ru
