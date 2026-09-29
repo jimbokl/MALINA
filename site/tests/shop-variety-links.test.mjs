@@ -17,6 +17,7 @@ test('shop cultivar identity requires the whole verified name in the correct cro
   assert.equal(matchShopCultivar(raspberry('Малина ремонтантная Гусар')), null);
   assert.equal(matchShopCultivar(raspberry('Малина ремонтантная Золотая осень')), null);
   assert.equal(matchShopCultivar(raspberry('Малина Джоан Джи')), null);
+  assert.equal(matchShopCultivar({ ...raspberry('Малина Гусар ремонтантная'), source: 'garshinka' }), null);
   assert.equal(matchShopCultivar({ ...raspberry('Малина Метеор'), crop: 'strawberry' }), null);
 });
 

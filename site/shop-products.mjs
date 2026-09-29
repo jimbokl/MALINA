@@ -186,7 +186,8 @@ export function matchShopCultivar(product) {
   if (product.source === 'garshinka') {
     const key = shopNameKey(product.name, 'garshinka');
     cultivarName = key.replace(/^(?:малина|клубника) /u, '');
-    qualifier = /\bремонтантная\b/iu.test(product.name) ? 'ремонтантная' : null;
+    qualifier = product.crop === 'raspberry' && /(?:^|\s)ремонтантная(?:\s|$)/iu.test(product.name)
+      ? 'ремонтантная' : null;
   } else if (product.crop === 'raspberry' && product.categoryId.startsWith('Плодовые/Малина/')) {
     const match = name.match(/^малина (?:(бесшипая|крупноплодная|ремонтантная) )?(.+)$/u);
     qualifier = match?.[1];
