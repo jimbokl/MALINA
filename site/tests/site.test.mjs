@@ -441,7 +441,8 @@ test('карточки сортов показывают только прове
   assert.match(polka, /<dt>Тип основания<\/dt><dd>Справочный источник<\/dd>/);
   assert.match(polka, /<time datetime="2026-09-26">26\.09\.2026<\/time>/);
   assert.match(polka, /Описание сорта/);
-  assert.match(elan, /Элан можно посадить в контейнер на солнечном месте\. Ягоды у него появляются повторно в течение сезона/);
+  assert.match(elan, /Элан F1 даёт ягоды не одной короткой волной/);
+  assert.match(elan, /подвесной корзины/);
   assert.doesNotMatch(joan, /id="osnovaniya"/);
   assert.doesNotMatch(polka, /internal_sample_ref|private\/lot/);
   assert.match(karamelka, /Средняя масса ягоды — 3,8 г, максимальная — 8,0 г/);
@@ -720,7 +721,8 @@ test('карточки показывают источник и границы �
     assert.match(title, /^(Малина|Клубника) .+: описание сорта, фото, урожайность, отзывы садоводов/);
     assert.match(html, /name="description" content="[^"]*(описание сорта|урожайность)[^"]*отзывы садоводов/);
     const variety = varieties.find(item => route === `/sorta/${item.slug}/`);
-    assert.match(html, /КРАТКО О СОРТЕ/);
+    assert.match(html, new RegExp(`id="description-${variety.slug}"`));
+    assert.doesNotMatch(html, /<strong>—<\/strong>/);
     assert.match(html, /(?:Фото сорта|Иллюстрация (?:малины|жёлтой малины|клубники))/);
     assert.ok(html.includes(variety.source));
     assert.match(html, /Если хотите проверить/);
@@ -768,7 +770,7 @@ test('справочная урожайность Гусара остаётся 
   assert.equal(yieldRow.unit, 'т/га');
   assert.equal(yieldRow.source_key, 'fnc-gusar');
   assert.equal(yieldRow.evidence.evidence_kind, 'reference_document');
-  assert.match(html, /<span>Урожайность<\/span><strong>—<\/strong>/);
+  assert.doesNotMatch(html, /<span>Урожайность<\/span><strong>—<\/strong>/);
   assert.match(html, /<h3>7–9 т\/га<\/h3>/);
   assert.match(html, /место, годы и метод измерения не указаны/);
   assert.match(html, /Это не прогноз урожая на конкретном участке/);
@@ -1045,13 +1047,13 @@ test('официальный допуск Фестивальной охваты�
   const farEastHtml = await readFile(join(root, 'podbor', 'vladivostok', 'index.html'), 'utf8');
   assert.doesNotMatch(farEastHtml, /<h3>Фестивальная<\/h3>/);
   const varietyHtml = await readFile(join(root, 'sorta', 'festivalnaya', 'index.html'), 'utf8');
-  assert.match(varietyHtml, /<p class="lead">У Фестивальной ароматные ягоды: под Уфой их запах оценили высоко, а первые ягоды собирали уже в середине июня\./);
+  assert.match(varietyHtml, /<p class="lead">Фестивальная — сорт для тех, кому в клубнике важен прежде всего знакомый ягодный аромат\./);
   assert.match(varietyHtml, /В испытании под Уфой в 2019–2021 годах аромат ягод оценили в 4,9 балла из 5/);
   assert.match(varietyHtml, /Башкирский ГАУ · испытание сортов клубники 2019–2021/);
   assert.match(varietyHtml, /Если хотите проверить/);
   assert.doesNotMatch(varietyHtml, /<p class="lead">В Госреестре/);
   assert.match(varietyHtml, /(?:Фото сорта|Иллюстрация клубники)/);
-  assert.match(varietyHtml, /Урожайность<\/span><strong>—<\/strong>/);
+  assert.doesNotMatch(varietyHtml, /Урожайность<\/span><strong>—<\/strong>/);
 });
 
 test('проверенные допуски малины связывают сорт с городом через регион Госреестра', async () => {

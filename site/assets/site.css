@@ -725,3 +725,11 @@
 .shop-variety-photo img{display:block;width:142px;height:142px;object-fit:cover}
 .shop-variety-photo figcaption{font-size:11px;line-height:1.35;color:var(--muted);margin-top:7px}
 @media(max-width:760px){.shop-variety-photo{width:150px;margin-bottom:16px}.shop-variety-photo img{width:150px;height:150px}}
+
+/* Full cultivar descriptions keep the reading column comfortable on wide and narrow screens. */
+.variety-description{display:grid;grid-template-columns:minmax(220px,.7fr) minmax(0,1.3fr);gap:clamp(32px,6vw,90px);border-top:1px solid var(--line)}
+.variety-description-heading h2{font-family:var(--serif);font-size:clamp(36px,4vw,54px);line-height:1.08;font-weight:400;margin:16px 0 0}
+.variety-description-text{max-width:720px}
+.variety-description-text p{font-size:17px;line-height:1.8;margin:0 0 1.2em;color:var(--ink)}
+.variety-description-text .text-link{display:inline-block;margin-top:12px}
+@media(max-width:700px){.variety-description{grid-template-columns:1fr;gap:26px}.variety-description-heading h2{font-size:39px}.variety-description-text p{font-size:16px;line-height:1.72}}
