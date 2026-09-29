@@ -450,7 +450,7 @@ function shopIndex() {
   const groups = [{ crop: 'raspberry', heading: 'Саженцы малины' }, { crop: 'strawberry', heading: 'Рассада клубники' }];
   const sections = groups.map(group => {
     const selected = [...current, ...unavailable].filter(product => product.crop === group.crop);
-    return `<section class="section wrap shop-section" id="${group.crop === 'raspberry' ? 'malina' : 'klubnika'}" data-shop-section>${sectionHead('ВЫБРАТЬ И ПОСАДИТЬ', `${group.heading} · ${selected.length}`, 'Описание товара, посадка и наличие — на каждой странице.')}<div class="shop-grid">${selected.map(shopCard).join('')}</div></section>`;
+    return `<section class="section wrap shop-section" id="${group.crop === 'raspberry' ? 'malina' : 'klubnika'}" data-shop-section>${sectionHead('ВЫБРАТЬ И ПОСАДИТЬ', `${group.heading} · <span data-shop-section-count>${selected.length}</span>`, 'Описание товара, посадка и наличие — на каждой странице.')}<div class="shop-grid">${selected.map(shopCard).join('')}</div></section>`;
   }).join('');
   const schema = siteUrl ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [
     { '@type': 'CollectionPage', name: 'Магазин саженцев малины и рассады клубники', url: `${siteUrl}/magazin/`, mainEntity: { '@type': 'ItemList', itemListElement: publicShopProducts.map((product, index) => ({ '@type': 'ListItem', position: index + 1, name: shopDisplayName(product), url: `${siteUrl}${shopProductPath(product)}` })) } },

@@ -46,6 +46,13 @@
   const sections = [...document.querySelectorAll('[data-shop-section]')];
   if (!query || !stock || !count) return;
 
+  const noun = number => {
+    const lastTwo = number % 100;
+    if (lastTwo >= 11 && lastTwo <= 14) return 'товаров';
+    const last = number % 10;
+    return last === 1 ? 'товар' : last >= 2 && last <= 4 ? 'товара' : 'товаров';
+  };
+
   const update = () => {
     const term = query.value.trim().toLocaleLowerCase('ru').replaceAll('ё', 'е');
     let visible = 0;
@@ -56,10 +63,27 @@
       if (show) visible += 1;
     }
     for (const section of sections) {
-      section.hidden = !section.querySelector('[data-shop-card]:not([hidden])');
+      const sectionCount = section.querySelectorAll('[data-shop-card]:not([hidden])').length;
+      section.hidden = sectionCount === 0;
+      const label = section.querySelector('[data-shop-section-count]');
+      if (label) label.textContent = sectionCount;
     }
-    count.textContent = visible ? 'Показано ' + visible + ' товаров' : 'Ничего не найдено. Попробуйте другое название.';
+    const filtered = Boolean(term) || stock.value !== 'all';
+    count.textContent = filtered
+      ? `Показано ${visible} из ${cards.length} ${noun(cards.length)}${visible ? '' : '. Попробуйте другой запрос или фильтр.'}`
+      : `Показано ${visible} ${noun(visible)}`;
   };
   query.addEventListener('input', update);
   stock.addEventListener('change', update);
+  for (const link of document.querySelectorAll('.shop-hero-links a[href^="#"]')) {
+    link.addEventListener('click', () => {
+      const section = document.querySelector(link.getAttribute('href'));
+      if (!section?.hidden) return;
+      query.value = '';
+      stock.value = 'all';
+      update();
+    });
+  }
+  update();
+  window.addEventListener('pageshow', update);
 })();
