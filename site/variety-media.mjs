@@ -382,6 +382,23 @@ export const varietyPhotoSources = Object.freeze({
 // These cultivar-identified photographs accompany the illustration in the detail page.
 // They are not used as the cover image when the source shows a specimen or a disease symptom.
 export const varietySupplementalPhotoSources = Object.freeze({
+  kimberli: Object.freeze({
+    file: 'variety-photo-kimberli-microplants.webp',
+    sourcePage: 'https://openbiotechnologyjournal.com/contents/volumes/V20/e18740707455704/e18740707455704.pdf#page=5',
+    originalUrl: 'https://openbiotechnologyjournal.com/contents/volumes/V20/e18740707455704/e18740707455704.pdf',
+    originalSha256: '376d2787a7566a0785284518e11731c39db875871736ce999ce35c6fe4f47b6c',
+    sourcePanelSha256: 'eb8a680b90212237dcb040de939674815cd9eaaeab2ecb397caa0e6603a35124',
+    sha256: '21477a9a1ebe69047d6c04fb9eba1a6bf2306feca91667d4f4600894caf9e591',
+    author: 'С. Корнацкий и соавторы, Open Biotechnology Journal, 2026',
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+    identityEvidence: 'Рисунок 2 прямо называет сорт Kimberly; панель b показывает микрорастения до подготовки к следующему циклу выращивания.',
+    width: 623,
+    height: 383,
+    photoDetail: 'микрорастения в исследовании',
+    captionChange: 'панель b рисунка 2, перекодировано',
+    transformation: 'Из PDF извлечён JPEG панели b без кадрирования и перекодирован в WebP без увеличения.'
+  }),
   sudarushka: Object.freeze({
     file: 'variety-photo-sudarushka.webp',
     sourcePage: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11043506/',
