@@ -54,6 +54,8 @@
 
 28.09.2026 владелец попросил возобновить решение проблемы. Публичные Google DNS и Cloudflare DNS подтверждают четыре A-записи корня и CNAME `www`; CAA корня отсутствует, DS/DNSSEC тоже. GitHub Pages сначала показывал `InvalidDNSError`, хотя сайт по HTTP работал. Повторная проверка в интерфейсе Pages запустила новый запрос: UI показывает `DNS Check in Progress` и `Certificate Requested`, API теперь возвращает `https_certificate.state: new`, `https_enforced: false`. Это продвижение относительно прежнего `null`, но валидного сертификата пока нет. Не снимайте домен повторно во время этого запроса; дождитесь результата проверки. Если GitHub опять сообщит `InvalidDNSError` при корректном публичном DNS, передайте GitHub Support точную диагностику из `docs/HTTPS_SUPPORT_2026-09-28.md`.
 
+30.09.2026 по поручению владельца DNS-зона перенесена на Cloudflare Free. У REG.RU изменены NS на `dexter.ns.cloudflare.com` и `stella.ns.cloudflare.com`. Все шесть исходных записей импортированы и сверены, A и CNAME оставлены в режиме **DNS only** для прямой работы GitHub Pages. На 08:07 UTC делегирование в зоне `.ru` ещё показывало старые NS, сайт работал по HTTP, сертификат Pages оставался `state: new`. Подробные проверки и дальнейший статус — в `docs/HTTPS_SUPPORT_2026-09-28.md`. Не добавляйте Cloudflare proxy для A/CNAME при этой схеме.
+
 Когда Pages выпустит валидный сертификат для домена:
 
 1. Сверьте сертификат и обычный HTTPS-ответ для `malinaklubnika.ru` и `www.malinaklubnika.ru` без отключения проверки TLS.
