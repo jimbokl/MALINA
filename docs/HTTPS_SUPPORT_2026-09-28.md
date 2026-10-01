@@ -78,3 +78,12 @@ REG.RU принял замену NS `ns1.reg.ru`/`ns2.reg.ru` на `dexter.ns.cl
 - `.github/workflows/pages.yml` переведён с HTTP на `SITE_URL=https://malinaklubnika.ru`; это переводит canonical, sitemap и robots на HTTPS при публикации.
 - Локальная сборка с HTTPS создала 719 HTML-страниц; `npm test` — 244 успешно, без ошибок и пропусков. Логи и сохранённый ответ поддержки: `/Users/dmitrij/Documents/ChatGPT/Personal/artifacts/malina-https/`.
 - HTTPS закрыл причину предполагаемого переезда. Остальные критерии W-05 (индексация, дубли и CWV) остаются отдельной работой.
+
+## Приёмка опубликованного HTTPS — 1 октября 2026
+
+- Релиз `c1f4cc2ee56dafcf6bef977a5614b11967b45985` опубликован: [Pages](https://github.com/jimbokl/MALINA/actions/runs/36860772937) и [Site checks](https://github.com/jimbokl/MALINA/actions/runs/36860772784) успешны на этом SHA.
+- `npm run check:public` завершился с кодом 0: robots, sitemap и все 469 HTML-страниц из sitemap прошли проверку TLS, canonical и базового HTML. Локальная сборка содержит 719 HTML-файлов; в sitemap входят индексируемые страницы.
+- Главная, `/malina/`, `/klubnika/`, `/sorta/`, `/podbor/`, `/in-vitro/`, `/otzyvy/`, `/guide/` доступны по обычному HTTPS с кодом 200. CSS, JS, JSON каталога и WASM отвечают 200 с подходящими типами содержимого. Первые отдельные curl-запросы встретили сетевые таймауты; повторные запросы и полная проверка прошли.
+- HTTP-корень перенаправляется на HTTPS-корень; HTTP `www` через HTTP-корень заканчивается на HTTPS-корне. HTTPS `www` перенаправляется непосредственно на HTTPS-корень. Валидация TLS включена во всех проверках.
+- Внешний Chrome проверен через Apple Events и DOM: подбор малины для Калининграда показывает 48 сортов, 18 с официальным региональным допуском; клубника для Амурской области — общее сравнение 38 сортов, `no_verified_rule`, без региональных результатов и отметок допуска. После перезагрузки canonical страницы — HTTPS. Снимок: `artifacts/malina-https/picker-https-no-regional-data.png` в рабочей папке чата.
+- Повторное чтение Pages API подтвердило `approved` и `https_enforced: true`; health вернул `{}`. Автоматизация `https-2` удалена через инструмент приложения после полной успешной проверки. Переезд из-за TLS не требуется.
