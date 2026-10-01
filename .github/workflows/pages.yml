@@ -45,7 +45,7 @@ jobs:
         run: node site/scripts/admitad-coupons.mjs
       - name: Build informational site
         env:
-          SITE_URL: http://malinaklubnika.ru
+          SITE_URL: https://malinaklubnika.ru
           SITE_BASE: /
           YM_COUNTER_ID: 113131045
           REVIEW_API_URL: ${{ vars.REVIEW_API_URL }}

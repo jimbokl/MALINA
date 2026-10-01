@@ -69,3 +69,12 @@ Thank you.
 Владелец прямо поручил сменить DNS по совету из обсуждения GitHub. Около 08:00–08:06 UTC в аккаунте Cloudflare создана зона `malinaklubnika.ru` на бесплатном плане. Автоматический импорт сравнен с зоной REG.RU: четыре A корня на `185.199.108.153`–`185.199.111.153`, `www` CNAME на `jimbokl.github.io`, TXT `_globalsign-domain-verification=RQp11f2o0_IzufO6FA72Ir2tw_QIZ3Z6sOuRWFuZgg`. Все шесть записей установлены в режим **DNS only**. У назначенных Cloudflare `dexter.ns.cloudflare.com` и `stella.ns.cloudflare.com` до делегирования напрямую получены нужные A, CNAME и TXT. CAA корня у Cloudflare отсутствует; DS в зоне `.ru` отсутствует.
 
 REG.RU принял замену NS `ns1.reg.ru`/`ns2.reg.ru` на `dexter.ns.cloudflare.com`/`stella.ns.cloudflare.com`; интерфейс подтвердил «DNS-серверы изменены». Cloudflare находится в состоянии ожидания делегирования. На 08:07 UTC сервер зоны `.ru` и публичные резолверы ещё показывают старые NS, что ожидаемо сразу после изменения. HTTP-корень возвращает 200, `www` перенаправляет на корень; сертификат Pages пока `state:new`, `https_enforced:false`. Следующий шаг — дождаться появления новых NS у `.ru` и в публичных резолверах, перепроверить `/pages/health` и выпуск сертификата.
+
+## Сертификат выпущен после вмешательства GitHub Support — 1 октября 2026
+
+- В [тикете 4811705](https://help.github.com/ticket/personal/0/4811705) сотрудник GitHub Support Saidi сообщил, что повторно запустил обработку запроса TLS, сертификат одобрен и установлен. Тикет закрыт. Исходная причина сбоя не названа; нельзя считать доказанной ошибку REG.RU, Cloudflare, DNSSEC или конкретной очереди GitHub.
+- В 12:09 UTC Pages API подтвердил `https_certificate.state: approved`, имена `malinaklubnika.ru` и `www.malinaklubnika.ru`, срок до 30.12.2026. Обычные HTTPS-запросы прошли проверку TLS: корень — 200, `www` — 301 на HTTPS-корень.
+- Через Pages API включён `https_enforced: true`, настройка прочитана обратно. DNS и привязка домена не изменялись.
+- `.github/workflows/pages.yml` переведён с HTTP на `SITE_URL=https://malinaklubnika.ru`; это переводит canonical, sitemap и robots на HTTPS при публикации.
+- Локальная сборка с HTTPS создала 719 HTML-страниц; `npm test` — 244 успешно, без ошибок и пропусков. Логи и сохранённый ответ поддержки: `/Users/dmitrij/Documents/ChatGPT/Personal/artifacts/malina-https/`.
+- HTTPS закрыл причину предполагаемого переезда. Остальные критерии W-05 (индексация, дубли и CWV) остаются отдельной работой.
