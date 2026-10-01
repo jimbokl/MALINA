@@ -20,6 +20,11 @@
 
 ## Текущая передача
 
+### 2026-10-01 15:33 UTC · W-05/F-06: повторная отправка HTTPS-карты в Search Console
+
+- В собственном браузере Codex открыт только доменный ресурс MALINA `sc-domain:malinaklubnika.ru`; внешний Chrome не использовался. Его HTTPS-карта `https://malinaklubnika.ru/sitemap.xml` уже присутствовала, но первая обработка 1 октября дала «Не удалось обработать» и 0 страниц. Прямой запрос к карте вернул `200`, `application/xml` и HTTPS-адреса. Карту повторно отправили; Search Console показала «Файл Sitemap отправлен». Это подтверждает отправку, но ещё не успешную обработку Google.
+- Коммит `1920fb6` отправлен в `main`; [Site checks](https://github.com/jimbokl/MALINA/actions/runs/36884748152) и [Publish informational site to GitHub Pages](https://github.com/jimbokl/MALINA/actions/runs/36884747933) завершились успешно на этом SHA. Следующий шаг — прочитать новый результат обработки HTTPS-карты в Google. Яндекс Вебмастер и фактический приём целей Метрики остаются непроверенными.
+
 ### 2026-10-01 15:29 UTC · W-05/F-06: контроль после включения HTTPS
 
 - Pages API повторно показал сертификат `approved` для корня и `www` и `https_enforced: true`. Обычные запросы без отключения проверки TLS вернули `200` для HTTPS-корня; HTTP-корень и HTTPS-`www` завершились на `https://malinaklubnika.ru/`.
