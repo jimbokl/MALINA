@@ -832,7 +832,7 @@ test('город передаёт регион в подбор и показыв
   assert.match(picker, /id="picker-edit-conditions" class="picker-edit-conditions" type="button">← Изменить условия<\/button>/);
   assert.match(js, /params\.get\('city'\)/);
   assert.match(js, /params\.get\('region'\)/);
-  assert.match(js, /regionInput\.value = cityRegion/);
+  assert.match(js, /regionInput\.value = city \|\| cityRegion/);
   assert.match(js, /Выберите культуру и посмотрите сорта./);
   assert.match(picker, /name="shelter" value="unknown" checked/);
   assert.match(picker, /name="drainage" value="unknown" checked/);

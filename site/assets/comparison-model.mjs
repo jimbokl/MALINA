@@ -94,12 +94,12 @@ export function resolveComparisonPlace({ city = '', region = '', cities = [], re
     const namedCities = cities.filter(item => normalizePlace(item.name) === normalizePlace(cityName));
     if (!namedCities.length) return { city: null, region: null, reason: 'unknown-city' };
     const matches = regionName
-      ? namedCities.filter(item => normalizePlace(item.region) === normalizePlace(regionName))
+      ? namedCities.filter(item => [item.region, item.selectionRegion].some(value => value && normalizePlace(value) === normalizePlace(regionName)))
       : namedCities;
     if (!matches.length) return { city: null, region: null, reason: 'conflicting-place' };
     if (matches.length !== 1) return { city: null, region: null, reason: 'ambiguous-city' };
     const matchedCity = matches[0];
-    const matchedRegion = regions.find(item => normalizePlace(item.name_ru) === normalizePlace(matchedCity.region));
+    const matchedRegion = regions.find(item => normalizePlace(item.name_ru) === normalizePlace(matchedCity.selectionRegion || matchedCity.region));
     return matchedRegion
       ? { city: matchedCity, region: matchedRegion, reason: null }
       : { city: matchedCity, region: null, reason: 'unmapped-region' };

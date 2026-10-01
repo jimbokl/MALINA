@@ -20,7 +20,7 @@ if (form) {
     const visible = pickerCards.filter(card => card.dataset.pickerVisible === 'true');
     const admitted = visible.filter(card => admittedSlugs.has(card.dataset.cultivarSlug));
     if (!admitted.length) return;
-    admissionStatus.textContent = `Из ${visible.length} показанных сортов ${admitted.length} входят в официальный список для региона «${selectedRegionName}».`;
+    admissionStatus.textContent = `Мы нашли ${admitted.length} ${varietyWord(admitted.length)} в региональном списке. Показываем их первыми — начните сравнение с них.`;
     admissionStatus.hidden = false;
     for (const heading of pickerResults.querySelectorAll('.picker-group-heading')) {
       const cards = [];
@@ -61,10 +61,10 @@ if (form) {
     if (!card) return;
     const badge = card.querySelector('.picker-admission');
     const heading = document.createElement('strong');
-    heading.textContent = 'Есть в списке для вашего региона';
+    heading.textContent = 'В региональном списке';
     const explanation = document.createElement('p');
-    explanation.textContent = `Сорт включён в список для региона «${selectedRegionName || region.name_ru}».`;
-    badge.append(heading, explanation);
+    explanation.textContent = selectedRegionName || region.name_ru;
+    badge.replaceChildren(heading, explanation);
     badge.hidden = false;
   };
 
@@ -114,7 +114,7 @@ if (form) {
       const heading = document.createElement('h3');
       heading.textContent = cultivar.canonical_name;
       const explanation = document.createElement('p');
-      explanation.textContent = `Сорт включён в официальный список для региона «${region.name_ru}».`;
+      explanation.textContent = 'Посмотрите, чем он отличается от других сортов, и почитайте опыт садоводов.';
       const cultivarLink = document.createElement('a');
       cultivarLink.href = cultivarHref(cultivar.slug);
       cultivarLink.textContent = 'Открыть сорт ↗';
@@ -136,6 +136,7 @@ if (form) {
     if (!regionName) return;
     const crop = String(fields.get('crop') || 'all');
     showStatus(`Подбираем сорта для «${regionName}»…`);
+    let admissionFallback;
 
     try {
       catalogPromise ||= loadCatalog();
@@ -146,6 +147,7 @@ if (form) {
         showStatus('Выберите регион из списка и попробуйте ещё раз.', true, 'unknown_region');
         return;
       }
+      admissionFallback = showAdmissions(catalog, region, crop);
       if (!engine) {
         const module = await import(`${base}/assets/selector/malina_selector.js`);
         await module.default();
@@ -157,11 +159,11 @@ if (form) {
       const selection = JSON.parse(engine(text, JSON.stringify(query)));
       if (selection.error) throw new Error(selection.error.message);
       if (selection.total === 0) {
-        const admissions = showAdmissions(catalog, region, crop);
+        const admissions = admissionFallback;
         const statusMessage = !admissions.mapped
           ? 'Для этого региона пока нет отдельного списка сортов. Попробуйте соседний регион или общий каталог.'
           : admissions.count
-          ? `Мы нашли ${admissions.count} ${varietyWord(admissions.count)} из официального списка для «${regionName}».`
+          ? `Мы нашли ${admissions.count} ${varietyWord(admissions.count)} в региональном списке. Откройте карточки и сравните сорта.`
             : 'Для выбранной культуры в этом регионе пока нет записей. Посмотрите общий каталог сортов.';
         showStatus(statusMessage, false, admissions.count ? 'verified_rule' : admissions.mapped ? 'no_verified_rule' : 'unmapped_region');
         return;
@@ -189,6 +191,10 @@ if (form) {
       showAdmissions(catalog, region, crop);
     } catch {
       if (currentRequest !== requestId) return;
+      if (admissionFallback?.count) {
+        showStatus(`Мы нашли ${admissionFallback.count} ${varietyWord(admissionFallback.count)} в региональном списке. Откройте карточки и сравните сорта.`, false, 'verified_rule');
+        return;
+      }
       catalogPromise = undefined;
       showStatus('Не получилось загрузить сорта. Попробуйте ещё раз.', true, 'load_error');
     }

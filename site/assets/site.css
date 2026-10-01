@@ -229,8 +229,8 @@
 .picker-match a:focus-visible{outline:3px solid var(--wine);outline-offset:4px}
 .picker-admission{margin:-4px 0 18px;padding:16px 19px;background:#e9f1e8;border-left:3px solid #4b7651;color:#2a4b32}
 .picker-admission[hidden]{display:none}
-.picker-admission strong{display:block;margin-bottom:5px;font-size:12px}
-.picker-admission p{margin:0 0 8px;font-size:12px;line-height:1.6}
+.picker-admission strong{display:block;margin-bottom:5px;font-size:14px}
+.picker-admission p{margin:0;font-size:14px;line-height:1.5}
 .picker-admission a{color:inherit;font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .picker-admission a:focus-visible{outline:3px solid var(--wine);outline-offset:4px}
 .picker-memo-open{display:inline-flex;align-items:center;justify-content:center;min-height:42px;margin:0 0 18px;padding:9px 14px;border:1px solid var(--green);background:transparent;color:var(--green);font:700 12px/1.35 var(--sans);cursor:pointer}

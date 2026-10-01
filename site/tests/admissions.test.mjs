@@ -43,3 +43,30 @@ test('карточка выделяет допуск только для одн�
   assert.equal(resolveAdmissionSelection('?city=Рязань&city=Владивосток', places, numbers).kind, 'unknown');
   assert.equal(resolveAdmissionSelection('', places, numbers).kind, 'none');
 });
+
+test('карточка сохраняет региональный допуск для прежнего и нового контекста Москвы и Петербурга', () => {
+  const cityPlaces = {
+    cities: [
+      { name: 'Москва', region: 'Москва', selectionRegion: 'Московская область' },
+      { name: 'Санкт-Петербург', region: 'Санкт-Петербург', selectionRegion: 'Ленинградская область' }
+    ],
+    regions: [
+      { name_ru: 'Московская область', admission_region_name: 'Центральный', admission_region_number: 3 },
+      { name_ru: 'Ленинградская область', admission_region_name: 'Северо-Западный', admission_region_number: 2 }
+    ]
+  };
+  for (const region of ['Москва', 'Московская область']) {
+    const selection = resolveAdmissionSelection(`?city=Москва&region=${encodeURIComponent(region)}`, cityPlaces, [3]);
+    assert.equal(selection.kind, 'admitted');
+    assert.equal(selection.number, 3);
+    assert.equal(selection.place.region.name_ru, 'Московская область');
+  }
+  for (const region of ['Санкт-Петербург', 'Ленинградская область']) {
+    const selection = resolveAdmissionSelection(`?city=Санкт-Петербург&region=${encodeURIComponent(region)}`, cityPlaces, [2]);
+    assert.equal(selection.kind, 'admitted');
+    assert.equal(selection.number, 2);
+  }
+  assert.equal(resolveAdmissionSelection('?city=Москва&region=Ленинградская+область', cityPlaces, [2, 3]).kind, 'unknown');
+  assert.equal(resolveAdmissionSelection('?city=Санкт-Петербург&region=Московская+область', cityPlaces, [2, 3]).kind, 'unknown');
+  assert.equal(resolveAdmissionSelection('?city=Москва&region=Москва', cityPlaces, [2]).kind, 'not-admitted');
+});

@@ -233,8 +233,10 @@ function comparePage(cropKey) {
 }
 
 const pickerPlaceOptions = [
-  ...cities.map(city => ({ name: city.name, region: city.region, city: city.name })),
-  ...[...new Set(cities.map(city => city.region))].sort((a, b) => a.localeCompare(b, 'ru'))
+  ...cities.map(city => ({ name: city.name, region: city.selectionRegion || city.region, city: city.name })),
+  ...[...new Set(cities.map(city => city.selectionRegion || city.region))]
+    .filter(region => !cities.some(city => city.name === region))
+    .sort((a, b) => a.localeCompare(b, 'ru'))
     .map(region => ({ name: region, region, city: '' }))
 ].map(place => `<option value="${e(place.name)}" data-region="${e(place.region)}" data-city="${e(place.city)}" label="${e(place.city ? place.region : 'Регион России')}"></option>`).join('');
 
@@ -262,11 +264,12 @@ for (const citySlug of cityEditorialEvidence.keys()) {
 
 function cityPickerPage(city) {
   const path = `/podbor/${city.slug}/`;
+  const selectionRegion = city.selectionRegion || city.region;
   const editorialEvidence = cityEditorialEvidence.get(city.slug);
   const title = `Подбор сортов малины и клубники — ${city.name}`;
-  const description = `Подбор малины и клубники для сада в городе ${city.name} (${city.region}): сравните сорта, условия участка и записи Госреестра.`;
-  const citySearch = e(new URLSearchParams({ city: city.name, region: city.region }).toString());
-  const region = publicCatalog.regions.find(item => item.name_ru === city.region);
+  const description = `Подбор малины и клубники для сада: ${city.name}, ${selectionRegion}. Сравните сорта, условия участка и отзывы садоводов.`;
+  const citySearch = e(new URLSearchParams({ city: city.name, region: selectionRegion }).toString());
+  const region = publicCatalog.regions.find(item => item.name_ru === selectionRegion);
   const admissions = region?.admission_region_number
     ? publicCatalog.cultivars.flatMap(cultivar => (cultivar.admissions || [])
       .filter(admission => admission.admission_region_number === region.admission_region_number)
@@ -290,8 +293,8 @@ function cityPickerPage(city) {
     .replaceAll('Выбор региона России и условий участка для справочного сравнения сортов малины и клубники.', e(description))
     .replace('<h1>Свой сад.<br><em>Свой сорт.</em></h1>', `<h1>Ягодный сад:<br><em>${e(city.name)}.</em></h1>`)
     .replace('Укажите город или регион и выберите малину или клубнику.', 'Выберите малину или клубнику. Условия участка можно уточнить по желанию.')
-    .replace('id="picker-form"', `id="picker-form" data-city="${e(city.name)}" data-region="${e(city.region)}"`)
-    .replace('id="picker-region" name="region"', `id="picker-region" name="region" value="${e(city.region)}"`)
+    .replace('id="picker-form"', `id="picker-form" data-city="${e(city.name)}" data-region="${e(selectionRegion)}"`)
+    .replace('id="picker-region" name="region"', `id="picker-region" name="region" value="${e(city.name)}"`)
     .replace('<p id="verified-status">Укажите регион и нажмите «Показать сорта» выше.</p><ul id="verified-results"></ul>',
       `<p id="verified-status">${e(initialStatus)}</p><ul id="verified-results">${admissionList}</ul>`)
     .replace(/href="(\/sorta\/[a-z0-9-]+\/)(#[^"]*)?"/g, (_, cultivarPath, fragment = '') =>

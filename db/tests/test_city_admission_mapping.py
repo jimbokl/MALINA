@@ -16,6 +16,8 @@ import catalog  # noqa: E402
 # Transcribed from the 2024 State Register, Appendix 4, printed p. 604.
 # The values are cultivar-admission regions, not climate zones.
 CITY_ZONE_BY_SLUG = {
+    "moscow": 3,
+    "saint-petersburg": 2,
     "arkhangelsk": 1,
     "murmansk": 1,
     "petrozavodsk": 1,
@@ -71,15 +73,12 @@ CITY_ZONE_BY_SLUG = {
     "khabarovsk": 12,
 }
 
-UNMAPPED_FEDERAL_CITIES = {"moscow", "saint-petersburg"}
-
-
 def read_cities() -> list[dict[str, str]]:
     source = (ROOT / "site" / "cities.mjs").read_text(encoding="utf-8")
     entries = re.findall(
-        r"\{ slug: '([^']+)', name: '([^']+)', region: '([^']+)' \}", source
+        r"\{ slug: '([^']+)', name: '([^']+)', region: '([^']+)'(?:, selectionRegion: '([^']+)')? \}", source
     )
-    return [dict(zip(("slug", "name", "region"), entry, strict=True)) for entry in entries]
+    return [dict(zip(("slug", "name", "region", "selectionRegion"), entry, strict=True)) for entry in entries]
 
 
 class CityAdmissionMappingTests(unittest.TestCase):
@@ -95,7 +94,7 @@ class CityAdmissionMappingTests(unittest.TestCase):
         self.assertEqual(len(cities), 55)
         self.assertEqual(
             {city["slug"] for city in cities},
-            set(CITY_ZONE_BY_SLUG) | UNMAPPED_FEDERAL_CITIES,
+            set(CITY_ZONE_BY_SLUG),
         )
 
         rows = {
@@ -109,13 +108,7 @@ class CityAdmissionMappingTests(unittest.TestCase):
         }
         mapped_count = 0
         for city in cities:
-            row = rows.get(city["region"])
-            if city["slug"] in UNMAPPED_FEDERAL_CITIES:
-                self.assertTrue(
-                    row is None or row["admission_region_number"] is None,
-                    f"{city['name']} must remain unmapped in the 2024 Register scheme",
-                )
-                continue
+            row = rows.get(city["selectionRegion"] or city["region"])
 
             self.assertIsNotNone(row, f"Missing subject record for {city['region']}")
             self.assertEqual(
@@ -132,7 +125,19 @@ class CityAdmissionMappingTests(unittest.TestCase):
             self.assertEqual(row["source_key"], expected_source)
             mapped_count += 1
 
-        self.assertEqual(mapped_count, 53)
+        self.assertEqual(mapped_count, 55)
+
+    def test_capital_gardens_have_public_candidates_for_both_crops(self) -> None:
+        snapshot = catalog.public_snapshot(self.connection)
+        for code, number in (("moscow-oblast", 3), ("leningrad-oblast", 2)):
+            region = next(row for row in snapshot["regions"] if row["code"] == code)
+            self.assertEqual(region["admission_region_number"], number)
+            for crop in ("raspberry", "strawberry"):
+                candidates = [row for row in snapshot["cultivars"]
+                              if row["crop_slug"] == crop and any(
+                                  admission["admission_region_number"] == number
+                                  for admission in row["admissions"])]
+                self.assertTrue(candidates, f"No {crop} candidates for {code}")
 
 
 if __name__ == "__main__":

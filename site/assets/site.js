@@ -165,7 +165,7 @@ if (cultivarPath || /^\/magazin\/[a-z0-9-]+\/$/.test(routePath)) {
       if (!Array.isArray(cities)) return;
       const normalize = value => String(value || '').trim().toLocaleLowerCase('ru-RU').replace(/ё/g, 'е');
       const matches = cities.filter(item => normalize(item.name) === normalize(city) &&
-        normalize(item.region) === normalize(region));
+        [item.region, item.selectionRegion].some(value => value && normalize(value) === normalize(region)));
       if (matches.length === 1 && safeId(matches[0].slug)) {
         const cityPickerPath = `${siteBase}/podbor/${matches[0].slug}/`;
         for (const link of document.querySelectorAll('main a[href]')) {
@@ -177,7 +177,7 @@ if (cultivarPath || /^\/magazin\/[a-z0-9-]+\/$/.test(routePath)) {
             link.href = cityPickerPath;
           } else if (/^\/(?:sorta|magazin)\/[a-z0-9-]+\/$/.test(path)) {
             url.searchParams.set('city', matches[0].name);
-            url.searchParams.set('region', matches[0].region);
+            url.searchParams.set('region', matches[0].selectionRegion || matches[0].region);
             link.href = `${url.pathname}${url.search}${url.hash}`;
           }
         }
@@ -374,7 +374,7 @@ if (pickerForm) {
   regionInput.addEventListener('input', invalidatePickerLocation);
   regionInput.addEventListener('change', invalidatePickerLocation);
   const { resolvePickerPlace, normalizePickerPlace } = await import('./picker-place.mjs');
-  if (cityRegion) regionInput.value = cityRegion;
+  if (cityRegion) regionInput.value = city || cityRegion;
   const updateCityContext = () => {
     placeError.hidden = true;
     placeContinue.hidden = true;
@@ -487,6 +487,7 @@ if (pickerForm) {
     conditionsNote.hidden = openQuestions.length === 0;
     conditionsNote.textContent = openQuestions.length ? `Участок: ${openQuestions.join('; ')}` : '';
     document.querySelector('#picker-empty').hidden = visible !== 0;
+    regionInput.value = activeCity || region;
     output.hidden = false;
     output.dispatchEvent(new Event('picker:results'));
     output.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });

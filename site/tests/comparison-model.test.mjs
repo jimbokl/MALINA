@@ -100,3 +100,25 @@ test('сравнение связывает город с точным реги�
   assert.equal(admissionForPlace({ admissions: [{ admission_region_number: 3 }] }, moscow), null);
   assert.equal(admissionForPlace({ admissions: [{ admission_region_number: 3 }] }, tula).admission_region_number, 3);
 });
+
+test('Москва и Петербург используют регион подбора и принимают прежние ссылки на город', () => {
+  const cities = [
+    { name: 'Москва', region: 'Москва', selectionRegion: 'Московская область' },
+    { name: 'Санкт-Петербург', region: 'Санкт-Петербург', selectionRegion: 'Ленинградская область' }
+  ];
+  const regions = [
+    { name_ru: 'Московская область', admission_region_number: 3 },
+    { name_ru: 'Ленинградская область', admission_region_number: 2 }
+  ];
+  for (const city of cities) {
+    for (const region of ['', city.region, city.selectionRegion]) {
+      const place = resolveComparisonPlace({ city: city.name, region, cities, regions });
+      assert.equal(place.reason, null);
+      assert.equal(place.city, city);
+      assert.equal(place.region.name_ru, city.selectionRegion);
+      assert.equal(place.city.region, city.region);
+    }
+  }
+  assert.equal(resolveComparisonPlace({ city: 'Москва', region: 'Ленинградская область', cities, regions }).reason, 'conflicting-place');
+  assert.equal(resolveComparisonPlace({ city: 'Санкт-Петербург', region: 'Москва', cities, regions }).reason, 'conflicting-place');
+});
