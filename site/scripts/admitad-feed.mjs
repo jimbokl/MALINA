@@ -3,6 +3,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseCsv } from './admitad-csv.mjs';
 import { admitadSources, sourceProductId } from './admitad-sources.mjs';
+import { buildCatalogManifest, curatedCatalogProducts, writeCatalogManifest } from './generate-shop-catalog.mjs';
+import { matchesExpectedName } from '../shop-identity.mjs';
 
 export { parseCsv } from './admitad-csv.mjs';
 
@@ -21,20 +23,9 @@ function httpsUrl(value, allowedHost) {
   }
 }
 
-function normalizedName(value) {
-  return value.normalize('NFKC').toLocaleLowerCase('ru-RU').replaceAll('ё', 'е').replace(/\s+/g, ' ').trim();
-}
-
 function matchesIdentity(row, curated, source) {
   if (source.crop(row.categoryId, row.name) !== curated.crop) return false;
-  if (typeof curated.expectedName !== 'string' || !curated.expectedName.trim()) return false;
-  const name = normalizedName(row.name);
-  const expected = normalizedName(curated.expectedName);
-  const position = name.indexOf(expected);
-  if (position < 0) return false;
-  const before = position > 0 ? name[position - 1] : '';
-  const after = name[position + expected.length] || '';
-  return !/[\p{L}\p{N}]/u.test(before) && !/[\p{L}\p{N}]/u.test(after);
+  return matchesExpectedName(row.name, curated.expectedName);
 }
 
 function publicProduct(row, curated, source) {
@@ -92,6 +83,32 @@ export function buildSnapshot(csv, curatedProducts, now = new Date(), sourceId =
     expiresAt: new Date(now.getTime() + freshnessMs).toISOString(),
     products: curatedProducts.flatMap(product => selected.get(String(product.id)) || [])
   };
+}
+
+export function buildFeedRefresh(feeds, previousCatalog, now = new Date(), curatedProducts = curatedCatalogProducts) {
+  let catalog = previousCatalog;
+  const products = [];
+  const sources = [];
+  for (const feed of feeds) {
+    try {
+      const nextCatalog = buildCatalogManifest(feed.csv, curatedProducts, catalog, { stableNewSlugs: true, source: feed.source });
+      const nextSnapshot = buildSnapshot(feed.csv, nextCatalog.filter(product => product.source === feed.source), now, feed.source);
+      catalog = nextCatalog;
+      products.push(...nextSnapshot.products);
+      sources.push({ source: feed.source, ok: true, productCount: nextSnapshot.products.length,
+        availableCount: nextSnapshot.products.filter(product => product.availability === 'in_stock').length });
+    } catch {
+      // Catalog validation belongs to the source, just like download/CSV failures.
+      sources.push({ source: feed.source, ok: false });
+    }
+  }
+  const hasFreshSource = sources.some(source => source.ok);
+  const snapshot = {
+    checkedAt: hasFreshSource ? now.toISOString() : null,
+    expiresAt: hasFreshSource ? new Date(now.getTime() + freshnessMs).toISOString() : null,
+    products
+  };
+  return { catalog, snapshot, sources };
 }
 
 export async function fetchFeed(feedUrl, fetcher = fetch) {
@@ -186,16 +203,15 @@ async function main() {
       }
     }
     if (!feeds.length) throw new Error('No Admitad feeds available');
-    const { buildCatalogManifest, curatedCatalogProducts, writeCatalogManifest } = await import('./generate-shop-catalog.mjs');
-    let catalog = JSON.parse(await readFile(catalogPath, 'utf8'));
-    for (const feed of feeds) catalog = buildCatalogManifest(feed.csv, curatedCatalogProducts, catalog, { stableNewSlugs: true, source: feed.source });
-    const now = new Date();
-    const products = feeds.flatMap(feed => buildSnapshot(feed.csv, catalog.filter(product => product.source === feed.source), now, feed.source).products);
-    const snapshot = { checkedAt: now.toISOString(), expiresAt: new Date(now.getTime() + freshnessMs).toISOString(), products };
+    const previousCatalog = JSON.parse(await readFile(catalogPath, 'utf8'));
+    const { catalog, snapshot, sources } = buildFeedRefresh(feeds, previousCatalog);
+    for (const source of sources.filter(source => !source.ok)) {
+      process.stderr.write(`Admitad ${source.source} refresh failed: catalog validation failed\n`);
+    }
     await cacheImages(snapshot.products, join(root, 'db', 'public', 'shop-images'));
     await writeCatalogManifest(catalogPath, catalog);
     await writeSnapshot(output, snapshot);
-    const sourceCounts = feeds.map(feed => `${feed.source}: ${snapshot.products.filter(product => product.source === feed.source).length} products, ${snapshot.products.filter(product => product.source === feed.source && product.availability === 'in_stock').length} available`);
+    const sourceCounts = sources.filter(source => source.ok).map(source => `${source.source}: ${source.productCount} products, ${source.availableCount} available`);
     process.stdout.write(`Admitad snapshot: ${catalog.length} catalog products; ${sourceCounts.join('; ')}\n`);
   } catch (error) {
     // A failed refresh must withdraw price and outbound ordering links.

@@ -55,6 +55,13 @@
 
   const update = () => {
     const term = query.value.trim().toLocaleLowerCase('ru').replaceAll('ё', 'е');
+    const stockCounts = { all: cards.length, in_stock: 0, out_of_stock: 0, unknown: 0 };
+    for (const card of cards) stockCounts[card.dataset.stock] += 1;
+    const stockLabels = { all: 'Все товары', in_stock: 'Есть в наличии', out_of_stock: 'Нет в наличии', unknown: 'Наличие уточняется' };
+    for (const option of stock.options) {
+      option.textContent = `${stockLabels[option.value]} (${stockCounts[option.value]})`;
+      option.disabled = option.value !== 'all' && stockCounts[option.value] === 0;
+    }
     let visible = 0;
     for (const card of cards) {
       const show = (!term || card.dataset.search.includes(term))
@@ -70,7 +77,7 @@
     }
     const filtered = Boolean(term) || stock.value !== 'all';
     count.textContent = filtered
-      ? `Показано ${visible} из ${cards.length} ${noun(cards.length)}${visible ? '' : '. Попробуйте другой запрос или фильтр.'}`
+      ? `Показано ${visible} ${noun(visible)} из ${cards.length}${visible ? '' : '. Попробуйте другой запрос или фильтр.'}`
       : `Показано ${visible} ${noun(visible)}`;
   };
   query.addEventListener('input', update);

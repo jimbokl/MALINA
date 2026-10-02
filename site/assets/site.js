@@ -3,12 +3,15 @@ function refreshShopFreshness() {
   const now = Date.now();
   const offersExpire = Date.parse(document.documentElement.dataset.shopOffersExpires || '');
   if (Number.isFinite(offersExpire) && offersExpire <= now) {
-    for (const price of document.querySelectorAll('[data-shop-live-price]')) {
+    for (const price of document.querySelectorAll('[data-shop-stock-label], [data-shop-live-price]')) {
       price.textContent = 'Наличие уточняется';
       price.removeAttribute('data-shop-live-price');
     }
-    for (const card of document.querySelectorAll('[data-shop-card][data-stock="in_stock"]')) {
+    for (const card of document.querySelectorAll('[data-shop-card]')) {
       card.dataset.stock = 'unknown';
+    }
+    for (const heading of document.querySelectorAll('[data-shop-order-stock-label]')) {
+      heading.textContent = 'Наличие уточняется';
     }
     for (const order of document.querySelectorAll('[data-shop-live-order]')) {
       const eyebrow = document.createElement('span');
@@ -22,7 +25,11 @@ function refreshShopFreshness() {
       order.removeAttribute('data-shop-live-order');
     }
     document.querySelectorAll('[data-shop-offer-schema]').forEach(node => node.remove());
-    document.querySelector('[data-shop-stock]')?.dispatchEvent(new Event('change'));
+    const filter = document.querySelector('[data-shop-stock]');
+    if (filter) {
+      if (filter.value === 'in_stock' || filter.value === 'out_of_stock') filter.value = 'all';
+      filter.dispatchEvent(new Event('change'));
+    }
   }
 
   const couponsExpire = Date.parse(document.documentElement.dataset.shopCouponsExpires || '');
@@ -63,15 +70,25 @@ function refreshShopFreshness() {
     }
   }
 }
-if (document.querySelector('[data-shop-live-price], [data-shop-live-order], [data-shop-coupon], [data-shop-coupon-banner], [data-shop-coupon-source]')) {
+if (document.querySelector('[data-shop-live-price], [data-shop-live-order], [data-shop-stock-label], [data-shop-order-stock-label], [data-shop-coupon], [data-shop-coupon-banner], [data-shop-coupon-source]')) {
   refreshShopFreshness();
   window.setInterval(refreshShopFreshness, 60_000);
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) refreshShopFreshness();
   });
+  window.addEventListener('pageshow', refreshShopFreshness);
 }
 
 const menuButton = document.querySelector('.menu-toggle');
+function refreshExpiredOfferClick(event) {
+  if (!event.target.closest('[data-affiliate-offer]')) return false;
+  const expires = Date.parse(document.documentElement.dataset.shopOffersExpires || '');
+  if (!Number.isFinite(expires) || expires > Date.now()) return false;
+  event.preventDefault();
+  refreshShopFreshness();
+  return true;
+}
+document.addEventListener('auxclick', refreshExpiredOfferClick);
 const analyticsChoiceKey = 'malina:analytics-choice';
 const cookieNoticeKey = 'malina:cookie-notice';
 function readSitePreference(key) {
@@ -195,9 +212,12 @@ document.addEventListener('click', async event => {
     cultivar: safeId(/\/sorta\/([a-z0-9-]+)\//.exec(cultivarLink.getAttribute('href') || '')?.[1])
   });
   const offerLink = event.target.closest('[data-affiliate-offer]');
-  if (offerLink) trackGoal('affiliate_click', {
-    offer_id: safeId(offerLink.dataset.affiliateOffer), cultivar: safeId(offerLink.dataset.cultivar)
-  });
+  if (offerLink) {
+    if (refreshExpiredOfferClick(event)) return;
+    trackGoal('affiliate_click', {
+      offer_id: safeId(offerLink.dataset.affiliateOffer), cultivar: safeId(offerLink.dataset.cultivar)
+    });
+  }
 
   const comparisonLink = event.target.closest('#picker-compare-link');
   if (comparisonLink && !comparisonLink.hidden) trackGoal('comparison_open', {

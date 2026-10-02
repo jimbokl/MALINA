@@ -287,7 +287,7 @@ test('распроданный товар ведёт к тому же сорту
     const unavailableGroups = ['gerakl-sazhenec', 'zheltyy-gigant-sazhenec', 'aziya-sazhenec', 'malina-meteor-73583'];
     const unavailable = shopProducts
       .filter(item => unavailableGroups.includes(item.canonicalSlug || item.slug))
-      .map(item => ({ id: item.id, source: item.source, availability: 'out_of_stock' }));
+      .map(item => ({ id: item.id, source: item.source, name: item.name, availability: 'out_of_stock' }));
     const snapshotPath = join(temp, 'offers.json');
     const output = join(temp, 'dist');
     await writeFile(snapshotPath, JSON.stringify({ checkedAt: checkedAt.toISOString(), expiresAt: expiresAt.toISOString(), products: [...active, ...unavailable] }));

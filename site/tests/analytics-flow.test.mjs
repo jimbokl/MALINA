@@ -215,6 +215,21 @@ test('article and affiliate goals reject raw URLs and uncontrolled IDs', async (
   assert.doesNotMatch(JSON.stringify(state.calls), /PRIVATE_/);
 });
 
+test('expired offer click refreshes the page state without navigation or conversion', async () => {
+  for (const type of ['click', 'auxclick']) {
+    const state = harness({ path: '/magazin/malina-gusar/', counter: '12345' });
+    state.document.documentElement.dataset.shopOffersExpires = '2020-01-01T00:00:00Z';
+    let prevented = false;
+    await state.document.dispatchEvent({
+      type,
+      target: target(new Set(['[data-affiliate-offer]']), { dataset: { affiliateOffer: '67762', cultivar: 'gusar' } }),
+      preventDefault() { prevented = true; }
+    });
+    assert.equal(prevented, true);
+    assert.deepEqual(state.goals(), []);
+  }
+});
+
 test('selector start, regional rule outcomes, error and completion send no form text', async () => {
   const picker = new Element({
     elements: { crop: { value: 'raspberry' } },

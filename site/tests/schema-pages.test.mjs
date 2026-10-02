@@ -29,7 +29,7 @@ test('разметка различает справку о сорте, види
     const snapshot = { checkedAt: checkedAt.toISOString(), expiresAt: expiresAt.toISOString(), products: [
       { id: '67762', source: 'agrosemfond', name: 'Саженец малины Гусар', availability: 'in_stock',
         priceMinor: 44950, currency: 'RUB', merchantUrl, affiliateUrl, imagePath: '/assets/shop/67762.webp' },
-      ...unavailable.map(product => ({ id: product.id, source: product.source, availability: 'out_of_stock' }))
+      ...unavailable.map(product => ({ id: product.id, source: product.source, name: product.name, availability: 'out_of_stock' }))
     ] };
     const snapshotPath = join(temp, 'offers.json');
     const output = join(temp, 'dist');

@@ -54,3 +54,36 @@ test('предложение второго магазина проверяет�
   assert.equal(currentShopOffers(second, [{ id: 'g-101', source: 'garshinka' }], now).get('g-101')?.imagePath, '/assets/shop/g-101.jpg');
   assert.equal(currentShopOffers({ ...second, products: [{ ...offer, affiliateUrl }] }, [{ id: 'g-101', source: 'garshinka' }], now).size, 0);
 });
+
+test('одинаковая нормализация имени в фиде и витрине, без совпадений частей сорта', () => {
+  const manifest = [{ id: product.id, expectedName: 'Гусар' }];
+  for (const name of ['Малина «ГУСАР»', 'Малина\u00a0Гусар\u00a0(С2)']) {
+    assert.equal(currentShopOffers({ ...snapshot, products: [{ ...product, name }] }, manifest, now).size, 1);
+  }
+  for (const name of ['Малина Гусарская', 'Малина СуперГусар', 'Малина Гусар2']) {
+    assert.equal(currentShopOffers({ ...snapshot, products: [{ ...product, name }] }, manifest, now).size, 0);
+  }
+});
+
+test('неоднозначный артикул не создаёт предложение, другие товары сохраняются', () => {
+  const other = { ...product, id: 'other' };
+  const ambiguous = { ...snapshot, products: [product, { ...product, priceMinor: 10000 }, other] };
+  const offers = currentShopOffers(ambiguous, [{ id: product.id }, { id: other.id }], now);
+  assert.deepEqual([...offers.keys()], ['other']);
+  const unavailable = { ...snapshot, products: [
+    { id: product.id, availability: 'out_of_stock' },
+    { id: product.id, availability: 'out_of_stock' }
+  ] };
+  assert.equal(shopStockState(unavailable, [{ id: product.id }], new Map(), now), 'unknown');
+});
+
+test('статус без наличия относится к правильному сорту и продавцу', () => {
+  const manifest = [{ id: product.id, expectedName: 'Гусар' }];
+  const absent = { ...product, availability: 'out_of_stock' };
+  assert.equal(shopStockState({ ...snapshot, products: [absent] }, manifest, new Map(), now), 'out_of_stock');
+  for (const change of [{ name: 'Малина Гусарская' }, { source: 'garshinka' }]) {
+    assert.equal(shopStockState({ ...snapshot, products: [{ ...absent, ...change }] }, manifest, new Map(), now), 'unknown');
+  }
+  assert.equal(shopStockState({ ...snapshot, expiresAt: now.toISOString() }, manifest,
+    new Map([[product.id, product]]), now), 'unknown');
+});

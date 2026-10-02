@@ -1,4 +1,5 @@
 import { sourceFor } from './scripts/admitad-sources.mjs';
+import { matchesExpectedName } from './shop-identity.mjs';
 
 const productImagePattern = /^\/assets\/shop\/(?:g-)?\d+\.(?:jpg|png|webp)$/;
 
@@ -7,6 +8,19 @@ function secureUrl(value, host) {
     const url = new URL(value);
     return url.protocol === 'https:' && url.hostname === host && !url.username && !url.password && !url.port ? url : null;
   } catch { return null; }
+}
+
+function uniqueSnapshotProducts(snapshot) {
+  const products = new Map();
+  const duplicates = new Set();
+  for (const product of snapshot.products) {
+    if (product?.id == null) continue;
+    const id = String(product.id);
+    if (products.has(id)) duplicates.add(id);
+    products.set(id, product);
+  }
+  for (const id of duplicates) products.delete(id);
+  return products;
 }
 
 export function shopSnapshotIsCurrent(snapshot, now = new Date()) {
@@ -18,10 +32,15 @@ export function shopSnapshotIsCurrent(snapshot, now = new Date()) {
 }
 
 export function shopStockState(snapshot, variants, offers, now = new Date()) {
-  if (variants.some(product => offers.has(String(product.id)))) return 'in_stock';
   if (!shopSnapshotIsCurrent(snapshot, now) || !variants.length) return 'unknown';
-  const byId = new Map(snapshot.products.filter(product => product?.id != null).map(product => [String(product.id), product]));
-  return variants.every(product => byId.get(String(product.id))?.availability === 'out_of_stock')
+  if (variants.some(product => offers.has(String(product.id)))) return 'in_stock';
+  const byId = uniqueSnapshotProducts(snapshot);
+  return variants.every(product => {
+    const entry = byId.get(String(product.id));
+    return entry?.availability === 'out_of_stock'
+      && (entry.source || 'agrosemfond') === sourceFor(product)?.id
+      && (!product.expectedName || matchesExpectedName(entry.name, product.expectedName));
+  })
     ? 'out_of_stock' : 'unknown';
 }
 
@@ -29,7 +48,7 @@ export function currentShopOffers(snapshot, manifest, now = new Date()) {
   if (!shopSnapshotIsCurrent(snapshot, now)) return new Map();
   const products = new Map(manifest.map(product => [String(product.id), product]));
   const valid = new Map();
-  for (const offer of snapshot.products) {
+  for (const offer of uniqueSnapshotProducts(snapshot).values()) {
     if (!offer || !products.has(String(offer.id)) || valid.has(String(offer.id))) continue;
     const product = products.get(String(offer.id));
     const source = sourceFor(product);
@@ -41,7 +60,7 @@ export function currentShopOffers(snapshot, manifest, now = new Date()) {
     if (offer.availability !== 'in_stock' || offer.currency !== 'RUB' || !Number.isSafeInteger(offer.priceMinor) || offer.priceMinor <= 0) continue;
     if (typeof offer.name !== 'string' || !offer.name.trim() || offer.name.length > 250) continue;
     const expected = products.get(String(offer.id)).expectedName;
-    if (expected && !offer.name.toLocaleLowerCase('ru').replaceAll('ё', 'е').includes(expected.toLocaleLowerCase('ru').replaceAll('ё', 'е'))) continue;
+    if (expected && !matchesExpectedName(offer.name, expected)) continue;
     valid.set(String(offer.id), {
       ...offer,
       affiliateUrl: affiliate.href,
