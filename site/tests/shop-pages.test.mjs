@@ -58,6 +58,9 @@ test('магазин показывает уникальные карточки 
     if (process.env.SITE_URL) assert.ok(!sitemap.includes(`/magazin/${product.slug}/`), `duplicate in sitemap: ${product.slug}`);
     const redirect = await productHtml(product);
     assert.match(redirect, /name="robots" content="noindex,follow"/, product.slug);
+    assert.match(redirect, /<noscript><meta http-equiv="refresh"/);
+    assert.match(redirect, /<script defer src="\/assets\/shop-redirect\.js\?v=[a-f0-9]{12}"/);
+    assert.match(redirect, /<a data-shop-redirect href=/);
     assert.ok(redirect.includes(`url=/magazin/${product.canonicalSlug}/`), `redirect: ${product.slug}`);
   }
   if (process.env.SITE_URL) {
@@ -104,6 +107,7 @@ test('все публичные товарные страницы имеют у�
     titles.add(title);
     assert.match(html, /<h1>[^<]+(?:<small[^>]*>[^<]+<\/small>)?<\/h1>/, product.slug);
     assert.match(html, /class="shop-product-image"/, product.slug);
+    assert.doesNotMatch(html, /<figcaption>[^<]*&lt;a\s/, `escaped photo attribution: ${product.slug}`);
     assert.match(html, /href="\/magazin\/"/, product.slug);
     if (product.merchantUrl) {
       assert.ok(html.includes(`href="${escapeHtml(product.merchantUrl)}"`), `seller source: ${product.slug}`);
@@ -257,6 +261,7 @@ test('свежие цены и акции несут срок действия �
     assert.match(catalog, /data-shop-offers-expires="[^"]+"/);
     assert.match(catalog, /data-shop-live-price[^>]*>449,50/);
     assert.match(page, /data-shop-live-order/);
+    assert.match(page, /data-shop-order-navigation/);
     assert.match(catalog, /data-shop-coupon-dates="[^"]+"/);
     assert.match(catalog, /data-shop-coupon-banner/);
   } finally {
@@ -279,7 +284,7 @@ test('распроданный товар ведёт к тому же сорту
       priceMinor: 44950, currency: 'RUB', merchantUrl: item.merchantUrl,
       affiliateUrl: `https://${item.affiliateHost}/g/abc/?ulp=${encodeURIComponent(item.merchantUrl)}`
     }));
-    const unavailableGroups = ['gerakl-sazhenec', 'zheltyy-gigant-sazhenec', 'aziya-sazhenec'];
+    const unavailableGroups = ['gerakl-sazhenec', 'zheltyy-gigant-sazhenec', 'aziya-sazhenec', 'malina-meteor-73583'];
     const unavailable = shopProducts
       .filter(item => unavailableGroups.includes(item.canonicalSlug || item.slug))
       .map(item => ({ id: item.id, source: item.source, availability: 'out_of_stock' }));
@@ -290,17 +295,26 @@ test('распроданный товар ведёт к тому же сорту
       cwd: root, env: { ...process.env, MALINA_BUILD_OUT: output, MALINA_SHOP_SNAPSHOT: snapshotPath }, stdio: 'pipe'
     });
     const readPage = slug => readFile(join(output, 'magazin', slug, 'index.html'), 'utf8');
+    assert.match(await readFile(join(output, 'assets', 'shop-navigation.mjs'), 'utf8'), /export function shopNavigationContext/);
     const sameCultivar = await readPage('gerakl-sazhenec');
     assert.match(sameCultivar, /data-shop-next-step="same_cultivar"/);
     assert.match(sameCultivar, /href="\/magazin\/tovar-g-300164\/"/);
+    assert.match(sameCultivar, /data-shop-order-navigation><a[^>]*href="\/magazin\/tovar-g-300164\/">Посмотреть другое предложение/);
     assert.doesNotMatch(sameCultivar, /data-affiliate-offer=/);
-    const otherCultivars = await readPage('zheltyy-gigant-sazhenec');
-    assert.match(otherCultivars, /data-shop-next-step="other_cultivars"/);
-    assert.match(otherCultivars, /href="\/magazin\/gusar-sazhenec\/"/);
-    assert.doesNotMatch(otherCultivars, /data-affiliate-offer=/);
+    assert.match(sameCultivar, /<figcaption>Фото сорта<\/figcaption>/);
+    assert.match(sameCultivar, /class="photo-attribution">Фото сорта · <a href="https:\/\/biosel/);
+    const yellow = await readPage('zheltyy-gigant-sazhenec');
+    assert.match(yellow, /data-shop-next-step="picker"/);
+    assert.match(yellow, /data-shop-order-navigation><a[^>]*href="\/podbor\/\?crop=raspberry"/);
+    assert.doesNotMatch(yellow, /data-affiliate-offer=/);
+    const similar = await readPage('malina-meteor-73583');
+    assert.match(similar, /data-shop-next-step="other_cultivars"/);
+    assert.match(similar, /data-shop-order-navigation><a[^>]*href="#alternativy">Посмотреть похожие сорта/);
+    assert.match(similar, /id="alternativy"/);
+    assert.match(similar, /href="\/magazin\/gusar-sazhenec\/"/);
     const picker = await readPage('aziya-sazhenec');
     assert.match(picker, /data-shop-next-step="picker"/);
-    assert.match(picker, /href="\/podbor\/"/);
+    assert.match(picker, /href="\/podbor\/\?crop=strawberry"/);
     assert.match(picker, /href="\/sorta\/\?crop=strawberry"/);
     assert.doesNotMatch(picker, /data-affiliate-offer=/);
   } finally {
@@ -311,7 +325,7 @@ test('распроданный товар ведёт к тому же сорту
 test('товарная страница ведёт к подбору города без повторяющихся оговорок', async () => {
   for (const product of publicProducts) {
     const html = await productHtml(product);
-    assert.match(html, /<section id="regiony">[\s\S]*?href="\/podbor\/"/, `city picker: ${product.slug}`);
+    assert.match(html, new RegExp(`<section id="regiony">[\\s\\S]*?href="/podbor/\\?crop=${product.crop}"`), `city picker: ${product.slug}`);
     assert.doesNotMatch(html, /нет сверенных сведений о регионах допуска|Сейчас заказ этой позиции недоступен|Наличие может измениться при следующем обновлении/i, product.slug);
     assert.doesNotMatch(html, /<dd>(?:|—)<\/dd>/, `empty variety fact: ${product.slug}`);
     if (!product.lead) assert.doesNotMatch(html, /class="shop-product-lead"/, `generic hero lead: ${product.slug}`);

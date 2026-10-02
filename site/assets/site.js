@@ -16,7 +16,8 @@ function refreshShopFreshness() {
       eyebrow.textContent = 'ПРЕДЛОЖЕНИЕ ПРОДАВЦА';
       const heading = document.createElement('h2');
       heading.textContent = 'Наличие уточняется';
-      order.replaceChildren(eyebrow, heading);
+      const navigation = order.querySelector('[data-shop-order-navigation]');
+      order.replaceChildren(eyebrow, heading, ...(navigation ? [navigation] : []));
       order.classList.add('shop-order-empty');
       order.removeAttribute('data-shop-live-order');
     }
@@ -153,34 +154,24 @@ if (cultivarPath) {
     : document.querySelector('.variety-hero-art.strawberry') ? 'strawberry' : 'unknown';
   trackGoal('cultivar_view', { crop, cultivar: cultivarPath[1] });
 }
-if (cultivarPath || /^\/magazin\/[a-z0-9-]+\/$/.test(routePath)) {
+if (cultivarPath || /^\/(?:sorta|magazin)\/(?:[a-z0-9-]+\/)?$/.test(routePath)) {
   const params = new URLSearchParams(location.search);
-  const city = params.getAll('city').length === 1 ? params.get('city')?.trim() : '';
-  const region = params.getAll('region').length === 1 ? params.get('region')?.trim() : '';
-  if (city && region) {
-    fetch(`${siteBase}/data/cities.json`).then(response => {
-      if (!response.ok) throw new Error('city routes unavailable');
+  if (params.has('city') || params.has('region')) {
+    const crop = document.querySelector('.shop-product')?.dataset.crop ||
+      (document.querySelector('.variety-hero-art.raspberry') ? 'raspberry' :
+        document.querySelector('.variety-hero-art.strawberry') ? 'strawberry' : params.get('crop'));
+    const readData = path => fetch(`${siteBase}/data/${path}`).then(response => {
+      if (!response.ok) throw new Error('place data unavailable');
       return response.json();
-    }).then(cities => {
-      if (!Array.isArray(cities)) return;
-      const normalize = value => String(value || '').trim().toLocaleLowerCase('ru-RU').replace(/ё/g, 'е');
-      const matches = cities.filter(item => normalize(item.name) === normalize(city) &&
-        [item.region, item.selectionRegion].some(value => value && normalize(value) === normalize(region)));
-      if (matches.length === 1 && safeId(matches[0].slug)) {
-        const cityPickerPath = `${siteBase}/podbor/${matches[0].slug}/`;
-        for (const link of document.querySelectorAll('main a[href]')) {
-          const url = new URL(link.href, location.origin);
-          if (url.origin !== location.origin) continue;
-          const path = siteBase && url.pathname.startsWith(`${siteBase}/`)
-            ? url.pathname.slice(siteBase.length) : url.pathname;
-          if (path === '/podbor/') {
-            link.href = cityPickerPath;
-          } else if (/^\/(?:sorta|magazin)\/[a-z0-9-]+\/$/.test(path)) {
-            url.searchParams.set('city', matches[0].name);
-            url.searchParams.set('region', matches[0].selectionRegion || matches[0].region);
-            link.href = `${url.pathname}${url.search}${url.hash}`;
-          }
-        }
+    });
+    Promise.resolve().then(() => Promise.all([
+      readData('cities.json'), readData('catalog.json'), import('./shop-navigation.mjs')
+    ])).then(([cities, catalog, navigation]) => {
+      if (!Array.isArray(cities) || !Array.isArray(catalog.regions)) return;
+      const context = navigation.shopNavigationContext(location.search, cities, catalog.regions, crop, siteBase);
+      if (!context) return;
+      for (const link of document.querySelectorAll('main a[href]')) {
+        link.href = navigation.shopContextHref(link.href, context, location.origin, siteBase);
       }
     }).catch(() => {});
   }
@@ -340,6 +331,10 @@ if (pickerForm) {
   }
   (async () => {
   const params = new URLSearchParams(location.search);
+  const initialCrop = params.getAll('crop').length === 1 ? params.get('crop') : '';
+  if (['raspberry', 'strawberry'].includes(initialCrop) && pickerForm.elements?.crop) {
+    pickerForm.elements.crop.value = initialCrop;
+  }
   const city = (pickerForm.dataset.city || params.get('city') || '').trim();
   const cityRegion = (pickerForm.dataset.region || params.get('region') || '').trim();
   const regionInput = pickerForm.querySelector('#picker-region');

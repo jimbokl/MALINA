@@ -17,18 +17,59 @@ export function relatedShopProducts(product, publicProducts, offerFor, limit = 3
     .map(({ item }) => item);
 }
 
-export function outOfStockNextProducts(product, publicProducts, offerFor, isVerifiedCultivar, limit = 3) {
-  const available = publicProducts.filter(item =>
-    item.slug !== product.slug && item.crop === product.crop && offerFor(item)
-  );
-  if (product.cultivarSlug) {
-    const otherSeller = item => (offerFor(item)?.source || item.source) !== product.source;
-    const sameCultivar = available.filter(item => item.cultivarSlug === product.cultivarSlug)
-      .sort((left, right) => Number(otherSeller(right)) - Number(otherSeller(left)));
-    if (sameCultivar.length) return { kind: 'same_cultivar', products: sameCultivar.slice(0, limit) };
+const comparisonFields = [
+  ['fruitColor', new Set(['red', 'yellow']), true],
+  ['fruiting', new Set(['summer', 'remontant']), true],
+  ['harvestTiming', new Set(['early', 'middle', 'late', 'autumn', 'repeat']), false]
+];
+
+function publishedVariety(product, varietyFor) {
+  const variety = varietyFor(product);
+  return product.cultivarSlug && variety?.slug === product.cultivarSlug && variety.cropKey === product.crop ? variety : null;
+}
+
+function similarityScore(current, candidate) {
+  let matches = 0;
+  for (const [field, knownValues, excludesConflict] of comparisonFields) {
+    if (!knownValues.has(current[field]) || !knownValues.has(candidate[field])) continue;
+    if (current[field] === candidate[field]) matches += 1;
+    else if (excludesConflict) return 0;
   }
-  const verified = available.filter(item =>
-    item.cultivarSlug && item.cultivarSlug !== product.cultivarSlug && isVerifiedCultivar(item)
-  );
-  return { kind: verified.length ? 'other_cultivars' : 'picker', products: verified.slice(0, limit) };
+  return matches;
+}
+
+function uniqueCultivars(products, limit) {
+  const seen = new Set();
+  return products.filter(item => {
+    if (seen.has(item.cultivarSlug)) return false;
+    seen.add(item.cultivarSlug);
+    return true;
+  }).slice(0, limit);
+}
+
+// varietyFor returns the published cultivar record, not a flag or product claims.
+export function outOfStockNextProducts(product, publicProducts, offerFor, varietyFor, limit = 3) {
+  const available = publicProducts
+    .filter(item => item.slug !== product.slug && item.crop === product.crop)
+    .map(item => ({ item, offer: offerFor(item) }))
+    .filter(({ offer }) => offer);
+  if (product.cultivarSlug) {
+    const otherSeller = ({ item, offer }) => (offer.source || item.source) !== product.source;
+    const sameCultivar = available.filter(({ item }) => item.cultivarSlug === product.cultivarSlug)
+      .sort((left, right) => Number(otherSeller(right)) - Number(otherSeller(left)));
+    if (sameCultivar.length) {
+      return { kind: 'same_cultivar', products: uniqueCultivars(sameCultivar.map(({ item }) => item), limit) };
+    }
+  }
+  const current = publishedVariety(product, varietyFor);
+  if (!current) return { kind: 'picker', products: [] };
+  const similar = available
+    .map(({ item }) => {
+      const candidate = item.cultivarSlug && publishedVariety(item, varietyFor);
+      return { item, score: candidate ? similarityScore(current, candidate) : 0 };
+    })
+    .filter(({ score }) => score > 0)
+    .sort((left, right) => right.score - left.score);
+  const products = uniqueCultivars(similar.map(({ item }) => item), limit);
+  return { kind: products.length ? 'other_cultivars' : 'picker', products };
 }

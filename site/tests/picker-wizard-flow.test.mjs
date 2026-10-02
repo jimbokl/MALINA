@@ -141,6 +141,7 @@ test('подтверждение неизвестного места сохра�
   const pickerSource = source.slice(source.indexOf('const pickerForm = document.querySelector'), source.length)
     .replace(/\bimport\s*\(/g, '__import(');
   const form = new FakeElement();
+  form.elements = { crop: { value: 'all' } };
   const place = new FakeElement();
   const cityContext = new FakeElement();
   const error = new FakeElement();
@@ -174,7 +175,7 @@ test('подтверждение неизвестного места сохра�
   const values = { region: place.value, crop: 'raspberry', setting: 'all', light: 'unknown', fruiting: 'all', harvestTiming: 'all', shelter: 'unknown', drainage: 'unknown' };
   const context = {
     document: { querySelector: selector => nodes.get(selector), querySelectorAll: () => [], createElement: () => new FakeElement() },
-    location: { search: '', origin: 'https://example.test' }, URL, URLSearchParams,
+    location: { search: '?crop=strawberry', origin: 'https://example.test' }, URL, URLSearchParams,
     CustomEvent: class { constructor(type) { this.type = type; } },
     Event: class { constructor(type) { this.type = type; } },
     FormData: class { get(name) { return name === 'region' ? place.value : values[name]; } },
@@ -185,6 +186,7 @@ test('подтверждение неизвестного места сохра�
       : { classifyPickerCard() {}, cityForPickerContext: () => '' }
   };
   runInNewContext(pickerSource, context);
+  assert.equal(form.elements.crop.value, 'strawberry', 'the crop from a product link is selected immediately');
   // Input during the async place-module load must already invalidate Tula's visible results.
   place.value = 'Мой посёлок';
   place.dispatchEvent({ type: 'input' });
