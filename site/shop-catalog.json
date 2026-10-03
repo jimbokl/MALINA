@@ -3120,6 +3120,21 @@
     "cultivarSlug": null
   },
   {
+    "id": "g-63876",
+    "source": "garshinka",
+    "slug": "tovar-g-63876",
+    "name": "Малиновое дерево (Малина штамбовая) Сказка бесшипная",
+    "expectedName": "Малиновое дерево (Малина штамбовая) Сказка бесшипная",
+    "crop": "raspberry",
+    "categoryId": "Плодовые растения/Малина",
+    "merchantUrl": "https://www.garshinka.ru/product/malina-skazka",
+    "description": "",
+    "duplicateName": false,
+    "canonicalSlug": "tovar-g-63876",
+    "variantLabel": null,
+    "cultivarSlug": null
+  },
+  {
     "id": "g-80862",
     "source": "garshinka",
     "slug": "tovar-g-80862",
