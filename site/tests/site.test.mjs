@@ -512,13 +512,13 @@ test('сравнение сортов отдаёт полезный HTML, ист
   }
 });
 
-test('сравнение клубники показывает оба источника урожайности для Русича и Зенги Зенганы', async () => {
+test('сравнение клубники сохраняет независимые измерения Русича и Зенги Зенганы', async () => {
   const html = await readFile(join(root, 'sravnenie', 'klubnika', 'index.html'), 'utf8');
   const payload = html.match(/<script id="comparison-data" type="application\/json">([\s\S]*?)<\/script>/)?.[1];
   const varieties = JSON.parse(payload).varieties;
   for (const slug of ['rusich', 'zenga-zengana']) {
     const item = varieties.find(variety => variety.slug === slug);
-    assert.equal(item.yieldObservations.length, 2, slug);
+    assert.equal(item.yieldObservations.length, slug === 'rusich' ? 3 : 2, slug);
   }
   for (const value of ['21,6 т/га', '148,3 ц/га', '7,7 т/га', '127,5 ц/га']) {
     assert.ok(varieties.some(item => getComparisonYields(item).some(row => row.value === value)), value);

@@ -1,4 +1,4 @@
-"""The VNIISPK comparison remains a measured, place-unassigned trial result."""
+"""The title establishes the oblast; exact trial coordinates remain unknown."""
 
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ class MoscowStrawberryComparison0046Tests(unittest.TestCase):
                 self.assertEqual(len(matches), 1)
                 observation = matches[0]
                 self.assertEqual((observation["value_number"], observation["unit"]), (value, "ц/га"))
-                self.assertIsNone(observation["region_code"])
+                self.assertEqual(observation["region_code"], "moscow-oblast")
                 self.assertEqual(observation["source_url"], SOURCE_URL)
                 evidence = observation["evidence"]
                 self.assertEqual(evidence["evidence_kind"], "published_study")

@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
+import { getRegionalTrials } from '../assets/regional-trials.mjs';
+
+const vmSource = source => source.replace(/^import .*regional-trials\.mjs';\n/m, '').replace(/\bimport\s*\(/g, '__import(');
 
 test('официальные допуски остаются видимыми при отсутствии местных испытаний', async () => {
   const source = await readFile(new URL('../assets/verified-selector.js', import.meta.url), 'utf8');
@@ -36,6 +39,7 @@ test('официальные допуски остаются видимыми п
     }] }]
   };
   const context = {
+    getRegionalTrials,
     document: {
       documentElement: { dataset: {} },
       querySelector: selector => nodes.get(selector),
@@ -48,7 +52,7 @@ test('официальные допуски остаются видимыми п
     fetch: async () => ({ ok: true, text: async () => JSON.stringify(catalog) }),
     __import: async () => ({ default: async () => {}, select_varieties: () => JSON.stringify({ total: 0 }) })
   };
-  runInNewContext(source.replace(/\bimport\s*\(/g, '__import('), context);
+  runInNewContext(vmSource(source), context);
   await listeners.get('submit')({ preventDefault() {} });
 
   assert.match(status.textContent, /Мы нашли 1 сорт в региональном списке/);
@@ -66,6 +70,16 @@ const deferred = () => {
   let resolve;
   const promise = new Promise(done => { resolve = done; });
   return { promise, resolve };
+};
+
+const trialObservation = {
+  trait_code: 'yield', region_code: 'tula', value_number: 10, unit: 'т/га',
+  source_key: 'test-local-trial', source_title: 'Испытание', source_url: 'https://example.test/trial.pdf',
+  evidence: {
+    evidence_kind: 'published_study', place_text: 'Тульская область · опытный участок',
+    setting_text: 'Открытый грунт', period_from: '2022', period_to: '2023',
+    source_locator: 'Таблица 1', method_text: 'Среднее за два сезона'
+  }
 };
 
 async function pickerHarness({ crop = 'raspberry', fetchCatalog, importEngine } = {}) {
@@ -93,7 +107,7 @@ async function pickerHarness({ crop = 'raspberry', fetchCatalog, importEngine } 
       this.children = [];
       this.append(...children);
     },
-    querySelector(selector) { return selector === '.picker-admission' ? this.badge : null; },
+    querySelector(selector) { return selector === '.picker-admission' ? this.badge : selector === '.picker-trial' ? this.trialNote : null; },
     querySelectorAll(selector) {
       return selector === '.picker-group-heading' ? this.children.filter(child => child.classList.contains('picker-group-heading')) : [];
     },
@@ -113,6 +127,12 @@ async function pickerHarness({ crop = 'raspberry', fetchCatalog, importEngine } 
   const output = element();
   const pickerResults = element();
   const admissionStatus = element();
+  const trialSection = element();
+  trialSection.hidden = true;
+  const trialCards = element();
+  const trialSources = element();
+  const trialJump = element();
+  trialJump.hidden = true;
   const cultivars = [
     { slug: 'polka', canonical_name: 'Полька', crop_slug: 'raspberry', admissions: [] },
     { slug: 'gusar', canonical_name: 'Гусар', crop_slug: 'raspberry', admissions: [{ admission_region_number: 3 }] },
@@ -124,6 +144,8 @@ async function pickerHarness({ crop = 'raspberry', fetchCatalog, importEngine } 
     card.dataset = { cultivarSlug: cultivar.slug, pickerVisible: String(cultivar.crop_slug === crop) };
     card.badge = element();
     card.badge.hidden = true;
+    card.trialNote = element();
+    card.trialNote.hidden = true;
     return card;
   });
   const heading = element(['picker-group-heading']);
@@ -135,9 +157,11 @@ async function pickerHarness({ crop = 'raspberry', fetchCatalog, importEngine } 
   };
   const nodes = new Map([
     ['#picker-form', form], ['#verified-status', status], ['#verified-results', results],
-    ['#picker-output', output], ['#picker-results', pickerResults], ['#picker-admission-status', admissionStatus]
+    ['#picker-output', output], ['#picker-results', pickerResults], ['#picker-admission-status', admissionStatus],
+    ['#regional-trials', trialSection], ['#regional-trial-cards', trialCards], ['#regional-trial-sources', trialSources], ['#picker-trial-jump', trialJump]
   ]);
   const context = {
+    getRegionalTrials,
     document: {
       documentElement: { dataset: {} },
       querySelector: selector => nodes.get(selector),
@@ -154,9 +178,9 @@ async function pickerHarness({ crop = 'raspberry', fetchCatalog, importEngine } 
     __import: importEngine || (async () => ({ default: async () => {}, select_varieties: () => JSON.stringify({ total: 0 }) }))
   };
   const source = await readFile(new URL('../assets/verified-selector.js', import.meta.url), 'utf8');
-  runInNewContext(source.replace(/\bimport\s*\(/g, '__import('), context);
+  runInNewContext(vmSource(source), context);
   return {
-    form, status, results, output, pickerResults, admissionStatus, cards, catalog,
+    form, status, results, output, pickerResults, admissionStatus, cards, catalog, trialSection, trialCards, trialSources, trialJump,
     submit: () => form.listeners.get('submit')[0]({ preventDefault() {} }),
     emitResults: () => output.dispatchEvent({ type: 'picker:results' }),
     changeLocation: () => form.dispatchEvent({ type: 'picker:location-change' })
@@ -248,4 +272,43 @@ test('смена места во время загрузки WASM очищает
   assert.equal(picker.status.textContent, 'Выберите регион и нажмите «Показать сорта».');
   assert.equal(picker.admissionStatus.hidden, true);
   assert.ok(picker.cards.every(card => card.badge.hidden));
+});
+
+test('местный опыт виден без WASM, ссылки сохраняют город, смена региона очищает карточки', async () => {
+  const picker = await pickerHarness({ importEngine: async () => { throw new Error('WASM unavailable'); } });
+  picker.catalog.cultivars.find(item => item.slug === 'gusar').observations = [trialObservation];
+  picker.form.dataset.activeCity = 'Тула';
+  picker.form.dataset.activeRegion = 'Тульская область';
+  await picker.submit();
+  assert.equal(picker.trialSection.hidden, false);
+  assert.equal(picker.trialJump.hidden, false);
+  assert.equal(picker.trialCards.children.length, 1);
+  const card = picker.trialCards.children[0];
+  assert.equal(card.children[1].textContent, 'Гусар');
+  const links = card.children.at(-1).children;
+  const url = new URL(links[0].href, 'https://example.test');
+  assert.equal(url.searchParams.get('city'), 'Тула');
+  assert.equal(url.searchParams.get('region'), 'Тульская область');
+  assert.equal(links[1].href, `${links[0].href}#otzyvy`);
+  assert.equal(picker.cards.find(item => item.dataset.cultivarSlug === 'gusar').trialNote.hidden, false);
+  assert.equal(picker.trialSources.children[0].textContent, 'Источники и условия испытаний');
+
+  picker.changeLocation();
+  assert.equal(picker.trialSection.hidden, true);
+  assert.equal(picker.trialJump.hidden, true);
+  assert.equal(picker.trialCards.children.length, 0);
+  assert.equal(picker.trialSources.children.length, 0);
+  assert.ok(picker.cards.every(card => card.trialNote.hidden));
+});
+
+test('выбор клубники не оставляет местные результаты малины', async () => {
+  const picker = await pickerHarness();
+  picker.catalog.cultivars.find(item => item.slug === 'gusar').observations = [trialObservation];
+  await picker.submit();
+  assert.equal(picker.trialCards.children.length, 1);
+  picker.form.elements.crop.value = 'strawberry';
+  await picker.submit();
+  assert.equal(picker.trialSection.hidden, true);
+  assert.equal(picker.trialCards.children.length, 0);
+  assert.ok(picker.cards.every(card => card.trialNote.hidden));
 });

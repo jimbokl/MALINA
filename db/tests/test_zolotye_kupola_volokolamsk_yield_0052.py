@@ -32,7 +32,7 @@ class ZolotyeKupolaVolokolamskYield0052Tests(unittest.TestCase):
         }
         observations = [
             row for row in cultivars["zolotye-kupola"]["observations"]
-            if row["source_key"] == SOURCE_KEY
+            if row["source_key"] == SOURCE_KEY and row["trait_code"] == "yield"
         ]
         self.assertEqual(len(observations), 1)
         observation = observations[0]

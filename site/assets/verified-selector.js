@@ -1,3 +1,5 @@
+import { getRegionalTrials } from './regional-trials.mjs';
+
 const form = document.querySelector('#picker-form');
 
 if (form) {
@@ -13,6 +15,21 @@ if (form) {
   let admittedSlugs = new Set();
   let resultsReady = false;
   let selectedRegionName = '';
+  const trialSection = document.querySelector('#regional-trials');
+  const trialCards = document.querySelector('#regional-trial-cards');
+  const trialSources = document.querySelector('#regional-trial-sources');
+  const trialJump = document.querySelector('#picker-trial-jump');
+
+  const clearTrials = () => {
+    if (trialSection) trialSection.hidden = true;
+    if (trialJump) trialJump.hidden = true;
+    trialCards?.replaceChildren();
+    trialSources?.replaceChildren();
+    for (const card of pickerCards) {
+      const note = card.querySelector('.picker-trial');
+      if (note) { note.replaceChildren(); note.hidden = true; }
+    }
+  };
 
   const updatePickerAdmissions = () => {
     admissionStatus.hidden = true;
@@ -53,6 +70,7 @@ if (form) {
     resultsReady = false;
     selectedRegionName = '';
     clearCardAdmissions();
+    clearTrials();
     showStatus('Выберите регион и нажмите «Показать сорта».');
   });
 
@@ -98,6 +116,79 @@ if (form) {
     return `${url.pathname}${url.search}`;
   };
 
+  const showTrials = (catalog, region, crop) => {
+    const trials = getRegionalTrials(catalog, region.code, crop);
+    if (!trialSection || !trials.length) return;
+    const sourceList = document.createElement('div');
+    sourceList.className = 'regional-trial-evidence';
+    for (const trial of trials) {
+      const finding = trial.findings[0];
+      const note = pickerCards.find(card => card.dataset.cultivarSlug === trial.slug)?.querySelector('.picker-trial');
+      if (note) {
+        const heading = document.createElement('strong');
+        heading.textContent = 'Изучали в вашем регионе';
+        const metric = document.createElement('p');
+        metric.textContent = `${finding.label}: ${finding.value} · ${finding.period}`;
+        note.replaceChildren(heading, metric);
+        note.hidden = false;
+      }
+      const card = document.createElement('article');
+      card.className = 'regional-trial-card';
+      const cropLabel = document.createElement('span');
+      cropLabel.className = 'eyebrow';
+      cropLabel.textContent = trial.cropSlug === 'raspberry' ? 'МАЛИНА' : 'КЛУБНИКА';
+      const title = document.createElement('h3');
+      title.textContent = trial.name;
+      const period = document.createElement('p');
+      period.className = 'regional-trial-place';
+      period.textContent = `${finding.period} · ${finding.placeLabel}`;
+      const facts = document.createElement('ul');
+      for (const fact of trial.findings.filter(item => item.sourceKey === finding.sourceKey)) {
+        const item = document.createElement('li');
+        item.textContent = `${fact.label}: ${fact.value}`;
+        facts.append(item);
+      }
+      const links = document.createElement('div');
+      links.className = 'regional-trial-links';
+      const varietyLink = document.createElement('a');
+      varietyLink.href = cultivarHref(trial.slug);
+      varietyLink.textContent = 'Посмотреть сорт →';
+      const reviewsLink = document.createElement('a');
+      reviewsLink.href = `${cultivarHref(trial.slug)}#otzyvy`;
+      reviewsLink.textContent = 'Опыт садоводов →';
+      links.append(varietyLink, reviewsLink);
+      card.append(cropLabel, title, period, facts, links);
+      trialCards.append(card);
+
+      const evidence = document.createElement('article');
+      const evidenceTitle = document.createElement('h3');
+      evidenceTitle.textContent = trial.name;
+      evidence.append(evidenceTitle);
+      for (const fact of trial.findings) {
+        const description = document.createElement('p');
+        description.textContent = `${fact.label}: ${fact.value}. ${fact.period}. ${fact.place}. ${fact.conditions}. ${fact.method}`;
+        evidence.append(description);
+        if (fact.uncertainty) {
+          const details = document.createElement('p');
+          details.textContent = fact.uncertainty;
+          evidence.append(details);
+        }
+        const sourceLink = document.createElement('a');
+        sourceLink.href = fact.sourceUrl;
+        sourceLink.target = '_blank';
+        sourceLink.rel = 'noopener noreferrer';
+        sourceLink.textContent = `${fact.sourceTitle} · ${fact.sourceLocator} ↗`;
+        evidence.append(sourceLink);
+      }
+      sourceList.append(evidence);
+    }
+    const summary = document.createElement('summary');
+    summary.textContent = 'Источники и условия испытаний';
+    trialSources.replaceChildren(summary, sourceList);
+    trialSection.hidden = false;
+    if (trialJump) trialJump.hidden = false;
+  };
+
   const showAdmissions = (catalog, region, crop) => {
     if (!region.admission_region_number) return { mapped: false, count: 0 };
     const admitted = catalog.cultivars.filter(item =>
@@ -130,6 +221,7 @@ if (form) {
     const currentRequest = ++requestId;
     resultsReady = false;
     clearCardAdmissions();
+    clearTrials();
     const fields = new FormData(form);
     const regionName = String(fields.get('region') || '').trim();
     selectedRegionName = regionName;
@@ -148,6 +240,7 @@ if (form) {
         return;
       }
       admissionFallback = showAdmissions(catalog, region, crop);
+      showTrials(catalog, region, crop);
       if (!engine) {
         const module = await import(`${base}/assets/selector/malina_selector.js`);
         await module.default();
@@ -182,9 +275,16 @@ if (form) {
         for (const reason of match.reasons) {
           const rationale = document.createElement('p');
           rationale.textContent = reason.rationale;
-          const limits = document.createElement('p');
-          limits.textContent = `Когда это важно: ${reason.limitations}`;
-          item.append(rationale, limits);
+          item.append(rationale);
+          if (reason.limitations) {
+            const limits = document.createElement('details');
+            const summary = document.createElement('summary');
+            summary.textContent = 'Условия наблюдения';
+            const explanation = document.createElement('p');
+            explanation.textContent = reason.limitations;
+            limits.append(summary, explanation);
+            item.append(limits);
+          }
         }
         results.append(item);
       }
