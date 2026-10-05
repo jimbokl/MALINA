@@ -355,6 +355,16 @@ if (pickerForm) {
   if (['raspberry', 'strawberry'].includes(initialCrop) && pickerForm.elements?.crop) {
     pickerForm.elements.crop.value = initialCrop;
   }
+  let restoredConditions = false;
+  for (const key of ['setting', 'light', 'fruiting', 'harvestTiming', 'shelter', 'drainage']) {
+    if (params.getAll(key).length !== 1) continue;
+    const option = [...pickerForm.querySelectorAll(`input[name="${key}"]`)].find(input => input.value === params.get(key));
+    if (option) {
+      if (!option.checked) restoredConditions = true;
+      option.checked = true;
+    }
+  }
+  if (restoredConditions) pickerForm.querySelector('.picker-advanced').open = true;
   const city = (pickerForm.dataset.city || params.get('city') || '').trim();
   const cityRegion = (pickerForm.dataset.region || params.get('region') || '').trim();
   const regionInput = pickerForm.querySelector('#picker-region');

@@ -16,7 +16,7 @@ import { voteWidget, voteFreshness, ratingBody, resolveVoteApi } from '../votes.
 import { validateVoteSnapshot } from '../assets/vote-model.js';
 import { pageStructuredData } from '../structured-data.mjs';
 import { raspberryFacets, raspberryFacetVarieties } from '../catalog-facets.mjs';
-import { getComparisonYields } from '../assets/comparison-model.mjs';
+import { getComparisonMeasurements, getComparisonYields } from '../assets/comparison-model.mjs';
 import { getRegionalTrials } from '../assets/regional-trials.mjs';
 import { shopProducts } from '../shop-products.mjs';
 import { shopVarietyPhotoIds } from '../shop-variety-photos.mjs';
@@ -199,38 +199,51 @@ function comparePage(cropKey) {
         ((Number.isFinite(row.value_number) && row.unit) || String(row.value_text || '').trim())
       ) || null;
       const yieldObservations = (publicRecord?.observations || []).filter(row => row.trait_code === 'yield' && row.evidence);
-      return { ...item, admissions: publicRecord?.admissions || [], yieldObservation, yieldObservations };
+      const product = publicShopProducts.find(product => product.cultivarSlug === item.slug && product.crop === cropKey);
+      return { ...item, admissions: publicRecord?.admissions || [], observations: publicRecord?.observations || [], yieldObservation, yieldObservations, shopHref: product ? `/magazin/${product.slug}/` : null };
     }),
     cities,
     regions: publicCatalog.regions
   }).replaceAll('<', '\\u003c');
-  const choices = cropVarieties.map(item => `<label class="comparison-choice"><input type="checkbox" name="cultivar" value="${e(item.slug)}"${initialVarieties.includes(item) ? ' checked' : ''}><span><strong>${e(item.name)}</strong></span><a href="/sorta/${e(item.slug)}/">Карточка сорта ↗</a></label>`).join('');
+  const choices = cropVarieties.map(item => `<div class="comparison-choice" data-comparison-name="${e(item.name)}"><label><input type="checkbox" name="cultivar" value="${e(item.slug)}"${initialVarieties.includes(item) ? ' checked' : ''}><span><strong>${e(item.name)}</strong></span></label><a href="/sorta/${e(item.slug)}/">О сорте ↗</a></div>`).join('');
   const facts = initialVarieties.map(item => `<th scope="col"><a href="/sorta/${e(item.slug)}/">${e(item.name)}</a></th>`).join('');
   const factDefinitions = [
     ['Культура', item => item.crop],
     ['Тип плодоношения', item => item.fruitingLabel],
     ['Когда созревает', item => item.period],
-    ['Где изучали сорт', item => item.place],
+    ['Где выращивать', item => item.place],
     ['Коротко о сорте', item => item.note]
   ];
   const rows = [
     ...factDefinitions.map(([label, getValue]) => `<tr><th scope="row">${e(label)}</th>${initialVarieties.map(item => `<td>${e(getValue(item) || '—')}</td>`).join('')}</tr>`),
-    `<tr><th scope="row">Урожайность</th>${initialVarieties.map(item => {
-      const studies = getComparisonYields({ observations: publicCultivars.get(item.slug)?.observations || [] });
-      return `<td>${studies.length ? studies.map(yieldData => `<div class="comparison-yield"><strong>${e(yieldData.value)}</strong></div>`).join('') : '—'}</td>`;
-    }).join('')}</tr>`,
+    ...[['Урожайность', 'yield'], ['Масса ягоды', 'berry_weight_g']].map(([label, traitCode]) => `<tr><th scope="row">${label}</th>${initialVarieties.map(item => {
+      const studies = getComparisonMeasurements({ observations: publicCultivars.get(item.slug)?.observations || [] }, traitCode);
+      return `<td>${studies.length ? studies.map(study => `<div class="comparison-trial"><strong>${e(study.value)}</strong><small>${e(study.context)}</small></div>`).join('') : '—'}</td>`;
+    }).join('')}</tr>`),
     `<tr><th scope="row">Есть ли сорт в официальном списке</th>${initialVarieties.map(() => '<td>Выберите город в подборе</td>').join('')}</tr>`
   ].join('');
   const initialSources = initialVarieties.map(item => {
     const record = publicCultivars.get(item.slug);
     const links = [
       { label: item.sourceLabel, url: item.source },
-      ...getComparisonYields({ observations: record?.observations || [] })
+      ...['yield', 'berry_weight_g'].flatMap(traitCode => getComparisonMeasurements({ observations: record?.observations || [] }, traitCode))
         .filter(study => study.sourceUrl).map(study => ({ label: study.sourceTitle, url: study.sourceUrl }))
     ].filter((source, index, all) => source.url && all.findIndex(other => other.url === source.url) === index);
     return `<li><strong>${e(item.name)}</strong> · проверено ${e(item.reviewedAt ?? reviewedAt)}${links.map(source => ` · <a href="${e(source.url)}" target="_blank" rel="noopener noreferrer">${e(source.label)} ↗</a>`).join('')}</li>`;
   }).join('');
-  return layout({ title: `Сравнить сорта ${cropName}`, description: `Сравните характеристики сортов ${cropName} и откройте исходные описания.`, path: route, active: 'catalog', script: '<script type="module" src="/assets/comparison.js"></script>', body: `<section class="simple-hero comparison-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span><a href="/sorta/">Каталог сортов</a><span> / </span>Сравнение</div><span class="eyebrow">АТЛАС / СРАВНЕНИЕ СОРТОВ</span><h1>Сравнить сорта<br><em>${isRaspberry ? 'малины.' : 'клубники.'}</em></h1><p>Поставьте сорта рядом: так легче увидеть, чем они отличаются и какой выбрать для своего сада.</p></div></section><section class="section wrap comparison-section" id="comparison" data-crop="${cropKey}" data-reviewed-at="${e(reviewedAt)}"><script id="comparison-data" type="application/json">${comparisonData}</script><div class="comparison-intro"><div><span class="eyebrow">ВАШЕ СРАВНЕНИЕ</span><p id="comparison-context" class="comparison-context" hidden></p></div><a class="text-link" href="/sorta/">Вернуться в каталог ↗</a></div><p class="comparison-status" id="comparison-status" role="status" aria-live="polite">Выберите сорта для сравнения.</p><div class="comparison-table-wrap" tabindex="0" role="region" aria-label="Таблица сравнения сортов. На узком экране её можно прокручивать по горизонтали."><table class="comparison-table"><caption>Характеристики сортов ${cropName} по исходным описаниям.</caption><thead><tr><th scope="col">Параметр</th>${facts}</tr></thead><tbody id="comparison-rows">${rows}</tbody></table></div><details class="comparison-chooser" id="comparison-chooser"><summary>Изменить сорта для сравнения</summary><p>Выберите от двух до четырёх сортов. В каталоге ${cropVarieties.length} вариантов.</p><fieldset class="comparison-choices"><legend>Сорта для сравнения</legend>${choices}</fieldset></details><p class="comparison-limits">Для выбора под свой город откройте подбор и сравните региональные данные.</p><details class="comparison-sources" id="comparison-sources"><summary>Источники и подробности сравнения</summary><p>Мы сверили характеристики с материалами ниже. Здесь можно проверить даты и исходные данные.</p><ul>${initialSources}</ul></details></section>` });
+  return layout({ title: `Сравнить сорта ${cropName}`, description: `Сравните характеристики сортов ${cropName}, урожайность и результаты местных испытаний.`, path: route, active: 'catalog', script: '<script type="module" src="/assets/comparison.js"></script>', body: `
+<section class="simple-hero comparison-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">Главная</a><span> / </span><a href="/sorta/">Каталог сортов</a><span> / </span>Сравнение</div><span class="eyebrow">ВЫБИРАЕМ ДЛЯ СВОЕГО САДА</span><h1>Сравнить сорта<br><em>${isRaspberry ? 'малины.' : 'клубники.'}</em></h1><p>Мы собрали характеристики рядом — смотрите, чем отличаются сорта, и выбирайте подходящий для своей грядки.</p></div></section>
+<section class="section wrap comparison-section" id="comparison" data-crop="${cropKey}" data-reviewed-at="${e(reviewedAt)}">
+<script id="comparison-data" type="application/json">${comparisonData}</script>
+<div class="comparison-intro"><div><span class="eyebrow">ВАШЕ СРАВНЕНИЕ</span><p id="comparison-context" class="comparison-context" hidden></p></div><div class="comparison-return-links"><a class="text-link" id="comparison-return-picker" href="/podbor/?crop=${cropKey}">Вернуться к подбору ↗</a><a class="text-link" href="/sorta/?crop=${cropKey}">Каталог сортов ↗</a></div></div>
+<div class="comparison-tools" id="comparison-tools" hidden><div id="comparison-selected" class="comparison-selected" aria-label="Выбранные сорта"></div><div class="comparison-actions"><label class="comparison-differences"><input type="checkbox" id="comparison-differences"><span>Только различия</span></label><button type="button" id="comparison-copy" class="comparison-copy">Скопировать ссылку ↗</button></div></div>
+<div class="comparison-share-fallback" id="comparison-share-fallback" hidden><label for="comparison-share-url">Ссылка на ваше сравнение</label><input type="text" id="comparison-share-url" readonly spellcheck="false" aria-describedby="comparison-share-help"><p id="comparison-share-help">Выделите ссылку и скопируйте её, чтобы сохранить сравнение или отправить знакомым.</p></div>
+<p class="comparison-status" id="comparison-status" role="status" aria-live="polite">Сравниваем ${initialVarieties.length} сорта. Нажмите на название, чтобы узнать больше.</p>
+<div class="comparison-table-wrap" tabindex="0" role="region" aria-label="Таблица сравнения сортов. На узком экране её можно прокручивать по горизонтали."><table class="comparison-table"><caption>Сравниваем характеристики сортов ${cropName}. Листайте таблицу вправо, чтобы увидеть все сорта.</caption><thead><tr><th scope="col">Характеристика</th>${facts}</tr></thead><tbody id="comparison-rows">${rows}</tbody></table></div>
+<p class="comparison-empty-differences" id="comparison-empty-differences" hidden>По этим характеристикам сорта похожи. Снимите отметку «Только различия», чтобы увидеть всё сравнение.</p>
+<details class="comparison-chooser" id="comparison-chooser" hidden><summary>Изменить сорта для сравнения</summary><p>Выберите от двух до четырёх сортов.</p><div class="comparison-search-tools"><label for="comparison-search">Найти сорт<input type="search" id="comparison-search" placeholder="Например, Полька или Клери" autocomplete="off"></label><button type="button" id="comparison-clear">Снять выбор</button></div><p id="comparison-search-count" class="comparison-search-count" role="status" aria-live="polite">В каталоге ${cropVarieties.length} сортов</p><p class="comparison-search-empty" id="comparison-search-empty" hidden>Такого названия пока нет. Попробуйте написать короче или выберите другой сорт.</p><fieldset class="comparison-choices"><legend>Сорта для сравнения</legend>${choices}</fieldset></details>
+<div class="comparison-next" id="comparison-next" hidden></div>
+<details class="comparison-sources" id="comparison-sources"><summary>Источники и подробности сравнения</summary><p>Мы подготовили сравнение по данным из этих материалов. Здесь собраны ссылки, даты и условия испытаний.</p><ul>${initialSources}</ul></details></section>` });
 }
 
 const pickerPlaceOptions = [

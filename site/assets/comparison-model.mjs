@@ -20,8 +20,7 @@ export function toggleSelection(selection, slug, varieties, cropKey) {
 
 export function comparisonHref(cropKey, selection, search = '', siteBase = '') {
   const params = new URLSearchParams(search);
-  if (selection.length) params.set('sort', selection.join(','));
-  else params.delete('sort');
+  params.set('sort', selection.join(','));
   const query = params.toString();
   return `${siteBase}/sravnenie/${cropKey === 'raspberry' ? 'malina' : 'klubnika'}/${query ? `?${query}` : ''}`;
 }
@@ -39,15 +38,18 @@ export function getComparisonFacts(variety) {
     ['Культура', variety.crop],
     ['Тип плодоношения', variety.fruitingLabel || null],
     ['Когда созревает', variety.period || null],
-    ['Где изучали сорт', variety.place || null],
+    ['Где выращивать', variety.place || null],
     ['Коротко о сорте', variety.note || null]
   ];
 }
 
-export function getComparisonYields(variety) {
-  const observations = variety?.yieldObservations || variety?.observations || (variety?.yieldObservation ? [variety.yieldObservation] : []);
+export function getComparisonMeasurements(variety, traitCode) {
+  if (!['yield', 'berry_weight_g'].includes(traitCode)) return [];
+  const observations = traitCode === 'yield'
+    ? variety?.yieldObservations || variety?.observations || (variety?.yieldObservation ? [variety.yieldObservation] : [])
+    : variety?.observations || [];
   const accepted = observations.filter(item => {
-    if (item?.trait_code !== 'yield' ||
+    if (item?.trait_code !== traitCode ||
       !((Number.isFinite(item.value_number) && String(item.unit || '').trim()) || String(item.value_text || '').trim())) return false;
     const evidence = item.evidence;
     if (!evidence || !String(evidence.place_text || '').trim() ||
@@ -76,16 +78,45 @@ export function getComparisonYields(variety) {
   });
 }
 
+export function getComparisonYields(variety) {
+  return getComparisonMeasurements(variety, 'yield');
+}
+
 export function getComparisonYield(variety) {
   return getComparisonYields(variety)[0] || null;
 }
 
 export function getComparisonLabels(includeAdmissions = false) {
-  const labels = ['Культура', 'Тип плодоношения', 'Когда созревает', 'Где изучали сорт', 'Коротко о сорте', 'Урожайность'];
+  const labels = ['Культура', 'Тип плодоношения', 'Когда созревает', 'Где выращивать', 'Коротко о сорте', 'Урожайность', 'Масса ягоды'];
   return includeAdmissions ? [...labels, 'Есть ли сорт в официальном списке'] : labels;
 }
 
 const normalizePlace = value => String(value || '').trim().toLocaleLowerCase('ru-RU').replace(/\s+/g, ' ');
+
+const normalizeComparisonText = value => normalizePlace(value).replace(/ё/g, 'е');
+
+export function hasComparisonDifference(values) {
+  return new Set(values.map(value => normalizeComparisonText(value ?? ''))).size > 1;
+}
+
+export function searchComparisonVarieties(varieties, query) {
+  const needle = normalizeComparisonText(query);
+  return varieties.filter(item => [item.name, item.slug, ...(Array.isArray(item.aliases) ? item.aliases : [])]
+    .some(value => normalizeComparisonText(value).includes(needle)));
+}
+
+export function comparisonPickerHref(cropKey, place, search = '', siteBase = '') {
+  const input = new URLSearchParams(search);
+  const params = new URLSearchParams();
+  params.set('crop', cropKey === 'raspberry' ? 'raspberry' : 'strawberry');
+  if (place?.region?.name_ru) params.set('region', place.region.name_ru);
+  if (place?.city?.name) params.set('city', place.city.name);
+  for (const key of ['setting', 'light', 'fruiting', 'harvestTiming', 'shelter', 'drainage']) {
+    if (input.getAll(key).length === 1) params.set(key, input.get(key));
+  }
+  const cityPath = place?.city?.slug && !place.reason ? `${encodeURIComponent(place.city.slug)}/` : '';
+  return `${siteBase}/podbor/${cityPath}?${params}`;
+}
 
 export function resolveComparisonPlace({ city = '', region = '', cities = [], regions = [] } = {}) {
   const cityName = String(city || '').trim();

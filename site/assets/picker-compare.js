@@ -35,6 +35,10 @@ if (output && form) {
       if (region) params.set('region', region);
       const city = form.dataset.activeCity || (cityContext && !cityContext.hidden ? form.dataset.city : '');
       if (city) params.set('city', city);
+      for (const key of ['setting', 'light', 'fruiting', 'harvestTiming', 'shelter', 'drainage']) {
+        const value = form.elements[key]?.value;
+        if (value) params.set(key, value);
+      }
       const slugs = selected.map(input => input.value);
       link.href = comparisonHref(crop, slugs, params.toString(), siteBase);
       link.textContent = `Сравнить ${count} сорта ↗`;

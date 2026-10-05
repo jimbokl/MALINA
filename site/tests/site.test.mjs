@@ -473,9 +473,9 @@ test('сравнение сортов отдаёт полезный HTML, ист
   for (const [crop, slug] of [['малины', 'malina'], ['клубники', 'klubnika']]) {
     const html = await readFile(join(root, 'sravnenie', slug, 'index.html'), 'utf8');
     assert.match(html, new RegExp(`Сравнить сорта<br><em>${crop}\\.`));
-    assert.match(html, /<details class="comparison-chooser" id="comparison-chooser"><summary>Изменить сорта для сравнения<\/summary>/);
+    assert.match(html, /<details class="comparison-chooser" id="comparison-chooser" hidden><summary>Изменить сорта для сравнения<\/summary>/);
     assert.ok(html.indexOf('id="comparison-rows"') < html.indexOf('id="comparison-chooser"'), 'результат сравнения расположен до длинного списка сортов');
-    assert.match(html, /Поставьте сорта рядом: так легче увидеть, чем они отличаются/);
+    assert.match(html, /Мы собрали характеристики рядом/);
     assert.match(html, /<details class="comparison-sources" id="comparison-sources"><summary>Источники и подробности сравнения<\/summary>/);
     assert.doesNotMatch(html.match(/<tbody id="comparison-rows">([\s\S]*?)<\/tbody>/)?.[1] ?? "", /comparison-source|проверено/);
     assert.match(html, /comparison-data/);
@@ -491,6 +491,7 @@ test('сравнение сортов отдаёт полезный HTML, ист
     assert.ok(data.varieties.every(item => Array.isArray(item.admissions)));
     assert.ok(data.varieties.every(item => item.yieldObservation === null || item.yieldObservation?.evidence), 'в сравнение попадают только урожайности с публичным паспортом');
     assert.match(html, /<th scope="row">Урожайность<\/th>/);
+    assert.match(html, /<th scope="row">Масса ягоды<\/th>/);
     assert.match(html, /Есть ли сорт в официальном списке/);
     assert.ok(data.varieties.some(item => item.yieldObservation), 'проверенные результаты урожайности доступны сравнению');
     const htmlReviewedDates = new Set([...html.matchAll(/проверено (\d{2}\.\d{2}\.\d{4})/g)].map(match => match[1]));
@@ -504,7 +505,7 @@ test('сравнение сортов отдаёт полезный HTML, ист
   assert.match(script, /resolveComparisonPlace/);
   assert.match(script, /comparison-sources/);
   assert.match(script, /item\.reviewedAt \|\| root\.dataset\.reviewedAt/);
-  assert.match(script, /selected\.length < 2 && chooser/);
+  assert.match(script, /if \(selected\.length < 2\) chooser\.open = true/);
   const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8').catch(() => '');
   if (process.env.SITE_URL) {
     assert.match(sitemap, /\/sravnenie\/malina\//);
