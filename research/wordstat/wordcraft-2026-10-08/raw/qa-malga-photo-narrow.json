@@ -1,0 +1,158 @@
+{
+  "url": "http://127.0.0.1:5181/sorta/malga/#seo-photo",
+  "title": "Клубника Мальга: описание сорта, фото, урожайность, отзывы садоводов · МАЛИНА — КЛУБНИКА",
+  "h1": "Мальга.",
+  "canonical": "https://malinaklubnika.ru/sorta/malga/",
+  "viewport": {
+    "width": 530,
+    "height": 736
+  },
+  "documentWidth": 530,
+  "horizontalOverflow": false,
+  "sections": [
+    {
+      "id": "otzyvy",
+      "heading": "Отзывы о сорте Мальга"
+    },
+    {
+      "id": "seo-opisanie",
+      "heading": "Описание сорта Мальга: что сравнить"
+    },
+    {
+      "id": "seo-care",
+      "heading": "Посадка и уход за Мальга"
+    },
+    {
+      "id": "seo-photo",
+      "heading": "Фото сорта Мальга"
+    }
+  ],
+  "brokenVisibleImages": [],
+  "duplicateIds": [],
+  "links": [
+    {
+      "text": "Главная",
+      "href": "/"
+    },
+    {
+      "text": "Каталог",
+      "href": "/sorta/"
+    },
+    {
+      "text": "Сравнить с условиями",
+      "href": "/podbor/"
+    },
+    {
+      "text": "Почитать опыт садоводов ↗",
+      "href": "#otzyvy"
+    },
+    {
+      "text": "Весь каталог ↗",
+      "href": "/sorta/"
+    },
+    {
+      "text": "Клубника\nАзия",
+      "href": "/sorta/aziya/"
+    },
+    {
+      "text": "Клубника\nАльба",
+      "href": "/sorta/alba/"
+    },
+    {
+      "text": "Клубника\nАльбион",
+      "href": "/sorta/albion/"
+    },
+    {
+      "text": "Названия клубники: Елизавета, Априка и похожие написания ",
+      "href": "/zhurnal/nazvaniya-klubniki-elizaveta-aprika-i-oshibki/"
+    },
+    {
+      "text": "Опыт садоводов и отзывы",
+      "href": "#otzyvy"
+    },
+    {
+      "text": "Записать свой сезон ↗",
+      "href": "/instrumenty/zhurnal-uchastka/?crop=strawberry&cultivar=%D0%9C%D0%B0%D0%BB%D1%8C%D0%B3%D0%B0"
+    },
+    {
+      "text": "Все материалы ↗",
+      "href": "/zhurnal/klubnika/"
+    },
+    {
+      "text": "",
+      "href": "/zhurnal/nazvaniya-klubniki-elizaveta-aprika-i-oshibki/"
+    },
+    {
+      "text": "Названия клубники: Елизавета, Априка и похожие написания",
+      "href": "/zhurnal/nazvaniya-klubniki-elizaveta-aprika-i-oshibki/"
+    },
+    {
+      "text": "Читать материал",
+      "href": "/zhurnal/nazvaniya-klubniki-elizaveta-aprika-i-oshibki/"
+    },
+    {
+      "text": "",
+      "href": "/zhurnal/bakterialnaya-pyatnistost-klubniki-chto-proverit/"
+    },
+    {
+      "text": "Бактериальный ожог клубники: какие признаки проверить",
+      "href": "/zhurnal/bakterialnaya-pyatnistost-klubniki-chto-proverit/"
+    },
+    {
+      "text": "Читать материал",
+      "href": "/zhurnal/bakterialnaya-pyatnistost-klubniki-chto-proverit/"
+    },
+    {
+      "text": "",
+      "href": "/zhurnal/tripsy-na-klubnike-priznaki/"
+    },
+    {
+      "text": "Трипсы на клубнике: признаки, фото и выбор действий",
+      "href": "/zhurnal/tripsy-na-klubnike-priznaki/"
+    },
+    {
+      "text": "Читать материал",
+      "href": "/zhurnal/tripsy-na-klubnike-priznaki/"
+    },
+    {
+      "text": "Сравнить другие сорта ↗",
+      "href": "/podbor/"
+    },
+    {
+      "text": "Посмотреть товар",
+      "href": "/magazin/tovar-g-312717/"
+    },
+    {
+      "text": "Zenti Franco; New Fruits SAS",
+      "href": "https://patents.google.com/patent/USPP28310P3/en"
+    },
+    {
+      "text": "Патентная публикация USPTO",
+      "href": "https://www.uspto.gov/terms-use-uspto-websites"
+    },
+    {
+      "text": "Geoplant Vivai · Malga SG134 ↗",
+      "href": "https://geoplantvivai.com/en/malga-strawberry-plant/"
+    },
+    {
+      "text": "Подробно о посадке",
+      "href": "/zhurnal/posadka-klubniki/"
+    },
+    {
+      "text": "Уход в течение сезона",
+      "href": "/zhurnal/uhod-za-klubnikoi-v-techenie-sezona/"
+    },
+    {
+      "text": "Фото Мальга: Zenti Franco; New Fruits SAS",
+      "href": "https://patents.google.com/patent/USPP28310P3/en"
+    },
+    {
+      "text": "Сравнить с другими сортами клубники",
+      "href": "/sorta/klubnika/"
+    },
+    {
+      "text": "Проверить регион допуска",
+      "href": "/sorta/klubnika/regiony/"
+    }
+  ]
+}

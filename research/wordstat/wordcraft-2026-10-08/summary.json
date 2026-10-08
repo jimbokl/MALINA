@@ -1,0 +1,114 @@
+{
+  "region": "Россия (225)",
+  "devices": "ALL_DEVICES",
+  "capture_date": "2026-10-08",
+  "metric": "Среднемесячное число пользователей точной формы запроса за прошедший год",
+  "exports": [
+    {
+      "file": "bolezni-klubniki.xlsx",
+      "seed": "болезни клубники",
+      "ui_url": "https://webmaster.yandex.ru/site/efficiency/wordcraft/?device=ALL_DEVICES&tab=ADDITIONAL&query=%D0%B1%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D0%B8+%D0%BA%D0%BB%D1%83%D0%B1%D0%BD%D0%B8%D0%BA%D0%B8&mode=QUERY&userQueries=SITES&rivals=ADDITIONAL&regions=225",
+      "counts": {
+        "Queries": 601,
+        "AdditionalQueries": 366,
+        "HostsTable": 84,
+        "UrlsTable": 263
+      }
+    },
+    {
+      "file": "bolezni-maliny.xlsx",
+      "seed": "болезни малины",
+      "ui_url": "https://webmaster.yandex.ru/site/efficiency/wordcraft/?device=ALL_DEVICES&tab=ADDITIONAL&query=%D0%B1%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D0%B8+%D0%BC%D0%B0%D0%BB%D0%B8%D0%BD%D1%8B&mode=QUERY&userQueries=SITES&rivals=ADDITIONAL&regions=225",
+      "counts": {
+        "AdditionalQueries": 210,
+        "Queries": 307,
+        "HostsTable": 101,
+        "UrlsTable": 240
+      }
+    },
+    {
+      "file": "klubnika.xlsx",
+      "seed": "клубника",
+      "ui_url": "https://webmaster.yandex.ru/site/efficiency/wordcraft/?device=ALL_DEVICES&tab=ADDITIONAL&query=%D0%BA%D0%BB%D1%83%D0%B1%D0%BD%D0%B8%D0%BA%D0%B0&mode=QUERY&userQueries=SITES&rivals=ADDITIONAL&regions=225",
+      "counts": {
+        "HostsTable": 2000,
+        "UrlsTable": 2000,
+        "AdditionalQueries": 369,
+        "Queries": 1000
+      }
+    },
+    {
+      "file": "malina.xlsx",
+      "seed": "малина",
+      "ui_url": "https://webmaster.yandex.ru/site/efficiency/wordcraft/?device=ALL_DEVICES&tab=ADDITIONAL&query=%D0%BC%D0%B0%D0%BB%D0%B8%D0%BD%D0%B0&mode=QUERY&userQueries=PAGES&rivals=ADDITIONAL&regions=225",
+      "counts": {
+        "HostsTable": 952,
+        "UrlsTable": 2000,
+        "AdditionalQueries": 353,
+        "Queries": 1000
+      }
+    },
+    {
+      "file": "posadka-maliny.xlsx",
+      "seed": "посадка малины",
+      "ui_url": "https://webmaster.yandex.ru/site/efficiency/wordcraft/?device=ALL_DEVICES&tab=ADDITIONAL&query=%D0%BF%D0%BE%D1%81%D0%B0%D0%B4%D0%BA%D0%B0+%D0%BC%D0%B0%D0%BB%D0%B8%D0%BD%D1%8B&mode=QUERY&userQueries=SITES&rivals=ADDITIONAL&regions=225",
+      "counts": {
+        "AdditionalQueries": 432,
+        "HostsTable": 123,
+        "Queries": 529,
+        "UrlsTable": 357
+      }
+    },
+    {
+      "file": "sorta-klubniki.xlsx",
+      "seed": "сорта клубники",
+      "ui_url": "https://webmaster.yandex.ru/site/efficiency/wordcraft/?device=ALL_DEVICES&tab=ADDITIONAL&query=%D1%81%D0%BE%D1%80%D1%82%D0%B0+%D0%BA%D0%BB%D1%83%D0%B1%D0%BD%D0%B8%D0%BA%D0%B8&mode=QUERY&userQueries=SITES&rivals=ADDITIONAL&regions=225",
+      "counts": {
+        "AdditionalQueries": 469,
+        "HostsTable": 214,
+        "Queries": 1000,
+        "UrlsTable": 1932
+      }
+    },
+    {
+      "file": "sorta-maliny.xlsx",
+      "seed": "сорта малины",
+      "ui_url": "https://webmaster.yandex.ru/site/efficiency/wordcraft/?device=ALL_DEVICES&tab=ADDITIONAL&query=%D1%81%D0%BE%D1%80%D1%82%D0%B0+%D0%BC%D0%B0%D0%BB%D0%B8%D0%BD%D1%8B&mode=QUERY&userQueries=SITES&rivals=ADDITIONAL&regions=225",
+      "counts": {
+        "Queries": 1000,
+        "AdditionalQueries": 448,
+        "HostsTable": 213,
+        "UrlsTable": 1547
+      }
+    },
+    {
+      "file": "tibetskaya-malina.xlsx",
+      "seed": "тибетская малина",
+      "ui_url": "https://webmaster.yandex.ru/site/efficiency/wordcraft/?device=ALL_DEVICES&tab=ADDITIONAL&query=%D1%82%D0%B8%D0%B1%D0%B5%D1%82%D1%81%D0%BA%D0%B0%D1%8F+%D0%BC%D0%B0%D0%BB%D0%B8%D0%BD%D0%B0&mode=QUERY&userQueries=SITES&rivals=ADDITIONAL&regions=225",
+      "counts": {
+        "AdditionalQueries": 40,
+        "Queries": 217,
+        "HostsTable": 93,
+        "UrlsTable": 197
+      }
+    }
+  ],
+  "query_observations": 8341,
+  "unique_queries": 7973,
+  "scope_counts": {
+    "off_topic_gambling": 460,
+    "review_needed": 1352,
+    "garden": 5416,
+    "adjacent_food": 486,
+    "off_topic_or_malformed": 106,
+    "ambiguous_brand": 50,
+    "adjacent_health": 103
+  },
+  "low_garden_queries": 614,
+  "moderate_garden_queries": 2946,
+  "low_garden_additional_queries": 116,
+  "metric_conflicts": 0,
+  "competitor_page_observations": 8536,
+  "unique_competitor_pages": 7356,
+  "unique_competitor_hosts": 2805
+}

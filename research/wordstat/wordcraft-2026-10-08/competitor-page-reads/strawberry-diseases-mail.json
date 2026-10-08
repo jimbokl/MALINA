@@ -1,0 +1,13 @@
+{
+  "url": "chrome-error://chromewebdata/",
+  "title": "pogoda.mail.ru",
+  "ready": "complete",
+  "headings": [
+    "Не удается получить доступ к сайту"
+  ],
+  "intro": "Не удается получить доступ к сайту\n\nСайт pogoda.mail.ru неожиданно разорвал соединение.\n\nПопробуйте сделать следующее:\n\nПроверьте подключение к интернету.\nПроверьте настройки прокси-сервера и брандмауэра.\nERR_CONNECTION_CLOSED\nПерезагрузить\nСведения",
+  "image_count": 0,
+  "expected_url": "https://pogoda.mail.ru/news/66104528/",
+  "captured_utc": "2026-10-08T10:26:13.133513+00:00",
+  "verified_url": false
+}

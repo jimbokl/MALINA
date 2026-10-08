@@ -1,0 +1,3962 @@
+{
+  "checkedIso": "2026-10-08",
+  "use": "Curated external links; no image copying, review text import, local moderation status or ratings assigned.",
+  "growerSources": [
+    {
+      "slug": "gordost-rossii",
+      "name": "Гордость России",
+      "cropKey": "raspberry",
+      "kind": "grower_diary",
+      "url": "https://7dach.ru/Alex_Eskin/podelites-opytom-vyraschivaniya-maliny-gordost-rossii-221162.html",
+      "title": "Поделитесь опытом выращивания малины «Гордость России»",
+      "author": "Две участницы обсуждения (имена в доступном тексте не указаны)",
+      "publishedIso": "2019-04-16",
+      "summary": "В ответах на вопрос Александра Ескина участницы рассказывают о посадках 2017 и 2018 годов. Обе сообщают о крупных ягодах и зимовке без пригибания; одна осталась недовольна вкусом. Место их участков не указано, поэтому эти наблюдения не подтверждают пригодность сорта для Сибири.",
+      "hasNamedPhotos": false,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "tarusa",
+      "name": "Таруса",
+      "cropKey": "raspberry",
+      "kind": "grower_diary",
+      "url": "https://7dach.ru/SvetikOdessa/malinovoe-derevo_2-72683.html",
+      "title": "Малиновое дерево",
+      "author": "Светлана Гевал",
+      "publishedIso": "2016-06-14",
+      "place": "Одесса",
+      "summary": "В личной записи автор показывает штамбовую малину и подписывает фотографии как «Крепыш и Таруса». Она пишет, что укрепила куст, поскольку тот раскачивался на ветру; это наблюдение одного сада.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "gusar",
+      "name": "Гусар",
+      "cropKey": "raspberry",
+      "kind": "grower_diary",
+      "url": "https://7dach.ru/KatyaK/gusar-krupnaya-sladkaya-malina-moego-sada-228819.html",
+      "title": "Гусар — крупная, сладкая малина моего сада",
+      "author": "Екатерина (KatyaK)",
+      "publishedIso": "2019-07-05",
+      "place": "Орёл",
+      "summary": "Автор описывает выращивание Гусара из купленного в 2017 году саженца; в публикации размещены фотографии, подписанные «Малина Гусар». Сроки и впечатления относятся к её саду и не являются сортовым испытанием.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "karamelka",
+      "name": "Карамелька",
+      "cropKey": "raspberry",
+      "kind": "grower_diary",
+      "url": "https://7dach.ru/user_7878_SveKle/malina-karamelka-kto-vyraschivaet-podelites-vpechatleniyami-296146.html",
+      "title": "Малина Карамелька. Кто выращивает? Поделитесь впечатлениями!",
+      "author": "Комментатор с профилем «Татьяна» (в благодарности автор вопроса называет её Ольгой)",
+      "publishedIso": "2022-10-31",
+      "summary": "Комментатор сообщает, что выращивает Карамельку много лет, и прикладывает фотографии урожая с подписями «Малина Карамелька». Отзыв и снимки приведены как личный опыт участницы обсуждения.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "oranzhevoe-chudo",
+      "name": "Оранжевое чудо",
+      "cropKey": "raspberry",
+      "kind": "named_photo_only",
+      "url": "https://7dach.ru/gosha_popov_66/oranzhevoe-chudo_29-216211.html",
+      "title": "Оранжевое чудо",
+      "author": "Игорь Попов",
+      "publishedIso": "2019-01-21",
+      "place": "Рудный",
+      "summary": "Автор загрузил фотографию с подписью «Оранжевое чудо»; в комментарии он характеризует ягоды собственного растения как сладкие и крупные. На странице есть и снимки других, прямо обозначенных неизвестными сортов — они здесь не учитываются.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "malina-krepysh",
+      "name": "Крепыш",
+      "cropKey": "raspberry",
+      "kind": "named_photo_only",
+      "url": "https://7dach.ru/SvetikOdessa/malinovoe-derevo_2-72683.html",
+      "title": "Малиновое дерево",
+      "author": "Светлана Гевал",
+      "publishedIso": "2016-06-14",
+      "place": "Одесса",
+      "summary": "В дневнике показаны и прямо подписаны фотографии штамбовой малины «Крепыш и Таруса». Описанный автором приём укрепления относится к совместно показанным растениям и не позволяет выделить отдельный опыт именно по Крепышу.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "zheltyy-gigant",
+      "name": "Жёлтый гигант",
+      "cropKey": "raspberry",
+      "kind": "grower_diary",
+      "url": "https://7dach.ru/Tatka-Veta/malina-zheltyy-gigant-samaya-sladkaya-230032.html",
+      "title": "Малина Жёлтый гигант — самая сладкая!",
+      "author": "Татьяна (Tatka-Veta)",
+      "publishedIso": "2019-07-12",
+      "place": "Куровское",
+      "summary": "Авторская фотозапись прямо обозначена как малина «Жёлтый гигант» и включает личное впечатление о ягоде. Это подписанное фото и мнение одного садовода, а не независимая проверка сорта или сравнительное испытание.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "raspberry-novost-kuzmina",
+      "name": "Новость Кузьмина",
+      "cropKey": "raspberry",
+      "kind": "named_photo_only",
+      "url": "https://7dach.ru/Eleko/10-luchshih-sortov-maliny-kotorye-rekomenduyut-dachniki-272274.html",
+      "title": "10 лучших сортов малины, которые рекомендуют дачники",
+      "author": "Марина (автор фото; фамилия не приведена в подписи)",
+      "place": "Бурятия",
+      "summary": "В сортовом разделе есть фотография с подписью «Малина Новость Кузьмина. Фото Марины (Бурятия)». Страница даёт именованное фото, но не отдельный дневник выращивания этой участницы.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "gerakl",
+      "name": "Геракл",
+      "cropKey": "raspberry",
+      "kind": "named_photo_only",
+      "url": "https://7dach.ru/Khalilov-f/remontantnaya-malina-gerakl-37877.html",
+      "title": "Ремонтантная малина Геракл",
+      "author": "Франс Хасанович Халилов",
+      "publishedIso": "2015-09-27",
+      "place": "Бугульма",
+      "summary": "Авторская запись показывает и называет Геракл; в подписи/тексте автор сообщает о сборе ягод с начала августа. Это краткое наблюдение из сада автора, а не подробный дневник или сортовое испытание.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "abrikosovaya",
+      "name": "Абрикосовая",
+      "cropKey": "raspberry",
+      "kind": "grower_diary",
+      "url": "https://7dach.ru/fedzina/malina-abrikosovaya-95549.html",
+      "title": "Малина Абрикосовая",
+      "author": "Зинаида Фёдорова (fedzina)",
+      "publishedIso": "2016-10-30",
+      "place": "Москва",
+      "summary": "В личной записи автор показывает подписанную Абрикосовую, описывает несколько посадок и различающиеся способы обрезки. Рассказ не является контролируемым сравнением методов; оценивать результат можно только как опыт её сада.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "brilliantovaya",
+      "name": "Бриллиантовая",
+      "cropKey": "raspberry",
+      "kind": "named_photo_only",
+      "url": "https://7dach.ru/dnevnicCazachki/krupnoplodnaya-malina-lyubimaya-yagodnaya-kultura-87722.html",
+      "title": "Крупноплодная малина. Любимая ягодная культура",
+      "author": "Татьяна Ермолина",
+      "publishedIso": "2016-09-07",
+      "place": "Иловля",
+      "summary": "В личной публикации о малиннике имеется отдельная подпись к фотографии «Бриллиантовая». Страница не содержит развёрнутого отдельного отзыва о поведении именно этого сорта.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "elizaveta-2",
+      "name": "Елизавета 2",
+      "cropKey": "strawberry",
+      "kind": "grower_diary",
+      "url": "https://7dach.ru/gala1753/korolevskaya-yagoda-1886.html",
+      "title": "Королевская ягода: личный опыт с Елизаветой 2",
+      "author": "Галина Володина",
+      "place": "Борисовка, Белгородская область",
+      "publishedIso": "2013-06-29",
+      "summary": "Автор описывает размножение первых трёх кустов Елизаветы 2, повторные сборы и изменение формы ягод в жару. Фотографии показаны в рассказе о её посадках; на странице также есть снимок другого сорта, Линозы, который к Елизавете 2 здесь не отнесён.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "black-prince-natalya-gavrilov-posad",
+      "cultivarSlug": "black-prince-strawberry",
+      "kind": "grower_diary",
+      "name": "Чёрный принц",
+      "cropKey": "strawberry",
+      "url": "https://7dach.ru/28101959NaTa/klubnika-sorta-chernyy-princ-ochen-vkusnaya-yagoda-259932.html",
+      "title": "Клубника сорта 'Черный принц' — очень вкусная ягода",
+      "author": "Наталья Т (28101959NaTa)",
+      "publishedIso": "2020-07-14",
+      "place": "Гаврилов Посад",
+      "summary": "Автор описывает выращивание нескольких кустов с последующим делением для расширения грядки и отмечает, что в первый год после деления крупных ягод было немного. На странице есть несколько фотографий с подписями «Клубника „Черный принц“»; сведения о вкусе и урожае остаются личным наблюдением автора.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "kupchikha-svetlana-volgograd",
+      "cultivarSlug": "kupchikha",
+      "kind": "grower_diary",
+      "name": "Купчиха (земклуника)",
+      "cropKey": "strawberry",
+      "url": "https://7dach.ru/bajenovasveta/zemklunika-kupchiha_2-224899.html",
+      "title": "Земклуника 'Купчиха'",
+      "author": "Светлана Баженова (bajenovasveta)",
+      "publishedIso": "2019-06-03",
+      "place": "Волгоград",
+      "summary": "Светлана рассказывает о первом сезоне после покупки посадочного материала с открытыми корнями: часть растений пережила жаркую августовскую пересадку, дала усы, а весной кусты пришлось перенести. Фотографии на странице подписаны как Купчиха и показывают растения и зелёные ягоды; это опыт одного участка.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "festivalnaya-tatyana-orel",
+      "cultivarSlug": "festivalnaya",
+      "kind": "grower_diary",
+      "name": "Фестивальная",
+      "cropKey": "strawberry",
+      "url": "https://7dach.ru/panytany/klubnika-festivalnaya-vkus-detstva-133037.html",
+      "title": "Клубника «Фестивальная» — вкус детства",
+      "author": "Татьяна (panytany)",
+      "publishedIso": "2017-06-25",
+      "place": "Орёл",
+      "summary": "Автор пишет, что сохраняет и обновляет этот сорт много лет, а в своём саду наблюдает обильное цветение и большое количество ягод. В дневнике есть фотографии с подписями «Клубника сорта Фестивальная»; приведённые автором сроки и урожайность относятся к её участку, не к независимому испытанию.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "albion-natalya-novorossiysk-container-trial",
+      "cultivarSlug": "albion",
+      "kind": "grower_diary",
+      "name": "Альбион",
+      "cropKey": "strawberry",
+      "url": "https://7dach.ru/Bernata/klubnika-albion-avantyurnaya-ideya-uvenchavshayasya-uspehom-291485.html",
+      "title": "Земляника ремонтантная Альбион: эксперимент с контейнерами",
+      "author": "Наталья (Bernata)",
+      "publishedIso": "2022-06-07",
+      "place": "Новороссийск",
+      "summary": "Автор описывает личный эксперимент с посадкой Альбиона в крупных контейнерах, размещённых на солнечном жарком участке, и отмечает необходимость частого полива обычных грядок. В статье есть подписанные фотографии кустов и ягод сорта; результат относится к её контейнерной схеме и климату.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "gigantella-igor-samara",
+      "cultivarSlug": "gigantella",
+      "kind": "grower_diary",
+      "name": "Гигантелла",
+      "cropKey": "strawberry",
+      "url": "https://7dach.ru/IgorKS/vkus-radosti---zemlyanika-gigantella-134540.html",
+      "title": "Вкус радости — земляника Гигантелла",
+      "author": "Игорь К (IgorKS)",
+      "publishedIso": "2017-07-05",
+      "place": "Самара",
+      "summary": "Игорь рассказывает о выращивании и сборе Гигантеллы в своём саду, включая использование ягод для заморозки. Это личный отчёт с фотографиями, опубликованный в пользовательском разделе; он не подтверждает сортовую идентичность любых саженцев с таким названием.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "malvina-galina-borisovka-collection",
+      "cultivarSlug": "malvina",
+      "kind": "named_photo_only",
+      "name": "Мальвина",
+      "cropKey": "strawberry",
+      "url": "https://7dach.ru/gala1753/my-vybiraem-nas-vybirayut-247431.html",
+      "title": "Размножение земляники садовой: что выбрать — саженцы с ОКС или ЗКС",
+      "author": "Галина Володина (gala1753)",
+      "publishedIso": "2020-02-13",
+      "place": "Борисовка",
+      "summary": "Коллекционер и разводчик земляники показывает сорта в своей коллекции и отдельно подписывает фотографию «Мальвина (поздний)». Это свидетельство наличия растения с такой этикеткой в коллекции автора, а не сезонный отзыв о вкусе или урожайности.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "lord-tanjeen-multivariety-diary",
+      "cultivarSlug": "strawberry-lord",
+      "kind": "grower_diary",
+      "name": "Лорд",
+      "cropKey": "strawberry",
+      "url": "https://7dach.ru/Tanjeen/klubnichnyy-placdarm-nachalo-s-prodolzheniem-266576.html",
+      "title": "Клубничный «плацдарм»: начало с продолжением",
+      "author": "Танж & Ната (Tanjeen)",
+      "publishedIso": "2020-12-14",
+      "place": "Брянская область",
+      "summary": "В многолетнем дневнике авторы описывают устройство новых грядок и сравнение нескольких сортов, включая Лорд. Они сообщают о покупке саженцев и разочаровании формой и размером части ягод; фотография с подписью различает Хоней, Лорд и безымянное растение, поэтому выводы нужно читать как опыт конкретных посадок с оговоркой о возможном пересорте.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "albion-oksana-berdyansk-indoor-trial",
+      "cultivarSlug": "albion",
+      "kind": "grower_diary",
+      "name": "Альбион",
+      "cropKey": "strawberry",
+      "url": "https://7dach.ru/xena1505/sadovaya-zemlyanika-vne-sezona-4089.html",
+      "title": "Садовая земляника в домашних условиях: эксперимент с сортами",
+      "author": "Оксана (xena1505)",
+      "publishedIso": "2014-01-26",
+      "place": "Бердянск",
+      "summary": "Оксана описывает сравнительный домашний эксперимент с несколькими сортами; на фотографии и в подписях Альбион отделён от других растений, включая ягоду Альбиона. Это ограниченный опыт вне обычной грядки, полезный как документированный пример, но не как рекомендация стандартной технологии.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "murano-natalya-afonchenko-gomel",
+      "cultivarSlug": "murano",
+      "kind": "grower_diary",
+      "name": "Мурано",
+      "cropKey": "strawberry",
+      "url": "https://7dach.ru/NatalyaAfonchenko/leto-2024-iyun-314014.html",
+      "title": "Лето 2024. Июнь",
+      "author": "Наталья Афонченко (NatalyaAfonchenko)",
+      "publishedIso": "2024-06-30",
+      "place": "Гомельская область",
+      "summary": "Наталья рассказывает, что из 12 заказанных по почте кустов Мурано прижились шесть, затем разрослись; в следующем сезоне автору понравились сладкие, плотные и крупные ягоды. Две фотографии подписаны «Мурано»; это личный результат одной посадки и покупного материала.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "florence-svetlana-kaliningrad",
+      "cultivarSlug": "strawberry-florence",
+      "kind": "grower_diary",
+      "name": "Флоренс",
+      "cropKey": "strawberry",
+      "url": "https://7dach.ru/Svet-Kara/ya-klubniku-florens-posadila-vsem-lyubitelyam-klubniki-ugodila-257949.html",
+      "title": "Клубника Флоренс: описание сорта, уход за растениями. Фото",
+      "author": "Светлана (Svet-Kara)",
+      "publishedIso": "2020-06-23",
+      "place": "Калининград",
+      "summary": "Светлана пишет, что получила три маленьких корешка, укоренила два растения и в первый сезон дождалась первой ягоды 22 июня; автор отдельно описывает вкус своей пробы. На странице есть фотографии с подписями Флоренс и первого урожая; цифры и впечатления относятся к её саду.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "slug": "sonsation-alexander-miass-comment",
+      "cultivarSlug": "strawberry-sonsation",
+      "kind": "grower_diary",
+      "name": "Сенсация (Sonsation)",
+      "cropKey": "strawberry",
+      "url": "https://7dach.ru/Tangeya/bez-leta-dachniku-ne-zhit-s-iyunem-nadobno-druzhit-zhdem-rasskazov-ob-iyunskoy-pogode-327809.html?c=3",
+      "title": "Без лета дачнику не жить, с июнем надобно дружить. Ждём рассказов об июньской погоде. Комментарии",
+      "author": "Александр Старцев",
+      "publishedIso": "2026-06-16",
+      "place": "Миасс",
+      "summary": "В комментарии к дневнику Александр сообщает о сборе ягод в дождливый период и подписывает фотографию «Сонсейшен (Сенсация) созревает позднее других». Это сезонное наблюдение и снимок растения с указанной автором этикеткой, не независимое сравнение сроков сорта.",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    },
+    {
+      "cultivarSlug": "aziya",
+      "name": "Азия",
+      "cropKey": "strawberry",
+      "url": "https://7dach.ru/Roselin/klubnika-aziya-moi-vpechatleniya-pervyy-opyt-302706.html",
+      "title": "Клубника «Азия». Мои впечатления, первый опыт",
+      "author": "Ирина Топчий (Roselin)",
+      "publishedIso": "2023-06-11",
+      "place": "Майкоп, Адыгея",
+      "summary": "Ирина описывает первый сбор после осенней посадки: ягоды были плотными, сладкими при полном созревании, со слабым ароматом. Она также отмечает повреждение цветов долгоносиком. В дневнике показаны ягоды, кусты и усы с подписями сорта Азия.",
+      "kind": "grower_diary",
+      "hasNamedPhotos": true,
+      "checkedIso": "2026-10-08"
+    }
+  ],
+  "externalReaderSources": [
+    {
+      "title": "Малина Таруса - отзывы о сорте, описание, фото",
+      "name": "Таруса",
+      "url": "https://dachaotzyv.ru/malina-tarusa/",
+      "reviewCount": 13,
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "Карина Смолина"
+        },
+        {
+          "date": "2018-06-29",
+          "author": "Julia"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "scope": "Существование опубликованных отзывов с подписью и датой проверено; подлинность личности, сортового материала и условий независимо не подтверждена.",
+      "cropKey": "raspberry",
+      "checkedIso": "2026-10-08",
+      "slug": "tarusa",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Малина Таруса",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Малина Нижегородец - отзывы о сорте, описание, фото",
+      "name": "Нижегородец",
+      "url": "https://dachaotzyv.ru/malina-nizhegorodec/",
+      "reviewCount": 3,
+      "authors": [
+        {
+          "date": "2018-06-26",
+          "author": "Kataleya"
+        },
+        {
+          "date": "2018-06-13",
+          "author": "Ангелина"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "scope": "Существование опубликованных отзывов с подписью и датой проверено; подлинность личности, сортового материала и условий независимо не подтверждена.",
+      "cropKey": "raspberry",
+      "checkedIso": "2026-10-08",
+      "slug": "raspberry-nizhegorodets",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Малина Нижегородец",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Малина Изобильная - отзывы о сорте, описание, фото",
+      "name": "Изобильная",
+      "url": "https://dachaotzyv.ru/malina-izobilnaya/",
+      "reviewCount": 4,
+      "authors": [
+        {
+          "date": "2018-07-06",
+          "author": "Оксана"
+        },
+        {
+          "date": "2018-07-03",
+          "author": "Владимир Нилов"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "scope": "Существование опубликованных отзывов с подписью и датой проверено; подлинность личности, сортового материала и условий независимо не подтверждена.",
+      "cropKey": "raspberry",
+      "checkedIso": "2026-10-08",
+      "slug": "izobilnaya",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Малина Изобильная",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Клубника Альба - отзывы о сорте, описание, фото",
+      "name": "Альба",
+      "url": "https://dachaotzyv.ru/klubnika-alba/",
+      "reviewCount": 13,
+      "authors": [
+        {
+          "date": "2023-09-29",
+          "author": "Нина Буздалина"
+        },
+        {
+          "date": "2018-10-03",
+          "author": "Светлана"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "scope": "Существование опубликованных отзывов с подписью и датой проверено; подлинность личности, сортового материала и условий независимо не подтверждена.",
+      "cropKey": "strawberry",
+      "checkedIso": "2026-10-08",
+      "slug": "alba",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Клубника Альба",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Клубника Купчиха - отзывы о сорте, описание, фото",
+      "name": "Купчиха",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-kupchiha/",
+      "reviewCount": 17,
+      "authors": [
+        {
+          "date": "2025-06-21",
+          "author": "Диагонова"
+        },
+        {
+          "date": "2023-04-23",
+          "author": "Селиванова Оксана Борисовна"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "kupchikha",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Клубника Купчиха",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Клубника Клери - отзывы о сорте, описание, фото",
+      "name": "Клери",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-kleri/",
+      "reviewCount": 13,
+      "authors": [
+        {
+          "date": "2018-10-05",
+          "author": "Вероника"
+        },
+        {
+          "date": "2018-10-04",
+          "author": "nazarova_darina"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "kleri",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Клубника Клери",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Клубника Мурано - отзывы о сорте, описание, фото",
+      "name": "Мурано",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-murano/",
+      "reviewCount": 8,
+      "authors": [
+        {
+          "date": "2024-08-29",
+          "author": "ПантераТигрис"
+        },
+        {
+          "date": "2018-10-11",
+          "author": "Ирина"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "murano",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Клубника Мурано",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Клубника Лорд - отзывы о сорте, описание, фото",
+      "name": "Лорд",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-lord/",
+      "reviewCount": 16,
+      "authors": [
+        {
+          "date": "2023-04-19",
+          "author": "Елена Галяева"
+        },
+        {
+          "date": "2018-10-04",
+          "author": "Тамара"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "strawberry-lord",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Клубника Лорд",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Малина Карамелька - отзывы о сорте, описание, фото",
+      "name": "Карамелька",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-karamelka/",
+      "reviewCount": 10,
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "Наталья"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "Инга Плетнева"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "karamelka",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Малина Карамелька",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Малина Гусар - отзывы о сорте, описание, фото",
+      "name": "Гусар",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-gusar/",
+      "reviewCount": 11,
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "daria"
+        },
+        {
+          "date": "2018-06-29",
+          "author": "Светлова"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "gusar",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Малина Гусар",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Малина Оранжевое Чудо - отзывы о сорте, описание, фото",
+      "name": "Оранжевое Чудо",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-oranzhevoe-chudo/",
+      "reviewCount": 10,
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "Вера Полякова"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "Alice"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "oranzhevoe-chudo",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Малина Оранжевое Чудо",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Малина Желтый Гигант - отзывы о сорте, описание, фото",
+      "name": "Желтый Гигант",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-zheltyj-gigant/",
+      "reviewCount": 10,
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "tammy"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "Ольга"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "zheltyy-gigant",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Малина Желтый Гигант",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Малина Крепыш - отзывы о сорте, описание, фото",
+      "name": "Крепыш",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-krepysh/",
+      "reviewCount": 4,
+      "authors": [
+        {
+          "date": "2018-07-02",
+          "author": "liana"
+        },
+        {
+          "date": "2018-06-29",
+          "author": "Маргарита Бочкарева"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "malina-krepysh",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Малина Крепыш",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Малина Соколица - отзывы о сорте, описание, фото",
+      "name": "Соколица",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-sokolica/",
+      "reviewCount": 3,
+      "authors": [
+        {
+          "date": "2018-05-27",
+          "author": "MarinellaT"
+        },
+        {
+          "date": "2018-05-13",
+          "author": "Алевтина Шибаева"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "raspberry-sokolica",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Малина Соколица",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Малина Скромница - отзывы о сорте, описание, фото",
+      "name": "Скромница",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-skromnica/",
+      "reviewCount": 3,
+      "authors": [
+        {
+          "date": "2018-05-26",
+          "author": "Alfacentavra"
+        },
+        {
+          "date": "2018-04-23",
+          "author": "dasha1001"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "skromnitsa",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Малина Скромница",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Малина Мишутка - отзывы о сорте, описание, фото",
+      "name": "Мишутка",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-mishutka/",
+      "reviewCount": 3,
+      "authors": [
+        {
+          "date": "2018-05-23",
+          "author": "Гузалия"
+        },
+        {
+          "date": "2018-05-11",
+          "author": "Rafaelka"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "raspberry-mishutka",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Малина Мишутка",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Малина Золотая Осень - отзывы о сорте, описание, фото",
+      "name": "Золотая Осень",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-zolotaya-osen/",
+      "reviewCount": 5,
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "Вероника"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "tanya"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "zolotaya-osen",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Малина Золотая Осень",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Клубника Черный Принц - отзывы о сорте, описание, фото",
+      "name": "Черный Принц",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-chernyj-princ/",
+      "reviewCount": 8,
+      "authors": [
+        {
+          "date": "2018-10-08",
+          "author": "Елена"
+        },
+        {
+          "date": "2018-09-30",
+          "author": "kseniya_s"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "black-prince-strawberry",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Клубника Черный Принц",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Клубника Гигантелла - отзывы о сорте, описание, фото",
+      "name": "Гигантелла",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-gigantella/",
+      "reviewCount": 14,
+      "authors": [
+        {
+          "date": "2018-10-04",
+          "author": "Катя"
+        },
+        {
+          "date": "2018-09-23",
+          "author": "sofia_rogova"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "gigantella",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Клубника Гигантелла",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Клубника Фурор - отзывы о сорте, описание, фото",
+      "name": "Фурор",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-furor/",
+      "reviewCount": 5,
+      "authors": [
+        {
+          "date": "2018-10-16",
+          "author": "Элина"
+        },
+        {
+          "date": "2018-10-04",
+          "author": "mashulya"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "strawberry-furore",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Клубника Фурор",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Клубника Берегиня - отзывы о сорте, описание, фото",
+      "name": "Берегиня",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-bereginya/",
+      "reviewCount": 9,
+      "authors": [
+        {
+          "date": "2018-10-09",
+          "author": "Лидия"
+        },
+        {
+          "date": "2018-09-29",
+          "author": "polina_mihailova"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "bereginya",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Клубника Берегиня",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Клубника Рубиновый Кулон - отзывы о сорте, описание, фото",
+      "name": "Рубиновый Кулон",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-rubinovyj-kulon/",
+      "reviewCount": 8,
+      "authors": [
+        {
+          "date": "2018-10-11",
+          "author": "Ирина"
+        },
+        {
+          "date": "2018-10-01",
+          "author": "popova_dina"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "strawberry-ruby-pendant",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Клубника Рубиновый Кулон",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Клубника Эльсанта - отзывы о сорте, описание, фото",
+      "name": "Эльсанта",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-elsanta/",
+      "reviewCount": 10,
+      "authors": [
+        {
+          "date": "2018-10-05",
+          "author": "Диана"
+        },
+        {
+          "date": "2018-09-30",
+          "author": "popova jenya"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "elsanta",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Клубника Эльсанта",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "title": "Клубника Элиане - отзывы о сорте, описание, фото",
+      "name": "Элиане",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-eliane/",
+      "reviewCount": 10,
+      "authors": [
+        {
+          "date": "2018-10-09",
+          "author": "Полина"
+        },
+        {
+          "date": "2018-09-30",
+          "author": "Kate_80"
+        }
+      ],
+      "checkedIso": "2026-10-08",
+      "kind": "external_published_reader_accounts",
+      "slug": "strawberry-elianny",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "фото Клубника Элиане",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Мираж",
+      "slug": "raspberry-mirazh",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-mirazh/",
+      "title": "Малина Мираж - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-06",
+          "author": "Елизавета Куприянова"
+        },
+        {
+          "date": "2018-07-01",
+          "author": "Игорь"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Мираж",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Поклон Казакову",
+      "slug": "poklon-kazakovu",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-poklon-kazakovu/",
+      "title": "Малина Поклон Казакову - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-06-16",
+          "author": "galiga"
+        },
+        {
+          "date": "2018-06-03",
+          "author": "Barracuda82"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Поклон Казакову",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Московский гигант",
+      "slug": "moskovskiy-gigant",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-moskovskij-gigant/",
+      "title": "Малина Московский Гигант - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "katya sorokina"
+        },
+        {
+          "date": "2018-06-28",
+          "author": "Валерия"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены."
+    },
+    {
+      "name": "Метеор",
+      "slug": "meteor",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-meteor/",
+      "title": "Малина Метеор - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-02",
+          "author": "Sasha"
+        },
+        {
+          "date": "2018-06-29",
+          "author": "Lena"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены."
+    },
+    {
+      "name": "Полька",
+      "slug": "polka",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-polka/",
+      "title": "Малина Полька - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-11-24",
+          "author": "Максим Заречный"
+        },
+        {
+          "date": "2018-07-03",
+          "author": "Тамара Павловна"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Полька",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Атлант",
+      "slug": "atlant",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-atlant/",
+      "title": "Малина Атлант - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-04",
+          "author": "дорохова"
+        },
+        {
+          "date": "2018-07-03",
+          "author": "svetik"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Атлант",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Колокольчик",
+      "slug": "raspberry-kolokolchik",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-kolokolchik/",
+      "title": "Малина Колокольчик - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-15",
+          "author": "Андрей_50"
+        },
+        {
+          "date": "2018-07-05",
+          "author": "марина"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Колокольчик",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Абрикосовая",
+      "slug": "abrikosovaya",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-abrikosovaya/",
+      "title": "Малина Абрикосовая - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2023-07-04",
+          "author": "inna"
+        },
+        {
+          "date": "2018-05-26",
+          "author": "Meloni"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Абрикосовая",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Бриллиантовая",
+      "slug": "brilliantovaya",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-brilliantovaya/",
+      "title": "Малина Бриллиантовая - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "Олеся"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "Ирина Михайлова"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Бриллиантовая",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Калининградская",
+      "slug": "raspberry-kaliningradskaya",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-kaliningradskaya/",
+      "title": "Малина Калининградская - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-09",
+          "author": "faina"
+        },
+        {
+          "date": "2018-07-06",
+          "author": "Аня"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Калининградская",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Маршал",
+      "slug": "strawberry-marshal",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-marshal/",
+      "title": "Клубника Маршал - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-11",
+          "author": "Полина"
+        },
+        {
+          "date": "2018-10-01",
+          "author": "lena_popova"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены."
+    },
+    {
+      "name": "Вима Тарда",
+      "slug": "strawberry-vima-tarda",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-vima-tarda/",
+      "title": "Клубника Вима Тарда - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2023-04-19",
+          "author": "Елена Галяева"
+        },
+        {
+          "date": "2018-10-16",
+          "author": "Ирина"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены."
+    },
+    {
+      "name": "Кимберли",
+      "slug": "kimberli",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-kimberli/",
+      "title": "Клубника Кимберли - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-05",
+          "author": "Вероника"
+        },
+        {
+          "date": "2018-10-03",
+          "author": "Надежда"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Кимберли",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Краса России",
+      "slug": "krasa-rossii",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-krasa-rossii/",
+      "title": "Малина Краса России - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-04",
+          "author": "Inna"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "Lena Verdova"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Краса России",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Пингвин",
+      "slug": "pingvin",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-pingvin/",
+      "title": "Малина Пингвин - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2019-06-10",
+          "author": "Татьяна Львовна"
+        },
+        {
+          "date": "2018-07-03",
+          "author": "Валя"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Пингвин",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Беглянка",
+      "slug": "beglyanka",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-beglyanka/",
+      "title": "Малина Беглянка - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-06",
+          "author": "Валерий"
+        },
+        {
+          "date": "2018-07-01",
+          "author": "vikky"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Беглянка",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Лячка",
+      "slug": "lyachka",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-lyachka/",
+      "title": "Малина Лячка - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-09",
+          "author": "Дарья Яровская"
+        },
+        {
+          "date": "2018-07-04",
+          "author": "Семен"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Лячка",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Феномен",
+      "slug": "raspberry-fenomen",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-fenomen/",
+      "title": "Малина Феномен - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-09",
+          "author": "Анна"
+        },
+        {
+          "date": "2018-07-05",
+          "author": "Полина Гусарова"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Феномен",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Бабье лето",
+      "slug": "raspberry-babye-leto",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-babe-leto/",
+      "title": "Малина Бабье Лето - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "Галина"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "Alice"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Бабье Лето",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Таганка",
+      "slug": "taganka",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-taganka/",
+      "title": "Малина Таганка - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2021-07-15",
+          "author": "тимур золов"
+        },
+        {
+          "date": "2018-07-04",
+          "author": "Ира"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Таганка",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Рубиновый гигант",
+      "slug": "raspberry-rubinovyy-gigant",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-rubinovyj-gigant/",
+      "title": "Малина Рубиновый гигант - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "Полина"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "Valeria"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Рубиновый гигант",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Золотые купола",
+      "slug": "zolotye-kupola",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-zolotye-kupola/",
+      "title": "Малина Золотые Купола - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2023-07-05",
+          "author": "inna"
+        },
+        {
+          "date": "2018-07-06",
+          "author": "Валя"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Золотые Купола",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Пересвет",
+      "slug": "peresvet",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-peresvet/",
+      "title": "Малина Пересвет - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-05",
+          "author": "Елена"
+        },
+        {
+          "date": "2018-07-01",
+          "author": "Вероника"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Пересвет",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Джоан Джей",
+      "slug": "joan-j",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-dzhoan-dzhej/",
+      "title": "Малина Джоан Джей - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-11-21",
+          "author": "Максим Заречный"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "Ира"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Джоан Джей",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Солнышко",
+      "slug": "solnyshko",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-solnyshko/",
+      "title": "Малина Солнышко - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-14",
+          "author": "Ирина"
+        },
+        {
+          "date": "2018-07-09",
+          "author": "polinochka"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Солнышко",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Осенняя красавица",
+      "slug": "raspberry-osennyaya-krasavitsa-trade",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-osennyaya-krasavica/",
+      "title": "Малина Осенняя Красавица - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-05-16",
+          "author": "Olxa"
+        },
+        {
+          "date": "2018-05-07",
+          "author": "Екатерина"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Осенняя Красавица",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Августовское чудо",
+      "slug": "raspberry-avgustovskoe-chudo",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-avgustovskoe-chudo/",
+      "title": "Малина Августовское Чудо - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-06",
+          "author": "Валентина"
+        },
+        {
+          "date": "2018-07-01",
+          "author": "alina yakusheva"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Августовское Чудо",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Элан",
+      "slug": "elan",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-elan/",
+      "title": "Клубника Элан - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-18",
+          "author": "Полина"
+        },
+        {
+          "date": "2018-10-07",
+          "author": "len_nok"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Элан",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Румба",
+      "slug": "rumba",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-rumba/",
+      "title": "Клубника Румба - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-15",
+          "author": "larisa"
+        },
+        {
+          "date": "2018-10-12",
+          "author": "Катерина"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Румба",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Зефир",
+      "slug": "zephyr",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-zefir/",
+      "title": "Клубника Зефир - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2023-04-19",
+          "author": "Елена Галяева"
+        },
+        {
+          "date": "2018-10-08",
+          "author": "Alena Doronina"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Зефир",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Богота",
+      "slug": "strawberry-bogota",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-bogota/",
+      "title": "Клубника Богота - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-16",
+          "author": "Валерия"
+        },
+        {
+          "date": "2018-10-05",
+          "author": "Irrel"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Богота",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Терентий",
+      "slug": "raspberry-terentiy",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-terentij/",
+      "title": "Малина Терентий - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-05-26",
+          "author": "Cate"
+        },
+        {
+          "date": "2018-05-03",
+          "author": "Tanyamatanya"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Терентий",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Брянское диво",
+      "slug": "bryanskoe-divo",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-bryanskoe-divo/",
+      "title": "Малина Брянское Диво - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "Поспелова Инна"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "sofika"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Брянское Диво",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Сказка",
+      "slug": "malina-skazka",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-skazka/",
+      "title": "Малина Сказка - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-04",
+          "author": "Inna"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "Valentina Durova"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Сказка",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Патриция",
+      "slug": "patritsiya",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-patriciya/",
+      "title": "Малина Патриция - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "Федотова Лариса"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "kate dibrova"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Патриция",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Маросейка",
+      "slug": "maroseyka",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-marosejka/",
+      "title": "Малина Маросейка - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "Ира"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "Abrosimova"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены."
+    },
+    {
+      "name": "Шапка Мономаха",
+      "slug": "raspberry-shapka-monomaha",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-shapka-monomaha/",
+      "title": "Малина Шапка Мономаха - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2024-02-26",
+          "author": "Нина Буздалина"
+        },
+        {
+          "date": "2018-07-03",
+          "author": "Лия"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены."
+    },
+    {
+      "name": "Евразия",
+      "slug": "evraziya",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-evraziya/",
+      "title": "Малина Евразия - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-09",
+          "author": "Полина Громова"
+        },
+        {
+          "date": "2018-07-06",
+          "author": "Sasha"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены."
+    },
+    {
+      "name": "Носорог",
+      "slug": "raspberry-nosorog",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-nosorog/",
+      "title": "Малина Носорог - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-09",
+          "author": "Алена"
+        },
+        {
+          "date": "2018-07-06",
+          "author": "Polina Yarovaya"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Носорог",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Журавлик",
+      "slug": "zhuravlik",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-zhuravlik/",
+      "title": "Малина Журавлик - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-04",
+          "author": "Oolka"
+        },
+        {
+          "date": "2018-06-26",
+          "author": "Svetoch1989"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Журавлик",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Дочь Геракла",
+      "slug": "raspberry-doch-gerakla-trade",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-doch-gerakla/",
+      "title": "Малина Дочь Геракла - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-09",
+          "author": "ann rogova"
+        },
+        {
+          "date": "2018-07-06",
+          "author": "Полина"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Дочь Геракла",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Красная Гвардия",
+      "slug": "raspberry-krasnaya-gvardiya",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-krasnaya-gvardiya/",
+      "title": "Малина Красная Гвардия - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2019-04-15",
+          "author": "Шульц Мария"
+        },
+        {
+          "date": "2019-01-21",
+          "author": "allamore"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Красная Гвардия",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Херитейдж",
+      "slug": "heritage",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-heritejdzh/",
+      "title": "Малина Херитейдж - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-02",
+          "author": "Полина"
+        },
+        {
+          "date": "2018-06-27",
+          "author": "igor temnikov"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Херитейдж",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Рубиновое ожерелье",
+      "slug": "rubinovoe-ozherele",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-rubinovoe-ozherele/",
+      "title": "Малина Рубиновое Ожерелье - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-02",
+          "author": "inga"
+        },
+        {
+          "date": "2018-06-28",
+          "author": "semen"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Рубиновое Ожерелье",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Полана",
+      "slug": "polana",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-polana/",
+      "title": "Малина Полана - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-04",
+          "author": "Татьяна"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "olga terehina"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Полана",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Геракл",
+      "slug": "gerakl",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-gerakl/",
+      "title": "Малина Геракл - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-06-29",
+          "author": "Валентина"
+        },
+        {
+          "date": "2018-06-25",
+          "author": "Галия"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Геракл",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Арбат",
+      "slug": "raspberry-arbat",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-arbat/",
+      "title": "Малина Арбат - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-09",
+          "author": "Лариса Полянская"
+        },
+        {
+          "date": "2018-07-05",
+          "author": "Татьяна"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Арбат",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Женева",
+      "slug": "strawberry-geneva",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-zheneva/",
+      "title": "Клубника Женева - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-18",
+          "author": "петрова маша"
+        },
+        {
+          "date": "2018-10-18",
+          "author": "Рита"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Женева",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Дукат",
+      "slug": "strawberry-dukat",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-dukat/",
+      "title": "Клубника Дукат - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-15",
+          "author": "lindsey"
+        },
+        {
+          "date": "2018-10-12",
+          "author": "Мария"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Дукат",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Фестивальная",
+      "slug": "festivalnaya",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-festivalnaya/",
+      "title": "Клубника Фестивальная - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2023-04-19",
+          "author": "Елена Галяева"
+        },
+        {
+          "date": "2018-10-05",
+          "author": "Вероника"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Фестивальная",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Мальвина",
+      "slug": "malvina",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-malvina/",
+      "title": "Клубника Мальвина - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-11-03",
+          "author": "Максим Заречный"
+        },
+        {
+          "date": "2023-04-19",
+          "author": "Елена Галяева"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Мальвина",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Хоней",
+      "slug": "honey",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-honej/",
+      "title": "Клубника Хоней - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2023-04-20",
+          "author": "Елена Галяева"
+        },
+        {
+          "date": "2018-10-05",
+          "author": "Вероника"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Хоней",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Чамора Туруси",
+      "slug": "strawberry-chamora-turusi",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-chamora-turusi/",
+      "title": "Клубника Чамора Туруси - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-08",
+          "author": "лена мальцева"
+        },
+        {
+          "date": "2018-10-05",
+          "author": "Таня"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Чамора Туруси",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Вима Занта",
+      "slug": "strawberry-vima-zanta",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-vima-zanta/",
+      "title": "Клубника Вима Занта - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-11",
+          "author": "вика"
+        },
+        {
+          "date": "2018-10-01",
+          "author": "полякова женя"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Вима Занта",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Пандора",
+      "slug": "strawberry-pandora",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-pandora/",
+      "title": "Клубника Пандора - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-11",
+          "author": "Марго"
+        },
+        {
+          "date": "2018-10-01",
+          "author": "semenova_july"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Пандора",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Соловушка",
+      "slug": "solovushka",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-solovushka/",
+      "title": "Клубника Соловушка - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-15",
+          "author": "Lizza"
+        },
+        {
+          "date": "2018-10-12",
+          "author": "Полина"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Соловушка",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Азия",
+      "slug": "aziya",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-aziya/",
+      "title": "Клубника Азия - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2020-05-04",
+          "author": "Миц Гаянэ"
+        },
+        {
+          "date": "2018-10-03",
+          "author": "Анна"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Азия",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Царица",
+      "slug": "tsaritsa",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-carica/",
+      "title": "Клубника Царица - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2023-04-20",
+          "author": "Елена Галяева"
+        },
+        {
+          "date": "2018-10-05",
+          "author": "VeroNicka"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Царица",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Джоли",
+      "slug": "dzholi",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-dzholi/",
+      "title": "Клубника Джоли - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2023-04-20",
+          "author": "Елена Галяева"
+        },
+        {
+          "date": "2018-10-10",
+          "author": "Аня"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Джоли",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Полка",
+      "slug": "strawberry-polka",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-polka/",
+      "title": "Клубника Полка - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-08",
+          "author": "Дашуня"
+        },
+        {
+          "date": "2018-10-05",
+          "author": "марина"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Полка",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Альбион",
+      "slug": "albion",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-albion/",
+      "title": "Клубника Альбион - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-05",
+          "author": "nikita_orlov"
+        },
+        {
+          "date": "2018-10-03",
+          "author": "Ярослав"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Альбион",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Зенга Зенгана",
+      "slug": "zenga-zengana",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-zenga-zengana/",
+      "title": "Клубника Зенга Зенгана - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2021-01-02",
+          "author": "Ермолаева Татьяна"
+        },
+        {
+          "date": "2018-10-08",
+          "author": "mash_ka"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Зенга Зенгана",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Виктория (земляника)",
+      "slug": "strawberry-victoria",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-viktoriya/",
+      "title": "Клубника Виктория - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-11",
+          "author": "Надя"
+        },
+        {
+          "date": "2018-10-01",
+          "author": "popov_igor"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Виктория",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Temptation (Искушение)",
+      "slug": "strawberry-temptation-syngenta",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-iskushenie/",
+      "title": "Клубника Искушение - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-18",
+          "author": "Мария"
+        },
+        {
+          "date": "2018-10-07",
+          "author": "an_na"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Искушение",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Marmolada (Мармолада)",
+      "slug": "strawberry-marmolada",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-marmelada/",
+      "title": "Клубника Мармелада - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-08",
+          "author": "Анна"
+        },
+        {
+          "date": "2018-09-30",
+          "author": "liza_nosova"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Мармелада",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Флоранс (Florence)",
+      "slug": "strawberry-florence",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-florens/",
+      "title": "Клубника Флоренс - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2023-04-19",
+          "author": "Елена Галяева"
+        },
+        {
+          "date": "2018-10-08",
+          "author": "Олеся"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Флоренс",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Эльвира (клубника)",
+      "slug": "strawberry-elvira-trade",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-elvira/",
+      "title": "Клубника Эльвира - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2023-05-12",
+          "author": "Надежда"
+        },
+        {
+          "date": "2018-10-15",
+          "author": "Настасья"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Эльвира",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Driscoll Maravilla",
+      "slug": "maravilla",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-maravilla/",
+      "title": "Малина Маравилла - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-11-27",
+          "author": "Максим Заречный"
+        },
+        {
+          "date": "2018-06-20",
+          "author": "Неля_11"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Маравилла",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Tulameen",
+      "slug": "raspberry-tulameen",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-tulamin/",
+      "title": "Малина Туламин - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-06",
+          "author": "Аркадий Кашин"
+        },
+        {
+          "date": "2018-06-01",
+          "author": "Лариса"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Туламин",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Sugana (Зюгана)",
+      "slug": "raspberry-sugana",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-zyugana/",
+      "title": "Малина Зюгана - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "irarura"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "Татьяна"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Зюгана",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Брусвяна (Brusviana)",
+      "slug": "raspberry-brusviana",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-brusvyana/",
+      "title": "Малина Брусвяна - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-07-03",
+          "author": "Dina"
+        },
+        {
+          "date": "2018-07-02",
+          "author": "Валерия"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Брусвяна",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Glen Ample",
+      "slug": "glen-ample",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-glen-ampl/",
+      "title": "Малина Глен Ампл - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-05-28",
+          "author": "Vanilla77"
+        },
+        {
+          "date": "2018-05-09",
+          "author": "Андрей"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Глен Ампл",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Glen Fyne",
+      "slug": "raspberry-glen-fyne",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-glen-fajn/",
+      "title": "Малина Глен Файн - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-06-05",
+          "author": "Елизавета"
+        },
+        {
+          "date": "2018-05-22",
+          "author": "Orlov55555"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Глен Файн",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Tadmor",
+      "slug": "raspberry-tadmor",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-tadmor/",
+      "title": "Малина Тадмор - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-05-20",
+          "author": "Orhidea"
+        },
+        {
+          "date": "2018-05-10",
+          "author": "Халима"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Тадмор",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Кисс Неллис (торговое имя)",
+      "slug": "strawberry-kiss-nellis-trade",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-kiss-nellis/",
+      "title": "Клубника Кисс Неллис - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-18",
+          "author": "Анна"
+        },
+        {
+          "date": "2018-10-07",
+          "author": "marina_d"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Кисс Неллис",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Kent",
+      "slug": "strawberry-kent",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-kent/",
+      "title": "Клубника Кент - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2019-06-16",
+          "author": "Татьяна Львовна"
+        },
+        {
+          "date": "2018-10-11",
+          "author": "Катерина"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Кент",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Sonata (Соната)",
+      "slug": "strawberry-sonata",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-sonata/",
+      "title": "Клубника Соната - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2023-04-20",
+          "author": "Елена Галяева"
+        },
+        {
+          "date": "2018-10-11",
+          "author": "Валерия"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Соната",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Машенька (Московская юбилейная)",
+      "slug": "mashenka",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-mashenka/",
+      "title": "Клубника Машенька - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-08",
+          "author": "маша доронина"
+        },
+        {
+          "date": "2018-10-05",
+          "author": "Лидия"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Машенька",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Королева Елизавета / Queen Elizabeth",
+      "slug": "strawberry-queen-elizabeth",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-koroleva-elizaveta/",
+      "title": "Клубника Королева Елизавета - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-08",
+          "author": "Полина"
+        },
+        {
+          "date": "2018-09-30",
+          "author": "sasha_doronina"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Королева Елизавета",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Darselect",
+      "slug": "strawberry-darselect",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-darselekt/",
+      "title": "Клубника Дарселект - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-09",
+          "author": "Татьяна"
+        },
+        {
+          "date": "2018-09-30",
+          "author": "ann_pavlova"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Дарселект",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Белый Швед (торговое имя белоплодной земляники)",
+      "slug": "strawberry-white-swede-trade",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-belyj-shved/",
+      "title": "Клубника Белый швед - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2019-02-15",
+          "author": "Кристина"
+        },
+        {
+          "date": "2019-02-14",
+          "author": "Карина"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены."
+    },
+    {
+      "name": "Корона (Korona)",
+      "slug": "strawberry-korona",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-korona/",
+      "title": "Клубника Корона - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-08",
+          "author": "Валерия"
+        },
+        {
+          "date": "2018-09-30",
+          "author": "alina_dobrodeeva"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Корона",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Selva (Сельва)",
+      "slug": "strawberry-selva-uc",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-selva/",
+      "title": "Клубника Сельва - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-15",
+          "author": "alla"
+        },
+        {
+          "date": "2018-10-12",
+          "author": "Ирина"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Сельва",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Roxana (Роксана)",
+      "slug": "strawberry-roxana",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-roksana/",
+      "title": "Клубника Роксана - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2023-04-19",
+          "author": "Елена Галяева"
+        },
+        {
+          "date": "2018-10-11",
+          "author": "Ирина"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Роксана",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "San Andreas",
+      "slug": "san-andreas",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-san-andreas/",
+      "title": "Клубника Сан Андреас - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-09",
+          "author": "Оксана"
+        },
+        {
+          "date": "2018-09-30",
+          "author": "rita_orlova"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Сан Андреас",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Sonsation (Сонсейшен / Сенсация)",
+      "slug": "strawberry-sonsation",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-sensaciya/",
+      "title": "Клубника Сенсация - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-16",
+          "author": "Анастасия"
+        },
+        {
+          "date": "2018-10-07",
+          "author": "vero_nika"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Сенсация",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Salsa (Сальса)",
+      "slug": "strawberry-salsa",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-salsa/",
+      "title": "Клубника Сальса - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-11",
+          "author": "Снежанна"
+        },
+        {
+          "date": "2018-10-01",
+          "author": "faina"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Сальса",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Charlotte (Шарлотта)",
+      "slug": "strawberry-charlotte",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-sharlotta/",
+      "title": "Клубника Шарлотта - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-18",
+          "author": "Мария"
+        },
+        {
+          "date": "2018-10-07",
+          "author": "vikky"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Шарлотта",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Gariguette (Гаригуэтта)",
+      "slug": "strawberry-gariguette",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-gariguetta/",
+      "title": "Клубника Гаригуэтта - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-18",
+          "author": "Анна"
+        },
+        {
+          "date": "2018-10-07",
+          "author": "popova_rita"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Гаригуэтта",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Ostara (Остара)",
+      "slug": "strawberry-ostara-trade",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-ostara/",
+      "title": "Клубника Остара - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-16",
+          "author": "Мария"
+        },
+        {
+          "date": "2018-10-04",
+          "author": "ann_trofimova"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Остара",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Московский деликатес (торговая карточка земляники)",
+      "slug": "strawberry-moscow-delicacy-trade",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-moskovskij-delikates/",
+      "title": "Клубника Московский Деликатес - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-18",
+          "author": "Вера"
+        },
+        {
+          "date": "2018-10-07",
+          "author": "tamara_ivanova"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Московский Деликатес",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Флэр (Flair)",
+      "slug": "strawberry-flair",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-fler/",
+      "title": "Клубника Флер - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-15",
+          "author": "nastya"
+        },
+        {
+          "date": "2018-10-12",
+          "author": "Ludmila"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Флер",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Honeoye (в продаже «Медовая»)",
+      "slug": "strawberry-honeoye-cornell",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-medovaya/",
+      "title": "Клубника Медовая - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-16",
+          "author": "Елена"
+        },
+        {
+          "date": "2018-10-05",
+          "author": "svet_ik"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Медовая",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Ирма",
+      "slug": "strawberry-irma",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-irma/",
+      "title": "Клубника Ирма - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-11",
+          "author": "Карина"
+        },
+        {
+          "date": "2018-10-01",
+          "author": "galin_ka"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Ирма",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Kama (Кама)",
+      "slug": "strawberry-kama",
+      "cropKey": "strawberry",
+      "url": "https://dachaotzyv.ru/klubnika-kama/",
+      "title": "Клубника Кама - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2018-10-11",
+          "author": "Галина"
+        },
+        {
+          "date": "2018-10-01",
+          "author": "bella"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Клубника Кама",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "name": "Cascade Delight",
+      "slug": "raspberry-cascade-delight",
+      "cropKey": "raspberry",
+      "url": "https://dachaotzyv.ru/malina-kaskad-delajt/",
+      "title": "Малина Каскад Делайт - отзывы о сорте, описание, фото",
+      "authors": [
+        {
+          "date": "2020-03-11",
+          "author": "Елена К."
+        },
+        {
+          "date": "2018-07-09",
+          "author": "flora"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликованные отзывы с подписью и датой; сведения об авторе, растении и условиях независимо не подтверждены.",
+      "hasNamedPhotos": true,
+      "photoCaption": "Малина Каскад Делайт",
+      "photoScope": "Название указано издателем; идентичность растения и авторство снимка независимо не подтверждены."
+    },
+    {
+      "slug": "cabrillo",
+      "name": "Кабрилло",
+      "cropKey": "strawberry",
+      "publisher": "Клубника24",
+      "url": "https://klubnika24.ru/obsuzhdenie-sorta-klubniki-kabrillo",
+      "title": "Обсуждение сорта клубники Кабрилло",
+      "authors": [
+        {
+          "author": "Zumberg",
+          "date": null
+        },
+        {
+          "author": "Neffertity",
+          "date": null
+        }
+      ],
+      "publishedDateStatus": "not_displayed",
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Участники публикуют собственные наблюдения о ягодах и рассаде. Даты сообщений не показаны; личности, сортовой материал и условия независимо не проверены."
+    },
+    {
+      "slug": "tsunaki",
+      "name": "Цунаки",
+      "cropKey": "strawberry",
+      "publisher": "СтройПодсказка",
+      "url": "https://stroy-podskazka.ru/klubnika/sorta/cunaki/",
+      "title": "Клубника Цунаки: отзыв о первом плодоношении в Подмосковье",
+      "authors": [
+        {
+          "author": "Татьяна, С-З Подмосковья Васильевна Сухачева",
+          "date": "2025-06-30"
+        }
+      ],
+      "kind": "external_published_reader_accounts",
+      "checkedIso": "2026-10-08",
+      "scope": "Опубликован собственный опыт автора в северо-западном Подмосковье. Сортовая идентичность и наблюдения независимо не подтверждены; редакционное описание страницы здесь не используется как первоисточник."
+    }
+  ],
+  "seoPhotoSupplement": {
+    "siriya": {
+      "url": "https://www.meiosis.co.uk/fruit_types/syria/",
+      "publisher": "Meiosis Ltd · Syria (NF 137)",
+      "title": "Syria (NF 137): Fruit Quality photograph",
+      "checkedIso": "2026-10-08",
+      "scope": "The Syria NF 137 cultivar page links the Fruit Quality photograph SY-F3.jpg; New Fruits s.a.s. is named as breeder. The source photograph remains on the publisher site.",
+      "imageUrl": "https://www.meiosis.co.uk/wp-content/uploads/2017/03/SY-F3.jpg"
+    },
+    "pshehiba": {
+      "url": "https://www.brzezna.pl/malina-rubus-idaeus-przehyba/",
+      "publisher": "SZD Brzezna · Przehyba",
+      "title": "MALINA (Rubus idaeus) – Przehyba",
+      "checkedIso": "2026-10-08",
+      "scope": "The breeder page identifies the photograph as Dojrzałe owoce malin odmiany Przehyba (ripe fruits of cultivar Przehyba). Checked indexed page text; a direct fetch returned 502 Bad Gateway.",
+      "verificationMethod": "publisher_page_search_index_with_cultivar_photo_caption",
+      "directFetchStatus": "502 Bad Gateway"
+    },
+    "maravilla": {
+      "url": "https://patents.google.com/patent/USPP14804P2/en",
+      "publisher": "Driscoll’s · US Plant Patent USPP14804P2",
+      "title": "Raspberry plant named Driscoll Maravilla",
+      "checkedIso": "2026-10-08",
+      "scope": "Patent page identifies Driscoll Maravilla and describes photographs: Fig. 1 flowering/fruiting primocane, Fig. 2 leaves, Fig. 3 shoots."
+    },
+    "raspberry-lagorai-plus": {
+      "url": "https://patents.google.com/patent/US20130318664P1/en",
+      "publisher": "United States Patent and Trademark Office · US20130318664P1",
+      "title": "Raspberry plant — Lagorai Plus cultivar",
+      "checkedIso": "2026-10-08",
+      "scope": "The patent explicitly identifies Lagorai Plus and describes photographs of ripe fruit (Fig. 1), fruit distribution on plants (Fig. 2), and ripe/immature fruit and leaves (Fig. 3)."
+    },
+    "raspberry-adelita": {
+      "url": "https://patents.google.com/patent/US20120311748P1/en",
+      "publisher": "United States Patent and Trademark Office · US20120311748P1",
+      "title": "Raspberry plant named Adelita",
+      "checkedIso": "2026-10-08",
+      "scope": "Patent identifies the new variety as Adelita (selection 07.09R.50); Figs. 1–2 show plants with red conical fruit, and later figures compare Adelita fruit with Heritage."
+    },
+    "raspberry-georgia": {
+      "url": "https://patents.google.com/patent/USPP19430P3/en",
+      "publisher": "United States Patent and Trademark Office · USPP19430P3",
+      "title": "Raspberry plant named Georgia",
+      "checkedIso": "2026-10-08",
+      "scope": "The patent names Georgia and describes a field photograph at midseason fruiting (Fig. 1), fruiting truss and fruit shape (Figs. 8 and 10), and a labeled comparison with Glen Ample (Fig. 9)."
+    },
+    "raspberry-jaclyn": {
+      "url": "https://patents.google.com/patent/USPP15647P2/en",
+      "publisher": "United States Patent and Trademark Office · USPP15647P2",
+      "title": "Raspberry plant named Jaclyn",
+      "checkedIso": "2026-10-08",
+      "scope": "The patent names Jaclyn and describes photos of its primocane, leaves, flowers and fruit; Fig. 6 is a fruiting cluster and Figs. 8–10 show primocane fruit."
+    },
+    "raspberry-joan-j": {
+      "url": "https://patents.google.com/patent/USPP18954P3/en",
+      "publisher": "Medway Fruits · US Plant Patent USPP18954P3",
+      "title": "Raspberry plant named Joan J",
+      "checkedIso": "2026-10-08",
+      "scope": "The patent identifies Joan J and describes its color photograph, taken at Maidstone on 19 August 1998: an upright plant with fruit at different maturity stages."
+    },
+    "strawberry-fronteras": {
+      "url": "https://patentimages.storage.googleapis.com/62/7d/6a/89f614181750cf/USPP026709-20160510-D00001.png",
+      "publisher": "University of California · US Plant Patent USPP26709P3",
+      "title": "Strawberry plant named Fronteras",
+      "checkedIso": "2026-10-08",
+      "scope": "The UC patent identifies Fronteras and links its three color figures: a fruiting field plant, a typical leaf, and representative mid-season fruit."
+    },
+    "albion": {
+      "url": "https://strawberry.ucdavis.edu/sites/g/files/dgvnsk11856/files/media/images/Albion.jpg",
+      "publisher": "University of California, Davis · Strawberry Breeding & Research Program",
+      "title": "Albion strawberry",
+      "checkedIso": "2026-10-08",
+      "scope": "Direct image linked from the UC Davis Albion release page, where it is explicitly labeled “Image: Albion strawberry”."
+    },
+    "cabrillo": {
+      "url": "https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/str/app00010197e.shtml",
+      "publisher": "Canadian Food Inspection Agency · Plant Breeders’ Rights description",
+      "title": "Cabrillo strawberry cultivar and reference-variety photographs",
+      "checkedIso": "2026-10-08",
+      "scope": "The government cultivar page labels comparison photographs: Cabrillo at left, with Albion, San Andreas and Portola in the same panels. Use only as a labeled comparison, not as an isolated Cabrillo portrait."
+    },
+    "san-andreas": {
+      "url": "https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/str/app00010197e.shtml",
+      "publisher": "Canadian Food Inspection Agency · Plant Breeders’ Rights description",
+      "title": "San Andreas in a labeled Cabrillo comparison panel",
+      "checkedIso": "2026-10-08",
+      "scope": "The government page labels comparative images with San Andreas in the center-right position in one panel and bottom-left in another, alongside Cabrillo, Albion and Portola."
+    },
+    "murano": {
+      "url": "https://civ.it/wp-content/uploads/2025/02/murano-still-life.png",
+      "publisher": "Consorzio Italiano Vivaisti (CIV)",
+      "title": "Murano strawberry · still life",
+      "checkedIso": "2026-10-08",
+      "scope": "Direct still-life image linked from CIV’s cultivar page headed MURANO; the same page describes Murano fruit."
+    },
+    "strawberry-vivara": {
+      "url": "https://civ.it/wp-content/uploads/2025/01/vivara-still-life.png",
+      "publisher": "Consorzio Italiano Vivaisti (CIV)",
+      "title": "VIVARApbr strawberry · still life",
+      "checkedIso": "2026-10-08",
+      "scope": "Direct still-life image linked from CIV’s page headed VIVARApbr, which identifies the cultivar and describes its fruit."
+    },
+    "aniya": {
+      "url": "https://civ.it/wp-content/uploads/2025/01/ania-still-life.png",
+      "publisher": "Consorzio Italiano Vivaisti (CIV)",
+      "title": "ANIA CIVRH612pbr strawberry · still life",
+      "checkedIso": "2026-10-08",
+      "scope": "Direct still-life image linked from CIV’s page headed ANIA CIVRH612pbr; identity matches the Ania cultivar, not similarly named cultivars."
+    },
+    "aprika": {
+      "url": "https://civ.it/wp-content/uploads/2025/02/aprica-still-life.png",
+      "publisher": "Consorzio Italiano Vivaisti (CIV)",
+      "title": "APRICA strawberry · still life",
+      "checkedIso": "2026-10-08",
+      "scope": "Direct still-life image linked from CIV’s page headed APRICApbr; the image filename and cultivar page identify Aprica."
+    },
+    "strawberry-sibilla": {
+      "url": "https://civ.it/wp-content/uploads/2025/02/sibilla-still-life.png",
+      "publisher": "Consorzio Italiano Vivaisti (CIV)",
+      "title": "SIBILLA strawberry · still life",
+      "checkedIso": "2026-10-08",
+      "scope": "Direct still-life image linked from CIV’s SIBILLApbr cultivar page."
+    },
+    "strawberry-giusy": {
+      "url": "https://civ.it/wp-content/uploads/2025/01/giusy-still-life.png",
+      "publisher": "Consorzio Italiano Vivaisti (CIV)",
+      "title": "GIUSY CIVH413 strawberry · still life",
+      "checkedIso": "2026-10-08",
+      "scope": "Direct still-life image linked from CIV’s GIUSY CIVH413 cultivar page."
+    },
+    "strawberry-sonsation": {
+      "url": "https://flevoberry.nl/wp-content/uploads/2026/09/Sonsation-duo-2400_1600-1024x683-1.jpg",
+      "publisher": "Flevo Berry · Sonsation variety page",
+      "title": "Sonsation strawberry",
+      "checkedIso": "2026-10-08",
+      "scope": "Direct image in the gallery on Flevo Berry’s page headed Sonsation; the breeder page names the variety and identifies its breeding program."
+    },
+    "raspberry-magnat": {
+      "url": "https://niwabrzezna.pl/wp-content/uploads/2023/09/IMG_0844.jpg",
+      "publisher": "NIWA Hodowla Roślin Jagodowych",
+      "title": "Magnat raspberry cultivar",
+      "checkedIso": "2026-10-08",
+      "scope": "Image linked from NIWA’s cultivar page headed “Magnat (NR 1616002)”; that page contains the cultivar-specific description and image gallery."
+    }
+  },
+  "checkedAt": "2026-10-08T14:16:46.617Z",
+  "localCultivarPhotoSources": {
+    "varietyPhotoSources": {
+      "nashe-podmoskove": {
+        "file": "variety-photo-nashe-podmoskovie.webp",
+        "sourcePage": "https://www.agronauka-sv.ru/jour/article/view/883",
+        "originalUrl": "https://pdfs.semanticscholar.org/9a32/5dd36827a0a9af4d5e3e8b06c6058312cca2.pdf",
+        "originalSha256": "dbbc6df41dea4bf1e111c247926af52670ab8a6622e07deeac90d18d9b5546fa",
+        "sourcePanelSha256": "4fbe4a46b59f9204517e8e05e2c4e788cf4a4036fd7ed0b5fb7a4d14f2c91e1c",
+        "sha256": "a59eaba5e6388a49ec2c88882081421eae0e53b5abf51064155914beef2c5c4b",
+        "author": "М. Т. Упадышев и соавторы, «Аграрная наука Евро-Северо-Востока», 2021",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Рисунок 2 статьи «Особенности формирования полевого репозитория земляники садовой» прямо подписан «Сорт Наше Подмосковье».",
+        "width": 574,
+        "height": 383,
+        "captionChange": "рисунок 2, перекодировано",
+        "transformation": "Встроенный JPEG рисунка 2 перекодирован в WebP без кадрирования и увеличения."
+      },
+      "zheltyy-gigant": {
+        "file": "variety-photo-yellow-giant-fruit.webp",
+        "sourcePage": "https://agroecoinfo.ru/STATYI/2022/5/st_525.pdf#page=5",
+        "originalUrl": "https://agroecoinfo.ru/STATYI/2022/5/st_525.pdf",
+        "originalSha256": "d508e334f4e912e2e783b6722b1e3f8e2f903418a7d696997f3f888a1530d0b7",
+        "sourcePanelSha256": "df69e3456722015dd08e6425e3c8b09053eec889430f9ecf79dc81591ca790ba",
+        "sha256": "34af09622955636712438004c4a2d3a2acbf9b845fe4d82472f27a2bb7d7a4d5",
+        "author": "О. В. Ладыженская и соавторы, «АгроЭкоИнфо», 2022",
+        "license": "Условия журнала",
+        "licenseUrl": "https://agroecoinfo.ru/TEXT/RUSSIAN/journal.html",
+        "identityEvidence": "Рисунок 2 статьи ГБС РАН прямо подписан «Сорт малины Жёлтый Гигант»; на снимке жёлтые ягоды из опыта с обработкой.",
+        "width": 734,
+        "height": 395,
+        "photoDetail": "ягоды в опыте с обработкой",
+        "captionChange": "рисунок 2, перекодировано",
+        "transformation": "Встроенный JPEG рисунка 2 перекодирован в WebP без увеличения; журнал разрешает частичное воспроизведение с активной ссылкой на первоисточник."
+      },
+      "brilliantovaya": {
+        "file": "variety-photo-brilliantovaya.webp",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Rubus_idaeus_%27Brilliantovaya%27.JPG",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/0/08/Rubus_idaeus_%27Brilliantovaya%27.JPG",
+        "originalSha256": "7ececde32095ac6b3d219ed13d21a9ded94ace13d32c73c3c2fdec0deabeae06",
+        "sha256": "8613cf226ccae95f381c3163968b646de80400fe5353878e8827ecb9073de943",
+        "author": "Borealis55",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "identityEvidence": "Авторский снимок на Wikimedia Commons прямо подписан как сорт Бриллиантовая, снят в Ивановской области в сентябре 2012 года.",
+        "width": 960,
+        "height": 640,
+        "captionChange": "кадрировано и уменьшено",
+        "transformation": "Исходный JPEG кадрирован по центру до пропорции 3:2, уменьшен с 3264 × 2448 до 960 × 640 и перекодирован в WebP. Производное фото распространяется на условиях CC BY-SA 3.0."
+      },
+      "bryanskoe-divo": {
+        "file": "variety-photo-bryanskoye-divo.webp",
+        "sourcePage": "https://biosel.elpub.ru/jour/article/download/116/115#page=9",
+        "originalUrl": "https://biosel.elpub.ru/jour/article/download/116/115",
+        "originalSha256": "d838bfd49d19df6917d6daf50e09e2e26e68029d5fb9fc1d5daef6f68da41ae3",
+        "sourcePanelSha256": "864a9d997b4041900bf78c2e78aea1cc590475bbc688f3383053c09c8b728fd5",
+        "sha256": "260277cecd8d34b84c439f834ff3411dd3748101f80d50ee991275bf6521ebd1",
+        "author": "В. Н. Подорожный и Н. А. Пиянина",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Рисунок 3 статьи прямо подписан «Ягоды малины сорта Брянское Диво»; взята правая фотография ягод на кусте.",
+        "width": 749,
+        "height": 439,
+        "captionChange": "рисунок 3, перекодировано",
+        "transformation": "Встроенная правая фотография рисунка 3 извлечена из PDF в JP2 и перекодирована в WebP без кадрирования и увеличения."
+      },
+      "gerakl": {
+        "file": "variety-photo-gerakl.webp",
+        "sourcePage": "https://biosel.elpub.ru/jour/article/download/116/115#page=9",
+        "originalUrl": "https://biosel.elpub.ru/jour/article/download/116/115",
+        "originalSha256": "d838bfd49d19df6917d6daf50e09e2e26e68029d5fb9fc1d5daef6f68da41ae3",
+        "sourcePanelSha256": "3bfe44d3329f02a35ed6d9e9c3a7fa581507e776cfca48902c1e0dfedb5336d2",
+        "sha256": "f7e111cca93ecca29b17796089851815d69358f2a1d7d0f6607a3cb524602a65",
+        "author": "В. Н. Подорожный и Н. А. Пиянина",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Рисунок 4 той же статьи прямо подписан «Ягоды малины сорта Геракл»; взята правая фотография ягод на кусте.",
+        "width": 500,
+        "height": 401,
+        "captionChange": "рисунок 4, перекодировано",
+        "transformation": "Встроенная правая фотография рисунка 4 извлечена из PDF в JP2 и перекодирована в WebP без кадрирования и увеличения."
+      },
+      "aprika": {
+        "file": "variety-photo-aprica.webp",
+        "sourcePage": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11125040/",
+        "originalUrl": "https://mdpi-res.com/d_attachment/plants/plants-13-01419/article_deploy/plants-13-01419.pdf",
+        "originalSha256": "a4bcb4920fb55154fe30268a491ae9cf06c13cbab3d07ddc60c5e97741c563e4",
+        "sourcePanelSha256": "c567f3e1ce1fe85b0fe7e12cca5f840c1559bc4b3b23ec795e2e9a5146fa19de",
+        "sha256": "44700499427903688db7de2ff9e9a364a7ebf4b2015e765d0df411446f8181eb",
+        "author": "Kristyna Simkova и соавторы",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Подпись рисунка 3 статьи прямо называет Aprica; выбраны только зрелые ягоды стадий R3–R4.",
+        "width": 446,
+        "height": 372,
+        "captionChange": "рисунок 3, кадрировано",
+        "transformation": "Встроенный JPEG рисунка 3 извлечён из PDF; кадрированы только зрелые ягоды стадий R3–R4, без увеличения; перекодировано в WebP."
+      },
+      "malvina": {
+        "file": "variety-photo-malvina.webp",
+        "sourcePage": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11125040/#suppl_1",
+        "originalUrl": "https://pmc.ncbi.nlm.nih.gov/articles/instance/11125040/bin/plants-13-01419-s001.zip",
+        "originalSha256": "a27bd7b8edd7f02c92d71bd399f50b4ffe0fdbedb6faecf55b4b298295b9fa31",
+        "sourcePanelSha256": "0b1d0f5bf7fce6d5c1d587c0761720464508ad3de0bec5248373dd149f04c7d6",
+        "sha256": "56492efe823fc3bfd20270598b99681d6af15614d8ca91fdf1bb3571aee34c4b",
+        "author": "Kristyna Simkova и соавторы",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Подпись рисунка S1-3 в дополнительном материале статьи прямо называет сорт Malwina; взяты ягоды стадий R4–R5.",
+        "width": 960,
+        "height": 640,
+        "photoDetail": "зрелые и перезревшие ягоды",
+        "captionChange": "дополнительный рисунок S1-3, кадрировано",
+        "transformation": "Из дополнительного рисунка S1-3 кадрированы стадии R4–R5; уменьшено до 960 × 640 и перекодировано в WebP."
+      },
+      "rumba": {
+        "file": "variety-photo-rumba.webp",
+        "sourcePage": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10305725/",
+        "originalUrl": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10305725/supplementaryFiles",
+        "originalSha256": "aca129a4db42fd74f62964eb74e3a4540fcb4b9fac613ef3daf063849a2fe840",
+        "sourcePanelSha256": "e4d1dd705a7d58d2e0d9ad1ef35bb659ffd05a278392808bae2a981dc09f4b05",
+        "sha256": "a4e75d612e15ce5c8339ae744ff0035b1f3914637953fcdeda4cd0d7a82c35fb",
+        "author": "Milosavljević и соавторы",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Подпись дополнительного рисунка S6 прямо определяет панель (a) как сорт Rumba; на снимке здоровые спелые ягоды.",
+        "width": 960,
+        "height": 611,
+        "captionChange": "дополнительный рисунок S6, панель a, кадрировано",
+        "transformation": "Из TIFF дополнительного рисунка S6 выделена подписанная панель (a), уменьшена до 960 × 611 и перекодирована в WebP."
+      },
+      "cambridge-favourite": {
+        "file": "variety-photo-cambridge-favourite.webp",
+        "sourcePage": "https://biosel.elpub.ru/jour/article/download/143/139#page=4",
+        "originalUrl": "https://biosel.elpub.ru/jour/article/download/143/139",
+        "originalSha256": "44bdf81cdea9a17ce16ddd789ddb273e40c1b929734aedd1a6c4253080bd30c5",
+        "sourcePanelSha256": "4377692db859c8887968246c70dc6dde64556a65c02addf2314e2c9a7ebd7bb4",
+        "sha256": "d8f0dfbeb5f699df5b7792e7e1221ad570987c03bd196b2fd0a59a053bfdb40d",
+        "author": "И. Э. Храбров и соавторы",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "identityEvidence": "Подпись к рисунку 1 научной статьи Храброва и соавторов прямо определяет панель Б как сорт Cambridge Favourite; на панели видны здоровые красные ягоды.",
+        "width": 855,
+        "height": 480,
+        "captionChange": "панель Б, кадрировано",
+        "transformation": "Из страницы 4 PDF (рисунок 1) выделена панель Б с ягодами Cambridge Favourite, отрендерена в 300 dpi и кадрирована до 855 × 480 без увеличения."
+      },
+      "slavutich": {
+        "file": "variety-photo-slavutich.webp",
+        "sourcePage": "https://jbiochemtech.com/storage/models/article/bMUh1GtjLrbMv0U5GbVt14NkkfQ2frw7KZS6iVW7Iv1VKS7RXJ6GRMwbz9KS/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology.pdf#page=4",
+        "originalUrl": "https://jbiochemtech.com/storage/models/article/bMUh1GtjLrbMv0U5GbVt14NkkfQ2frw7KZS6iVW7Iv1VKS7RXJ6GRMwbz9KS/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology.pdf",
+        "originalSha256": "6b5585cd4373f9727005093e4f87279ad3237f4075a9c9b0476441bfd81962ac",
+        "sourcePanelSha256": "01d26938a6d2c1c2650389163169933df3c6ab9acd2c59b65cfbff5de8372ab1",
+        "sha256": "19c03f718b4e76ea653ab7ba002412ce4844cd1a107e93ce57cdb983b1540f7b",
+        "author": "Ivan Kulikov et al.",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Подпись Figure 3 в статье Garden Strawberry Varieties of the All-Russian Horticultural Institute прямо называет сорт Slavutich; под ягодами в кадре видна этикетка «Славутич».",
+        "width": 600,
+        "height": 466,
+        "captionChange": "рисунок 3, перекодировано",
+        "transformation": "Встроенный JPEG рисунка 3 извлечён из PDF без кадрирования и увеличения, перекодирован в WebP."
+      },
+      "vityaz": {
+        "file": "variety-photo-vityaz.webp",
+        "sourcePage": "https://jbiochemtech.com/storage/models/article/bMUh1GtjLrbMv0U5GbVt14NkkfQ2frw7KZS6iVW7Iv1VKS7RXJ6GRMwbz9KS/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology.pdf#page=4",
+        "originalUrl": "https://jbiochemtech.com/storage/models/article/bMUh1GtjLrbMv0U5GbVt14NkkfQ2frw7KZS6iVW7Iv1VKS7RXJ6GRMwbz9KS/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology.pdf",
+        "originalSha256": "6b5585cd4373f9727005093e4f87279ad3237f4075a9c9b0476441bfd81962ac",
+        "sourcePanelSha256": "f34934217d4a047ce8ac54949ef87f8f9ec2bb6893863490db5675a1ce75131c",
+        "sha256": "e504a8b334ee51c5f80a9049a699f2024516010f086d1fa1da4dc0cc0e45a3f9",
+        "author": "Ivan Kulikov et al.",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Подпись Figure 4 в статье Garden Strawberry Varieties of the All-Russian Horticultural Institute прямо называет сорт Vityaz.",
+        "width": 605,
+        "height": 465,
+        "captionChange": "рисунок 4, перекодировано",
+        "transformation": "Встроенный JPEG рисунка 4 извлечён из PDF без кадрирования и увеличения, перекодирован в WebP."
+      },
+      "tsaritsa": {
+        "file": "variety-photo-tsaritsa.webp",
+        "sourcePage": "https://jbiochemtech.com/storage/models/article/bMUh1GtjLrbMv0U5GbVt14NkkfQ2frw7KZS6iVW7Iv1VKS7RXJ6GRMwbz9KS/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology.pdf#page=4",
+        "originalUrl": "https://jbiochemtech.com/storage/models/article/bMUh1GtjLrbMv0U5GbVt14NkkfQ2frw7KZS6iVW7Iv1VKS7RXJ6GRMwbz9KS/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology.pdf",
+        "originalSha256": "6b5585cd4373f9727005093e4f87279ad3237f4075a9c9b0476441bfd81962ac",
+        "sourcePanelSha256": "a9ee9a9f6c7640db3ac561358a31d10247807260dfded2bacb7f386d1748f87c",
+        "sha256": "81b9b81b3522801c11ecbfe9ae7e0bf8f0718b7b6b0a5d224d727349f22ca681",
+        "author": "Ivan Kulikov et al.",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Подпись Figure 5 в статье Garden Strawberry Varieties of the All-Russian Horticultural Institute прямо называет сорт Tsaritsa; на фото есть этикетка «Царица».",
+        "width": 582,
+        "height": 421,
+        "captionChange": "рисунок 5, перекодировано",
+        "transformation": "Встроенный JPEG рисунка 5 извлечён из PDF без кадрирования и увеличения, перекодирован в WebP."
+      },
+      "alfa": {
+        "file": "variety-photo-alfa.webp",
+        "sourcePage": "https://jbiochemtech.com/storage/models/article/bMUh1GtjLrbMv0U5GbVt14NkkfQ2frw7KZS6iVW7Iv1VKS7RXJ6GRMwbz9KS/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology.pdf#page=5",
+        "originalUrl": "https://jbiochemtech.com/storage/models/article/bMUh1GtjLrbMv0U5GbVt14NkkfQ2frw7KZS6iVW7Iv1VKS7RXJ6GRMwbz9KS/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology.pdf",
+        "originalSha256": "6b5585cd4373f9727005093e4f87279ad3237f4075a9c9b0476441bfd81962ac",
+        "sourcePanelSha256": "90a226bf3d90fd5252e85e83b6c2d0161661500609610cf4c489dd47035445be",
+        "sha256": "aca1d52fdc13c58da0f398e473f48e49b7e4400031b6dbe0ac2aedc20ca64c2a",
+        "author": "Ivan Kulikov et al.",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Подпись Figure 6 в статье Garden Strawberry Varieties of the All-Russian Horticultural Institute прямо называет сорт Al’fa; на фото есть этикетка «Альфа».",
+        "width": 601,
+        "height": 442,
+        "captionChange": "рисунок 6, перекодировано",
+        "transformation": "Встроенный JPEG рисунка 6 извлечён из PDF без кадрирования и увеличения, перекодирован в WebP."
+      },
+      "bereginya": {
+        "file": "variety-photo-bereginya.webp",
+        "sourcePage": "https://jbiochemtech.com/storage/models/article/bMUh1GtjLrbMv0U5GbVt14NkkfQ2frw7KZS6iVW7Iv1VKS7RXJ6GRMwbz9KS/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology.pdf#page=5",
+        "originalUrl": "https://jbiochemtech.com/storage/models/article/bMUh1GtjLrbMv0U5GbVt14NkkfQ2frw7KZS6iVW7Iv1VKS7RXJ6GRMwbz9KS/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology.pdf",
+        "originalSha256": "6b5585cd4373f9727005093e4f87279ad3237f4075a9c9b0476441bfd81962ac",
+        "sourcePanelSha256": "a22cc8b030a95da95afce666ac2ad247733ad50953ec2d5c88cd3d64ba3e85da",
+        "sha256": "c4c4ab8c19c0e39c5c30071846aaf5492b6811f4dc6cdc20909f015d9d7d249a",
+        "author": "Ivan Kulikov et al.",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Подпись Figure 7 в статье Garden Strawberry Varieties of the All-Russian Horticultural Institute прямо называет сорт Bereginya; на фото есть этикетка «Берегиня».",
+        "width": 615,
+        "height": 439,
+        "captionChange": "рисунок 7, перекодировано",
+        "transformation": "Встроенный JPEG рисунка 7 извлечён из PDF без кадрирования и увеличения, перекодирован в WebP."
+      },
+      "albion": {
+        "file": "variety-photo-albion.webp",
+        "sourcePage": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8909511/#foods-11-00640-f001",
+        "originalUrl": "https://mdpi-res.com/d_attachment/foods/foods-11-00640/article_deploy/foods-11-00640.pdf",
+        "originalSha256": "7dcfb0cf2ff4d5ce03c862a2512e1197b14fa1b26ed3ce65ccd1a61cdc4ee1d9",
+        "sourcePanelSha256": "575f1c5e90c557a1528bfa82a61c3e8af47a2a1262f396fbce3f9bedff631dcc",
+        "sha256": "663dff033705e15fbfc7476180f2fd843d230dd49074773a43ff82f213c77dcf",
+        "author": "Anica Bebek Markovinović et al.",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "В статье Chemometric Valorization of Strawberry cv. Albion рисунок 1 прямо подписывает обе панели как ягоды Albion; панель B показывает ягоды при полной спелости.",
+        "width": 765,
+        "height": 630,
+        "captionChange": "панель B, кадрировано",
+        "transformation": "Из встроенного изображения рисунка 1 размером 1740 × 746 выделена панель B, кадрирована до 765 × 630 и сохранена в WebP без увеличения."
+      },
+      "aziya": {
+        "file": "variety-photo-aziya.webp",
+        "sourcePage": "https://horticulturejournal.usamv.ro/pdf/2024/issue_1/Art2.pdf#page=3",
+        "originalUrl": "https://horticulturejournal.usamv.ro/pdf/2024/issue_1/Art2.pdf",
+        "originalSha256": "7ca510cf83af8ac8328cde0bc146207471e084e081a78ae68914a0775d3f0c2d",
+        "sourcePanelSha256": "9a1095eaeafda2a1d2e7b9c883330bd0e7e3ecff4c9be647266d8b9f37b31301",
+        "sha256": "fc41b145f9ddcac7894699da957a09bab3d87b8aacac90b08c2d257246f3d66b",
+        "author": "Stefka Atanassova et al.",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "В статье Non-Destructive Assessment of Strawberry Fruit Quality на странице 3 подпись рисунка 1 прямо обозначает Asia как панель b; использовано только встроенное фото этой панели.",
+        "width": 440,
+        "height": 352,
+        "captionChange": "панель b рисунка 1",
+        "transformation": "Панель b размером 440 × 352 вырезана из рендера страницы PDF с управлением цветом и сохранена в WebP. Встроенный JPEG панели имеет 221 × 221 и иной цвет при прямом декодировании; рендер воспроизводит опубликованный вид."
+      },
+      "alba": {
+        "file": "variety-photo-alba.webp",
+        "sourcePage": "https://horticulturejournal.usamv.ro/pdf/2024/issue_1/Art2.pdf#page=3",
+        "originalUrl": "https://horticulturejournal.usamv.ro/pdf/2024/issue_1/Art2.pdf",
+        "originalSha256": "7ca510cf83af8ac8328cde0bc146207471e084e081a78ae68914a0775d3f0c2d",
+        "sourcePanelSha256": "ef3da185580c8244171297e97a14820fa80d7b7e774330d0b3ba91377641d442",
+        "sha256": "132cffa4e9e9ebd76cbbdd65f2fc033c6caa09f3713f6f027978520bdbf2cf02",
+        "author": "Stefka Atanassova et al.",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "В статье Non-Destructive Assessment of Strawberry Fruit Quality на странице 3 подпись рисунка 1 прямо обозначает Alba как панель a; использовано только встроенное фото этой панели.",
+        "width": 373,
+        "height": 277,
+        "captionChange": "панель a рисунка 1",
+        "transformation": "Из PDF извлечена встроенная фотография панели a размером 373 × 277; исправлена инверсия каналов CMYK при декодировании, сохранено в WebP без увеличения и кадрирования."
+      },
+      "atlant": {
+        "file": "variety-photo-atlant.webp",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%B0%D0%BB%D0%B8%D0%BD%D0%B0_%D0%B0%D1%82%D0%BB%D0%B0%D0%BD%D1%82.jpg",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1e/%D0%9C%D0%B0%D0%BB%D0%B8%D0%BD%D0%B0_%D0%B0%D1%82%D0%BB%D0%B0%D0%BD%D1%82.jpg",
+        "originalSha256": "6a1a6685f8eb7ef8e613531f5f0a0487e5c3d79ba8abd147c4039292f7d5e2d4",
+        "sha256": "e9f591a4791f88626ebc3404f0b04bbbc41bf9248b54e23621f8ecd954286e6f",
+        "author": "Алексей РТ",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "identityEvidence": "Автор подписал собственный снимок «Ремонтантная малина сорт Атлант»; на фотографии видны красные спелые ягоды.",
+        "transformation": "Исходник 1920 × 1080 кадрирован до 1440 × 960 и уменьшен до 960 × 640 в WebP; производное изображение CC BY-SA 4.0."
+      },
+      "polka": {
+        "file": "variety-photo-polka.webp",
+        "sourcePage": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10673471/#metabolites-13-01124-f001",
+        "originalUrl": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/f2db/10673471/7f279dae7004/metabolites-13-01124-g001.jpg",
+        "originalSha256": "ac4ce141ebd209a999259c063096f55f2d6e7d39e938ad4ad64442492750b9fc",
+        "sha256": "1694db3cc6f154316213e357a85a11f3c400241eac40748c6e46ce97a2f0f590",
+        "author": "Mirosława Chwil et al.",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Авторы исследовали ягоды трёх сортов из коммерческой посадки и прямо подписали панель C рисунка 1 как Polka.",
+        "width": 668,
+        "height": 526,
+        "captionChange": "панель C, кадрировано",
+        "transformation": "Из рисунка 1 (676 × 907) выделена панель C с ягодами сорта Polka; кадрировано до 668 × 526 и перекодировано в WebP без масштабирования. Оригинал и производное изображение CC BY 4.0."
+      },
+      "polana": {
+        "file": "variety-photo-polana.webp",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Polana-malina.jpg",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Polana-malina.jpg",
+        "originalSha256": "c45db4d29d513305042997e509739aa2170f0ffd297e65f617529a45a2208d2e",
+        "sha256": "d3f2087a088bbec1a071da9d858e365f56c16197e0e92e90bbc612a457f5494a",
+        "author": "Djomla85",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "identityEvidence": "Автор подписал собственную фотографию «Polana-plod»; исходный снимок содержит надпись «Малина Polana».",
+        "width": 300,
+        "height": 240,
+        "captionChange": "перекодировано без кадрирования",
+        "transformation": "Оригинал 300 × 240 перекодирован в WebP без масштабирования и кадрирования; надпись уже была на исходном снимке. Производное изображение CC BY-SA 4.0."
+      },
+      "heritage": {
+        "file": "variety-photo-heritage.webp",
+        "sourcePage": "https://www.flickr.com/photos/graibeard/3220923545/",
+        "originalUrl": "https://live.staticflickr.com/3128/3220923545_c22ae77719_b.jpg",
+        "originalSha256": "1f7f1c10ebd4468660575d3574776c9c5edb9f9158f409d930153fb9fa8e9de9",
+        "sha256": "ac5018572bc7d40af90714bb2bbab5021ce51b8bffa81e35e1eafadea3e620a9",
+        "author": "graibeard",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "identityEvidence": "Заголовок и описание авторского снимка на Flickr прямо называют Raspberry Heritage — Rubus idaeus; JSON-LD страницы содержит авторство и лицензию CC BY-SA 2.0.",
+        "width": 705,
+        "height": 470,
+        "captionChange": "кадрировано",
+        "transformation": "Оригинал 705 × 1024 кадрирован по вертикали до 705 × 470 вокруг спелой и незрелой ягод, перекодирован в WebP без увеличения; производное изображение CC BY-SA 2.0."
+      },
+      "honey": {
+        "file": "variety-photo-honey.webp",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Fragaria_ananassa_Honeoye_2023-05-31_6638.jpg",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/0/07/Fragaria_ananassa_Honeoye_2023-05-31_6638.jpg",
+        "originalSha256": "a2b04e816200342a45add09d7a9d7cdd3b7aa7c5f3efa50b43ce576bf3b5b7c2",
+        "sha256": "7ac503d09c5f00d9db2ca91da6e09b6b6adc9d2521c8cc6bbe1cd9aa0209f8c1",
+        "author": "Salicyna",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "identityEvidence": "Автор прямо указал в описании «Fragaria × ananassa Honeoye», фотография сорта в Щецине 31 мая 2023 года.",
+        "photoDetail": "незрелые ягоды",
+        "transformation": "Уменьшено до 960 × 640, кадрировано по центру, сохранено в WebP; производное изображение CC BY-SA 4.0."
+      },
+      "zenga-zengana": {
+        "file": "variety-photo-zenga-zengana.webp",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Fragaria_ananassa_Senga_Sengana_2023-06-12_7456.jpg",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Fragaria_ananassa_Senga_Sengana_2023-06-12_7456.jpg",
+        "originalSha256": "db7e34f8e76dc2c6945eba683899b409b5e63950d24878b5f702fbfb47485862",
+        "sha256": "de357d337308fb57cbd163db007ffba3e2a066f7d0f6f7d5d6ff71037bb1126f",
+        "author": "Salicyna",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "identityEvidence": "Автор прямо указал в описании «Fragaria × ananassa Senga Sengana», собственный снимок сорта в Щецине 12 июня 2023 года.",
+        "transformation": "Уменьшено до 960 × 640, кадрировано по центру, сохранено в WebP; производное изображение CC BY-SA 4.0."
+      },
+      "kleri": {
+        "file": "variety-photo-kleri.webp",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Clery_Gartenerdbeere.JPG",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Clery_Gartenerdbeere.JPG",
+        "originalSha256": "d1a7010dc07f7e20fdf0fc407040f5da4ccb52c700e5a13d1cd8f07398b95c72",
+        "sha256": "50c624748618e2cc83febd2a7f80a29ca0ca6577352189ba407d2df83372ee9d",
+        "author": "4028mdk09",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "identityEvidence": "Автор прямо указал в описании: «Gartenerdbeere Clery (Fragaria x ananassa)», съёмка в Гейдельберге 9 мая 2010 года.",
+        "transformation": "Уменьшено до 960 × 640, кадрировано по центру, сохранено в WebP; производное изображение CC BY-SA 3.0."
+      },
+      "murano": {
+        "file": "variety-photo-murano.webp",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Fraises_Murano_en_Dordogne.jpg",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Fraises_Murano_en_Dordogne.jpg",
+        "originalSha256": "4250025909bceb78f6a7023d2caf8c191db355112bfb6e466ac603cc2e534ea3",
+        "sha256": "a4d94097c4528796113ad3c9fcea20976ca1fefbed5468f4a1507c359489c628",
+        "author": "Renhour48",
+        "license": "CC0 1.0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "identityEvidence": "Авторское описание «Fraises Murano en Dordogne» и табличка MURANO в кадре.",
+        "transformation": "Уменьшено до 960 × 640, кадрировано по центру, сохранено в WebP."
+      },
+      "elsanta": {
+        "file": "variety-photo-elsanta.webp",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:FraisesElsantaCLJWeber_(23307386409).jpg",
+        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2b/FraisesElsantaCLJWeber_%2823307386409%29.jpg",
+        "originalSha256": "47333ca59b3681aaf121bda5ff53d218e2351c7ac5174cd119fdff51fd85c94a",
+        "sha256": "6e77a8b320779befc39b39e40107ec5095abcc76e4a63bb4e19992fdfd18874a",
+        "author": "INRA DIST / Jean Weber",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+        "identityEvidence": "Название сорта Elsanta в имени исходного файла INRA; перенос с Flickr проверен FlickreviewR.",
+        "transformation": "Уменьшено до 960 × 640, кадрировано по центру, сохранено в WebP."
+      }
+    },
+    "varietySupplementalPhotoSources": {
+      "double-gold": {
+        "file": "variety-photo-double-gold-patent.webp",
+        "sourcePage": "https://patents.google.com/patent/USPP24811P3/en",
+        "originalUrl": "https://patentimages.storage.googleapis.com/56/1e/77/b1bfc0931d208a/USPP24811.pdf",
+        "originalSha256": "4ef1e9a2c92831822e2887b6268bdc08a368ded8436982297e2e18f25b532359",
+        "sha256": "b2d3fd1902175f011b59c532a2c2b556bdbe4e7cec97be4b177534469fb034c2",
+        "author": "Courtney A. Weber / Cornell University; USPTO",
+        "license": "Патентная публикация USPTO",
+        "licenseUrl": "https://www.uspto.gov/terms-use-uspto-websites",
+        "identityEvidence": "Патент USPP24811P3 прямо называет сорт Double Gold; подпись FIG. 1 обозначает фотографию его плодов.",
+        "width": 1000,
+        "height": 947,
+        "photoDetail": "плоды на чёрно-белом патентном снимке",
+        "captionChange": "рисунок 1, кадрировано и уменьшено",
+        "transformation": "С листа 1 патента выделена фотография плодов, уменьшена до 1000 × 947 и перекодирована в WebP; снимок чёрно-белый."
+      },
+      "prelude": {
+        "file": "variety-photo-prelude-patent.webp",
+        "sourcePage": "https://patents.google.com/patent/USPP11747P2/en",
+        "originalUrl": "https://patentimages.storage.googleapis.com/3b/e1/9c/c6b0bb82ded75e/USPP11747.pdf",
+        "originalSha256": "d8ee74697a58a65e77a897cd0ff768899abb899f6eeed8e3238738fcefeae54c",
+        "sourcePanelSha256": "74a03da42dfcf0da71d260190a66a18e01c8371bcb6fd1ee977cd04cdd654e46",
+        "sha256": "4bbb98f673cf3f1c13735c543979d47dff112fefcc58139978142c7de191ebfc",
+        "author": "John C. Sanford, Kevin E. Maloney, Jack E. Reich, Donald K. Ourecky; Cornell Research Foundation",
+        "license": "Патентная публикация USPTO",
+        "licenseUrl": "https://www.uspto.gov/terms-use-uspto-websites",
+        "identityEvidence": "Патент USPP11747P2 прямо называет сорт Prelude; подпись FIG. 2 обозначает фотографию его плодов.",
+        "width": 1100,
+        "height": 715,
+        "photoDetail": "плоды на чёрно-белом патентном снимке",
+        "captionChange": "рисунок 2, кадрировано и уменьшено",
+        "transformation": "С листа 2 патента выделена фотография плодов (1428 × 928), уменьшена до 1100 × 715 и перекодирована в WebP; снимок чёрно-белый."
+      },
+      "encore": {
+        "file": "variety-photo-encore-patent.webp",
+        "sourcePage": "https://patents.google.com/patent/USPP11746P2/en",
+        "originalUrl": "https://patentimages.storage.googleapis.com/ff/50/b7/51a9b0e6d929e8/USPP11746.pdf",
+        "originalSha256": "e8048b78ae143356a0d58345444e95f305b5510ce9705a90acfc2752e1bb598b",
+        "sourcePanelSha256": "aacdcf16bd248461e9d6ce196b4e1b07e5448917232e8c7b395aa8c87e62ed68",
+        "sha256": "779d4c92ef06a318a4ee916b3f4cd0946ba599beba56777aabe9b648471cdfe1",
+        "author": "John C. Sanford, Kevin E. Maloney, Jack E. Reich, Donald K. Ourecky; Cornell Research Foundation",
+        "license": "Патентная публикация USPTO",
+        "licenseUrl": "https://www.uspto.gov/terms-use-uspto-websites",
+        "identityEvidence": "Патент USPP11746P2 прямо называет сорт Encore; подпись FIG. 2 обозначает фотографию типичной кисти его плодов.",
+        "width": 1100,
+        "height": 720,
+        "photoDetail": "кисть плодов на чёрно-белом патентном снимке",
+        "captionChange": "рисунок 2, кадрировано и уменьшено",
+        "transformation": "С листа 2 патента выделена фотография кисти плодов (1432 × 937), уменьшена до 1100 × 720 и перекодирована в WebP; снимок чёрно-белый."
+      },
+      "solovushka": {
+        "file": "variety-photo-solovushka-frost-flowers.webp",
+        "sourcePage": "https://www.intechopen.com/chapters/73090",
+        "originalUrl": "https://cdnintech.com/media/chapter/73090/1512345123/media/F5.png",
+        "originalSha256": "8a4844e1537ee0735403c76ac547a3fa47b27d5dd2ab87a72799958dff00e207",
+        "sourcePanelSha256": "0d84c420d9f1b7d3b4a2212c8708ac00fdf198572fd4c25ed374ff3b0c01efe1",
+        "sha256": "149a23a24c2ecc23d509ef74bf1db968ffcc999975c7a7d58eddf8cd452ddfb0",
+        "author": "З. Е. Ожерельева и соавторы, IntechOpen, 2021",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "identityEvidence": "Рисунок 5: подпись прямо определяет панель (a) как цветки сорта Solovushka после воздействия −2,5 °C.",
+        "width": 367,
+        "height": 329,
+        "photoDetail": "цветки после морозного эксперимента",
+        "captionChange": "рисунок 5, панель a, кадрировано",
+        "transformation": "Из рисунка 5 выделена левая панель (a) 367 × 329; перекодирована в WebP без увеличения. Фото цветков, а не ягод."
+      },
+      "dzholi": {
+        "file": "variety-photo-joly-patent.webp",
+        "sourcePage": "https://patents.google.com/patent/USPP23126P3/en",
+        "originalUrl": "https://patentimages.storage.googleapis.com/f8/37/60/62da27a13cb3cd/USPP23126.pdf",
+        "originalSha256": "9d195a25fe469620a646e7ea7c5bb7a689429b6b02314ef4f5c470ba253a4dc0",
+        "sha256": "21e32731287b7c23eb2796f1212934946490dfc44bee0e62b52d2617a29d194f",
+        "author": "Michelangelo Leis, Alessio Martinelli, Gianfranco Castagnoli; CIV",
+        "license": "Патентная публикация USPTO",
+        "licenseUrl": "https://www.uspto.gov/terms-use-uspto-websites",
+        "identityEvidence": "Патент USPP23126P3 прямо называет сорт JOLY; подпись FIG. 4 обозначает фотографию его плодов.",
+        "width": 960,
+        "height": 652,
+        "photoDetail": "плоды на патентном снимке",
+        "captionChange": "рисунок 4, кадрировано",
+        "transformation": "С листа 4 патента выделена фотография плодов и перекодирована в WebP; снимок чёрно-белый."
+      },
+      "malga": {
+        "file": "variety-photo-malga-patent.webp",
+        "sourcePage": "https://patents.google.com/patent/USPP28310P3/en",
+        "originalUrl": "https://patentimages.storage.googleapis.com/da/f4/18/44f7c06b1edad7/USPP28310.pdf",
+        "originalSha256": "96030549993e55be3182c694fc635f0067fba9e2614ec7072a1d51ce9e0f284e",
+        "sha256": "d06e0b98397842e684def4931dfde77f7db5328ce4dcd7ef4a451b795c304a5e",
+        "author": "Zenti Franco; New Fruits SAS",
+        "license": "Патентная публикация USPTO",
+        "licenseUrl": "https://www.uspto.gov/terms-use-uspto-websites",
+        "identityEvidence": "Патент USPP28310P3 прямо называет сорт MALGA; подпись FIG. 2 обозначает крупный снимок его плодов.",
+        "width": 1100,
+        "height": 711,
+        "photoDetail": "плоды на патентном снимке",
+        "captionChange": "рисунок 2, кадрировано",
+        "transformation": "С листа 2 патента выделена фотография плодов и перекодирована в WebP; снимок чёрно-белый."
+      },
+      "aniya": {
+        "file": "variety-photo-ania-patent.webp",
+        "sourcePage": "https://patents.google.com/patent/USPP32221P3/en",
+        "originalUrl": "https://patentimages.storage.googleapis.com/30/ef/cc/5c5a7f6645e5b9/USPP32221.pdf",
+        "originalSha256": "aa0ab55f75c4ca9dd19a6a12438f753ac986763abda3ccd6b7b9dd838e07a8be",
+        "sha256": "5a5becb71715dfb9810c7abf0700c972f4e156db891727d690ee4c7f95785c5a",
+        "author": "Alessio Martinelli, Michelangelo Leis; CIV",
+        "license": "Патентная публикация USPTO",
+        "licenseUrl": "https://www.uspto.gov/terms-use-uspto-websites",
+        "identityEvidence": "Патент USPP32221P3 прямо называет сорт CIVRH612; оригинатор CIV подтверждает торговое название ANIA для этого сорта; FIG. 4 показывает его плоды.",
+        "width": 1100,
+        "height": 780,
+        "photoDetail": "плоды на патентном снимке",
+        "captionChange": "рисунок 4, кадрировано",
+        "transformation": "С листа 4 патента выделена фотография плодов и перекодирована в WebP; снимок чёрно-белый."
+      },
+      "kimberli": {
+        "file": "variety-photo-kimberli-microplants.webp",
+        "sourcePage": "https://openbiotechnologyjournal.com/contents/volumes/V20/e18740707455704/e18740707455704.pdf#page=5",
+        "originalUrl": "https://openbiotechnologyjournal.com/contents/volumes/V20/e18740707455704/e18740707455704.pdf",
+        "originalSha256": "376d2787a7566a0785284518e11731c39db875871736ce999ce35c6fe4f47b6c",
+        "sourcePanelSha256": "eb8a680b90212237dcb040de939674815cd9eaaeab2ecb397caa0e6603a35124",
+        "sha256": "21477a9a1ebe69047d6c04fb9eba1a6bf2306feca91667d4f4600894caf9e591",
+        "author": "С. Корнацкий и соавторы, Open Biotechnology Journal, 2026",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Рисунок 2 прямо называет сорт Kimberly; панель b показывает микрорастения до подготовки к следующему циклу выращивания.",
+        "width": 623,
+        "height": 383,
+        "photoDetail": "микрорастения в исследовании",
+        "captionChange": "панель b рисунка 2, перекодировано",
+        "transformation": "Из PDF извлечён JPEG панели b без кадрирования и перекодирован в WebP без увеличения."
+      },
+      "sudarushka": {
+        "file": "variety-photo-sudarushka.webp",
+        "sourcePage": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11043506/",
+        "originalUrl": "https://pdfs.semanticscholar.org/7137/18200ea61d95ab689e7162ae0327acf4ac01.pdf",
+        "originalSha256": "c04d40ac65dd139ca7ec3b5885de44ffcfb5794bb89761b2f2db082db01bb6d4",
+        "sourcePanelSha256": "fc9cd17e232f7d5b9c2651848c19272bb8b93b25ed1680040396498b7b1d9be3",
+        "sha256": "de3a6ad687c099f37332f9bcec8117a77a6a3fce326f300a6adcc195c75c13ee",
+        "author": "А. С. Лыжин и И. В. Лукьянчук, 2024",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Рисунок 1а статьи прямо подписан Sudarushka; показан куст сорта без ягод.",
+        "width": 777,
+        "height": 585,
+        "photoDetail": "куст в исследовании",
+        "captionChange": "рисунок 1а, перекодировано",
+        "transformation": "Из PDF извлечён JPEG рисунка 1а без кадрирования и перекодирован в WebP без увеличения."
+      },
+      "cabrillo": {
+        "file": "variety-photo-cabrillo.webp",
+        "sourcePage": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8728004/",
+        "originalUrl": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/6df8/8728004/f7c27f3aa812/jkab378f1.jpg",
+        "originalSha256": "0d272ba3b270c1d5f96d84fa221e4f30a40d5f050b74cd5f7d0eca4b8c4919e9",
+        "sourcePanelSha256": "292bfa0544035981471ff2982c2f63f96671939eb5088f169930b79e840f7e6d",
+        "sha256": "d27e01863c2bb74d8fcc18048ea0f631965531cb52d3fe101b397ca129b213a9",
+        "author": "S. Petrasch и соавторы, G3, 2022",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Рисунок 1 статьи прямо подписывает строку Cabrillo; показаны ягоды после 0, 7, 14 и 21 дня хранения.",
+        "width": 490,
+        "height": 55,
+        "photoDetail": "ягоды в опыте хранения",
+        "captionChange": "строка рисунка 1, кадрировано",
+        "transformation": "Из JPEG рисунка 1 выделена подписанная строка Cabrillo размером 490 × 55 и перекодирована в WebP без увеличения."
+      },
+      "oranzhevoe-chudo": {
+        "file": "variety-photo-orange-miracle-plants.webp",
+        "sourcePage": "https://www.mdpi.com/2223-7747/10/10/2071",
+        "originalUrl": "https://mdpi-res.com/d_attachment/plants/plants-10-02071/article_deploy/plants-10-02071.pdf",
+        "originalSha256": "92e3291344484c3628ac9b17c4b0e989ab3b402718bad2a76df8cde8a247b401",
+        "sourcePanelSha256": "e63d44dad5af8b544a975cef5f3e08bdd6b8d3c098feab3f3baa1c9453e54670",
+        "sha256": "cb800a0454f3fef010ed7196719827ac5763d824a832f15910fd353556512a65",
+        "author": "А. Тараканов и соавторы, Plants, 2021",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Методы статьи называют материал сортом Orange Miracle, рисунок 2 показывает растения опыта через 45 дней после пересадки; ягод на фото нет.",
+        "width": 1095,
+        "height": 821,
+        "photoDetail": "молодые растения в опыте",
+        "captionChange": "рисунок 2, перекодировано",
+        "transformation": "Из PDF извлечён рисунок 2 с молодыми растениями сорта Orange Miracle и перекодирован в WebP без увеличения."
+      },
+      "caroline": {
+        "file": "variety-photo-caroline-stages.webp",
+        "sourcePage": "https://www.mdpi.com/2311-7524/12/1/79",
+        "originalUrl": "https://mdpi-res.com/d_attachment/horticulturae/horticulturae-12-00079/article_deploy/html/images/horticulturae-12-00079-g001.png",
+        "originalSha256": "156db5cad48b721b25eb558a9b58309ae326dd4225e57272359d2082b227ad08",
+        "sourcePanelSha256": "012308600fd1c182656b5322fa1b968becfa942908639360de19a9e2256f056b",
+        "sha256": "2b557a09c8ef4d85245c8390854bccfc4941d70b8a2ee1c997cab7a53551fb90",
+        "author": "B. Xu и соавторы, Horticulturae, 2026",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Рисунок 1A статьи прямо подписан как стадии созревания ягод сорта Caroline; взята только панель A.",
+        "width": 1501,
+        "height": 1692,
+        "photoDetail": "стадии созревания ягод",
+        "captionChange": "панель A рисунка 1, кадрировано",
+        "transformation": "Из рисунка 1 выделена панель A с сортом Caroline и перекодирована в WebP без увеличения."
+      },
+      "joan-j": {
+        "file": "variety-photo-joan-j-stages.webp",
+        "sourcePage": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13043038/",
+        "originalUrl": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13043038/supplementaryFiles?inlineImages=true",
+        "originalSha256": "26743a2359f8b730d07431ad0ab3e0e471c6fe4f9b4879ca79cfded6f053048b",
+        "sourcePanelSha256": "b5387655cb1f0fd2e4f3938193e57844afda1f9aabf83bf62de2e026bbcc9693",
+        "sha256": "f00887df64244ec03482979531de7f6ae9fb18fb8aa761579965e6a0202f3875",
+        "author": "Anna Bazangeya и соавторы, Journal of Berry Research, 2025",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "В статье указано, что все растения опыта — сорт Joan J; рисунок 2 показывает три стадии окраски ягод с этих растений.",
+        "width": 680,
+        "height": 221,
+        "photoDetail": "ягоды трёх стадий зрелости",
+        "captionChange": "рисунок 2, перекодировано",
+        "transformation": "Исходный JPEG рисунка 2 перекодирован в WebP без увеличения и кадрирования."
+      },
+      "anne": {
+        "file": "variety-photo-anne.webp",
+        "sourcePage": "https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2016.01892/full",
+        "originalUrl": "https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2016.01892/pdf",
+        "originalSha256": "f566f1ff157394b0d73a303099a6cd6a5e269dab6666584a7d6cfd3989958427",
+        "sourcePanelSha256": "590148aa67d0fb9490b0a1cf2ff478f4b813357f8a927bb82d6be39b5b7efc8b",
+        "sha256": "a82592ca48b2c32f40114e5d93172258c24e58963d6c5f4a79e652b97936c469",
+        "author": "M. Z. Rafique и соавторы, Frontiers in Plant Science, 2016",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Рисунок 1 статьи прямо подписывает нижний ряд как сорт Anne; выбрана только жёлтая ягода стадии 4, без красного сорта Tulameen.",
+        "width": 159,
+        "height": 193,
+        "photoDetail": "зрелая жёлтая ягода",
+        "captionChange": "рисунок 1, стадия 4, кадрировано",
+        "transformation": "Из встроенного изображения PDF выделена только ягода Anne стадии 4; фрагмент 159 × 193 перекодирован в WebP без увеличения."
+      },
+      "festivalnaya": {
+        "file": "variety-photo-festivalnaya-anthracnose.webp",
+        "sourcePage": "https://biosel.elpub.ru/jour/article/download/143/139#page=4",
+        "originalUrl": "https://biosel.elpub.ru/jour/article/download/143/139",
+        "originalSha256": "44bdf81cdea9a17ce16ddd789ddb273e40c1b929734aedd1a6c4253080bd30c5",
+        "sourcePanelSha256": "cb10bebcaf1d9602a52425820f7e6f4116f9b321f92983eda3f602f4279ec994",
+        "sha256": "55865007c5529128150a4882f452bb705865c4c08166ac691f5e0911f6a6808c",
+        "author": "И. Э. Храбров и соавторы",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "identityEvidence": "Рисунок 1 статьи ВИР прямо называет панель В сортом «Фестивальная»; это ягоды с выраженным антракнозом, а не типичный здоровый плод сорта.",
+        "width": 800,
+        "height": 450,
+        "photoDetail": "ягоды, поражённые антракнозом",
+        "captionChange": "панель В рисунка 1, кадрировано",
+        "transformation": "Из PDF извлечено встроенное изображение 1600 × 900; выделена подписанная панель В 800 × 450 и перекодирована в WebP без увеличения."
+      },
+      "darenka": {
+        "file": "variety-photo-darenka.webp",
+        "sourcePage": "https://www.agronauka-sv.ru/jour/article/view/1761",
+        "originalUrl": "https://www.agronauka-sv.ru/jour/article/download/1761/816",
+        "originalSha256": "1c2a2c8433f20863bb2174b4843e1c3b204775d234857ecc839087681dedffe4",
+        "sourcePanelSha256": "6d5aabb1a6f176e2ca53d811f566cc56ec86ac5882bcca1e8aa0fc5bfd35a1fa",
+        "sha256": "665cf570606af97b24fd8502959ac8bd490310565863ab9c82138410886d6f73",
+        "author": "Е. Ю. Невоструева и Л. В. Багмет",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "identityEvidence": "Рисунок 5 статьи «Номенклатурные стандарты сортов земляники» прямо подписан как сорт Дарёнка; на гербарном листе есть фотографии цветка и ягод этого растения.",
+        "width": 640,
+        "height": 404,
+        "photoDetail": "фрагмент гербарного образца с ягодами",
+        "captionChange": "рисунок 5, кадрировано",
+        "transformation": "Из PDF извлечён встроенный JPEG рисунка 5 (640 × 954); выделена нижняя область 640 × 404 со снимком ягод, цветка и сортовой этикеткой, перекодирована в WebP без увеличения."
+      }
+    }
+  }
+}

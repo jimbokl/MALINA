@@ -1,0 +1,91 @@
+﻿query,cluster,demand,clicks,competition_code,competition,scope,target_path,action,editorial_note,seed_sources,table_sources,observations,metric_conflict
+малина польза,малина польза,1350,563,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+польза малины,малина польза,717,266,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+настойка из малины,настойка из малины,527,576,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+настойка на малине,настойка из малины,400,379,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+желе из малины на зиму простой,желе из малины,357,437,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+настойка из малины на водке,настойка из малины,313,363,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+малина повышает или понижает давление,малина повышает или понижает давление,223,164,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+настойка из малины на водке в домашних условиях,настойка из малины,191,237,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+польза малины для организма человека,малина польза,178,102,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+листья малины чем полезны для организма человека,листья малины чем полезны,175,187,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+желе из малины на зиму простой рецепт пятиминутка густое,желе из малины на зиму простой рецепт пятиминутка густое,168,226,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+малиновая настойка на водке,настойка из малины,166,168,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:AdditionalQueries,1,False
+листья малины для чего заваривают,листья малины чем полезны,151,137,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+листья малины польза,листья малины чем полезны,150,134,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+тибетская малина польза,тибетская малина,150,109,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина | тибетская малина,malina.xlsx:Queries | tibetskaya-malina.xlsx:Queries,2,False
+настойка на малине с водкой,настойка из малины,146,150,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+малина польза для организма,малина польза,125,89,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+листья малины показания к применению,листья малины чем полезны,122,144,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+настойка из малины на водке в домашних,настойка из малины,120,146,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+чем полезна малина для организма человека,малина польза,117,81,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+как ферментировать листья малины,как ферментировать листья малины,106,81,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+кому нельзя есть малину,кому нельзя есть малину,94,80,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,болезни малины | малина,bolezni-maliny.xlsx:AdditionalQueries | malina.xlsx:Queries,2,False
+ферментация листьев малины,как ферментировать листья малины,89,84,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+настойка на малине на самогоне,настойка на малине на самогоне,87,91,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+тибетская малина польза и вред ягод,тибетская малина,87,97,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина | тибетская малина,malina.xlsx:Queries | tibetskaya-malina.xlsx:Queries,2,False
+лист малины польза,листья малины,83,75,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+желе из малины с желатином,желе из малины,81,79,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+малина польза и вред для здоровья женщинам после 60,малина польза,80,109,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+лист малины полезные свойства и противопоказания,листья малины чем полезны,76,84,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+настойка из малины на самогоне,настойка на малине на самогоне,73,89,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+лист малины польза и вред для организма,листья малины чем полезны,72,88,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+листья малины при беременности,листья малины при беременности,70,75,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+почему нельзя малину при температуре,можно ли малину при температуре,69,80,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+настойка из малины на водке в домашних условиях простой рецепт,настойка из малины,67,101,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+варенье из тибетской малины,варенье из тибетской малины,63,74,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина | тибетская малина,malina.xlsx:Queries | tibetskaya-malina.xlsx:Queries,2,False
+желе из малины на зиму простой рецепт пятиминутка густое без желатина,желе из малины на зиму без косточек,54,88,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+кому нельзя малину,кому нельзя есть малину,54,45,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,болезни малины,bolezni-maliny.xlsx:AdditionalQueries,1,False
+желе из малины на зиму простой рецепт пятиминутка,желе из малины на зиму простой рецепт пятиминутка,48,78,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:Queries,1,False
+малиновая настойка на водке в домашних,настойка из малины,33,44,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:AdditionalQueries,1,False
+как заварить малину чтобы вызвать роды,листья малины при беременности перед родами,28,80,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:Queries,1,False
+тибетская малина польза и вред,тибетская малина,28,34,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+варенье из тибетской малины рецепт,варенье из тибетской малины,27,26,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+польза тибетской малины,тибетская малина,26,24,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+настойка малиновая на водке,настойка из малины,21,23,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:AdditionalQueries,1,False
+что можно приготовить из тибетской малины,варенье из тибетской малины,20,22,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+настойка малиновая на водке в домашних условиях рецепты,настойка из малины,19,26,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:AdditionalQueries,1,False
+тибетская малина полезные свойства,тибетская малина,18,14,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+чем полезна тибетская малина,тибетская малина описание,17,18,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+тибетская малина чем полезна,тибетская малина,15,10,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+чем полезна тибетская малина для организма человека,тибетская малина польза,12,15,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+что приготовить из тибетской малины,варенье из тибетской малины,11,14,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+клубника при камнях в желчном пузыре можно ли есть,рецепт салата при желчекаменной болезни,8,9,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,болезни клубники,bolezni-klubniki.xlsx:AdditionalQueries,1,False
+китайская малина польза,тибетская малина,7,3,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:AdditionalQueries,1,False
+малина тибетская польза,тибетская малина,7,4,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+тибетская малина варенье,варенье из тибетской малины,7,9,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+что можно сделать из тибетской малины,варенье из тибетской малины,7,8,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+малина при болезнях печени,болезнь печени мед,6,21,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,болезни малины,bolezni-maliny.xlsx:Queries,1,False
+настойка малиновая на водке в домашних условиях,настойка из малины,6,12,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:AdditionalQueries,1,False
+обработка клубники железным купоросом осенью,железный купорос для клубники,6,16,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,болезни клубники,bolezni-klubniki.xlsx:AdditionalQueries,1,False
+клубника при болезнь печени,продукты для печени и желчного пузыря,5,21,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,болезни клубники,bolezni-klubniki.xlsx:Queries,1,False
+компот из тибетской малины на зиму,компот из тибетской малины на зиму,5,6,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+малиновое желе с желатином,желе из малины,5,10,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:AdditionalQueries,1,False
+рецепт варенья из тибетской малины,варенье из тибетской малины,5,6,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+заготовки из тибетской малины,варенье из тибетской малины,4,4,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+клубника болезнь печени,можно ли арбуз при циррозе печени,4,16,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,болезни клубники,bolezni-klubniki.xlsx:Queries,1,False
+малиновый лист польза,листья малины,4,3,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,малина,malina.xlsx:AdditionalQueries,1,False
+тибетская малина польза ягод,тибетская малина,4,6,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+как сварить варенье из тибетской малины,варенье из тибетской малины,3,6,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+клубничное варенье рецепт с целыми ягодами 5 минутка,варенье из клубники 5-и минутка на зиму рецепт,3,3,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,клубника,klubnika.xlsx:AdditionalQueries,1,False
+малина при болезни печени,чеснок польза для печени,3,11,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,болезни малины,bolezni-maliny.xlsx:Queries,1,False
+можно ли клубнику при гастрите желудка,можно ли мороженое при гастрите,3,3,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,болезни клубники,bolezni-klubniki.xlsx:AdditionalQueries,1,False
+полезные свойства тибетской малины,тибетская малина описание,3,3,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+варенье из китайской малины,варенье из тибетской малины,2,2,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,тибетская малина,tibetskaya-malina.xlsx:AdditionalQueries,1,False
+железный купорос для обработки клубники осенью от вредителей и болезней,железный купорос для обработки клубники осенью от вредителей и болезней,2,4,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,болезни клубники,bolezni-klubniki.xlsx:Queries,1,False
+лист малины для чего применяется,листья малины чем полезны,2,3,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,болезни малины,bolezni-maliny.xlsx:AdditionalQueries,1,False
+листья малины для чего применяются,листья малины чем полезны,2,2,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,болезни малины,bolezni-maliny.xlsx:AdditionalQueries,1,False
+малиновое конфи для торта с крахмалом,рецепт малинового конфи для торта с крахмалом,2,2,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:AdditionalQueries,1,False
+чем полезна тибетская малина для организма,тибетская малина польза и вред ягод,2,2,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+в чем польза тибетской малины,тибетская малина,1,2,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+как сделать малиновую настойку на водке в домашних,настойка из малины,1,1,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,малина,malina.xlsx:AdditionalQueries,1,False
+кому нельзя есть малину при каких заболеваниях,кому нельзя есть малину,1,4,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,болезни малины,bolezni-maliny.xlsx:AdditionalQueries,1,False
+малина полезное,малина польза,1,1,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,болезни малины,bolezni-maliny.xlsx:AdditionalQueries,1,False
+малина розолистная польза,тибетская малина польза,1,1,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:AdditionalQueries,1,False
+малина тибетская польза и вред,тибетская малина,1,2,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+полезна ли тибетская малина,тибетская малина,1,2,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+тайская малина польза,тибетская малина,1,1,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:AdditionalQueries,1,False
+тибетская малина описание польза,тибетская малина,1,1,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+тибетская малина что приготовить из нее,варенье из тибетской малины,1,1,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+что готовят из тибетской малины,варенье из тибетской малины,1,2,LOW,Низкая,adjacent_food,,outside_garden_priority,adjacent_food,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False
+что делают из тибетской малины,тибетская малина польза,1,1,LOW,Низкая,adjacent_health,,outside_garden_priority,adjacent_health,тибетская малина,tibetskaya-malina.xlsx:Queries,1,False

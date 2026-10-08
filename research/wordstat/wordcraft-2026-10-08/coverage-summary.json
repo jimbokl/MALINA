@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-10-08",
+  "input": 5013,
+  "counts": {
+    "covered": 3844,
+    "gap": 0,
+    "out_of_scope": 1169
+  },
+  "complete": true,
+  "mappingComplete": true,
+  "completionScope": "canonical_routes_and_answer_anchors",
+  "resourceComplete": false,
+  "queriesWithMissingResources": 340,
+  "missingResourceCounts": {
+    "photo": 221,
+    "gardener_reviews": 287
+  },
+  "canonicalPages": 431
+}

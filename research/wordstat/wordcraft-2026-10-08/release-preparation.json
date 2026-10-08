@@ -1,0 +1,38 @@
+{
+  "preparedAt": "2026-10-08T14:32:05.475704+00:00",
+  "authorization": "User: публикуй",
+  "releaseBaseSha": "e0036a0fd196c30fd4ddc8de06096028e96b850e",
+  "status": "verified_local_pending_commit_and_publication",
+  "build": {
+    "passed": true,
+    "htmlPages": 1073,
+    "log": "/tmp/malina-seo-release-build.log"
+  },
+  "tests": {
+    "passed": 322,
+    "failed": 0,
+    "skipped": 0,
+    "log": "/tmp/malina-seo-release-tests.log"
+  },
+  "queryMapping": {
+    "covered": 3844,
+    "canonicalPages": 431,
+    "gaps": 0,
+    "csvSourceValidation": "passed",
+    "csvSha256": "00018aebeb15a6ff88605716cfb75dcdaaa8a054bd12fc04945e4f80151d675b"
+  },
+  "missingResources": {
+    "exactQueryForms": 340,
+    "photo": 221,
+    "gardenerReviews": 287
+  },
+  "registryStrict": {
+    "exitCode": 0,
+    "passed": false,
+    "hasDrift": true,
+    "scope": "global shared registry; no capability paths changed by this release",
+    "log": "/tmp/malina-seo-release-skills.log"
+  },
+  "unrelatedWorkingTreeChanges": "Preserved in /Volumes/DevSim/Projects/MALINA",
+  "csvLineEndings": "LF, UTF-8 BOM preserved"
+}

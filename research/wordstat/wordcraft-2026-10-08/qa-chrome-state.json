@@ -1,0 +1,15 @@
+{
+  "before": {
+    "frontWindow": "1149565268",
+    "activeIndex": 6
+  },
+  "windowId": "1149565686",
+  "tabId": "1149565687",
+  "url": "chrome://new-tab-page/",
+  "bounds": {
+    "x": 0,
+    "y": 33,
+    "width": 1470,
+    "height": 863
+  }
+}

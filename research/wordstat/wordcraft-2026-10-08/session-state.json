@@ -1,0 +1,60 @@
+{
+  "updatedAt": "2026-10-08T14:19:54.534666+00:00",
+  "objective": "SEO-08: source-backed canonical coverage of every relevant LOW/AVERAGE exact query, including Tibetan raspberry",
+  "status": "local_mapping_verified_resources_pending",
+  "researchTabId": "1149565673",
+  "researchWindowId": "1149565268",
+  "chromeControlRoute": "ChromeUse: Apple Events/DOM, native screencapture",
+  "browserQa": {
+    "before": {
+      "frontWindow": "1149565268",
+      "activeIndex": 6
+    },
+    "windowId": "1149565686",
+    "tabId": "1149565687",
+    "url": "http://127.0.0.1:5181/sorta/malga/#seo-photo",
+    "bounds": {
+      "x": 0,
+      "y": 33,
+      "width": 530,
+      "height": 823
+    },
+    "captureCount": 15
+  },
+  "chromeUserWindowRestored": true,
+  "baseHead": "696cf07726c1a454ec1ffe7c9e40f62da6d731fb",
+  "done": [
+    "8 XLS exports, 8341 observations, 7973 unique exact queries",
+    "1940 matching UI/XLS comparisons; no metric conflicts",
+    "3844 garden queries (643 LOW, 3201 AVERAGE) mapped to 431 canonicals; 0 route/anchor gaps",
+    "1169 off-project forms retained with audited exclusion reasons",
+    "291 new cultivar profiles, 57 articles, 4 crop/region catalogs; base 86 passports enhanced",
+    "Tibetan raspberry: 7 botanical/photo/care/review/trade-name sections; dedicated export included",
+    "1073 production-canonical HTML pages; 322 tests passed, no skipped/failing tests",
+    "HTML coverage verifier and CSV/source-reference validation passed",
+    "15 external Chrome QA captures inspected; user window/tab restored",
+    "Current report, source manifests, SEO plan, backlog and handoff recorded",
+    "24 grower/photo materials, 122 published-reader source pages and 20 photo supplements linked; existing licensed local cultivar photos included in coverage"
+  ],
+  "remaining": [
+    "Supply genuinely missing photos/reviews: queries-missing-resources.csv (340 exact forms; 221 photo, 287 reviews, intersecting groups)",
+    "Publish a reviewed release through the existing project process; current work is uncommitted/unpublished",
+    "After publication, verify exact release SHA/live pages and collect actual search performance"
+  ],
+  "reports": [
+    "README.md",
+    "covered-queries-low-moderate.csv",
+    "query-coverage.json",
+    "coverage-verification.json",
+    "csv-source-validation.json",
+    "validation.json"
+  ],
+  "publication": "SEO-08 local changes; no commit/push/deploy performed",
+  "workingTree": "Pre-existing unrelated dirty files preserved; review and stage task-owned paths explicitly if committing.",
+  "userChromeRestoration": {
+    "windowId": "1149565268",
+    "activeIndex": 6,
+    "observedTitle": "Типы GRU - DeepSeek",
+    "checkedAt": "2026-10-08T14:19:54.534666+00:00"
+  }
+}

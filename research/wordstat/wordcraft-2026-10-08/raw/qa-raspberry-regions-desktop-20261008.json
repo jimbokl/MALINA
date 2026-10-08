@@ -1,0 +1,942 @@
+{
+  "url": "http://127.0.0.1:5181/sorta/malina/regiony/#region-3",
+  "title": "Сорта малины по регионам России · МАЛИНА — КЛУБНИКА",
+  "h1": "Сорта малины по регионам России",
+  "canonical": "https://malinaklubnika.ru/sorta/malina/regiony/",
+  "viewport": {
+    "width": 1440,
+    "height": 773
+  },
+  "documentWidth": 1440,
+  "horizontalOverflow": false,
+  "sections": [
+    {
+      "id": "region-1",
+      "heading": "1. Северный"
+    },
+    {
+      "id": "region-2",
+      "heading": "2. Северо-Западный"
+    },
+    {
+      "id": "region-3",
+      "heading": "3. Центральный"
+    },
+    {
+      "id": "region-4",
+      "heading": "4. Волго-Вятский"
+    },
+    {
+      "id": "region-5",
+      "heading": "5. Центрально-Чернозёмный"
+    },
+    {
+      "id": "region-6",
+      "heading": "6. Северо-Кавказский"
+    },
+    {
+      "id": "region-7",
+      "heading": "7. Средневолжский"
+    },
+    {
+      "id": "region-8",
+      "heading": "8. Нижневолжский"
+    },
+    {
+      "id": "region-9",
+      "heading": "9. Уральский"
+    },
+    {
+      "id": "region-10",
+      "heading": "10. Западно-Сибирский"
+    },
+    {
+      "id": "region-11",
+      "heading": "11. Восточно-Сибирский"
+    },
+    {
+      "id": "region-12",
+      "heading": "12. Дальневосточный"
+    },
+    {
+      "id": "seo-sources",
+      "heading": "Источники"
+    }
+  ],
+  "brokenVisibleImages": [],
+  "duplicateIds": [],
+  "links": [
+    {
+      "text": "Главная",
+      "href": "/"
+    },
+    {
+      "text": "Сорта малины",
+      "href": "/sorta/malina/"
+    },
+    {
+      "text": "Северный",
+      "href": "#region-1"
+    },
+    {
+      "text": "Северо-Западный",
+      "href": "#region-2"
+    },
+    {
+      "text": "Центральный",
+      "href": "#region-3"
+    },
+    {
+      "text": "Волго-Вятский",
+      "href": "#region-4"
+    },
+    {
+      "text": "Центрально-Чернозёмный",
+      "href": "#region-5"
+    },
+    {
+      "text": "Северо-Кавказский",
+      "href": "#region-6"
+    },
+    {
+      "text": "Средневолжский",
+      "href": "#region-7"
+    },
+    {
+      "text": "Нижневолжский",
+      "href": "#region-8"
+    },
+    {
+      "text": "Уральский",
+      "href": "#region-9"
+    },
+    {
+      "text": "Западно-Сибирский",
+      "href": "#region-10"
+    },
+    {
+      "text": "Восточно-Сибирский",
+      "href": "#region-11"
+    },
+    {
+      "text": "Дальневосточный",
+      "href": "#region-12"
+    },
+    {
+      "text": "Атлант",
+      "href": "/sorta/atlant/"
+    },
+    {
+      "text": "Брянское диво",
+      "href": "/sorta/bryanskoe-divo/"
+    },
+    {
+      "text": "Евразия",
+      "href": "/sorta/evraziya/"
+    },
+    {
+      "text": "Жар-птица",
+      "href": "/sorta/zhar-ptitsa/"
+    },
+    {
+      "text": "Золотая осень",
+      "href": "/sorta/zolotaya-osen/"
+    },
+    {
+      "text": "Карамелька",
+      "href": "/sorta/karamelka/"
+    },
+    {
+      "text": "Метеор",
+      "href": "/sorta/meteor/"
+    },
+    {
+      "text": "Оранжевое чудо",
+      "href": "/sorta/oranzhevoe-chudo/"
+    },
+    {
+      "text": "Пингвин",
+      "href": "/sorta/pingvin/"
+    },
+    {
+      "text": "Подарок Кашину",
+      "href": "/sorta/podarok-kashinu/"
+    },
+    {
+      "text": "Поклон Казакову",
+      "href": "/sorta/poklon-kazakovu/"
+    },
+    {
+      "text": "Похвалинка",
+      "href": "/sorta/pohvalinka/"
+    },
+    {
+      "text": "Рубиновое ожерелье",
+      "href": "/sorta/rubinovoe-ozherele/"
+    },
+    {
+      "text": "Самохвал",
+      "href": "/sorta/samohval/"
+    },
+    {
+      "text": "Атлант",
+      "href": "/sorta/atlant/"
+    },
+    {
+      "text": "Бальзам",
+      "href": "/sorta/balzam/"
+    },
+    {
+      "text": "Брянское диво",
+      "href": "/sorta/bryanskoe-divo/"
+    },
+    {
+      "text": "Гусар",
+      "href": "/sorta/gusar/"
+    },
+    {
+      "text": "Евразия",
+      "href": "/sorta/evraziya/"
+    },
+    {
+      "text": "Жар-птица",
+      "href": "/sorta/zhar-ptitsa/"
+    },
+    {
+      "text": "Жёлтый гигант",
+      "href": "/sorta/zheltyy-gigant/"
+    },
+    {
+      "text": "Золотая осень",
+      "href": "/sorta/zolotaya-osen/"
+    },
+    {
+      "text": "Карамелька",
+      "href": "/sorta/karamelka/"
+    },
+    {
+      "text": "Метеор",
+      "href": "/sorta/meteor/"
+    },
+    {
+      "text": "Оранжевое чудо",
+      "href": "/sorta/oranzhevoe-chudo/"
+    },
+    {
+      "text": "Пингвин",
+      "href": "/sorta/pingvin/"
+    },
+    {
+      "text": "Подарок Кашину",
+      "href": "/sorta/podarok-kashinu/"
+    },
+    {
+      "text": "Поклон Казакову",
+      "href": "/sorta/poklon-kazakovu/"
+    },
+    {
+      "text": "Похвалинка",
+      "href": "/sorta/pohvalinka/"
+    },
+    {
+      "text": "Рубиновое ожерелье",
+      "href": "/sorta/rubinovoe-ozherele/"
+    },
+    {
+      "text": "Самохвал",
+      "href": "/sorta/samohval/"
+    },
+    {
+      "text": "Скромница",
+      "href": "/sorta/skromnitsa/"
+    },
+    {
+      "text": "Абрикосовая",
+      "href": "/sorta/abrikosovaya/"
+    },
+    {
+      "text": "Атлант",
+      "href": "/sorta/atlant/"
+    },
+    {
+      "text": "Бальзам",
+      "href": "/sorta/balzam/"
+    },
+    {
+      "text": "Беглянка",
+      "href": "/sorta/beglyanka/"
+    },
+    {
+      "text": "Брянское диво",
+      "href": "/sorta/bryanskoe-divo/"
+    },
+    {
+      "text": "Геракл",
+      "href": "/sorta/gerakl/"
+    },
+    {
+      "text": "Гусар",
+      "href": "/sorta/gusar/"
+    },
+    {
+      "text": "Евразия",
+      "href": "/sorta/evraziya/"
+    },
+    {
+      "text": "Жар-птица",
+      "href": "/sorta/zhar-ptitsa/"
+    },
+    {
+      "text": "Золотая осень",
+      "href": "/sorta/zolotaya-osen/"
+    },
+    {
+      "text": "Золотые купола",
+      "href": "/sorta/zolotye-kupola/"
+    },
+    {
+      "text": "Карамелька",
+      "href": "/sorta/karamelka/"
+    },
+    {
+      "text": "Медвежонок",
+      "href": "/sorta/medvezhonok/"
+    },
+    {
+      "text": "Метеор",
+      "href": "/sorta/meteor/"
+    },
+    {
+      "text": "Оранжевое чудо",
+      "href": "/sorta/oranzhevoe-chudo/"
+    },
+    {
+      "text": "Пересвет",
+      "href": "/sorta/peresvet/"
+    },
+    {
+      "text": "Пингвин",
+      "href": "/sorta/pingvin/"
+    },
+    {
+      "text": "Подарок Кашину",
+      "href": "/sorta/podarok-kashinu/"
+    },
+    {
+      "text": "Поклон Казакову",
+      "href": "/sorta/poklon-kazakovu/"
+    },
+    {
+      "text": "Похвалинка",
+      "href": "/sorta/pohvalinka/"
+    },
+    {
+      "text": "Рубиновое ожерелье",
+      "href": "/sorta/rubinovoe-ozherele/"
+    },
+    {
+      "text": "Салют",
+      "href": "/sorta/salyut/"
+    },
+    {
+      "text": "Самохвал",
+      "href": "/sorta/samohval/"
+    },
+    {
+      "text": "Скромница",
+      "href": "/sorta/skromnitsa/"
+    },
+    {
+      "text": "Солнышко",
+      "href": "/sorta/solnyshko/"
+    },
+    {
+      "text": "Юбилейная Куликова",
+      "href": "/sorta/yubileinaya-kulikova/"
+    },
+    {
+      "text": "Золотые купола",
+      "href": "/sorta/zolotye-kupola/"
+    },
+    {
+      "text": "Сравнительная оценка сортов малины по урожайности ягод и экономической эффективности",
+      "href": "https://opusmgau.ru/index.php/see/article/download/7576/7664/"
+    },
+    {
+      "text": "Золотые купола",
+      "href": "/sorta/zolotye-kupola/"
+    },
+    {
+      "text": "Сравнительная оценка сортов малины по урожайности ягод и экономической эффективности",
+      "href": "https://opusmgau.ru/index.php/see/article/download/7576/7664/"
+    },
+    {
+      "text": "Атлант",
+      "href": "/sorta/atlant/"
+    },
+    {
+      "text": "Бальзам",
+      "href": "/sorta/balzam/"
+    },
+    {
+      "text": "Брянское диво",
+      "href": "/sorta/bryanskoe-divo/"
+    },
+    {
+      "text": "Гусар",
+      "href": "/sorta/gusar/"
+    },
+    {
+      "text": "Евразия",
+      "href": "/sorta/evraziya/"
+    },
+    {
+      "text": "Жар-птица",
+      "href": "/sorta/zhar-ptitsa/"
+    },
+    {
+      "text": "Журавлик",
+      "href": "/sorta/zhuravlik/"
+    },
+    {
+      "text": "Золотая осень",
+      "href": "/sorta/zolotaya-osen/"
+    },
+    {
+      "text": "Карамелька",
+      "href": "/sorta/karamelka/"
+    },
+    {
+      "text": "Метеор",
+      "href": "/sorta/meteor/"
+    },
+    {
+      "text": "Оранжевое чудо",
+      "href": "/sorta/oranzhevoe-chudo/"
+    },
+    {
+      "text": "Пересвет",
+      "href": "/sorta/peresvet/"
+    },
+    {
+      "text": "Пингвин",
+      "href": "/sorta/pingvin/"
+    },
+    {
+      "text": "Подарок Кашину",
+      "href": "/sorta/podarok-kashinu/"
+    },
+    {
+      "text": "Поклон Казакову",
+      "href": "/sorta/poklon-kazakovu/"
+    },
+    {
+      "text": "Похвалинка",
+      "href": "/sorta/pohvalinka/"
+    },
+    {
+      "text": "Рубиновое ожерелье",
+      "href": "/sorta/rubinovoe-ozherele/"
+    },
+    {
+      "text": "Самохвал",
+      "href": "/sorta/samohval/"
+    },
+    {
+      "text": "Скромница",
+      "href": "/sorta/skromnitsa/"
+    },
+    {
+      "text": "Солнышко",
+      "href": "/sorta/solnyshko/"
+    },
+    {
+      "text": "Атлант",
+      "href": "/sorta/atlant/"
+    },
+    {
+      "text": "Бальзам",
+      "href": "/sorta/balzam/"
+    },
+    {
+      "text": "Брянское диво",
+      "href": "/sorta/bryanskoe-divo/"
+    },
+    {
+      "text": "Евразия",
+      "href": "/sorta/evraziya/"
+    },
+    {
+      "text": "Жар-птица",
+      "href": "/sorta/zhar-ptitsa/"
+    },
+    {
+      "text": "Золотая осень",
+      "href": "/sorta/zolotaya-osen/"
+    },
+    {
+      "text": "Карамелька",
+      "href": "/sorta/karamelka/"
+    },
+    {
+      "text": "Метеор",
+      "href": "/sorta/meteor/"
+    },
+    {
+      "text": "Оранжевое чудо",
+      "href": "/sorta/oranzhevoe-chudo/"
+    },
+    {
+      "text": "Пингвин",
+      "href": "/sorta/pingvin/"
+    },
+    {
+      "text": "Подарок Кашину",
+      "href": "/sorta/podarok-kashinu/"
+    },
+    {
+      "text": "Поклон Казакову",
+      "href": "/sorta/poklon-kazakovu/"
+    },
+    {
+      "text": "Похвалинка",
+      "href": "/sorta/pohvalinka/"
+    },
+    {
+      "text": "Рубиновое ожерелье",
+      "href": "/sorta/rubinovoe-ozherele/"
+    },
+    {
+      "text": "Самохвал",
+      "href": "/sorta/samohval/"
+    },
+    {
+      "text": "Скромница",
+      "href": "/sorta/skromnitsa/"
+    },
+    {
+      "text": "Атлант",
+      "href": "/sorta/atlant/"
+    },
+    {
+      "text": "Бальзам",
+      "href": "/sorta/balzam/"
+    },
+    {
+      "text": "Брянское диво",
+      "href": "/sorta/bryanskoe-divo/"
+    },
+    {
+      "text": "Гусар",
+      "href": "/sorta/gusar/"
+    },
+    {
+      "text": "Евразия",
+      "href": "/sorta/evraziya/"
+    },
+    {
+      "text": "Жар-птица",
+      "href": "/sorta/zhar-ptitsa/"
+    },
+    {
+      "text": "Журавлик",
+      "href": "/sorta/zhuravlik/"
+    },
+    {
+      "text": "Золотая осень",
+      "href": "/sorta/zolotaya-osen/"
+    },
+    {
+      "text": "Карамелька",
+      "href": "/sorta/karamelka/"
+    },
+    {
+      "text": "Оранжевое чудо",
+      "href": "/sorta/oranzhevoe-chudo/"
+    },
+    {
+      "text": "Пингвин",
+      "href": "/sorta/pingvin/"
+    },
+    {
+      "text": "Подарок Кашину",
+      "href": "/sorta/podarok-kashinu/"
+    },
+    {
+      "text": "Поклон Казакову",
+      "href": "/sorta/poklon-kazakovu/"
+    },
+    {
+      "text": "Похвалинка",
+      "href": "/sorta/pohvalinka/"
+    },
+    {
+      "text": "Рубиновое ожерелье",
+      "href": "/sorta/rubinovoe-ozherele/"
+    },
+    {
+      "text": "Самохвал",
+      "href": "/sorta/samohval/"
+    },
+    {
+      "text": "Скромница",
+      "href": "/sorta/skromnitsa/"
+    },
+    {
+      "text": "Солнышко",
+      "href": "/sorta/solnyshko/"
+    },
+    {
+      "text": "Атлант",
+      "href": "/sorta/atlant/"
+    },
+    {
+      "text": "Бальзам",
+      "href": "/sorta/balzam/"
+    },
+    {
+      "text": "Брянское диво",
+      "href": "/sorta/bryanskoe-divo/"
+    },
+    {
+      "text": "Гусар",
+      "href": "/sorta/gusar/"
+    },
+    {
+      "text": "Евразия",
+      "href": "/sorta/evraziya/"
+    },
+    {
+      "text": "Жар-птица",
+      "href": "/sorta/zhar-ptitsa/"
+    },
+    {
+      "text": "Журавлик",
+      "href": "/sorta/zhuravlik/"
+    },
+    {
+      "text": "Золотая осень",
+      "href": "/sorta/zolotaya-osen/"
+    },
+    {
+      "text": "Карамелька",
+      "href": "/sorta/karamelka/"
+    },
+    {
+      "text": "Метеор",
+      "href": "/sorta/meteor/"
+    },
+    {
+      "text": "Оранжевое чудо",
+      "href": "/sorta/oranzhevoe-chudo/"
+    },
+    {
+      "text": "Пингвин",
+      "href": "/sorta/pingvin/"
+    },
+    {
+      "text": "Подарок Кашину",
+      "href": "/sorta/podarok-kashinu/"
+    },
+    {
+      "text": "Поклон Казакову",
+      "href": "/sorta/poklon-kazakovu/"
+    },
+    {
+      "text": "Похвалинка",
+      "href": "/sorta/pohvalinka/"
+    },
+    {
+      "text": "Рубиновое ожерелье",
+      "href": "/sorta/rubinovoe-ozherele/"
+    },
+    {
+      "text": "Самохвал",
+      "href": "/sorta/samohval/"
+    },
+    {
+      "text": "Скромница",
+      "href": "/sorta/skromnitsa/"
+    },
+    {
+      "text": "Атлант",
+      "href": "/sorta/atlant/"
+    },
+    {
+      "text": "Брянское диво",
+      "href": "/sorta/bryanskoe-divo/"
+    },
+    {
+      "text": "Евразия",
+      "href": "/sorta/evraziya/"
+    },
+    {
+      "text": "Жар-птица",
+      "href": "/sorta/zhar-ptitsa/"
+    },
+    {
+      "text": "Золотая осень",
+      "href": "/sorta/zolotaya-osen/"
+    },
+    {
+      "text": "Карамелька",
+      "href": "/sorta/karamelka/"
+    },
+    {
+      "text": "Оранжевое чудо",
+      "href": "/sorta/oranzhevoe-chudo/"
+    },
+    {
+      "text": "Пингвин",
+      "href": "/sorta/pingvin/"
+    },
+    {
+      "text": "Подарок Кашину",
+      "href": "/sorta/podarok-kashinu/"
+    },
+    {
+      "text": "Поклон Казакову",
+      "href": "/sorta/poklon-kazakovu/"
+    },
+    {
+      "text": "Похвалинка",
+      "href": "/sorta/pohvalinka/"
+    },
+    {
+      "text": "Рубиновое ожерелье",
+      "href": "/sorta/rubinovoe-ozherele/"
+    },
+    {
+      "text": "Самохвал",
+      "href": "/sorta/samohval/"
+    },
+    {
+      "text": "Ариша",
+      "href": "/sorta/arisha/"
+    },
+    {
+      "text": "Атлант",
+      "href": "/sorta/atlant/"
+    },
+    {
+      "text": "Брянское диво",
+      "href": "/sorta/bryanskoe-divo/"
+    },
+    {
+      "text": "Евразия",
+      "href": "/sorta/evraziya/"
+    },
+    {
+      "text": "Жар-птица",
+      "href": "/sorta/zhar-ptitsa/"
+    },
+    {
+      "text": "Золотая осень",
+      "href": "/sorta/zolotaya-osen/"
+    },
+    {
+      "text": "Карамелька",
+      "href": "/sorta/karamelka/"
+    },
+    {
+      "text": "Оранжевое чудо",
+      "href": "/sorta/oranzhevoe-chudo/"
+    },
+    {
+      "text": "Пингвин",
+      "href": "/sorta/pingvin/"
+    },
+    {
+      "text": "Подарок Кашину",
+      "href": "/sorta/podarok-kashinu/"
+    },
+    {
+      "text": "Поклон Казакову",
+      "href": "/sorta/poklon-kazakovu/"
+    },
+    {
+      "text": "Похвалинка",
+      "href": "/sorta/pohvalinka/"
+    },
+    {
+      "text": "Рубиновое ожерелье",
+      "href": "/sorta/rubinovoe-ozherele/"
+    },
+    {
+      "text": "Самохвал",
+      "href": "/sorta/samohval/"
+    },
+    {
+      "text": "Атлант",
+      "href": "/sorta/atlant/"
+    },
+    {
+      "text": "Бальзам",
+      "href": "/sorta/balzam/"
+    },
+    {
+      "text": "Брянское диво",
+      "href": "/sorta/bryanskoe-divo/"
+    },
+    {
+      "text": "Евразия",
+      "href": "/sorta/evraziya/"
+    },
+    {
+      "text": "Жар-птица",
+      "href": "/sorta/zhar-ptitsa/"
+    },
+    {
+      "text": "Золотая осень",
+      "href": "/sorta/zolotaya-osen/"
+    },
+    {
+      "text": "Карамелька",
+      "href": "/sorta/karamelka/"
+    },
+    {
+      "text": "Оранжевое чудо",
+      "href": "/sorta/oranzhevoe-chudo/"
+    },
+    {
+      "text": "Пингвин",
+      "href": "/sorta/pingvin/"
+    },
+    {
+      "text": "Подарок Кашину",
+      "href": "/sorta/podarok-kashinu/"
+    },
+    {
+      "text": "Поклон Казакову",
+      "href": "/sorta/poklon-kazakovu/"
+    },
+    {
+      "text": "Похвалинка",
+      "href": "/sorta/pohvalinka/"
+    },
+    {
+      "text": "Рубиновое ожерелье",
+      "href": "/sorta/rubinovoe-ozherele/"
+    },
+    {
+      "text": "Самохвал",
+      "href": "/sorta/samohval/"
+    },
+    {
+      "text": "Скромница",
+      "href": "/sorta/skromnitsa/"
+    },
+    {
+      "text": "Атлант",
+      "href": "/sorta/atlant/"
+    },
+    {
+      "text": "Бальзам",
+      "href": "/sorta/balzam/"
+    },
+    {
+      "text": "Брянское диво",
+      "href": "/sorta/bryanskoe-divo/"
+    },
+    {
+      "text": "Евразия",
+      "href": "/sorta/evraziya/"
+    },
+    {
+      "text": "Жар-птица",
+      "href": "/sorta/zhar-ptitsa/"
+    },
+    {
+      "text": "Золотая осень",
+      "href": "/sorta/zolotaya-osen/"
+    },
+    {
+      "text": "Карамелька",
+      "href": "/sorta/karamelka/"
+    },
+    {
+      "text": "Оранжевое чудо",
+      "href": "/sorta/oranzhevoe-chudo/"
+    },
+    {
+      "text": "Пингвин",
+      "href": "/sorta/pingvin/"
+    },
+    {
+      "text": "Подарок Кашину",
+      "href": "/sorta/podarok-kashinu/"
+    },
+    {
+      "text": "Поклон Казакову",
+      "href": "/sorta/poklon-kazakovu/"
+    },
+    {
+      "text": "Похвалинка",
+      "href": "/sorta/pohvalinka/"
+    },
+    {
+      "text": "Рубиновое ожерелье",
+      "href": "/sorta/rubinovoe-ozherele/"
+    },
+    {
+      "text": "Самохвал",
+      "href": "/sorta/samohval/"
+    },
+    {
+      "text": "Атлант",
+      "href": "/sorta/atlant/"
+    },
+    {
+      "text": "Брянское диво",
+      "href": "/sorta/bryanskoe-divo/"
+    },
+    {
+      "text": "Евразия",
+      "href": "/sorta/evraziya/"
+    },
+    {
+      "text": "Жар-птица",
+      "href": "/sorta/zhar-ptitsa/"
+    },
+    {
+      "text": "Золотая осень",
+      "href": "/sorta/zolotaya-osen/"
+    },
+    {
+      "text": "Карамелька",
+      "href": "/sorta/karamelka/"
+    },
+    {
+      "text": "Оранжевое чудо",
+      "href": "/sorta/oranzhevoe-chudo/"
+    },
+    {
+      "text": "Пингвин",
+      "href": "/sorta/pingvin/"
+    },
+    {
+      "text": "Подарок Кашину",
+      "href": "/sorta/podarok-kashinu/"
+    },
+    {
+      "text": "Поклон Казакову",
+      "href": "/sorta/poklon-kazakovu/"
+    },
+    {
+      "text": "Похвалинка",
+      "href": "/sorta/pohvalinka/"
+    },
+    {
+      "text": "Рубиновое ожерелье",
+      "href": "/sorta/rubinovoe-ozherele/"
+    },
+    {
+      "text": "Самохвал",
+      "href": "/sorta/samohval/"
+    },
+    {
+      "text": "Государственный реестр селекционных достижений, допущенных к использованию, 2024",
+      "href": "https://gossortrf.ru/upload/iblock/00a/clri6obhudueqx6t1f6awcrsp6vm6psk.pdf"
+    }
+  ]
+}

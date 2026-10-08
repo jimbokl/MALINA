@@ -1,0 +1,70 @@
+{
+  "url": "http://127.0.0.1:5181/sorta/strawberry-chamora-turusi/",
+  "title": "Клубника Чамора Туруси: описание сорта · МАЛИНА — КЛУБНИКА",
+  "h1": "Клубника Чамора Туруси: описание сорта",
+  "canonical": "https://malinaklubnika.ru/sorta/strawberry-chamora-turusi/",
+  "viewport": {
+    "width": 530,
+    "height": 736
+  },
+  "documentWidth": 530,
+  "horizontalOverflow": false,
+  "sections": [
+    {
+      "id": "seo-opisanie",
+      "heading": "Характеристики Чамора Туруси"
+    },
+    {
+      "id": "seo-photo",
+      "heading": "Фото Чамора Туруси"
+    },
+    {
+      "id": "seo-reviews",
+      "heading": "Отзывы о сорте Чамора Туруси"
+    },
+    {
+      "id": "seo-care",
+      "heading": "Посадка и уход"
+    },
+    {
+      "id": "seo-sources",
+      "heading": "Источники"
+    }
+  ],
+  "brokenVisibleImages": [],
+  "duplicateIds": [],
+  "links": [
+    {
+      "text": "Главная",
+      "href": "/"
+    },
+    {
+      "text": "Сорта клубники",
+      "href": "/sorta/klubnika/"
+    },
+    {
+      "text": "Фото Чамора Туруси: ДачаОтзыв",
+      "href": "https://dachaotzyv.ru/klubnika-chamora-turusi/"
+    },
+    {
+      "text": "Отзывы о Чамора Туруси на «ДачаОтзыв»",
+      "href": "https://dachaotzyv.ru/klubnika-chamora-turusi/"
+    },
+    {
+      "text": "Как устроены отзывы садоводов",
+      "href": "/otzyvy/"
+    },
+    {
+      "text": "Посадка клубники",
+      "href": "/zhurnal/posadka-klubniki/"
+    },
+    {
+      "text": "Тип плодоношения",
+      "href": "/zhurnal/remontantnaya-klubnika/"
+    },
+    {
+      "text": "Растисад · справочная карточка садовой земляники Чамора Туруси",
+      "href": "https://rastisad.ru/strawberry/3916"
+    }
+  ]
+}

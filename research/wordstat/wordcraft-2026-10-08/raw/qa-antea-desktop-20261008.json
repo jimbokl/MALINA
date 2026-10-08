@@ -1,0 +1,62 @@
+{
+  "url": "http://127.0.0.1:5181/sorta/strawberry-antea/",
+  "title": "Клубника Antea: описание сорта · МАЛИНА — КЛУБНИКА",
+  "h1": "Клубника Antea: описание сорта",
+  "canonical": "https://malinaklubnika.ru/sorta/strawberry-antea/",
+  "viewport": {
+    "width": 1440,
+    "height": 773
+  },
+  "documentWidth": 1440,
+  "horizontalOverflow": false,
+  "sections": [
+    {
+      "id": "seo-opisanie",
+      "heading": "Характеристики Antea"
+    },
+    {
+      "id": "seo-photo",
+      "heading": "Фото Antea"
+    },
+    {
+      "id": "seo-reviews",
+      "heading": "Отзывы о сорте Antea"
+    },
+    {
+      "id": "seo-care",
+      "heading": "Посадка и уход"
+    },
+    {
+      "id": "seo-sources",
+      "heading": "Источники"
+    }
+  ],
+  "brokenVisibleImages": [],
+  "duplicateIds": [],
+  "links": [
+    {
+      "text": "Главная",
+      "href": "/"
+    },
+    {
+      "text": "Сорта клубники",
+      "href": "/sorta/klubnika/"
+    },
+    {
+      "text": "Как устроены отзывы садоводов",
+      "href": "/otzyvy/"
+    },
+    {
+      "text": "Посадка клубники",
+      "href": "/zhurnal/posadka-klubniki/"
+    },
+    {
+      "text": "Тип плодоношения",
+      "href": "/zhurnal/remontantnaya-klubnika/"
+    },
+    {
+      "text": "Consorzio Italiano Vivaisti (CIV) · официальный каталог селекционера",
+      "href": "https://civ.it/en/strawberries/"
+    }
+  ]
+}

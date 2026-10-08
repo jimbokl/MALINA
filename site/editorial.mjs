@@ -1,5 +1,11 @@
+import { newDiagnosticArticles } from './editorial-diagnostics-2026-10-08.mjs';
+import { newNameCheckArticles } from './editorial-name-check-2026-10-08.mjs';
 // Each section names the source used for its practical advice.
 import { newArticles20260926 } from './editorial-2026-09-26.mjs';
+import { newCareArticles } from './editorial-care-2026-10-08.mjs';
+import { newHealthArticles } from './editorial-health-2026-10-08.mjs';
+import { newBotanicalArticles } from './editorial-botanical-2026-10-08.mjs';
+import { newPestArticles } from './editorial-pests-2026-10-08.mjs';
 export const editorialReviewedAt = '25.09.2026';
 export const editorialReviewedIso = '2026-09-25';
 export const editorialAuthor = 'Редакция МАЛИНА — КЛУБНИКА';
@@ -291,4 +297,4 @@ const existingArticles = [
     relatedArticles: ['remontantnaya-klubnika', 'kak-vybrat-sazhentsy-klubniki', 'posadka-klubniki']
   }
 ];
-export const articles = [...newArticles20260926, ...existingArticles];
+export const articles = [...newNameCheckArticles, ...newDiagnosticArticles, ...newPestArticles, ...newBotanicalArticles, ...newCareArticles, ...newHealthArticles, ...newArticles20260926, ...existingArticles];

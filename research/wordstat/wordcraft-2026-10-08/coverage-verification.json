@@ -1,0 +1,12 @@
+{
+  "completionScope": "canonical_routes_and_answer_anchors",
+  "resourceComplete": false,
+  "queriesWithMissingResources": 340,
+  "checkedAt": "2026-10-08T14:33:39.915Z",
+  "queries": 5013,
+  "mappedPages": 431,
+  "gaps": 0,
+  "assertionsPassed": true,
+  "complete": true,
+  "failures": []
+}

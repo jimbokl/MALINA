@@ -1,0 +1,451 @@
+{
+  "checkedAt": "2026-10-08",
+  "articles": [
+    {
+      "slug": "tripsy-na-klubnike-priznaki",
+      "title": "Трипсы на клубнике: признаки, фото и выбор действий",
+      "reviewedIso": "2026-10-08",
+      "sources": [
+        {
+          "label": "UC IPM · Western Flower Thrips: признаки и повреждения земляники",
+          "url": "https://ipm.ucanr.edu/agriculture/strawberry/western-flower-thrips/"
+        }
+      ],
+      "claims": [
+        {
+          "anchor": "section-1",
+          "section": "Как выглядят трипсы и где посмотреть фото",
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "anchor": "section-2",
+          "section": "Бронзовая ягода: какие признаки сравнить",
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "anchor": "section-3",
+          "section": "Борьба: сначала подтвердить вредителя",
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "vrediteli-klubniki-kak-razlichit",
+      "title": "Вредители клубники: как различить клеща, долгоносика и трипсов",
+      "reviewedIso": "2026-10-08",
+      "sources": [
+        {
+          "label": "Россельхозцентр · вредители и болезни земляники, Томская область, 07.12.2022",
+          "url": "https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/sibirskiy/tomskaya-oblast/o-vreditelyakh-i-zabolevaniyakh-zemlyaniki-rasskazala-yagodovodam-spetsialist-tomskogo-filiala/"
+        },
+        {
+          "label": "UC IPM · Western Flower Thrips: признаки и повреждения земляники",
+          "url": "https://ipm.ucanr.edu/agriculture/strawberry/western-flower-thrips/"
+        }
+      ],
+      "claims": [
+        {
+          "anchor": "section-1",
+          "section": "Бутоны надломлены или висят на цветоножке",
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "anchor": "section-2",
+          "section": "Лист в светлых точках, снизу тонкая паутина",
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "anchor": "section-3",
+          "section": "Мелкие насекомые в цветках и бронзовость ягод",
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "anchor": "section-4",
+          "section": "Как выбрать способ борьбы",
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "mozaika-i-kurchavost-maliny",
+      "title": "Мозаика и курчавость малины: что проверять на листьях",
+      "reviewedIso": "2026-10-08",
+      "sources": [
+        {
+          "label": "Россельхозцентр · защита малины в ЛПХ, Кабардино-Балкария, 09.08.2023",
+          "url": "https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/severo-kavkazskiy/kabardino-balkarskaya-respublika/rekomendatsii-po-zashchite-maliny-v-lpkh/"
+        },
+        {
+          "label": "Университет Миннесоты · признаки болезней малины, диагностические фотографии",
+          "url": "https://smfarm.cfans.umn.edu/pests-and-diseases/pests-crop-specific-information/raspberries"
+        }
+      ],
+      "claims": [
+        {
+          "anchor": "section-1",
+          "section": "Мозаичность, курчавость и похожие симптомы",
+          "sourceIndexes": [
+            0,
+            1
+          ]
+        },
+        {
+          "anchor": "section-2",
+          "section": "Что делать при подозрении и подтверждении",
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "anchor": "section-3",
+          "section": "«Парша» и «махровость»: уточните, что изменилось",
+          "sourceIndexes": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "vidy-maliny-nazvaniya-i-fotografii",
+      "title": "Виды малины: названия и где посмотреть фотографии",
+      "reviewedIso": "2026-10-08",
+      "sources": [
+        {
+          "label": "NC State Extension · Rubus idaeus: описание и фотогалерея",
+          "url": "https://plants.ces.ncsu.edu/plants/rubus-idaeus/"
+        },
+        {
+          "label": "NC State Extension · Rubus occidentalis: фотографии плодов и побегов",
+          "url": "https://plants.ces.ncsu.edu/plants/rubus-occidentalis/common-name/blackberry/"
+        },
+        {
+          "label": "Burke Herbarium · Rubus leucodermis: подписанные фотографии",
+          "url": "https://burkeherbarium.org/imagecollection/taxon.php?Taxon=Rubus+leucodermis"
+        },
+        {
+          "label": "Royal Botanic Gardens, Kew · Rubus phoenicolasius",
+          "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:895791-1"
+        },
+        {
+          "label": "ПетрГУ · Т. И. Кирилкина, «Круглый сад», 2015, рисунок 6",
+          "url": "https://hb.karelia.ru/journal/article.php?id=2784"
+        },
+        {
+          "label": "Flora of North America · Rubus illecebrosus",
+          "url": "https://efloras.org/florataxon.aspx?flora_id=1&taxon_id=250100435"
+        }
+      ],
+      "claims": [
+        {
+          "anchor": "section-1",
+          "section": "Обычная и чёрная малина",
+          "sourceIndexes": [
+            0,
+            1
+          ]
+        },
+        {
+          "anchor": "section-2",
+          "section": "Голубая, японская и тибетская малина",
+          "sourceIndexes": [
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "anchor": "section-3",
+          "section": "Как сравнить фотографии и выбрать садовый сорт",
+          "sourceIndexes": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "vidy-klubniki-nazvaniya-i-fotografii",
+      "title": "Виды клубники: названия, фотографии и садовые сорта",
+      "reviewedIso": "2026-10-08",
+      "sources": [
+        {
+          "label": "NC State Extension · Fragaria × ananassa: описание и фотогалерея",
+          "url": "https://plants.ces.ncsu.edu/plants/fragaria-x-ananassa/"
+        },
+        {
+          "label": "Burke Herbarium · Fragaria vesca: описание и подписанные фотографии",
+          "url": "https://burkeherbarium.org/imagecollection/taxon.php?Taxon=Fragaria+vesca"
+        },
+        {
+          "label": "Royal Botanic Gardens, Kew · Fragaria moschata, принятое название и гербарные материалы",
+          "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:60441586-2/general-information"
+        },
+        {
+          "label": "Oregon State University Extension · определения сезонного и нейтральнодневного плодоношения",
+          "url": "https://extension.oregonstate.edu/catalog/pub/em-9375-day-neutral-strawberry-production-central-oregon"
+        }
+      ],
+      "claims": [
+        {
+          "anchor": "section-1",
+          "section": "Садовая клубника: Fragaria × ananassa",
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "anchor": "section-2",
+          "section": "Лесная земляника и Fragaria moschata",
+          "sourceIndexes": [
+            1,
+            2
+          ]
+        },
+        {
+          "anchor": "section-3",
+          "section": "Сорт, ремонтантность и длина дня",
+          "sourceIndexes": [
+            0,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "listya-maliny-kak-vyglyadyat",
+      "title": "Листья малины: описание, фотографии и признаки повреждения",
+      "reviewedIso": "2026-10-08",
+      "sources": [
+        {
+          "label": "NC State Extension · Rubus idaeus: ботаническое описание и подписанные фотографии",
+          "url": "https://plants.ces.ncsu.edu/plants/rubus-idaeus/"
+        },
+        {
+          "label": "University of Minnesota · Raspberry: Discolored leaves",
+          "url": "https://apps.extension.umn.edu/garden/diagnose/plant/fruit/raspberry/leavesdiscolored.html"
+        },
+        {
+          "label": "University of Maryland Extension · Nutrient Deficiency of Trees and Shrubs",
+          "url": "https://www.extension.umd.edu/resource/nutrient-deficiency-trees-and-shrubs"
+        }
+      ],
+      "claims": [
+        {
+          "anchor": "section-1",
+          "section": "Как выглядит здоровый лист малины",
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "anchor": "section-2",
+          "section": "Листья как обожжённые: что проверить",
+          "sourceIndexes": [
+            1
+          ]
+        },
+        {
+          "anchor": "section-3",
+          "section": "Если желтеет лист или остаются зелёные жилки",
+          "sourceIndexes": [
+            1,
+            2
+          ]
+        },
+        {
+          "anchor": "section-4",
+          "section": "Ягода похожа на малину: каких признаков не хватает",
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "anchor": "section-5",
+          "section": "Таёжная малина: с чем сравнить фотографию",
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "tibetskaya-malina-kakoe-rastenie",
+      "title": "Тибетская малина: описание, настоящие фото и уход",
+      "reviewedIso": "2026-10-08",
+      "sources": [
+        {
+          "label": "ПетрГУ · Т. И. Кирилкина, «Круглый сад», 2015; описание и рисунок 6",
+          "url": "https://hb.karelia.ru/journal/article.php?id=2784"
+        },
+        {
+          "label": "Flora of North America · Rubus illecebrosus",
+          "url": "https://efloras.org/florataxon.aspx?flora_id=1&taxon_id=250100435"
+        },
+        {
+          "label": "NC State Extension · Rubus illecebrosus: место посадки и размножение",
+          "url": "https://plants.ces.ncsu.edu/plants/rubus-illecebrosus/common-name/blackberry/"
+        },
+        {
+          "label": "Plantarium · Rubus illecebrosus: фотографии авторов с датами и местом",
+          "url": "https://www.plantarium.ru/page/view/item/51270.html"
+        },
+        {
+          "label": "Элитный Сад · торговая карточка «Норвежская малина»",
+          "url": "https://xn--80aikl5af8e.xn--p1ai/malina-norvezhskaya"
+        },
+        {
+          "label": "Високий Замок · рассказ Степана Вивирки о купленном растении, 28.07.2023",
+          "url": "https://wz.lviv.ua/life/494477-tybetska-malyna-miau-miau"
+        },
+        {
+          "label": "India Flora Online · Rubus nepalensis: Himalayan Creeping Bramble",
+          "url": "https://indiaflora-ces.iisc.ac.in/herbsheet.php?cat=13&id=10230"
+        },
+        {
+          "label": "Kew · Rubus nepalensis: принятое имя и ареал",
+          "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:60459029-2/general-information"
+        }
+      ],
+      "claims": [
+        {
+          "anchor": "section-1",
+          "section": "Что именно называют тибетской малиной",
+          "sourceIndexes": [
+            0,
+            1
+          ]
+        },
+        {
+          "anchor": "section-2",
+          "section": "Описание и настоящие фотографии",
+          "sourceIndexes": [
+            0,
+            1,
+            3
+          ]
+        },
+        {
+          "anchor": "section-3",
+          "section": "Посадка и уход: место, разрастание и зимовка",
+          "sourceIndexes": [
+            0,
+            2
+          ]
+        },
+        {
+          "anchor": "section-4",
+          "section": "Как читать отзывы перед покупкой",
+          "sourceIndexes": [
+            0,
+            1,
+            5
+          ]
+        },
+        {
+          "anchor": "section-5",
+          "section": "Китайская, тайская и земляничная малина: проверка этикетки",
+          "sourceIndexes": [
+            0,
+            1
+          ]
+        },
+        {
+          "anchor": "section-6",
+          "section": "Норвежская, скандинавская, Розалина и Мяу-мяу",
+          "sourceIndexes": [
+            0,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "anchor": "section-7",
+          "section": "Гималайская, азиатская и ползучая малина",
+          "sourceIndexes": [
+            6,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "sinyaya-golubaya-i-chernaya-malina",
+      "title": "Синяя и голубая малина: как проверить растение по описанию",
+      "reviewedIso": "2026-10-08",
+      "sources": [
+        {
+          "label": "Burke Museum, University of Washington · Rubus leucodermis: описание и подписанные фотографии",
+          "url": "https://burkeherbarium.org/imagecollection/taxon.php?Taxon=Rubus+leucodermis"
+        }
+      ],
+      "claims": [
+        {
+          "anchor": "section-1",
+          "section": "Как выглядит Rubus leucodermis",
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "anchor": "section-2",
+          "section": "Что проверить в предложении семян или саженца",
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "anchor": "section-3",
+          "section": "Если нужна тёмная малина для участка",
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "yaponskaya-malina-rubus-phoenicolasius",
+      "title": "Японская малина: проверяем название Rubus phoenicolasius",
+      "reviewedIso": "2026-10-08",
+      "sources": [
+        {
+          "label": "Royal Botanic Gardens, Kew · Rubus phoenicolasius",
+          "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:895791-1"
+        }
+      ],
+      "claims": [
+        {
+          "anchor": "section-1",
+          "section": "Какое имя искать на этикетке",
+          "sourceIndexes": [
+            0
+          ]
+        },
+        {
+          "anchor": "section-2",
+          "section": "Что выяснить перед посадкой",
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

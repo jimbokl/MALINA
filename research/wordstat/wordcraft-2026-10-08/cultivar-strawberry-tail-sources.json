@@ -1,0 +1,3997 @@
+{
+  "createdAt": "2026-10-08",
+  "scope": "All strawberry entries in /tmp/malina-cultivar-clusters-unmatched.json (LOW/AVERAGE); every cluster retained for explicit disposition.",
+  "counts": {
+    "totalClusters": 129,
+    "alreadyCovered": 21,
+    "verifiedNew": 51,
+    "nonCultivarOrGeneric": 13,
+    "sourceCheckPending": 38,
+    "tradeDescriptionNew": 9,
+    "supplementalProfiles": 74
+  },
+  "sources": [
+    {
+      "id": "civ-sibilla",
+      "label": "CIV — SIBILLApbr",
+      "url": "https://civ.it/en/strawberries/sibillapbr/",
+      "claims": [
+        "период созревания",
+        "1250 г/растение",
+        "30 г ягода",
+        "90% первый класс",
+        "Brix 10",
+        "форма и характеристики растения"
+      ]
+    },
+    {
+      "id": "civ-giusy",
+      "label": "CIV — GIUSY CIVH413",
+      "url": "https://civ.it/en/strawberries/giusy-civh413/",
+      "claims": [
+        "1350 г/растение",
+        "31 г ягода",
+        "95% первый класс",
+        "Brix 9",
+        "ранний срок на уровне Clery",
+        "форма и цвет ягоды"
+      ]
+    },
+    {
+      "id": "coviro-sandra",
+      "label": "Coviro — BL34 Sandra",
+      "url": "https://www.coviro.it/en/bl34-sandra/",
+      "claims": [
+        "короткий день",
+        "примерно на два дня раньше Alba",
+        "континентальный климат",
+        "форма и свойства плода",
+        "заявка на патент 2019/0619"
+      ]
+    },
+    {
+      "id": "cfia-faith",
+      "label": "Canadian Food Inspection Agency — Faith PBR description",
+      "url": "https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/str/app00012524e.shtml",
+      "claims": [
+        "заявитель и селекционер",
+        "сертификат 7719",
+        "неремонтантность",
+        "срок цветения и созревания",
+        "признаки плодов"
+      ]
+    },
+    {
+      "id": "cfia-allegro",
+      "label": "Canadian Food Inspection Agency — Allegro PBR description",
+      "url": "https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/str/app00011723e.shtml?wbdisable=true",
+      "claims": [
+        "заявитель Fresh Forward",
+        "сертификат 6458",
+        "родительская комбинация и отбор",
+        "признаки растения",
+        "место и период технического испытания"
+      ]
+    },
+    {
+      "id": "flevo-falco",
+      "label": "Flevo Berry — Falco",
+      "url": "https://flevoberry.nl/varieties/falco/",
+      "claims": [
+        "код селекции и заявка CPVO",
+        "короткий день и средний срок",
+        "пригодность к открытому грунту и тоннелям",
+        "признаки сбора и ягод"
+      ]
+    },
+    {
+      "id": "freshforward-jenkka",
+      "label": "Fresh Forward — Jenkka",
+      "url": "https://www.fresh-forward.nl/en/breed/jenkka",
+      "claims": [
+        "высокая доля первого класса",
+        "форма и вкус ягод",
+        "компактный тип растения",
+        "защита цветков от ночного заморозка"
+      ]
+    },
+    {
+      "id": "freshforward-cadenza",
+      "label": "Fresh Forward — Cadenza",
+      "url": "https://www.fresh-forward.nl/en/breed/cadenza",
+      "claims": [
+        "очень поздний июньский сорт",
+        "крупные ягоды",
+        "устойчивость к дождю",
+        "однородная коническая форма",
+        "срок относительно Malwina"
+      ]
+    },
+    {
+      "id": "freshforward-lambada",
+      "label": "Fresh Forward — Lambada",
+      "url": "https://www.fresh-forward.nl/en/breed/lambada",
+      "claims": [
+        "раннее созревание относительно Elsanta",
+        "ягоды и вкусовые признаки",
+        "мягкость и лежкость",
+        "чувствительность к отдельным болезням"
+      ]
+    },
+    {
+      "id": "freshforward-salsa",
+      "label": "Fresh Forward — Salsa",
+      "url": "https://www.fresh-forward.nl/en/breed/salsa",
+      "claims": [
+        "поздний срок сбора относительно Sonata",
+        "типичная масса 25–30 г",
+        "форма, цвет и ребристость ягод",
+        "продуктивность и чувствительность к Botrytis"
+      ]
+    },
+    {
+      "id": "vissers-zanta-xima",
+      "label": "Vissers Aardbeiplanten — short-day strawberry catalog",
+      "url": "https://v3.netetrade.com/media/vissers-aardbeiplanten/files/V65V03_GB.pdf",
+      "claims": [
+        "Vima Zanta: происхождение Elsanta × Korona, вкус, лежкость и форма плода",
+        "Vima Xima: созревание примерно на 14 дней позже Elsanta, признаки ягоды и характеристики сорта"
+      ]
+    },
+    {
+      "id": "uf-ifas-florida-beauty",
+      "label": "UF/IFAS — Florida Beauty Strawberry (HS1307)",
+      "url": "https://ask.ifas.ufl.edu/publication/HS1307",
+      "claims": [
+        "нейтральнодневный сорт, коммерциализирован в 2017 году",
+        "селекционный номер FL 12.121-5; родители Queensland Australia 2010-119 × Florida Radiance",
+        "компактный габитус и низкая потребность в охлаждении",
+        "равномерный средне-красный цвет и хорошая переносимость дождя",
+        "результаты урожайности и восприимчивости к болезням в испытаниях UF/IFAS"
+      ]
+    },
+    {
+      "id": "marionnet-mara-des-bois",
+      "label": "Marionnet Label / CRIV — Mara des Bois",
+      "url": "https://www.marionnet-label.com/nos-varietes-les-fraises/",
+      "claims": [
+        "ремонтантный сорт",
+        "интенсивный вкус и аромат, напоминающие лесную землянику",
+        "сорт выведен CRIV/Marionnet и коммерчески запущен в начале 1990-х"
+      ]
+    },
+    {
+      "id": "vissers-fenella",
+      "label": "Vissers — Fenella catalog entry; NIAB variety listing",
+      "url": "https://v3.netetrade.com/media/vissers-aardbeiplanten/files/V65V03_GB.pdf",
+      "claims": [
+        "среднепоздний сорт",
+        "английское происхождение и хороший вкус по каталогу"
+      ]
+    },
+    {
+      "id": "vissers-vima-rina",
+      "label": "Vissers — Vima Rina catalog entry",
+      "url": "https://v3.netetrade.com/media/vissers-aardbeiplanten/files/V65V03_GB.pdf",
+      "claims": [
+        "ремонтантный сорт",
+        "сравнение вкуса, плотности плода и кривой производства с Selva"
+      ]
+    },
+    {
+      "id": "marionnet-mariguette",
+      "label": "Marionnet Label — Mariguette",
+      "url": "https://www.marionnet-label.com/nos-varietes-les-fraises/",
+      "claims": [
+        "ремонтантный сорт; COV Marionnet 99",
+        "поздний сегмент; удлинённый блестящий красно-оранжевый плод",
+        "очень сладкий вкус по описанию оригинатора"
+      ]
+    },
+    {
+      "id": "cfia-bravura",
+      "label": "CFIA — официальное описание Bravura",
+      "url": "https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/str/app00012385e.shtml",
+      "claims": [
+        "идентичность сорта и правообладатель Flevo Berry Holding B.V.",
+        "раннее начало созревания",
+        "форма, цвет и плотность плода",
+        "происхождение и отбор 2008–2009 годов"
+      ]
+    },
+    {
+      "id": "academic-tsunaki",
+      "label": "Материалы коллекции генетического и географического происхождения земляники (таблица происхождения)",
+      "url": "https://staff.tiiame.uz/storage/users/154/books/4SX1NlePWDZqN23sYgcGSr92ent2V59D3sHwTe1x.pdf",
+      "claims": [
+        "указанная в таблице родительская комбинация Сюрприз олимпийца × Фестивальная ромашка; источник не подтверждает японское происхождение"
+      ]
+    },
+    {
+      "id": "ogorodum-mashenka",
+      "label": "Огородум — историческая версия о Машеньке / Московской юбилейной",
+      "url": "https://ogorodum.ru/klubnika-mashenka-opisanie-sorta-foto-i-otzyvy.html",
+      "claims": [
+        "атрибутированная вторичному источнику связь имени Машенька с Московской юбилейной",
+        "сообщение об авторском коллективе и исходных формах"
+      ]
+    },
+    {
+      "id": "rastisad-chamora",
+      "label": "RastiSad — обзор Чамора Туруси и разночтений происхождения",
+      "url": "https://rastisad.ru/strawberry/3916",
+      "claims": [
+        "обзор отмечает неизвестность происхождения и смешение названия с Викторией; вторичный источник"
+      ]
+    },
+    {
+      "id": "sortoved-lord",
+      "label": "Сортовед — обзор сорта Лорд и разночтений его происхождения",
+      "url": "https://sortoved.ru/klubnika-zemlyanika/sort-klubniki-lord.html",
+      "claims": [
+        "вторичный источник отмечает, что происхождение Лорда неизвестно; используется как указание на спорность происхождения"
+      ]
+    },
+    {
+      "id": "avu-zephyr",
+      "label": "Аграрный вестник Урала, 11/2011 — селекционные комбинации земляники",
+      "url": "https://m-avu.narod.ru/PDFkee/AVU_11_2011.pdf",
+      "claims": [
+        "Зефир указан как исходная форма в комбинациях скрещивания; источник не является паспортом сорта"
+      ]
+    },
+    {
+      "id": "klubnichnyi-hutorok-black-prince",
+      "label": "Клубничный хуторок — обзор исторических и современных названий Black Prince",
+      "url": "https://klubnichniyhutorok.by/chernyj-princ-black-prince/",
+      "claims": [
+        "вторичный обзор описывает историческое употребление Black Prince / Black Prince of Catwell и отмечает неустановленность происхождения современной торговой формы"
+      ]
+    },
+    {
+      "id": "crea-crapo-10-228-1",
+      "label": "CREA — CRAPO 10.228.1, совместное управление и распространение, reference 2020-1-OFA1",
+      "url": "https://www.crea.gov.it/en/-/selezione-di-fragola-crapo-10.228.1-gestione-congiunta-e-diffusione-rif.-2020-1-ofa1-",
+      "claims": [
+        "официальное существование записи CRAPO 10.228.1",
+        "опубликованы документы по CRAPO 228 от января 2020 года",
+        "не подтверждает тождество короткой торговой формы Krapo 10 и полного кода; нет описания плода"
+      ]
+    },
+    {
+      "id": "cfia-lucia",
+      "label": "CFIA — официальное описание Lucia, синоним Louie и регистрационные сведения",
+      "url": "https://active.inspection.gc.ca/francais/plaveg/pbrpov/cropreport/str/app00010022f.shtml?wbdisable=true",
+      "claims": [
+        "селектант Jim Bagdasarian / Lassen Canyon Nursery",
+        "официальный синоним Louie",
+        "форма плода и расположение цветоносов",
+        "заявка 15-8630; сертификат № 6016 и дата отзыва"
+      ]
+    },
+    {
+      "id": "pinova-marmolada",
+      "label": "Pinova — сортовая карточка Marmolada",
+      "url": "https://pinova.hr/en/selection-of-strawberry-varieties/",
+      "claims": [
+        "происхождение CIV, Ferrara, 1984; Gorella × Sel; ввод в производство 1989",
+        "короткодневный сорт, созревание относительно Elsanta",
+        "форма/цвет ягод и указанные каталогом восприимчивости"
+      ]
+    },
+    {
+      "id": "tomsk-depagro-victoria",
+      "label": "Департамент АПК Томской области — Детский Агровестник, выпуск о клубнике и Виктории",
+      "url": "https://depagro.tomsk.gov.ru/uploads/ckfinder/279/userfiles/files/Детский%20Агровестник%203%20-%20Клубника.pdf",
+      "claims": [
+        "история сорта Виктория и переход имени в бытовое обозначение садовой земляники",
+        "не идентифицирует современные растения с такой этикеткой"
+      ]
+    },
+    {
+      "id": "deutenkofen-premy-2020",
+      "label": "Lehr- und Beispielsbetrieb für Obstbau Deutenkofen — сортоиспытание земляники 2020",
+      "url": "https://www.obstbau-deutenkofen.de/fileadmin/user_upload/Dateien/dateien_erdbeerversuch/Erdbeeren_Deutenkofen_2020.pdf",
+      "claims": [
+        "Premy PVR назван селекцией CIV в Италии",
+        "примерно на два дня раньше Elsanta в условиях испытания",
+        "ярко-красные правильные средние плоды около 20 г",
+        "вкус с уравновешенным сахарно-кислотным соотношением",
+        "наблюдения урожая 2018 года и сильный рост растений"
+      ]
+    },
+    {
+      "id": "inrae-gariguette-archive",
+      "label": "INRA — архивная карточка сорта Gariguette",
+      "url": "https://www2.nancy.inra.fr/collectif/archorales/entretiens/Risser/pages/Fraise%20Gariguette.htm",
+      "claims": [
+        "селекция INRA и регистрация во французском официальном каталоге в 1976 году",
+        "ранний неремонтантный сорт",
+        "страница характеризует качество вкуса, но не урожайность"
+      ]
+    },
+    {
+      "id": "cfia-limalexia",
+      "label": "CFIA — официальная запись Limalexia и подробное описание UPOV",
+      "url": "https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/str/app00011461e.shtml",
+      "claims": [
+        "denomination, breeder Jaap Vromans и holder Asparagus Beheer B.V.",
+        "E0011 × E0021, controlled cross 2009 и selection 2010",
+        "non-remontant type, semi-upright habit, flowering and ripening window, fruit shape/size/firmness",
+        "описание основано на UPOV technical examination Bundessortenamt, 2016–2017",
+        "grant rights 2020 и surrender date 2026-09-01"
+      ]
+    },
+    {
+      "id": "ru2704274-gigantella-maxim",
+      "label": "Патент RU2704274C2 — рыночное употребление названия «Гигантелла Максим»",
+      "url": "https://patents.google.com/patent/RU2704274C2/ru",
+      "claims": [
+        "патент на способ размножения земляники упоминает имя как популярный сорт, предлагаемый биолабораториями и предприятиями на российском рынке",
+        "патент не является паспортом сорта и не описывает помологические свойства"
+      ]
+    },
+    {
+      "id": "orton-maxim-strawberry",
+      "label": "ОРТОН — карточка земляники «Максим» с синонимом «Гигантелла Максим»",
+      "url": "https://orton.ru/sorta-kultur/klubnika/maksim-klubnika/",
+      "claims": [
+        "карточка приводит Gigantella Maxim как синоним Максим",
+        "описанные цвет, форма, масса, размер и вкус — утверждения карточки ОРТОН, не независимые сортоиспытания"
+      ]
+    },
+    {
+      "id": "laimburg-coviro-nandi",
+      "label": "Laimburg Journal — varietal overview; Coviro interview on Nandi",
+      "url": "https://journal.laimburg.it/index.php/laimburg-journal/article/download/66/144/699",
+      "claims": [
+        "Nandi/Nandì listed as Italian variety with CIV as breeder and 2015 PBR application",
+        "Coviro interview attributes the variety to CIV in San Giuseppe di Comacchio",
+        "Coviro description (clearly attributed): vigorous rustic plants, large uniform fruits, aromatic pleasant flesh",
+        "sources do not provide pedigree or numeric independent performance data"
+      ]
+    },
+    {
+      "id": "vniispk-kama-trial",
+      "label": "ВНИИСПК — хозяйственно-биологическая оценка интродуцированных сортов земляники в Московской области",
+      "url": "https://vniispk.ru/pages/activities/science-activities/conference-2008/publ-2008-25",
+      "claims": [
+        "Кама включена в испытание земляники 2004–2007 годов как ранний сорт",
+        "начало созревания ранних сортов обычно 7–9 июня, в 2006 году 19–24 июня",
+        "для ранней группы Кама и Валента указаны 120–140 ц/га и хороший вкус первых ягод",
+        "публикация не приводит родословную или полный сортовой паспорт Камы"
+      ]
+    },
+    {
+      "id": "cfia-monterey",
+      "label": "Canadian Food Inspection Agency — official Monterey description and rights record",
+      "url": "https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/str/app00007369e.shtml",
+      "claims": [
+        "Albion × Cal 97.85-6; University of California; first fruiting 2002",
+        "day-neutral / everbearing type, very vigorous upright plant, early-mid harvest",
+        "fruit traits and comparative distinction by weak glossiness",
+        "CFIA comparative trial in British Columbia, 2008; disease and pest reaction notes"
+      ]
+    },
+    {
+      "id": "cfia-cabrillo",
+      "label": "Canadian Food Inspection Agency — official Cabrillo description and rights record",
+      "url": "https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/str/app00010197e.shtml",
+      "claims": [
+        "University of California variety; breeders Douglas Shaw and Kirk Larson",
+        "controlled cross in Davis 2008; selected 2009",
+        "day-neutral, very early beginning of ripening in comparative description; fruit traits",
+        "CFIA comparative trial in Chilliwack, British Columbia, 2018"
+      ]
+    },
+    {
+      "id": "cfia-charlotte",
+      "label": "Canadian Food Inspection Agency — official Charlotte varietal description and rights record",
+      "url": "https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/str/app00007301e.shtml",
+      "claims": [
+        "Ciref; breeder Philippe Roudeillac; French origin",
+        "Mara des Bois × CAL 19, cross in 1995 at Ciref station",
+        "fully remontant type, early flowering and harvest, fruit morphology",
+        "CFIA comparative trial in Quebec in summer 2008"
+      ]
+    },
+    {
+      "id": "vissers-elianny-catalog",
+      "label": "Vissers official strawberry catalogue — Elianny",
+      "url": "https://netetrade.com/media/vissers-aardbeiplanten/files/V65V03_GB.pdf",
+      "claims": [
+        "official breeder catalogue lists cultivar Elianny"
+      ]
+    },
+    {
+      "id": "fruitmasters-elianny-2009",
+      "label": "Fruitmasters report on first Elianny auction (2009), reporting Vissers/grower description",
+      "url": "https://www.agf.nl/article/45092/eerste-elianny-aardbeien-geveild-bij-koninklijke-fruitmastersgroep/",
+      "claims": [
+        "reported origin from Vissers and natural cross in 1998",
+        "reported firmness, colour, taste, and calyx comparison with Elsanta"
+      ]
+    },
+    {
+      "id": "vashnil-black-swan-strawberry",
+      "label": "Vashnil nursery description of Black Swan strawberry (commercial source)",
+      "url": "https://vashnil.ru/o-nas/blog/vyrasivanie-klubniki/klubnika-sorta-black-swan",
+      "claims": [
+        "uses Black Swan / Чёрный лебедь as a strawberry cultivar name",
+        "nursery describes it as late and non-remontant"
+      ]
+    },
+    {
+      "id": "yakutia-aleksandra-hybrid-strawberry",
+      "label": "Scientific review of Yakut strawberry breeding and the Aleksandra seedling 37-03",
+      "url": "https://pps.kaznu.kz/ru/Main/FileShow2/23498/76/3/2033/0//",
+      "claims": [
+        "Yakut strawberry Aleksandra is described as an interspecific cross of remontant woodland strawberry and Fragaria orientalis",
+        "ELS 37-03 (Aleksandra) was submitted for state testing in 2013",
+        "the study reports small fruit and late first-decade July ripening under its conditions"
+      ]
+    },
+    {
+      "id": "sfnca-elizaveta2-queen-elizabeth",
+      "label": "Siberian Federal Scientific Centre of Agro-BioTechnologies — strawberry planting material",
+      "url": "https://en.sfsca.ru/product/sazhentsy-yagody/",
+      "claims": [
+        "Елизавета 2 described as domestic clone of British Queen Elizabeth II",
+        "registration in Russian State Register in 2004"
+      ]
+    },
+    {
+      "id": "vashnil-queen-elizabeth-strawberry",
+      "label": "Vashnil nursery description of Queen Elizabeth strawberry",
+      "url": "https://vashnil.ru/o-nas/blog/vyrasivanie-klubniki/klubnika-sorta-koroleva-elizaveta",
+      "claims": [
+        "nursery describes Queen Elizabeth as English selection studied/adapted at Don Nursery",
+        "distinguishes it from Елизавета 2"
+      ]
+    },
+    {
+      "id": "rostok-oxheart",
+      "label": "Питомник Росток — торговая карточка Бычье сердце",
+      "url": "https://rostok-pitomnik.ru/catalog/klubnika-malina-ezhevika/klubnika1/klubnika-byche-serdtse-5-sht/",
+      "claims": [
+        "употребление торгового имени для садовой земляники",
+        "карточка не дает селекционного кода или происхождения"
+      ]
+    },
+    {
+      "id": "czech-register-carmen",
+      "label": "Czech/Slovak official registry records, summarized by Agronom.cc; Samara NIISKH breeding publication",
+      "url": "https://agronom.cc/en/sorta/fragaria/karmen",
+      "claims": [
+        "Carmen strawberry entry H809, Czech registration from 1971",
+        "SEMPRA PRAHA maintainer",
+        "Carmen appears as a strawberry parent in published Samara NIISKH crossing combinations"
+      ]
+    },
+    {
+      "id": "onlinesemena-garland",
+      "label": "Onlinesemena — commercial Garland listing",
+      "url": "https://onlinesemena.ru/catalog/strawberreis/remontantnaya/zemlyanika-sadovaya-girlyanda.html",
+      "claims": [
+        "seller calls own listing remontant strawberry and itself the originator",
+        "no breeder code in listing"
+      ]
+    },
+    {
+      "id": "raintree-flamingo",
+      "label": "Raintree Nursery and Linden Lane Farms — own-stock listings",
+      "url": "https://raintreenursery.com/products/flamingo-strawberry",
+      "claims": [
+        "Raintree listing describes pink-hued strawberry under Flamingo name",
+        "Linden Lane Farms recommends another strawberry variety for pollination",
+        "no common breeder identity proven"
+      ]
+    },
+    {
+      "id": "ashs-fragaria-chiloensis",
+      "label": "HortScience / American Society for Horticultural Science review",
+      "url": "https://doi.org/10.21273/HORTSCI.48.4.418",
+      "claims": [
+        "Fragaria chiloensis germplasm and domestication in Chile",
+        "Universidad de Talca breeding work on white/pink selections",
+        "not a named cultivar called Chile"
+      ]
+    },
+    {
+      "id": "ashs-sugar-lia-cultivar",
+      "label": "HortScience / ASHS cultivar release summary for Sugar Lia",
+      "url": "https://www.ars.usda.gov/ARSUserFiles/1718/PDF/2006/hortsci_45_1101_1113.pdf",
+      "claims": [
+        "Sugar Lia is an Italian short-day early strawberry cultivar released in 2005 for northern Italy",
+        "breeding pedigree 91.143.5 (86.288.1 × Cortina) × Miss; cross 1996, selection 1998, test code 96.62.10",
+        "medium-large symmetric conic bright-red fruit, firm flesh, high sugars; susceptibility notes in source"
+      ]
+    },
+    {
+      "id": "cresO-sugar-lia-trial",
+      "label": "CReSO varietal trial summary for Sugar Lia",
+      "url": "https://rivistafrutticoltura.edagricole.it/potatura-e-forme-di-allevamento/fragola-unifera-indicazioni-varietali-attraverso-le-valutazioni-del-creso/",
+      "claims": [
+        "Sugar Lia harvest about one day after Alba in the stated trial; medium-high, staggered productivity",
+        "trial notes susceptibility to Phytophthora; findings are from Italian evaluation conditions"
+      ]
+    },
+    {
+      "id": "ministry-register-slonenok",
+      "label": "Ministry of Agriculture of the Russian Federation · State Register extract",
+      "url": "https://gossortrf.ru/upload/iblock/e9a/yqfk93fw34x9106q63v3f5u5u96tdacf.pdf",
+      "claims": [
+        "Slonenok is listed under strawberry Fragaria with cultivar code 8904367",
+        "official listing supports western and eastern Siberian admission"
+      ]
+    },
+    {
+      "id": "niiss-slonenok-breeding-history",
+      "label": "Scientific conference proceedings on Siberian strawberry breeding",
+      "url": "https://conf.icgbio.ru/gpb2017/wp-content/uploads/sites/20/2016/12/Tezisi_gpb2017_.pdf",
+      "claims": [
+        "Slonenok derived from Idun × Krasavitsa Zagorya in 1969",
+        "submitted to state variety trials in 1989 and added to the State Register in 2006"
+      ]
+    },
+    {
+      "id": "agroapk-pervoklassnitsa-trials",
+      "label": "AgroAPK scientific paper · strawberry cultivars in South-Western Siberia",
+      "url": "https://agroapk.ru/88-archive/09-2016/1652-2016-09-14-ru",
+      "claims": [
+        "Pervoklassnitsa used as a control cultivar in field trials in South-Western Siberia",
+        "paper reports context-specific mean fruit mass 8.0–12.6 g and yield 11.2–28.5 t/ha"
+      ]
+    },
+    {
+      "id": "siberian-oasis-pervoklassnitsa",
+      "label": "Siberian nursery cultivar reference for Pervoklassnitsa citing NIISS/State Register data",
+      "url": "https://www.sibirskiy-oazis.ru/pervoklassnica.html",
+      "claims": [
+        "Pervoklassnitsa bred at NIISS; cross Fairy × Torpeda (1990), breeders A. D. Zabelina and N. P. Stolnikova",
+        "included in the Russian State Register in 2002 for West Siberia; medium maturity"
+      ]
+    },
+    {
+      "id": "ministry-register-bogema",
+      "label": "Ministry of Agriculture registry extract for Bogema",
+      "url": "https://libryansk.ru/files/text_news/kazakov/oxrana_2012.pdf",
+      "claims": [
+        "Registry table lists Bogema, code 9908400, admission year 2008 and Central region code 3"
+      ]
+    },
+    {
+      "id": "vsau-bogema-trial",
+      "label": "Voronezh State Agrarian University · field research comparing strawberry cultivars",
+      "url": "https://vestnik.vsau.ru/wp-content/uploads/2017/05/27-33.pdf",
+      "claims": [
+        "Bogema was included in comparative field observations of strawberry phenology and runner formation; results apply to the reported site and experimental protocol"
+      ]
+    },
+    {
+      "id": "cfia-hademar",
+      "label": "Canadian Food Inspection Agency · official Hademar cultivar description",
+      "url": "https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/str/app00013633e.shtml",
+      "claims": [
+        "Hademar is Fragaria × ananassa, held by Flevo Berry Holding B.V.; breeder Marcel Suiker",
+        "Day-neutral; early flowering and ripening; large conical firm fruit; dark green strongly rugose leaves",
+        "Cross 07-92-10 × Brighton in 2010; selected 2011; UPOV trial in Germany 2017–2018"
+      ]
+    },
+    {
+      "id": "cfia-fronteras",
+      "label": "Canadian Food Inspection Agency · official Fronteras cultivar description",
+      "url": "https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/str/app00009883e.shtml",
+      "claims": [
+        "Fronteras is a UC strawberry cultivar; breeders Kirk D. Larson and Douglas Shaw; test designation C235",
+        "Compared with Ventana, Benicia and Camarosa; few to medium stolons with weak anthocyanin coloration",
+        "Selection considered yield, fruit size/appearance, flowering type, plant architecture and disease reaction including powdery mildew"
+      ]
+    },
+    {
+      "id": "cfia-harmonie",
+      "label": "Canadian Food Inspection Agency · official Harmonie cultivar description",
+      "url": "https://active.inspection.gc.ca/english/plaveg/pbrpov/cropreport/str/app00003744e.shtml",
+      "claims": [
+        "Harmonie is an Agriculture and Agri-Food Canada strawberry cultivar bred by Shahrokh Khanizadeh; prior proposed name La Marquise",
+        "Cross Yamaska × Joliette in 1993; trialed at L’Acadie from 1994; June-bearing, harvest about one week after Kent",
+        "Trial description: red globose-conical fruit broader than long; moderate leaf spot susceptibility and moderate-to-susceptible leaf scorch response in that trial"
+      ]
+    },
+    {
+      "id": "vstisp-barynya-evaluation",
+      "label": "ФГБНУ ФНЦ Садоводства · экспертная оценка сорта Барыня",
+      "url": "https://vstisp.org/vstisp/index.php/component/content/article/2-icetheme/sample-news/uncategorized/1389-ekspertnaya-otsenka-gosudarstvennoj-komissii-rossijskoj-federatsii-po-ispytaniyu-i-okhrane-selektsionnykh-dostizhenij",
+      "claims": [
+        "Gossortkomissiya expert evaluation of strawberry cultivar Barynya at Kokino on 2021-07-25",
+        "Morphology, linear measurements, productivity and fruit quality were evaluated",
+        "Commission recommended inclusion in State Register for Central region in 2022"
+      ]
+    },
+    {
+      "id": "ashs-mae-cultivar",
+      "label": "HortScience · Register of New Fruit and Nut Cultivars, Mae",
+      "url": "https://journals.ashs.org/downloadpdf/journals/hortsci/45/5/article-p716.pdf",
+      "claims": [
+        "Mae is East Malling Research short-day strawberry cultivar; breeders D.W. Simpson, J.A. Bell, K.J. Hammond",
+        "Rosie × Onebor cross in 1994; selected 1995 as EM884; introduced 2003",
+        "Northern-European description: large uniform firm conical dark-red fruit; May–June about one week before Elsanta; susceptibility to powdery mildew and Phytophthora crown rot"
+      ]
+    },
+    {
+      "id": "flevo-furore",
+      "label": "Flevo Berry · Furore cultivar profile",
+      "url": "https://flevoberry.nl/varieties/furore/",
+      "claims": [
+        "Furore is everbearing; breeder reference 07-75-10; CPVO application 2013/2225",
+        "Originator describes rapid side-crown formation, fruit set during warmer periods, glossy orange-red conical berries",
+        "Originator notes relative fruit-skin sensitivity during hot weather and tolerance to some root diseases, thrips and mildew"
+      ]
+    },
+    {
+      "id": "syngenta-temptation",
+      "label": "Syngenta Flowers · Vegetalis Garden Strawberry Temptation, code 70106261",
+      "url": "https://www.syngentaflowers.com/apac/product/vegetalis/70106261",
+      "claims": [
+        "Syngenta Flowers lists Garden Strawberry Temptation product code 70106261",
+        "Product card says everbearing, few runners, heart-shaped fruit, approx. 15 g and approx. 86 days from transplant",
+        "Product page supports only this branded product; it does not prove all Russian-market plants sold as Искушение share this identity"
+      ]
+    },
+    {
+      "id": "ucdavis-brighton",
+      "label": "UC Davis Plant Breeding — Brighton",
+      "url": "https://plantbreeding.ucdavis.edu/strawberry-varieties-released",
+      "claims": [
+        "UC Davis lists Brighton among strawberry varieties released by R. S. Bringhurst in 1978",
+        "The list confirms cultivar identity and release year, but provides no regional yield or adaptation claims"
+      ]
+    },
+    {
+      "id": "ucdavis-selva",
+      "label": "UC Davis Plant Breeding — Selva",
+      "url": "https://plantbreeding.ucdavis.edu/strawberry-varieties-released",
+      "claims": [
+        "UC Davis lists Selva among strawberry varieties released by R. S. Bringhurst in 1983",
+        "UC Davis notes the variety was patented in 1984",
+        "The source confirms identity and history, not current Russian regional performance"
+      ]
+    },
+    {
+      "id": "coviro-brina-bl65r",
+      "label": "Coviro — BL65R Brina",
+      "url": "https://www.coviro.it/bl65r-brina/",
+      "claims": [
+        "Coviro identifies BL65R Brina as strawberry breeding material and cites European patent application 2022/1523",
+        "Breeder description: abundant continuous flowering, large to very large regular conical light-red fruits, good firmness and very good to excellent taste",
+        "Coviro recommends cool areas without strong temperature peaks; no Russian yield or winter-hardiness claim"
+      ]
+    },
+    {
+      "id": "greenplants-giant-jorney",
+      "label": "Greenplants — торговая карточка Гигант Джорнея",
+      "url": "https://greenplants.com.ua/polunycya-gigant-dzhorneya",
+      "claims": [
+        "Seller lists product as Fragaria × ananassa “Gurney’s Giant” under Russian/Ukrainian name Giant Jorney",
+        "Seller claims of fruit size, yield and resistance are not independently verified and are not presented as cultivar facts"
+      ]
+    },
+    {
+      "id": "scala-strawberry-retail",
+      "label": "FT.ua — торговая карточка земляники Scala",
+      "url": "https://www.ft.ua/ru/skala-zemljanica-sadovaja-klubnika-sort-scala-kupit-sazhency-rassada-frigo/",
+      "claims": [
+        "Retailer lists strawberry planting material as Scala/Скала",
+        "Retail listing is not a breeder passport and does not establish a unique breeding code"
+      ]
+    },
+    {
+      "id": "sakpatenti-sg134",
+      "label": "Sakpatenti — опубликованная заявка на клубничный сорт SG134",
+      "url": "https://www.sakpatenti.gov.ge/media/publication_pdf/BL12021_%E1%83%AF%E1%83%98%E1%83%A8%E1%83%94%E1%83%91%E1%83%98.pdf",
+      "claims": [
+        "Official plant variety publication names Franko Zenti as breeder of strawberry Fragaria × ananassa denomination SG134",
+        "The publication does not identify SG134 as Scala"
+      ]
+    },
+    {
+      "id": "ucdavis-cabrillo",
+      "label": "UC Davis Strawberry Licensing Program — Cabrillo",
+      "url": "https://research.ucdavis.edu/industry-support/plant-variety-licensing-program/strawberry-licensing-program/",
+      "claims": [
+        "UC Davis identifies Cabrillo as day-neutral cultivar formerly CN236 / Cal 8.181-1, from a 2008 cross",
+        "UC Davis describes adaptability across its production systems and reports a Macdoel trial result of 11,605 lb/acre and 32.0 g per fruit under the specified planting conditions",
+        "California trial figures are not universal yield claims for other regions"
+      ]
+    },
+    {
+      "id": "ucdavis-monterey",
+      "label": "UC Davis Strawberry Breeding & Research Program — Monterey",
+      "url": "https://strawberry.ucdavis.edu/monterey",
+      "claims": [
+        "UC Davis identifies Monterey as day-neutral, released 2008",
+        "UC Davis records parents Albion × Cal 97.85-6",
+        "The profile does not establish Russian regional yield or winter hardiness"
+      ]
+    },
+    {
+      "id": "prospecierara-ostara",
+      "label": "ProSpecieRara — Ostara variety catalog",
+      "url": "https://www.prospecierara.ch/fr/vegetaux/catalogue-des-varietes/BR-22010",
+      "claims": [
+        "ProSpecieRara states Ostara was selected in the Netherlands and marketed since 1969",
+        "This historical catalog entry does not verify each modern seller lot or regional performance"
+      ]
+    },
+    {
+      "id": "pzmay-elvira",
+      "label": "Племзавод «Майский» — каталог земляники садовой",
+      "url": "https://www.pzmay.ru/catalog/zemlyanika-sadovaya",
+      "claims": [
+        "Farm catalog lists Elvira as garden strawberry and gives 50–60 g at beginning of harvest, then 25–30 g later",
+        "Catalog does not supply breeder identity or selection code; values are attributed only to this commercial catalog"
+      ]
+    },
+    {
+      "id": "vir-lakomka-pavlovsk",
+      "label": "ВИР, Труды по прикладной ботанике, генетике и селекции, том 177, выпуск 2",
+      "url": "https://www.vir.nw.ru/wp-content/uploads/2018/09/trud177_v2.pdf",
+      "claims": [
+        "Study evaluated 85 strawberry cultivars at Pavlovsk Experimental Station collection sites in 2010–2015",
+        "Lakomka is listed among the latest-ripening cultivars in that study",
+        "The source excerpt does not give cultivar-specific yield, berry description, or universal regional dates"
+      ]
+    },
+    {
+      "id": "skfnc-belrubi",
+      "label": "СКФНЦСВВ — карточка сорта Белруби",
+      "url": "https://old.kubansad.ru/content/belrubi/",
+      "claims": [
+        "Center identifies Belrubi as French garden strawberry, origin Pocahontas × Tago, originalator SKZNIISiV",
+        "Center description: late May–early June, large elongated-conical shiny fruit; yield 12–15 t/ha",
+        "Center recommends North Caucasus; regional claims should not be generalized to other climates"
+      ]
+    },
+    {
+      "id": "osu-usda-ananasnaya",
+      "label": "Oregon State University / USDA-ARS · pomology paper on Ananasnaya hardy kiwifruit",
+      "url": "https://horticulture.oregonstate.edu/sites/agscid7/files/horticulture/attachments/54_ananasnaya_japs_60106-112_2006_strik_hummer.pdf",
+      "claims": [
+        "Ananasnaya описана как Actinidia arguta, не Fragaria",
+        "плоды зелёные с красным румянцем и сладко-кислым вкусом",
+        "возможна путаница клона, завезённого в США, с первоначальной селекцией Мичурина"
+      ]
+    },
+    {
+      "id": "rostok-ananasnaya-strawberry",
+      "label": "Питомник «Росток» · торговая карточка белоплодной садовой земляники «Ананасная»",
+      "url": "https://rostok-pitomnik.ru/agrotekhnika/opisanie-tovarov/klubnika-ananasnaya-opisanie-sorta/",
+      "claims": [
+        "карточка продавца называет белые плоды и красные семянки",
+        "карточка не приводит код селекции или происхождение маточника"
+      ]
+    },
+    {
+      "id": "kgau-solnechnaya-polyanka",
+      "label": "Красноярский ГАУ · оценка агробиологических признаков сортов земляники в Красноярской лесостепи",
+      "url": "https://vestnik.kgau.ru/ru/nauka/article/80041/view",
+      "claims": [
+        "Солнечная полянка включена в оценку сортов в 2015–2016 гг.",
+        "отнесена к очень крупным образцам, диапазон массы ягод группы 15,5–18,0 г",
+        "по комплексу показателей в условиях Красноярской лесостепи выделен Фейерверк"
+      ]
+    },
+    {
+      "id": "bernardini-nadja-bl29",
+      "label": "Danilo Bernardini · перечень сортов селекционера Berrylab",
+      "url": "https://danilobernardini.it/",
+      "claims": [
+        "Автор сайта называет себя breeder в Berrylab.",
+        "BL29*-NADJA® включён в список сортов клубники unifere; ремонтантные сорта перечислены отдельно.",
+        "Эта страница не сообщает урожайность, массу ягод или региональные результаты."
+      ]
+    },
+    {
+      "id": "sweetberry-nadja-trade-description",
+      "label": "Sweetberry · торговое описание Nadja",
+      "url": "https://sweetberry.kz/nadja",
+      "claims": [
+        "Продавец описывает Nadja как ранний итальянский сорт Berry Lab и приводит характеристики предлагаемой рассады; эти сведения относятся к карточке продавца и не являются независимым сортоиспытанием."
+      ]
+    },
+    {
+      "id": "bernardini-elody",
+      "label": "Danilo Bernardini · перечень собственных сортов клубники",
+      "url": "https://danilobernardini.it/",
+      "claims": [
+        "Danilo Bernardini обозначает себя breeder в Berrylab.",
+        "ELODY* приведён в списке сортов unifere; страница списка не приводит кода или сортовых показателей."
+      ]
+    },
+    {
+      "id": "bernardini-alturas",
+      "label": "Danilo Bernardini · перечень собственных сортов клубники",
+      "url": "https://danilobernardini.it/",
+      "claims": [
+        "ALTURAS* приведён в списке сортов rifiorenti; страница списка не приводит кода или сортовых показателей."
+      ]
+    },
+    {
+      "id": "usda-grin-cardinal-pi551540",
+      "label": "USDA-ARS GRIN-Global · Cardinal strawberry accession PI 551540",
+      "url": "https://npgsweb.ars-grin.gov/gringlobal/search?c=990261",
+      "claims": [
+        "Cardinal PI 551540 is Fragaria × ananassa from the University of Arkansas Agricultural Experiment Station; released 1974.",
+        "The accession record describes midseason-to-late ripening, fairly large berries, productivity, fruit use and adaptation context in historical US trials.",
+        "The US cultivar record does not establish identity of Russian retail plants sold as Cardinal."
+      ]
+    },
+    {
+      "id": "crea-garda-licensing",
+      "label": "CREA · лицензия на сорт клубники Garda",
+      "url": "https://www.crea.gov.it/-/variet%C3%A0-di-fragola-garda-licenza-non-esclusiva-rif.-2023-8-ofa-",
+      "claims": [
+        "CREA published official licensing decisions for strawberry variety GARDA in 2023 and updated the record in 2025.",
+        "The page is an IP/licensing notice and does not provide horticultural performance traits."
+      ]
+    },
+    {
+      "id": "uralsad-big-dipper-listing",
+      "label": "Питомник «Уралсад» · предложение «Большая Медведица»",
+      "url": "https://uralsad74.ru/catalog/fruitandberry/klubnika/730/",
+      "claims": [
+        "Товарная карточка предлагает садовую землянику «Большая Медведица» и описывает заявленные сроки/вкус/размер.",
+        "Карточка не указывает оригинатора или селекционный код; заявленные устойчивость и урожайность не подтверждены независимым опытом."
+      ]
+    },
+    {
+      "id": "nashsad-giant-delicacy-listing",
+      "label": "Питомник «Наш Сад» (Орёл) · карточка Гигантского деликатеса",
+      "url": "https://nashsadorel.ru/klubnikagigantdelicates",
+      "claims": [
+        "Продавец описывает собственное предложение как среднераннее, с удлинённо-коническими красно-малиновыми ягодами и светло-красной мякотью."
+      ]
+    },
+    {
+      "id": "vashnil-giant-delicacy-listing",
+      "label": "Питомник «Ваша Нива» · описание Giant Delicacy",
+      "url": "https://vashnil.ru/o-nas/blog/vyrasivanie-klubniki/klubnika-sorta-gigantskij-delikates",
+      "claims": [
+        "Публикация продавца называет Giant Delicacy позднеспелым голландским сортом и приводит собственные товарные показатели; происхождение не подкреплено кодом или первичным селекционным документом.",
+        "Срок созревания у этого продавца расходится с карточкой «Наш Сад»."
+      ]
+    },
+    {
+      "id": "vissers-cory-p241102-catalog",
+      "label": "Vissers America · short-day / June-bearer strawberry catalog",
+      "url": "https://v3.netetrade.com/media/vissers-aardbeiplanten/files/V65V03_GB.pdf",
+      "claims": [
+        "The breeder identifies Cory® P241102 as an early Vissers America selection.",
+        "Breeder catalogue describes large red fruit colored red inside, good taste/appearance, and high percentage of class-I fruit.",
+        "This is breeder catalogue information, not a Russian comparative trial."
+      ]
+    },
+    {
+      "id": "kraege-rosaria",
+      "label": "Stefan Kraege Züchtung — Rosaria 34/20/4A",
+      "url": "https://kraege.de/leistungen/erdbeeren/fruehreifende-sorten/kimberly/",
+      "claims": [
+        "имя Rosaria и селекционный номер 34/20/4A",
+        "ранний срок относительно Clery",
+        "описание плода и роста оригинатором",
+        "общее скрещивание с Serabella по сообщению оригинатора"
+      ]
+    },
+    {
+      "id": "vstisp-zolushka-paper",
+      "label": "ВСТИСП — публикация о сортах земляники",
+      "url": "https://jbiochemtech.com/storage/models/article/bMUh1GtjLrbMv0U5GbVt14NkkfQ2frw7KZS6iVW7Iv1VKS7RXJ6GRMwbz9KS/garden-strawberry-varieties-of-the-all-russian-horticultural-institute-for-breeding-agrotechnology.pdf",
+      "claims": [
+        "Zolushka — Fragaria × ananassa",
+        "допуск 1989 года и зоны",
+        "автор И. В. Попова",
+        "родительская комбинация Festivalnaya × Zenga Zengana"
+      ]
+    },
+    {
+      "id": "berrystore-moskova-listing",
+      "label": "Клубничная ферма Борисовых — товарное описание Московы",
+      "url": "https://berrystore.ru/",
+      "claims": [
+        "торговое имя Москова",
+        "заявленные признаки в карточке продавца",
+        "отсутствие селекционного кода в просмотренном описании"
+      ]
+    },
+    {
+      "id": "vashnil-henry-listing",
+      "label": "Питомник Ваша Нива — карточка Генри / Henry’s Hamburgers",
+      "url": "https://vashnil.ru/o-nas/blog/vyrasivanie-klubniki/klubnika-sorta-genri",
+      "claims": [
+        "товарное имя Генри / Henry’s Hamburgers",
+        "описание как поздней крупноплодной клубники только по заявлению продавца",
+        "не указаны селекционный код и доказательство связи Amy/Ami"
+      ]
+    },
+    {
+      "id": "malinnik-grebeshok-listing",
+      "label": "Малинник.ру — товарная карточка Гребешок",
+      "url": "https://malinnik.ru/product/klubnika-grebeshok/",
+      "claims": [
+        "продавец предлагает семена садовой земляники под именем Гребешок",
+        "заявляет скрещивание Фестивальная × Машенька",
+        "не указывает селекционера и первичную регистрацию"
+      ]
+    },
+    {
+      "id": "mesarbustes-colossus-listing",
+      "label": "MesArbustes — товарная карточка Colossus / Sweet Colossus",
+      "url": "https://www.mesarbustes.fr/fragaria-ananassa-colossus-fraise-geante.html",
+      "claims": [
+        "магазин связывает Colossus® и Sweet Colossus®",
+        "код товара GFR-2193",
+        "описание продавца плодов и назначения"
+      ]
+    },
+    {
+      "id": "geoplant-olympia-nf638",
+      "label": "Geoplant Vivai — карточка оригинатора Olympia NF638",
+      "url": "https://geoplantvivai.com/en/olympia-strawberry-plant/",
+      "claims": [
+        "идентификация сорта Olympia NF638",
+        "номер права сообщества EU48961",
+        "сроки относительно Alba и Roxana по карточке оригинатора",
+        "описанные оригинатором масса и форма ягоды",
+        "контекст заявлений об урожайности и болезнях"
+      ]
+    },
+    {
+      "id": "flevoberry-dahli",
+      "label": "Flevo Berry — карточка оригинатора Dahli",
+      "url": "https://flevoberry.nl/varieties/dahli/",
+      "claims": [
+        "идентификация Dahli и breeder reference 10-50-01",
+        "номер заявки CPVO 2015/2401",
+        "описание раннего срока и плодоношения по оригинатору",
+        "описание толерантности к Phytophthora cactorum и внимания к Botrytis"
+      ]
+    },
+    {
+      "id": "samara-vestnik-feya",
+      "label": "Самарский научный вестник — коллекционное изучение земляники; Фея как контрольный сорт",
+      "url": "https://snv63.ru/2309-4370/article/view/702091",
+      "claims": [
+        "Фея относится к изучаемым сортам садовой земляники НИИ «Жигулёвские сады»",
+        "Фея использовалась как районированный контроль в исследовании"
+      ]
+    },
+    {
+      "id": "gossortrf-strawberry-feya",
+      "label": "Госсортреестр РФ — реестровая строка Фея (садовая земляника)",
+      "url": "https://gov.cap.ru/home/145/2011/files/gosreestr2011/04_2011_sorta_121-235.pdf",
+      "claims": [
+        "реестровый код 8008663",
+        "допуск сорта в 1988 году",
+        "регионы допуска 4, 10 и 11"
+      ]
+    },
+    {
+      "id": "ncsemena-russian-size",
+      "label": "НК Семена — товарная карточка семян «Русский Размер F1» производителя Русский Огород",
+      "url": "https://www.ncsemena.ru/shop/semena/semena_ovoshchey/zemlyanika_klubnika_1/zemlyanika_f1_russkiy_razmer_3-id3475/",
+      "claims": [
+        "продаётся пакет из 8 семян с обозначением F1 «Русский Размер»",
+        "производителем в карточке указан Русский Огород",
+        "описание продавец маркирует как подготовленное ИИ; селекционный код и регистрация не указаны"
+      ]
+    },
+    {
+      "id": "vniispk-orlets-orenburg",
+      "label": "ВНИИСПК journal · productivity evaluation of strawberry cultivars in Orenburg",
+      "url": "https://old.journal-vniispk.ru/article.php?annum=9&lang=en&number=1",
+      "claims": [
+        "Orlets as a strawberry cultivar; local three-year productivity comparison"
+      ]
+    },
+    {
+      "id": "rcsi-orlets-phenology",
+      "label": "Komi Science Centre RAS journal · strawberry phenology in Bashkortostan",
+      "url": "https://journals.rcsi.science/1994-5655/article/view/271873",
+      "claims": [
+        "Orlets grouped as mid-season in the southern forest-steppe conditions of Bashkortostan"
+      ]
+    },
+    {
+      "id": "berrylab-federica",
+      "label": "BerryLAB · strawberry breeding varieties",
+      "url": "https://www.berrylab.it/",
+      "claims": [
+        "Federica as Italian single-cropping late cultivar for cool continental climates; Verona is a selection-field location"
+      ]
+    },
+    {
+      "id": "agronomplants-federica-2025",
+      "label": "Agronomplants · 2025 strawberry varieties catalog",
+      "url": "https://katalog.agronomplants.pl/BIZ365/S3ImageUploads/Fliplink/152980/7cdb84db~ENVarietiesCatalog2025.pdf",
+      "claims": [
+        "Federica fruit and crop period description as a BerryLAB variety; commercial distributor description"
+      ]
+    },
+    {
+      "id": "yagodnoe-kiss-nellis",
+      "label": "Yagodnoe Podvorie · product card",
+      "url": "https://yagodnoe-podvorie.ru/catalog/klubnika-srednespelaya/kiss-nellis",
+      "claims": [
+        "Use of Kiss Nellis name to offer strawberry planting material"
+      ]
+    },
+    {
+      "id": "vplate-kiss-nellis",
+      "label": "Vplate · cultivar overview noting conflicting origin claims",
+      "url": "https://vplate.ru/klubnika/sort/kiss-nellis/",
+      "claims": [
+        "Acknowledges author/origin are unknown and Gigantella Maxim relation is alleged, not documented"
+      ]
+    },
+    {
+      "id": "nikogarden-white-swede",
+      "label": "Niko Garden · retail plant listing",
+      "url": "https://nikogarden.ru/klubnika/shved/",
+      "claims": [
+        "Specific seller offer titled White Swede and its stated berry appearance/season; no breeder code or cultivar passport"
+      ]
+    },
+    {
+      "id": "flevoberry-florice",
+      "label": "Flevo Berry · Florice originaler page",
+      "url": "https://flevoberry.nl/variety/florice/",
+      "claims": [
+        "Breeder reference 13-115-12; CPVO application 2021/2779; everbearing type and source-described cultivation/fruit traits"
+      ]
+    },
+    {
+      "id": "flevoberry-florice-manual",
+      "label": "Flevo Berry · Florice cultivation manual",
+      "url": "https://flevoberry.nl/wp-content/uploads/2024/11/20241118-Cultivation-manual-Florice-ENG-Draft-v2.pdf",
+      "claims": [
+        "Florice developed by Flevo Berry; cultivar reference and source-specific crop traits"
+      ]
+    },
+    {
+      "id": "cornell-honeoye-pedigree",
+      "label": "Cornell University / NYSAES — strawberry breeding catalogue",
+      "url": "https://ecommons.cornell.edu/bitstreams/d6b11415-b995-41b3-a361-ed0af0f07dae/download",
+      "claims": [
+        "Honeoye pedigree Vibrant × Holiday",
+        "year 1979"
+      ]
+    },
+    {
+      "id": "cornell-honeoye-ny-extension",
+      "label": "Cornell Cooperative Extension — Strawberry Varieties for NY",
+      "url": "https://rvpadmin.cce.cornell.edu/uploads/doc_409.pdf",
+      "claims": [
+        "regional productivity, fruit size and firmness",
+        "flavor varies with soil; susceptibility notes"
+      ]
+    },
+    {
+      "id": "sad-i-ogorod-medovaya-honeoye",
+      "label": "НПО «Сады России» — товарная карточка «Медовая»",
+      "url": "https://sad-i-ogorod.ru/catalog/zemlyanika-vesna/zemlyanika-sadovaya-medovaya",
+      "claims": [
+        "продавец сопоставляет «Медовая» и Fragaria Honeoye"
+      ]
+    },
+    {
+      "id": "vstisp-estafeta-breeding",
+      "label": "ВСТИСП — селекция позднеспелых форм земляники",
+      "url": "https://vniispk.ru/pages/activities/science-activities/conference-2007/publ-2007-16",
+      "claims": [
+        "Эстафета — сорт земляники и родительская форма в комбинации Незнакомка × Эстафета"
+      ]
+    },
+    {
+      "id": "rior-strawberry-sortiment",
+      "label": "Научный обзор: оценка отечественного сортимента земляники",
+      "url": "https://www.riorpub.ru/ru/nauka/publications/article/6a9c149332807fdbab8600ef/zemlyanika-sadovaya-ocenka-otechestvennogo-sortimenta-i-napravleniya-selekcii/view",
+      "claims": [
+        "Эстафета в среднеспелой группе",
+        "включена в группу высокоурожайных отечественных сортов по анализируемым публикациям"
+      ]
+    },
+    {
+      "id": "planasa-daroyal",
+      "label": "Planasa · карточка сорта Daroyal",
+      "url": "https://planasa.com/variety/strawberry-daroyal/",
+      "claims": [
+        "ранний, сильнорослый и выносливый сорт",
+        "округлые ярко-красные плоды и удобный сбор",
+        "19,6 г среднего веса, 74% плодов первого класса и 7° Brix на R&D-поле Planasa в Ле-Барпе, Франция",
+        "данные привязаны к специфическим контролируемым условиям и не гарантируются в иных условиях"
+      ]
+    },
+    {
+      "id": "vniispk-zenga-zengana-orenburg",
+      "label": "ВНИИСПК · трёхлетняя оценка сортов земляники в Оренбургской области",
+      "url": "https://old.journal-vniispk.ru/pdf/2018/1/7.pdf",
+      "claims": [
+        "Зенга Зенгана использована как контрольный сорт",
+        "средняя продуктивность контроля 0,21 кг/растение за три года",
+        "авторы обсуждают влияние суровых зим и жаркого сухого лета на продуктивность"
+      ]
+    },
+    {
+      "id": "popovski-zenga-skopje",
+      "label": "Научная статья · фенологические и продуктивные характеристики сортов земляники в регионе Скопье",
+      "url": "https://scindeks-clanci.ceon.rs/data/pdf/2233-0070/2012/2233-00701204517P.pdf",
+      "claims": [
+        "из 17 сортов Zenga Zengana входила в позднюю группу созревания",
+        "средний вес плода 5,7 г — наименьший среди 17 изученных сортов в опыте"
+      ]
+    },
+    {
+      "id": "scindeks-madlen-skopje",
+      "label": "Научная статья · продуктивность 17 сортов земляники в регионе Скопье",
+      "url": "https://scindeks-clanci.ceon.rs/data/pdf/2233-0070/2012/2233-00701204517P.pdf",
+      "claims": [
+        "Madlen входила в раннюю группу созревания, начало 12–14 мая в регионе Скопье",
+        "средняя масса плода 11,1 г — максимальная среди 17 сортов в этом опыте"
+      ]
+    },
+    {
+      "id": "ssaa-kamrad-2025",
+      "label": "Самарский ГАУ · селекция и сортоизучение плодово-ягодных культур, 2025",
+      "url": "https://ssaa.ru/structur/riz/Sbornik_Selek_i_sortoiz_plodyag_kult_2025.pdf",
+      "claims": [
+        "Камрад Победитель включён в перечень сортов для получения гибридных семян от свободного опыления",
+        "публикация описывает селекционную работу, а не сортовое испытание продуктивности Камрада"
+      ]
+    },
+    {
+      "id": "uzhniy-kamrad-moscow-delicacy",
+      "label": "Садовый центр «Южный» · ассортимент земляники садовой",
+      "url": "https://www.uzhniy.ru/specpredlozheniya/rasteniya/klubnika-novoe-postuplenie/",
+      "claims": [
+        "предлагает Камрад Победитель как поздний сорт и Московский деликатес как ремонтантный крупноплодный сорт",
+        "карточка продавца указывает Московскому деликатесу среднюю массу 15 г и максимум до 35 г",
+        "данные о Камрад Победителе — торговые утверждения без испытательного протокола"
+      ]
+    },
+    {
+      "id": "all-seeds-moscow-delicacy-registry-copy",
+      "label": "Каталог сортов с воспроизведёнными данными Госреестра · Московский деликатес",
+      "url": "https://all-seeds.net/agro/sorts/161/4161/",
+      "claims": [
+        "страница-копия указывает заявочный номер 31806 и включение Московского деликатеса в 1999 году",
+        "заявители указаны как ABZ Aardbeien uit Zaad BV и ЗАО НК ЛТД",
+        "это не официальный интерфейс Госкомиссии, поэтому юридическую актуальность записи нужно проверять в реестре"
+      ]
+    },
+    {
+      "id": "civ-klodia-civh725",
+      "label": "CIV · оригинаторская карточка KLODIA® CIVH725",
+      "url": "https://civ.it/en/strawberries/klodia-civh725/",
+      "claims": [
+        "идентификатор CIVH725",
+        "июньское плодоношение и средняя сила роста",
+        "средняя масса ягод 28 г, продуктивность 1300 г/растение, 10° Brix",
+        "описание ягод и толерантности к заболеваниям"
+      ]
+    },
+    {
+      "id": "samara-verona-amino-study",
+      "label": "Самарский научный вестник · эколого-физиологические особенности сортов земляники",
+      "url": "https://snv63.ru/2309-4370/article/view/702091/ru_RU",
+      "claims": [
+        "Verona указана в сравнительной таблице сортов",
+        "код срока созревания 3 — средний",
+        "относительный показатель свободных аминокислот листьев 0,85 в сравнении 2024 и 2022 гг.",
+        "не оригинаторский паспорт"
+      ]
+    },
+    {
+      "id": "mamochka-heavy-metals-study",
+      "label": "Сортовые особенности накопления свинца и никеля растениями земляники садовой",
+      "url": "https://sciup.org/sortovye-osobennosti-nakoplenija-svinca-i-nikelja-rastenijami-zemljaniki-sadovoj-147123923",
+      "claims": [
+        "Мамочка присутствует среди изученных сортов земляники",
+        "в эксперименте описан корневой барьер, ограничивающий накопление никеля в плодах",
+        "условия — техногенное загрязнение; это не стандартный паспорт сорта и не оценка пищевой безопасности"
+      ]
+    },
+    {
+      "id": "dalgau-2019-strawberry-trial",
+      "label": "Сборник конференции ДальГАУ · оценка сортов земляники в Благовещенске",
+      "url": "https://dalgau.ru/upload/iblock/f0a/Sborinik-konferentsii-2019.pdf",
+      "claims": [
+        "Сладкоежка и Вкуснятина названы среди 17 сортообразцов опыта 2019 года",
+        "в публикации приведены группы сортов-лидеров, в которые эти названия не включены",
+        "не указан оригинатор или код и нет отдельного паспорта этих имен"
+      ]
+    },
+    {
+      "id": "rostok-velikobritaniya",
+      "label": "Питомник «Росток Калуга» · карточка рассады «Великобритания»",
+      "url": "https://rostok40.ru/product/rassada-klubnika-velikobritaniya/",
+      "claims": [
+        "предложение с закрытой корневой системой под торговым названием «Великобритания»",
+        "поздний срок, родословная с участием Чамора Туруси и характеристики приводятся только как заявления продавца",
+        "нет оригинаторского кода и независимого испытательного подтверждения"
+      ]
+    },
+    {
+      "id": "frigolab-legran",
+      "label": "FRIGOLab · каталог оптовой рассады земляники фриго",
+      "url": "https://frigo-klubnika.ru/",
+      "claims": [
+        "Легран включён в список сортов фриго",
+        "каталог продавца относит его к среднему сроку и указывает торговое окно 25 мая — 15 августа",
+        "нет оригинаторского кода или первичной ссылки"
+      ]
+    },
+    {
+      "id": "klubnichny-hutorok-feng-xiang",
+      "label": "Мини-питомник «Клубничный хуторок» · прайс-лист земляники",
+      "url": "https://klubnichniyhutorok.by/prajs-list/",
+      "claims": [
+        "Фенг Сянг помечен продавцом как китайская новинка",
+        "помещён в раздел ремонтантных сортов нейтрального дня",
+        "план доступности указан с августа 2027 года"
+      ]
+    },
+    {
+      "id": "ogorodik-gento",
+      "label": "Ogorodik.su · карточка товара «Клубника Дженто (Gento)»",
+      "url": "https://ogorodik.su/klubnika-gento",
+      "claims": [
+        "продавец предлагает товар под написаниями Дженто и Gento",
+        "карточка описывает сорт как ремонтантный",
+        "нет кода оригинатора или подтверждающей первичной ссылки"
+      ]
+    },
+    {
+      "id": "klubnichny-salut-czech-beauty",
+      "label": "ЛПХ «Клубничный Салют» · карточка рассады «Чешская красавица»",
+      "url": "https://klubnichnysalut.ru/rassada-klubniki-na-vesnu/cheshskaya-krasavitsa.html",
+      "claims": [
+        "частное хозяйство предлагает рассаду под именем «Чешская красавица»",
+        "срок и описание ягод заявлены продавцом",
+        "страница не подтверждает чешское происхождение, оригинатора или сортовой код"
+      ]
+    },
+    {
+      "id": "gavrish-giant-russian-f1-catalog",
+      "label": "Гавриш — каталог «Профессиональные семена», раздел «Земляника (клубника)»",
+      "url": "https://gavrishseeds.ru/files/project_5768/const_wholesalecatalog.pdf",
+      "claims": [
+        "Название F1 Гигант русский в разделе клубники",
+        "Гавриш описывает ягоды как крупные, сочные, сладкие и ароматные",
+        "Каталог не указывает региональный протокол испытаний или родительские линии"
+      ]
+    },
+    {
+      "id": "arifova-dissertation-antei-strawberry",
+      "label": "З. И. Арифова, диссертация; опытные данные 2012–2020, таблица 3.8, PDF с репозитория НБГНЦ",
+      "url": "https://obr.nbgnsc.ru/wp-content/uploads/2021/10/%D0%94%D0%B8%D1%81%D1%81%D0%B5%D1%80%D1%82%D0%B0%D1%86%D0%B8%D1%8F-%D0%90%D1%80%D0%B8%D1%84%D0%BE%D0%B2%D0%BE%D0%B9-%D0%97.%D0%98..pdf",
+      "claims": [
+        "Антей перечислен в сортовой таблице земляники садовой",
+        "Отнесён в исследовании к раннему сроку созревания",
+        "Восстановление тургора листьев 60±5,2% в условиях приведённого опыта",
+        "Источник не даёт оригинатора/код и не приравнивает Антей к Antea"
+      ]
+    },
+    {
+      "id": "agga-vinogradny-bum-seller-listing",
+      "label": "Объявление продавца рассады «Виноградный бум» на Agga, обновлено 03.10.2026",
+      "url": "https://agga.ua/ru/ad/101155106",
+      "claims": [
+        "Продавец выставляет рассаду под именем «полуница гроздевого плодоношения сорта Виноградный бум»",
+        "Продавец заявляет ремонтантность и сладкие ягоды без кислинки",
+        "Объявление не содержит оригинатора, кода/регистрационной записи или происхождения маточника"
+      ]
+    },
+    {
+      "id": "civ-official-premy-monograph",
+      "label": "CIV · монография Premy* (официальный PDF селекционера)",
+      "url": "https://civ.it/wp-content/uploads/2016/12/Premy-29-11-16.pdf",
+      "claims": [
+        "точное сортовое имя PREMY*",
+        "селекция CIV, Италия",
+        "коммерческое распространение с 2013 года",
+        "заявка на европейскую охрану 2013/1940"
+      ]
+    },
+    {
+      "id": "civ-strawberry-variety-list-antea",
+      "label": "CIV · официальный перечень сортов земляники",
+      "url": "https://civ.it/en/strawberries/",
+      "claims": [
+        "CIV прямо включает сорт ANTEA в перечень клубники / садовой земляники",
+        "каталожная страница подтверждает исходное написание ANTEA и культуру, не сообщая в самом перечне детальную агрономическую карточку"
+      ]
+    }
+  ],
+  "sourceClaimsBySlug": {
+    "strawberry-sibilla": [
+      "civ-sibilla"
+    ],
+    "strawberry-giusy": [
+      "civ-giusy"
+    ],
+    "strawberry-sandra-bl34": [
+      "coviro-sandra"
+    ],
+    "strawberry-faith": [
+      "cfia-faith"
+    ],
+    "strawberry-allegro": [
+      "cfia-allegro"
+    ],
+    "strawberry-falco": [
+      "flevo-falco"
+    ],
+    "strawberry-jenkka": [
+      "freshforward-jenkka"
+    ],
+    "strawberry-cadenza": [
+      "freshforward-cadenza"
+    ],
+    "strawberry-lambada": [
+      "freshforward-lambada"
+    ],
+    "strawberry-salsa": [
+      "freshforward-salsa"
+    ],
+    "strawberry-vima-xima": [
+      "vissers-zanta-xima"
+    ],
+    "strawberry-florida-beauty": [
+      "uf-ifas-florida-beauty"
+    ],
+    "strawberry-mara-des-bois": [
+      "marionnet-mara-des-bois"
+    ],
+    "strawberry-fenella": [
+      "vissers-fenella"
+    ],
+    "strawberry-vima-rina": [
+      "vissers-vima-rina"
+    ],
+    "strawberry-mariguette": [
+      "marionnet-mariguette"
+    ],
+    "strawberry-bravura": [
+      "cfia-bravura"
+    ],
+    "strawberry-tsunaki": [
+      "academic-tsunaki"
+    ],
+    "strawberry-mashenka": [
+      "ogorodum-mashenka"
+    ],
+    "strawberry-chamora-turusi": [
+      "rastisad-chamora"
+    ],
+    "strawberry-lord": [
+      "sortoved-lord"
+    ],
+    "zephyr": [
+      "avu-zephyr"
+    ],
+    "black-prince-strawberry": [
+      "klubnichnyi-hutorok-black-prince"
+    ],
+    "strawberry-krapo-10": [
+      "crea-crapo-10-228-1"
+    ],
+    "strawberry-lucia": [
+      "cfia-lucia"
+    ],
+    "strawberry-marmolada": [
+      "pinova-marmolada"
+    ],
+    "strawberry-victoria": [
+      "tomsk-depagro-victoria"
+    ],
+    "strawberry-premy": [
+      "deutenkofen-premy-2020",
+      "civ-official-premy-monograph"
+    ],
+    "strawberry-gariguette": [
+      "inrae-gariguette-archive"
+    ],
+    "strawberry-limalexia": [
+      "cfia-limalexia"
+    ],
+    "strawberry-gigantella-maxim-tail": [
+      "ru2704274-gigantella-maxim",
+      "orton-maxim-strawberry"
+    ],
+    "strawberry-nandi": [
+      "laimburg-coviro-nandi"
+    ],
+    "strawberry-kama": [
+      "vniispk-kama-trial"
+    ],
+    "strawberry-monterey": [
+      "cfia-monterey"
+    ],
+    "strawberry-cabrillo": [
+      "cfia-cabrillo"
+    ],
+    "strawberry-charlotte": [
+      "cfia-charlotte"
+    ],
+    "strawberry-elianny": [
+      "vissers-elianny-catalog",
+      "fruitmasters-elianny-2009"
+    ],
+    "strawberry-black-swan": [
+      "vashnil-black-swan-strawberry"
+    ],
+    "strawberry-aleksandra-yakutia": [
+      "yakutia-aleksandra-hybrid-strawberry"
+    ],
+    "strawberry-queen-elizabeth": [
+      "sfnca-elizaveta2-queen-elizabeth",
+      "vashnil-queen-elizabeth-strawberry"
+    ],
+    "strawberry-oxheart-trade-name": [
+      "retail name exists for strawberry listing",
+      "identity/code not established"
+    ],
+    "strawberry-carmen-czech": [
+      "Czech register code H809; registered 1971",
+      "SEMPRA PRAHA listed maintainer",
+      "Samara NIISKH breeding paper uses cultivar as parent"
+    ],
+    "strawberry-garland-trade-name": [
+      "commercial listing describes remontant type",
+      "seller names itself originator; no selection code"
+    ],
+    "strawberry-flamingo-trade-name": [
+      "seller descriptions of pink-fruited strawberry",
+      "second seller recommends another pollinator cultivar",
+      "identity across sellers not established"
+    ],
+    "strawberry-chile-species": [
+      "Fragaria chiloensis species/germplasm in Chile",
+      "white/pink selections described in HortScience review",
+      "no named cultivar identity for query label"
+    ],
+    "strawberry-sugar-lia": [
+      "ashs-sugar-lia-cultivar",
+      "cresO-sugar-lia-trial"
+    ],
+    "strawberry-slonenok": [
+      "ministry-register-slonenok",
+      "niiss-slonenok-breeding-history"
+    ],
+    "strawberry-pervoklassnitsa": [
+      "agroapk-pervoklassnitsa-trials",
+      "siberian-oasis-pervoklassnitsa"
+    ],
+    "strawberry-bogema": [
+      "ministry-register-bogema",
+      "vsau-bogema-trial"
+    ],
+    "strawberry-hademar": [
+      "cfia-hademar"
+    ],
+    "strawberry-fronteras": [
+      "cfia-fronteras"
+    ],
+    "strawberry-harmonie": [
+      "cfia-harmonie"
+    ],
+    "strawberry-barynya": [
+      "vstisp-barynya-evaluation"
+    ],
+    "strawberry-mae": [
+      "ashs-mae-cultivar"
+    ],
+    "strawberry-furore": [
+      "flevo-furore"
+    ],
+    "strawberry-temptation-syngenta": [
+      "syngenta-temptation"
+    ],
+    "strawberry-brighton-uc": [
+      "ucdavis-brighton"
+    ],
+    "strawberry-selva-uc": [
+      "ucdavis-selva"
+    ],
+    "strawberry-brina-coviro": [
+      "coviro-brina-bl65r"
+    ],
+    "strawberry-giant-jorney-trade": [
+      "greenplants-giant-jorney"
+    ],
+    "strawberry-krapo-generic": [
+      "crea-crapo-10-228-1"
+    ],
+    "strawberry-scala-trade": [
+      "scala-strawberry-retail",
+      "sakpatenti-sg134"
+    ],
+    "strawberry-cabrillo-uc": [
+      "ucdavis-cabrillo"
+    ],
+    "strawberry-monterey-uc": [
+      "ucdavis-monterey"
+    ],
+    "strawberry-ostara-trade": [
+      "prospecierara-ostara"
+    ],
+    "strawberry-elvira-trade": [
+      "pzmay-elvira"
+    ],
+    "strawberry-lakomka-vir": [
+      "vir-lakomka-pavlovsk"
+    ],
+    "strawberry-belrubi-skfnc": [
+      "skfnc-belrubi"
+    ],
+    "strawberry-ananasnaya-name-check": [
+      "osu-usda-ananasnaya",
+      "rostok-ananasnaya-strawberry"
+    ],
+    "strawberry-solnechnaya-polyanka-krasnoyarsk": [
+      "kgau-solnechnaya-polyanka"
+    ],
+    "strawberry-nadja-bl29": [
+      "bernardini-nadja-bl29",
+      "sweetberry-nadja-trade-description"
+    ],
+    "strawberry-elody-bernardini": [
+      "bernardini-elody"
+    ],
+    "strawberry-alturas-bernardini": [
+      "bernardini-alturas"
+    ],
+    "strawberry-cardinal-arkansas": [
+      "usda-grin-cardinal-pi551540"
+    ],
+    "strawberry-garda-crea": [
+      "crea-garda-licensing"
+    ],
+    "strawberry-big-dipper-trade": [
+      "uralsad-big-dipper-listing"
+    ],
+    "strawberry-giant-delicacy-trade": [
+      "nashsad-giant-delicacy-listing",
+      "vashnil-giant-delicacy-listing"
+    ],
+    "strawberry-cory-p241102": [
+      "vissers-cory-p241102-catalog"
+    ],
+    "strawberry-rosaria-kraege": [
+      "kraege-rosaria"
+    ],
+    "strawberry-zolushka-vstisp": [
+      "vstisp-zolushka-paper"
+    ],
+    "strawberry-moskova-trade": [
+      "berrystore-moskova-listing"
+    ],
+    "strawberry-henry-hamburger-trade": [
+      "vashnil-henry-listing"
+    ],
+    "strawberry-grebeshok-trade": [
+      "malinnik-grebeshok-listing"
+    ],
+    "strawberry-sweet-colossus-trade": [
+      "mesarbustes-colossus-listing"
+    ],
+    "strawberry-olympia-nf638": [
+      "geoplant-olympia-nf638"
+    ],
+    "strawberry-dahli-flevo": [
+      "flevoberry-dahli"
+    ],
+    "strawberry-feya-samara": [
+      "gossortrf-strawberry-feya",
+      "samara-vestnik-feya"
+    ],
+    "strawberry-russian-size-trade": [
+      "ncsemena-russian-size"
+    ],
+    "strawberry-orlets-vniispk": {
+      "sources": [
+        "vniispk-orlets-orenburg",
+        "rcsi-orlets-phenology"
+      ]
+    },
+    "strawberry-federica-berrylab": {
+      "sources": [
+        "berrylab-federica",
+        "agronomplants-federica-2025"
+      ]
+    },
+    "strawberry-kiss-nellis-trade": {
+      "sources": [
+        "yagodnoe-kiss-nellis",
+        "vplate-kiss-nellis"
+      ]
+    },
+    "strawberry-white-swede-trade": {
+      "sources": [
+        "nikogarden-white-swede"
+      ]
+    },
+    "strawberry-florice-flevo": {
+      "sources": [
+        "flevoberry-florice",
+        "flevoberry-florice-manual"
+      ]
+    },
+    "strawberry-honeoye-cornell": {
+      "sources": [
+        "cornell-honeoye-pedigree",
+        "cornell-honeoye-ny-extension",
+        "sad-i-ogorod-medovaya-honeoye"
+      ]
+    },
+    "strawberry-estafeta-vstisp": {
+      "sources": [
+        "vstisp-estafeta-breeding",
+        "rior-strawberry-sortiment"
+      ]
+    },
+    "strawberry-daroyal-planasa": [
+      "planasa-daroyal"
+    ],
+    "strawberry-zenga-zengana-trial": [
+      "vniispk-zenga-zengana-orenburg",
+      "popovski-zenga-skopje"
+    ],
+    "strawberry-madlen-skopje-trial": [
+      "scindeks-madlen-skopje"
+    ],
+    "strawberry-kamrad-pobeditel-breeding": [
+      "ssaa-kamrad-2025",
+      "uzhniy-kamrad-moscow-delicacy"
+    ],
+    "strawberry-moscow-delicacy-trade": [
+      "uzhniy-kamrad-moscow-delicacy",
+      "all-seeds-moscow-delicacy-registry-copy"
+    ],
+    "strawberry-klodia-civ": [
+      "civ-klodia-civh725"
+    ],
+    "strawberry-verona-samara-study": [
+      "samara-verona-amino-study"
+    ],
+    "strawberry-mamochka-vniispk-study": [
+      "mamochka-heavy-metals-study"
+    ],
+    "strawberry-sweettooth-amur-trial": [
+      "dalgau-2019-strawberry-trial"
+    ],
+    "strawberry-vkusnyatina-amur-trial": [
+      "dalgau-2019-strawberry-trial"
+    ],
+    "strawberry-velikobritaniya-trade": [
+      "rostok-velikobritaniya"
+    ],
+    "strawberry-legran-frigolabs-trade": [
+      "frigolab-legran"
+    ],
+    "strawberry-feng-xiang-nursery": [
+      "klubnichny-hutorok-feng-xiang"
+    ],
+    "strawberry-gento-ogorodik-trade": [
+      "ogorodik-gento"
+    ],
+    "strawberry-czech-beauty-trade": [
+      "klubnichny-salut-czech-beauty"
+    ],
+    "strawberry-giant-russian-f1-gavrish": [
+      "gavrish-giant-russian-f1-catalog"
+    ],
+    "strawberry-antei-arifova-study": [
+      "arifova-dissertation-antei-strawberry"
+    ],
+    "strawberry-vinogradny-bum-trade": [
+      "agga-vinogradny-bum-seller-listing"
+    ],
+    "strawberry-antea": [
+      "civ-strawberry-variety-list-antea"
+    ]
+  },
+  "clusters": [
+    {
+      "name": "александра",
+      "query": "клубника александра",
+      "volume": 6,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "полка",
+      "query": "клубника полка",
+      "volume": 5,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-polka",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "антея",
+      "query": "клубника антея",
+      "volume": 4,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-antea",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "бычье сердце",
+      "query": "клубника бычье сердце",
+      "volume": 4,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "лия сахарная",
+      "query": "клубника лия сахарная",
+      "volume": 4,
+      "disposition": "verified_new",
+      "reason": "Для сортового имени добавлен проверенный профиль с источниками селекции/реестра и конкретными признаками или регионально ограниченными полевыми данными.",
+      "articleSlug": "strawberry-sugar-lia",
+      "sourceIds": [
+        "ashs-sugar-lia-cultivar",
+        "cresO-sugar-lia-trial"
+      ]
+    },
+    {
+      "name": "лючия",
+      "query": "клубника лючия",
+      "volume": 4,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "мармелада",
+      "query": "клубника мармелада",
+      "volume": 4,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "слон",
+      "query": "слон клубника",
+      "volume": 4,
+      "disposition": "verified_new",
+      "reason": "Для сортового имени добавлен проверенный профиль с источниками селекции/реестра и конкретными признаками или регионально ограниченными полевыми данными.",
+      "articleSlug": "strawberry-slonenok",
+      "sourceIds": [
+        "ministry-register-slonenok",
+        "niiss-slonenok-breeding-history"
+      ]
+    },
+    {
+      "name": "фейт",
+      "query": "клубника фейт",
+      "volume": 4,
+      "disposition": "verified_new",
+      "articleSlug": "strawberry-faith",
+      "reason": "Есть конкретная карточка оригинатора/реестра с уникальными сортовыми признаками."
+    },
+    {
+      "name": "вивара",
+      "query": "клубника вивара",
+      "volume": 3,
+      "disposition": "already_covered",
+      "reason": "Сорт уже представлен в public varieties / существующем исследовательском модуле; новый профиль не создаётся.",
+      "articleSlug": "strawberry-vivara"
+    },
+    {
+      "name": "гирлянда",
+      "query": "клубника гирлянда",
+      "volume": 3,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "кармен",
+      "query": "клубника кармен",
+      "volume": 3,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "квики",
+      "query": "клубника квики",
+      "volume": 3,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-quicky",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "королева елизавета",
+      "query": "клубника королева елизавета описание сорта фото отзывы садоводов",
+      "volume": 3,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "лакомка",
+      "query": "клубника лакомка",
+      "volume": 3,
+      "disposition": "verified_new",
+      "reason": "Публикация ВИР включает Лакомку в полевую оценку земляники садовой на Павловской станции; в статье сорт перечислен среди позднеспелых в условиях опыта 2010–2015. Сортовые цифры за пределами источника не заявляются."
+    },
+    {
+      "name": "лималексия",
+      "query": "лималексия клубника описание",
+      "volume": 3,
+      "disposition": "verified_new",
+      "reason": "CFIA passport supplies breeding history and official description, whose detailed technical examination was performed by Bundessortenamt.",
+      "articleSlug": "strawberry-limalexia",
+      "sourceIds": [
+        "cfia-limalexia"
+      ]
+    },
+    {
+      "name": "мара де буа",
+      "query": "клубника мара де буа",
+      "volume": 3,
+      "disposition": "verified_new",
+      "reason": "Каталог селекционера подтверждает ремонтантный тип и отличительный вкусовой профиль; отдельные показатели урожайности в источнике отсутствуют.",
+      "articleSlug": "strawberry-mara-des-bois"
+    },
+    {
+      "name": "маршал",
+      "query": "клубника маршал",
+      "volume": 3,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-marshal",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "первоклассница",
+      "query": "клубника первоклассница",
+      "volume": 3,
+      "disposition": "verified_new",
+      "reason": "Для сортового имени добавлен проверенный профиль с источниками селекции/реестра и конкретными признаками или регионально ограниченными полевыми данными.",
+      "articleSlug": "strawberry-pervoklassnitsa",
+      "sourceIds": [
+        "agroapk-pervoklassnitsa-trials",
+        "siberian-oasis-pervoklassnitsa"
+      ]
+    },
+    {
+      "name": "прими",
+      "query": "клубника прими",
+      "volume": 3,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "сандра",
+      "query": "клубника сандра",
+      "volume": 3,
+      "disposition": "verified_new",
+      "articleSlug": "strawberry-sandra-bl34",
+      "reason": "Есть конкретная карточка оригинатора/реестра с уникальными сортовыми признаками."
+    },
+    {
+      "name": "фенелла",
+      "query": "клубника фенелла",
+      "volume": 3,
+      "disposition": "verified_new",
+      "reason": "Каталог Vissers указывает селекцию NIAB EMR, среднепоздний срок и вкус.",
+      "articleSlug": "strawberry-fenella"
+    },
+    {
+      "name": "чили",
+      "query": "клубника чили описание сорта",
+      "volume": 3,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "\"клубника мурано отзывы\"",
+      "query": "\"клубника мурано описание сорта фото отзывы\"",
+      "volume": 2,
+      "disposition": "already_covered",
+      "reason": "Сорт уже представлен в public varieties / существующем исследовательском модуле; новый профиль не создаётся.",
+      "articleSlug": "murano"
+    },
+    {
+      "name": "ами",
+      "query": "клубника ами",
+      "volume": 2,
+      "disposition": "trade_description",
+      "reason": "Отдельно разобрана неустановленная связь Ami/Amy/Эми с Генри; карточка не подтверждает это как синоним.",
+      "slug": "strawberry-henry-hamburger-trade"
+    },
+    {
+      "name": "барыня",
+      "query": "клубника барыня",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "Сортовая идентичность и происхождение подтверждены научным/официальным источником; условия и пределы переносимости явно указаны."
+    },
+    {
+      "name": "богема",
+      "query": "клубника богема",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "Для сортового имени добавлен проверенный профиль с источниками селекции/реестра и конкретными признаками или регионально ограниченными полевыми данными.",
+      "articleSlug": "strawberry-bogema",
+      "sourceIds": [
+        "ministry-register-bogema",
+        "vsau-bogema-trial"
+      ]
+    },
+    {
+      "name": "большая медведица",
+      "query": "клубника большая медведица",
+      "volume": 2,
+      "disposition": "trade_description",
+      "reason": "Содержательное описание конкретного продавца; оригинатор и селекционная идентичность не установлены.",
+      "slug": "strawberry-big-dipper-trade"
+    },
+    {
+      "name": "виктория",
+      "query": "клубника виктория",
+      "volume": 2,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "вима занта",
+      "query": "клубника вима занта",
+      "volume": 2,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-vima-zanta",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "вима ксима",
+      "query": "клубника вима ксима",
+      "volume": 2,
+      "disposition": "verified_new",
+      "articleSlug": "strawberry-vima-xima",
+      "reason": "Есть конкретная карточка оригинатора/реестра с уникальными сортовыми признаками."
+    },
+    {
+      "name": "вима рина",
+      "query": "вима рина клубника описание",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "Каталог Vissers подтверждает ремонтантность и сравнение сортовых признаков с Selva.",
+      "articleSlug": "strawberry-vima-rina"
+    },
+    {
+      "name": "вкуснятина",
+      "query": "клубника вкуснятина описание сорта",
+      "volume": 2,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "гигантский деликатес",
+      "query": "клубника гигантский деликатес",
+      "volume": 2,
+      "disposition": "trade_description",
+      "reason": "Сопоставлены две карточки питомников; характеристики и сроки атрибутированы продавцам, стабильное селекционное происхождение не установлено.",
+      "slug": "strawberry-giant-delicacy-trade"
+    },
+    {
+      "name": "джуси",
+      "query": "клубника джуси",
+      "volume": 2,
+      "disposition": "verified_new",
+      "articleSlug": "strawberry-giusy",
+      "reason": "Есть конкретная карточка оригинатора/реестра с уникальными сортовыми признаками."
+    },
+    {
+      "name": "искушение",
+      "query": "клубника искушение",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "Найдено проверяемое сортовое/торговое описание оригинатора; профиль различает установленный продукт и одноимённые рыночные саженцы."
+    },
+    {
+      "name": "кама",
+      "query": "клубника кама",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "Имя Камы подтверждено российским сортоиспытанием ВСТИСП/ВНИИСПК; профиль приводит ранний срок и урожайность только как результаты конкретного опыта и честно обозначает отсутствие паспорта родословной."
+    },
+    {
+      "name": "кисс неллис",
+      "query": "клубника кисс неллис описание сорта",
+      "volume": 2,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "легран",
+      "query": "клубника легран описание сорта",
+      "volume": 2,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "мадлен",
+      "query": "клубника мадлен описание сорта",
+      "volume": 2,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "маригет",
+      "query": "клубника маригет",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "Оригинатор Marionnet подтверждает статус, тип плодоношения и отличительные признаки плодов.",
+      "articleSlug": "strawberry-mariguette"
+    },
+    {
+      "name": "марышка",
+      "query": "клубника марышка",
+      "volume": 2,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-maryshka",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "мея",
+      "query": "клубника мея",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "Сортовая идентичность и происхождение подтверждены научным/официальным источником; условия и пределы переносимости явно указаны."
+    },
+    {
+      "name": "надя",
+      "query": "клубника надя",
+      "volume": 2,
+      "disposition": "supplemental_profile",
+      "reason": "Сорт BL29*-NADJA® проверен по перечню селекционера; отдельно отмечены пределы продавцовского описания.",
+      "slug": "strawberry-nadja-bl29"
+    },
+    {
+      "name": "нанди",
+      "query": "клубника нанди",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "Идентичность подтверждена обзором Laimburg (CIV, Nandì, заявка 2015); свойства явно атрибутированы интервью Coviro. Exact query routes to strawberry-nandi; без неподтверждённых численных обещаний."
+    },
+    {
+      "name": "нсд",
+      "query": "клубника нсд лучшие сорта",
+      "volume": 2,
+      "disposition": "non_cultivar_or_generic",
+      "reason": "Кластер не является названием отдельного сорта клубники; относится к общему интенту, формату выращивания, рецепту, стране или посторонней сущности."
+    },
+    {
+      "name": "розария",
+      "query": "клубника розария",
+      "volume": 2,
+      "disposition": "supplemental_profile",
+      "reason": "Оригинатор Stefan Kraege указывает Rosaria (34/20/4A), ранний сорт; свойства атрибутированы селекционной карточке.",
+      "slug": "strawberry-rosaria-kraege"
+    },
+    {
+      "name": "русский размер",
+      "query": "клубника русский размер",
+      "volume": 2,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "сладкий колосс",
+      "query": "клубника сладкий колосс описание сорта фото",
+      "volume": 2,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "тоскана",
+      "query": "клубника тоскана",
+      "volume": 2,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-toscana",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "федерико",
+      "query": "клубника федерико",
+      "volume": 2,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "флорида бьюти",
+      "query": "клубника флорида бьюти",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "Карточка UF/IFAS содержит происхождение, конкретные признаки и результаты многолетних испытаний сорта.",
+      "articleSlug": "strawberry-florida-beauty"
+    },
+    {
+      "name": "фурор",
+      "query": "клубника фурор",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "Найдено проверяемое сортовое/торговое описание оригинатора; профиль различает установленный продукт и одноимённые рыночные саженцы."
+    },
+    {
+      "name": "хадемар",
+      "query": "хадемар клубника описание",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "Идентичность и отличительные признаки подтверждены официальной технической записью CFIA; переносимость полевых характеристик ограничена условиями указанного испытания."
+    },
+    {
+      "name": "шарлотта",
+      "query": "клубника шарлотта",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "CFIA official PBR record identifies Ciref Charlotte and gives crossing history, remontant type and comparative descriptors; distinguishes this registered variety from generic namesakes."
+    },
+    {
+      "name": "элиане",
+      "query": "клубника элиане описание сорта",
+      "volume": 2,
+      "disposition": "verified_new",
+      "reason": "Vissers breeder catalogue lists Elianny; Fruitmasters 2009 report attributes the natural-cross 1998 history and explicitly contextualized crop description. Cyrillic aliases mapped to the breeder name; no yield or calendrical promises."
+    },
+    {
+      "name": "эстафета",
+      "query": "клубника эстафета описание сорта",
+      "volume": 2,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "\"альба сорта\"",
+      "query": "\"альба клубника описание сорта\"",
+      "volume": 1,
+      "disposition": "already_covered",
+      "reason": "Сорт уже представлен в public varieties / существующем исследовательском модуле; новый профиль не создаётся.",
+      "articleSlug": "alba"
+    },
+    {
+      "name": "\"клубника азия сорта\"",
+      "query": "\"клубника азия описание сорта\"",
+      "volume": 1,
+      "disposition": "already_covered",
+      "reason": "Сорт уже представлен в public varieties / существующем исследовательском модуле; новый профиль не создаётся.",
+      "articleSlug": "aziya"
+    },
+    {
+      "name": "аллегро",
+      "query": "клубника аллегро",
+      "volume": 1,
+      "disposition": "verified_new",
+      "articleSlug": "strawberry-allegro",
+      "reason": "Есть конкретная карточка оригинатора/реестра с уникальными сортовыми признаками."
+    },
+    {
+      "name": "альтурас",
+      "query": "клубника альтурас",
+      "volume": 1,
+      "disposition": "supplemental_profile",
+      "reason": "Имя ALTURAS* и ремонтантная группа подтверждены каталогом селекционера; иных свойств источник не сообщает.",
+      "slug": "strawberry-alturas-bernardini"
+    },
+    {
+      "name": "ананасная",
+      "query": "клубника ананасная",
+      "volume": 1,
+      "disposition": "trade_description",
+      "reason": "Название имеет подтверждённый омоним Ananasnaya у актинидии; торговая карточка белоплодной земляники существует, но её селекционная идентичность не подтверждена. Профиль разграничивает эти объекты и показывает, что проверить перед покупкой.",
+      "slug": "strawberry-ananasnaya-name-check"
+    },
+    {
+      "name": "белая описанием",
+      "query": "белая клубника сорта с фото и описанием",
+      "volume": 1,
+      "disposition": "non_cultivar_or_generic",
+      "reason": "Кластер не является названием отдельного сорта клубники; относится к общему интенту, формату выращивания, рецепту, стране или посторонней сущности."
+    },
+    {
+      "name": "белруби",
+      "query": "земляника белруби",
+      "volume": 1,
+      "disposition": "verified_new",
+      "reason": "СКФНЦСВВ публикует помологическую карточку сорта с происхождением и характеристиками, явно ограниченными рекомендованной зоной Северного Кавказа."
+    },
+    {
+      "name": "белый швед",
+      "query": "клубника белый швед",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "бизнеса",
+      "query": "клубника для бизнеса лучшие сорта",
+      "volume": 1,
+      "disposition": "non_cultivar_or_generic",
+      "reason": "Кластер не является названием отдельного сорта клубники; относится к общему интенту, формату выращивания, рецепту, стране или посторонней сущности."
+    },
+    {
+      "name": "богота",
+      "query": "клубника богота",
+      "volume": 1,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-bogota",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "брайтон",
+      "query": "клубника брайтон",
+      "volume": 1,
+      "disposition": "verified_new",
+      "reason": "Университетская программа селекции подтверждает клубничный сорт, селекционера и год выпуска; количественные региональные характеристики не приписываются.",
+      "articleSlug": "strawberry-brighton-uc"
+    },
+    {
+      "name": "брина",
+      "query": "клубника брина",
+      "volume": 1,
+      "disposition": "verified_new",
+      "reason": "Оригинатор Coviro публикует клубничный материал BL65R Brina, признаки селекционера и номер европейской патентной заявки.",
+      "articleSlug": "strawberry-brina-coviro"
+    },
+    {
+      "name": "букет гипсофилы клубникой мелкий калибр шоколаде sweet berry радуга",
+      "query": "букет из гипсофилы с клубникой сорта земляника мелкий калибр в шоколаде sweet berry радуга",
+      "volume": 1,
+      "disposition": "non_cultivar_or_generic",
+      "reason": "Кластер не является названием отдельного сорта клубники; относится к общему интенту, формату выращивания, рецепту, стране или посторонней сущности."
+    },
+    {
+      "name": "великобритания",
+      "query": "клубника великобритания",
+      "volume": 1,
+      "disposition": "non_cultivar_or_generic",
+      "reason": "Кластер не является названием отдельного сорта клубники; относится к общему интенту, формату выращивания, рецепту, стране или посторонней сущности."
+    },
+    {
+      "name": "вента",
+      "query": "клубника вента",
+      "volume": 1,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-venta",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "верона",
+      "query": "клубника верона",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "вима тарда",
+      "query": "вима тарда клубника описание",
+      "volume": 1,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-vima-tarda",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "виноградный бум",
+      "query": "клубника виноградный бум",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "гарда",
+      "query": "клубника гарда",
+      "volume": 1,
+      "disposition": "supplemental_profile",
+      "reason": "Сортовое имя GARDA подтверждено официальными лицензионными документами CREA; источник не содержит агрономических показателей.",
+      "slug": "strawberry-garda-crea"
+    },
+    {
+      "name": "гаригуэтта",
+      "query": "клубника гаригуэтта",
+      "volume": 1,
+      "disposition": "verified_new",
+      "reason": "Идентификация и ранний неремонтантный тип подтверждаются архивной страницей INRA; количественных региональных результатов источник не приводит.",
+      "articleSlug": "strawberry-gariguette",
+      "sourceIds": [
+        "inrae-gariguette-archive"
+      ]
+    },
+    {
+      "name": "гармония",
+      "query": "клубника гармония",
+      "volume": 1,
+      "disposition": "verified_new",
+      "reason": "Идентичность и отличительные признаки подтверждены официальной технической записью CFIA; переносимость полевых характеристик ограничена условиями указанного испытания."
+    },
+    {
+      "name": "генри",
+      "query": "клубника генри",
+      "volume": 1,
+      "disposition": "trade_description",
+      "reason": "Карточка «Ваша Нива» подтверждает употребление имени Henry’s Hamburgers, но не селекционную идентичность.",
+      "slug": "strawberry-henry-hamburger-trade"
+    },
+    {
+      "name": "гребешок",
+      "query": "клубника гребешок",
+      "volume": 1,
+      "disposition": "trade_description",
+      "reason": "Разобрано предложение семян Малинник.ру и атрибутирована версия происхождения продавца; первичный паспорт сорта не найден.",
+      "slug": "strawberry-grebeshok-trade"
+    },
+    {
+      "name": "дали",
+      "query": "клубника дали",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "дероял",
+      "query": "дероял клубника описание",
+      "volume": 1,
+      "disposition": "verified_new",
+      "reason": "Daroyal подтверждён карточкой оригинатора Planasa; русское написание «Дероял» сопоставляется с оригинальным латинским именем.",
+      "articleSlug": "strawberry-daroyal-planasa",
+      "sourceId": "planasa-daroyal"
+    },
+    {
+      "name": "дженка",
+      "query": "клубника дженка описание сорта",
+      "volume": 1,
+      "disposition": "verified_new",
+      "articleSlug": "strawberry-jenkka",
+      "reason": "Есть конкретная карточка оригинатора/реестра с уникальными сортовыми признаками."
+    },
+    {
+      "name": "дженто",
+      "query": "клубника дженто описание сорта",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "дукат",
+      "query": "клубника дукат",
+      "volume": 1,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-dukat",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "женева",
+      "query": "клубника женева",
+      "volume": 1,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-geneva",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "золушка",
+      "query": "земляника золушка",
+      "volume": 1,
+      "disposition": "supplemental_profile",
+      "reason": "В публикации ВСТИСП приведены происхождение, год допуска и зоны районирования сорта.",
+      "slug": "strawberry-zolushka-vstisp"
+    },
+    {
+      "name": "избранница",
+      "query": "клубника избранница",
+      "volume": 1,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-izbrannitsa",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "ирма",
+      "query": "клубника ирма",
+      "volume": 1,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-irma",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "каденза",
+      "query": "клубника каденза описание сорта",
+      "volume": 1,
+      "disposition": "verified_new",
+      "articleSlug": "strawberry-cadenza",
+      "reason": "Есть конкретная карточка оригинатора/реестра с уникальными сортовыми признаками."
+    },
+    {
+      "name": "какую почву любит",
+      "query": "какую почву любит клубника",
+      "volume": 1,
+      "disposition": "non_cultivar_or_generic",
+      "reason": "Кластер не является названием отдельного сорта клубники; относится к общему интенту, формату выращивания, рецепту, стране или посторонней сущности."
+    },
+    {
+      "name": "кардинал",
+      "query": "клубника кардинал",
+      "volume": 1,
+      "disposition": "supplemental_profile",
+      "reason": "Cardinal PI 551540 подтверждён базой USDA-ARS; профиль ограничивает идентичность конкретным американским сортом и не приписывает её одноимённой рознице.",
+      "slug": "strawberry-cardinal-arkansas"
+    },
+    {
+      "name": "клодия",
+      "query": "клубника клодия",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "комрад победитель",
+      "query": "клубника комрад победитель описание сорта фото отзывы",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "кори",
+      "query": "клубника кори",
+      "volume": 1,
+      "disposition": "supplemental_profile",
+      "reason": "Имя и код Cory® P241102 подтверждены каталогом оригинатора Vissers America; свойства ограничены утверждениями оригинатора.",
+      "slug": "strawberry-cory-p241102"
+    },
+    {
+      "name": "королева елизавета 2",
+      "query": "королева елизавета 2 клубника описание сорта отзывы садоводов",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "крымская",
+      "query": "крымская клубника",
+      "volume": 1,
+      "disposition": "non_cultivar_or_generic",
+      "reason": "Кластер не является названием отдельного сорта клубники; относится к общему интенту, формату выращивания, рецепту, стране или посторонней сущности."
+    },
+    {
+      "name": "ламбада",
+      "query": "клубника ламбада",
+      "volume": 1,
+      "disposition": "verified_new",
+      "articleSlug": "strawberry-lambada",
+      "reason": "Есть конкретная карточка оригинатора/реестра с уникальными сортовыми признаками."
+    },
+    {
+      "name": "мамочка",
+      "query": "клубника мамочка описание сорта",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "медовая",
+      "query": "клубника медовая",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "монтерей",
+      "query": "клубника монтерей",
+      "volume": 1,
+      "disposition": "verified_new",
+      "reason": "CFIA official varietal description confirms the cultivar, parentage, day-neutral type and comparative trial characteristics."
+    },
+    {
+      "name": "москова",
+      "query": "клубника москова",
+      "volume": 1,
+      "disposition": "trade_description",
+      "reason": "Разобрано конкретное предложение фермы Борисовых; оригинатор и код не указаны.",
+      "slug": "strawberry-moskova-trade"
+    },
+    {
+      "name": "московский деликатес",
+      "query": "клубника московский деликатес",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "олимпия",
+      "query": "клубника олимпия",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "орлец",
+      "query": "клубника орлец",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "остара",
+      "query": "клубника остара",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "пандора",
+      "query": "клубника пандора",
+      "volume": 1,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-pandora",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "русский гигант",
+      "query": "клубника русский гигант",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "сальса",
+      "query": "клубника сальса",
+      "volume": 1,
+      "disposition": "verified_new",
+      "articleSlug": "strawberry-salsa",
+      "reason": "Есть конкретная карточка оригинатора/реестра с уникальными сортовыми признаками."
+    },
+    {
+      "name": "сахаром зиму без варки",
+      "query": "клубника с сахаром на зиму без варки",
+      "volume": 1,
+      "disposition": "non_cultivar_or_generic",
+      "reason": "Кластер не является названием отдельного сорта клубники; относится к общему интенту, формату выращивания, рецепту, стране или посторонней сущности."
+    },
+    {
+      "name": "сахаром зиму без варки морозилке",
+      "query": "клубника с сахаром на зиму без варки в морозилке",
+      "volume": 1,
+      "disposition": "non_cultivar_or_generic",
+      "reason": "Кластер не является названием отдельного сорта клубники; относится к общему интенту, формату выращивания, рецепту, стране или посторонней сущности."
+    },
+    {
+      "name": "сельва",
+      "query": "клубника сельва",
+      "volume": 1,
+      "disposition": "verified_new",
+      "reason": "Университетская программа селекции подтверждает клубничный сорт, селекционера и год выпуска; количественные региональные характеристики не приписываются.",
+      "articleSlug": "strawberry-selva-uc"
+    },
+    {
+      "name": "сибилла",
+      "query": "клубника сибилла",
+      "volume": 1,
+      "disposition": "verified_new",
+      "articleSlug": "strawberry-sibilla",
+      "reason": "Есть конкретная карточка оригинатора/реестра с уникальными сортовыми признаками."
+    },
+    {
+      "name": "симфония",
+      "query": "клубника симфония",
+      "volume": 1,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-symphonia",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "скала",
+      "query": "клубника скала",
+      "volume": 1,
+      "disposition": "verified_new",
+      "reason": "Покрыто как торговое имя с явной границей идентичности: продавцы предлагают Scala, а официальная заявка Franko Zenti относится к коду SG134 без подтверждённого синонима Scala.",
+      "articleSlug": "strawberry-scala-trade"
+    },
+    {
+      "name": "сладкоежка",
+      "query": "клубника сладкоежка",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "солнечная полянка",
+      "query": "солнечная полянка клубника описание",
+      "volume": 1,
+      "disposition": "verified",
+      "reason": "Сорт и ограниченные данные о крупности подтверждены публикацией Красноярского ГАУ; указан контекст опыта Красноярской лесостепи.",
+      "slug": "strawberry-solnechnaya-polyanka-krasnoyarsk"
+    },
+    {
+      "name": "теплице поликарбоната",
+      "query": "клубника в теплице из поликарбоната посадка и уход",
+      "volume": 1,
+      "disposition": "non_cultivar_or_generic",
+      "reason": "Кластер не является названием отдельного сорта клубники; относится к общему интенту, формату выращивания, рецепту, стране или посторонней сущности."
+    },
+    {
+      "name": "томат знаменитая миссис шлаубах",
+      "query": "томат знаменитая клубника миссис шлаубах",
+      "volume": 1,
+      "disposition": "non_cultivar_or_generic",
+      "reason": "Кластер не является названием отдельного сорта клубники; относится к общему интенту, формату выращивания, рецепту, стране или посторонней сущности."
+    },
+    {
+      "name": "фалко",
+      "query": "клубника фалко описание сорта",
+      "volume": 1,
+      "disposition": "verified_new",
+      "articleSlug": "strawberry-falco",
+      "reason": "Есть конкретная карточка оригинатора/реестра с уникальными сортовыми признаками."
+    },
+    {
+      "name": "фейерверк",
+      "query": "клубника фейерверк",
+      "volume": 1,
+      "disposition": "already_covered",
+      "articleSlug": "strawberry-fireworks",
+      "reason": "Точное имя/алиас уже есть в public varieties или исследовательском модуле."
+    },
+    {
+      "name": "фенг сянг",
+      "query": "клубника фенг сянг",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "фея",
+      "query": "клубника фея описание сорта",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "фламинго",
+      "query": "фламинго клубника описание сорта фото отзывы",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "флорис",
+      "query": "клубника флорис",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "фриго",
+      "query": "фриго клубника что это",
+      "volume": 1,
+      "disposition": "non_cultivar_or_generic",
+      "reason": "Кластер не является названием отдельного сорта клубники; относится к общему интенту, формату выращивания, рецепту, стране или посторонней сущности."
+    },
+    {
+      "name": "фронтерас",
+      "query": "клубника фронтерас описание сорта фото отзывы садоводов",
+      "volume": 1,
+      "disposition": "verified_new",
+      "reason": "Идентичность и отличительные признаки подтверждены официальной технической записью CFIA; переносимость полевых характеристик ограничена условиями указанного испытания."
+    },
+    {
+      "name": "чешская красавица",
+      "query": "клубника чешская красавица",
+      "volume": 1,
+      "disposition": "source_check_pending",
+      "reason": "Похоже на сортовой интент по тексту запроса, но уникальная первичная сортовая характеристика пока не подтверждена; не публиковать как проверенный профиль."
+    },
+    {
+      "name": "элоди",
+      "query": "клубника элоди",
+      "volume": 1,
+      "disposition": "supplemental_profile",
+      "reason": "Имя ELODY* и группа однократного плодоношения подтверждены каталогом селекционера; иных свойств источник не сообщает.",
+      "slug": "strawberry-elody-bernardini"
+    }
+  ],
+  "photoPolicy": "photoUrl/photoLabel включаются только после визуальной проверки изображения на первичном сайте. Карточка UF/IFAS упоминает Figure 1 (растения и плоды, GCREC, 2016; credit Vance M. Whitaker), но изображение в этом проходе визуально не подтверждено, поэтому ссылка не внесена.",
+  "reviewBasis": {
+    "file": "coverage-gaps.tsv",
+    "rule": "Текущая сверка проводится по точным query из coverage-gaps.tsv. Старый раздел clusters сохраняет исторические raw-кластеры и не является подтверждением покрытия новых exact queries.",
+    "addedExactQueries": [
+      {
+        "query": "клубника черный принц описание сорта",
+        "demand": 684,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "клубника черный принц описание",
+        "demand": 453,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "клубника лорд описание сорта",
+        "demand": 422,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "клубника черный принц описание сорта отзывы",
+        "demand": 367,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "цунаки клубника описание",
+        "demand": 243,
+        "articleSlug": "strawberry-tsunaki",
+        "sourceId": "academic-tsunaki"
+      },
+      {
+        "query": "клубника цунаки описание сорта",
+        "demand": 203,
+        "articleSlug": "strawberry-tsunaki",
+        "sourceId": "academic-tsunaki"
+      },
+      {
+        "query": "клубника машенька описание сорта",
+        "demand": 194,
+        "articleSlug": "strawberry-mashenka",
+        "sourceId": "ogorodum-mashenka"
+      },
+      {
+        "query": "черный принц клубника описание сорта",
+        "demand": 181,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "чамора туруси клубника описание сорта",
+        "demand": 176,
+        "articleSlug": "strawberry-chamora-turusi",
+        "sourceId": "rastisad-chamora"
+      },
+      {
+        "query": "клубника лорд описание сорта фото отзывы",
+        "demand": 174,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "клубника зефир описание сорта",
+        "demand": 165,
+        "articleSlug": "zephyr",
+        "sourceId": "avu-zephyr"
+      },
+      {
+        "query": "клубника чамора туруси описание сорта фото отзывы садоводов урожайность",
+        "demand": 153,
+        "articleSlug": "strawberry-chamora-turusi",
+        "sourceId": "rastisad-chamora"
+      },
+      {
+        "query": "клубника черный принц описание сорта фото отзывы садоводов урожайность",
+        "demand": 149,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "черный принц клубника описание сорта фото отзывы",
+        "demand": 137,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "чамора туруси клубника описание сорта фото отзывы садоводов урожайность",
+        "demand": 118,
+        "articleSlug": "strawberry-chamora-turusi",
+        "sourceId": "rastisad-chamora"
+      },
+      {
+        "query": "клубника крапо 10 описание сорта",
+        "demand": 108,
+        "articleSlug": "strawberry-krapo-10",
+        "sourceId": "crea-crapo-10-228-1"
+      },
+      {
+        "query": "крапо 10 клубника описание сорта",
+        "demand": 101,
+        "articleSlug": "strawberry-krapo-10",
+        "sourceId": "crea-crapo-10-228-1"
+      },
+      {
+        "query": "клубника цунаки описание сорта фото отзывы садоводов урожайность",
+        "demand": 97,
+        "articleSlug": "strawberry-tsunaki",
+        "sourceId": "academic-tsunaki"
+      },
+      {
+        "query": "чамора туруси клубника описание сорта фото отзывы",
+        "demand": 95,
+        "articleSlug": "strawberry-chamora-turusi",
+        "sourceId": "rastisad-chamora"
+      },
+      {
+        "query": "клубника машенька описание сорта фото отзывы садоводов урожайность",
+        "demand": 86,
+        "articleSlug": "strawberry-mashenka",
+        "sourceId": "ogorodum-mashenka"
+      },
+      {
+        "query": "клубника чамора туруси описание сорта",
+        "demand": 77,
+        "articleSlug": "strawberry-chamora-turusi",
+        "sourceId": "rastisad-chamora"
+      },
+      {
+        "query": "клубника черный принц описание сорта отзывы садоводов",
+        "demand": 77,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "клубника лорд описание сорта фото отзывы садоводов урожайность характеристика и описание",
+        "demand": 70,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "клубника крапо 10 описание сорта фото отзывы садоводов урожайность",
+        "demand": 69,
+        "articleSlug": "strawberry-krapo-10",
+        "sourceId": "crea-crapo-10-228-1"
+      },
+      {
+        "query": "клубника цунаки описание сорта фото отзывы",
+        "demand": 66,
+        "articleSlug": "strawberry-tsunaki",
+        "sourceId": "academic-tsunaki"
+      },
+      {
+        "query": "крапо 10 клубника описание сорта фото отзывы садоводов",
+        "demand": 60,
+        "articleSlug": "strawberry-krapo-10",
+        "sourceId": "crea-crapo-10-228-1"
+      },
+      {
+        "query": "клубника черный принц описание сорта фото отзывы",
+        "demand": 52,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "цунаки клубника описание сорта фото отзывы садоводов",
+        "demand": 51,
+        "articleSlug": "strawberry-tsunaki",
+        "sourceId": "academic-tsunaki"
+      },
+      {
+        "query": "клубника машенька описание сорта фото отзывы",
+        "demand": 42,
+        "articleSlug": "strawberry-mashenka",
+        "sourceId": "ogorodum-mashenka"
+      },
+      {
+        "query": "лорд клубника описание сорта",
+        "demand": 40,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "клубника чамора туруси описание сорта фото",
+        "demand": 36,
+        "articleSlug": "strawberry-chamora-turusi",
+        "sourceId": "rastisad-chamora"
+      },
+      {
+        "query": "клубника лорд описание сорта фото отзывы садоводов урожайность",
+        "demand": 31,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "клубника цунаки описание сорта фото",
+        "demand": 29,
+        "articleSlug": "strawberry-tsunaki",
+        "sourceId": "academic-tsunaki"
+      },
+      {
+        "query": "клубника зефир описание сорта фото отзывы",
+        "demand": 28,
+        "articleSlug": "zephyr",
+        "sourceId": "avu-zephyr"
+      },
+      {
+        "query": "клубника лорд описание сорта фото",
+        "demand": 24,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "виктория лорд описание сорта фото отзывы",
+        "demand": 23,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "клубника черный принц описание сорта фото отзывы садоводов",
+        "demand": 23,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "цунаки клубника описание сорта",
+        "demand": 23,
+        "articleSlug": "strawberry-tsunaki",
+        "sourceId": "academic-tsunaki"
+      },
+      {
+        "query": "клубника чамора туруси описание сорта фото отзывы",
+        "demand": 18,
+        "articleSlug": "strawberry-chamora-turusi",
+        "sourceId": "rastisad-chamora"
+      },
+      {
+        "query": "цунаки клубника описание сорта и отзывы",
+        "demand": 18,
+        "articleSlug": "strawberry-tsunaki",
+        "sourceId": "academic-tsunaki"
+      },
+      {
+        "query": "машенька клубника описание сорта",
+        "demand": 17,
+        "articleSlug": "strawberry-mashenka",
+        "sourceId": "ogorodum-mashenka"
+      },
+      {
+        "query": "клубника машенька описание сорта фото",
+        "demand": 16,
+        "articleSlug": "strawberry-mashenka",
+        "sourceId": "ogorodum-mashenka"
+      },
+      {
+        "query": "виктория машенька описание сорта",
+        "demand": 13,
+        "articleSlug": "strawberry-mashenka",
+        "sourceId": "ogorodum-mashenka"
+      },
+      {
+        "query": "клубника зефир описание сорта фото отзывы садоводов урожайность характеристика и описание сорта",
+        "demand": 13,
+        "articleSlug": "zephyr",
+        "sourceId": "avu-zephyr"
+      },
+      {
+        "query": "цунаки клубника описание сорта фото",
+        "demand": 13,
+        "articleSlug": "strawberry-tsunaki",
+        "sourceId": "academic-tsunaki"
+      },
+      {
+        "query": "чамора туруси клубника описание сорта фото",
+        "demand": 13,
+        "articleSlug": "strawberry-chamora-turusi",
+        "sourceId": "rastisad-chamora"
+      },
+      {
+        "query": "клубника лорд описание сорта отзывы садоводов",
+        "demand": 12,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "клубника крапо 10 описание сорта фото отзывы",
+        "demand": 11,
+        "articleSlug": "strawberry-krapo-10",
+        "sourceId": "crea-crapo-10-228-1"
+      },
+      {
+        "query": "клубника лорд описание сорта фото отзывы садоводов",
+        "demand": 10,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "клубника чамора туруси описание сорта фото отзывы садоводов",
+        "demand": 10,
+        "articleSlug": "strawberry-chamora-turusi",
+        "sourceId": "rastisad-chamora"
+      },
+      {
+        "query": "виктория цунаки описание",
+        "demand": 9,
+        "articleSlug": "strawberry-tsunaki",
+        "sourceId": "academic-tsunaki"
+      },
+      {
+        "query": "земляника зефир описание сорта",
+        "demand": 8,
+        "articleSlug": "zephyr",
+        "sourceId": "avu-zephyr"
+      },
+      {
+        "query": "клубника лорд описание сорта отзывы",
+        "demand": 7,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "клубника цунаки описание сорта фото отзывы садоводов",
+        "demand": 7,
+        "articleSlug": "strawberry-tsunaki",
+        "sourceId": "academic-tsunaki"
+      },
+      {
+        "query": "черный принц клубника описание сорта отзывы садоводов",
+        "demand": 6,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "земляника черный принц описание сорта фото отзывы",
+        "demand": 4,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "земляника черный принц описание сорта фото отзывы садоводов",
+        "demand": 3,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "клубника лорд морозостойкость",
+        "demand": 3,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "земляника зефир описание",
+        "demand": 2,
+        "articleSlug": "zephyr",
+        "sourceId": "avu-zephyr"
+      },
+      {
+        "query": "земляника зефир описание сорта фото отзывы садоводов урожайность",
+        "demand": 2,
+        "articleSlug": "zephyr",
+        "sourceId": "avu-zephyr"
+      },
+      {
+        "query": "клубника лорд описание и отзывы",
+        "demand": 2,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "клубника цунаки описание отзывы",
+        "demand": 2,
+        "articleSlug": "strawberry-tsunaki",
+        "sourceId": "academic-tsunaki"
+      },
+      {
+        "query": "чамора туруси клубника описание и отзывы",
+        "demand": 2,
+        "articleSlug": "strawberry-chamora-turusi",
+        "sourceId": "rastisad-chamora"
+      },
+      {
+        "query": "земляника лорд описание сорта отзывы",
+        "demand": 1,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "земляника лорд описание сорта фото",
+        "demand": 1,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "земляника садовая лорд описание сорта",
+        "demand": 1,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "земляника садовая чамора туруси описание сорта",
+        "demand": 1,
+        "articleSlug": "strawberry-chamora-turusi",
+        "sourceId": "rastisad-chamora"
+      },
+      {
+        "query": "клубника машенька описание и отзывы",
+        "demand": 1,
+        "articleSlug": "strawberry-mashenka",
+        "sourceId": "ogorodum-mashenka"
+      },
+      {
+        "query": "лорд земляника описание",
+        "demand": 1,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "лорд клубника описание и отзывы",
+        "demand": 1,
+        "articleSlug": "strawberry-lord",
+        "sourceId": "sortoved-lord"
+      },
+      {
+        "query": "описание клубники черный принц",
+        "demand": 1,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "характеристика клубники чамора туруси",
+        "demand": 1,
+        "articleSlug": "strawberry-chamora-turusi",
+        "sourceId": "rastisad-chamora"
+      },
+      {
+        "query": "черный принц клубника описание отзывы",
+        "demand": 1,
+        "articleSlug": "black-prince-strawberry",
+        "sourceId": "klubnichnyi-hutorok-black-prince"
+      },
+      {
+        "query": "клубника лючия описание сорта",
+        "demand": 115,
+        "articleSlug": "strawberry-lucia",
+        "sourceId": "cfia-lucia"
+      },
+      {
+        "query": "клубника лючия описание сорта фото отзывы",
+        "demand": 23,
+        "articleSlug": "strawberry-lucia",
+        "sourceId": "cfia-lucia"
+      },
+      {
+        "query": "лючия клубника описание сорта",
+        "demand": 11,
+        "articleSlug": "strawberry-lucia",
+        "sourceId": "cfia-lucia"
+      },
+      {
+        "query": "клубника лючия описание сорта фото отзывы садоводов урожайность",
+        "demand": 10,
+        "articleSlug": "strawberry-lucia",
+        "sourceId": "cfia-lucia"
+      },
+      {
+        "query": "клубника виктория описание сорта",
+        "demand": 98,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "клубника виктория описание",
+        "demand": 45,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "клубника виктория описание сорта фото отзывы садоводов урожайность",
+        "demand": 28,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "клубника виктория описание сорта фото отзывы",
+        "demand": 20,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "клубника виктория описание сорта фото",
+        "demand": 17,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "виктория максим описание сорта",
+        "demand": 15,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "виктория первоклассница описание сорта",
+        "demand": 9,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "виктория корона описание сорта",
+        "demand": 6,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "фея виктория",
+        "demand": 5,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "виктория ремонтантная сорта для сибири",
+        "demand": 4,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "виктория первоклассница описание",
+        "demand": 1,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "виктория сорт слоненок",
+        "demand": 1,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "максим виктория описание сорта",
+        "demand": 1,
+        "articleSlug": "strawberry-victoria",
+        "sourceId": "tomsk-depagro-victoria"
+      },
+      {
+        "query": "клубника прими описание сорта",
+        "demand": 115,
+        "articleSlug": "strawberry-premy",
+        "sourceId": "deutenkofen-premy-2020"
+      },
+      {
+        "query": "клубника прими описание сорта фото отзывы",
+        "demand": 22,
+        "articleSlug": "strawberry-premy",
+        "sourceId": "deutenkofen-premy-2020"
+      },
+      {
+        "query": "клубника прими описание сорта фото отзывы садоводов урожайность характеристика и описание",
+        "demand": 6,
+        "articleSlug": "strawberry-premy",
+        "sourceId": "deutenkofen-premy-2020"
+      },
+      {
+        "query": "земляника прими описание сорта фото отзывы",
+        "demand": 2,
+        "articleSlug": "strawberry-premy",
+        "sourceId": "deutenkofen-premy-2020"
+      },
+      {
+        "query": "клубника гаригуэтта описание сорта",
+        "demand": 8,
+        "articleSlug": "strawberry-gariguette",
+        "sourceId": "inrae-gariguette-archive"
+      },
+      {
+        "query": "лималексия клубника описание",
+        "demand": 23,
+        "articleSlug": "strawberry-limalexia",
+        "sourceId": "cfia-limalexia"
+      },
+      {
+        "query": "клубника лималексия описание сорта",
+        "demand": 10,
+        "articleSlug": "strawberry-limalexia",
+        "sourceId": "cfia-limalexia"
+      },
+      {
+        "query": "клубника лималексия описание сорта фото отзывы садоводов урожайность",
+        "demand": 5,
+        "articleSlug": "strawberry-limalexia",
+        "sourceId": "cfia-limalexia"
+      },
+      {
+        "query": "земляника лималексия описание сорта",
+        "demand": 1,
+        "articleSlug": "strawberry-limalexia",
+        "sourceId": "cfia-limalexia"
+      },
+      {
+        "query": "клубника максим описание сорта",
+        "demand": 238,
+        "articleSlug": "strawberry-gigantella-maxim-tail",
+        "sourceId": "orton-maxim-strawberry"
+      },
+      {
+        "query": "клубника максим описание сорта фото отзывы",
+        "demand": 78,
+        "articleSlug": "strawberry-gigantella-maxim-tail",
+        "sourceId": "orton-maxim-strawberry"
+      },
+      {
+        "query": "клубника максим описание сорта фото отзывы садоводов форум садоводов",
+        "demand": 26,
+        "articleSlug": "strawberry-gigantella-maxim-tail",
+        "sourceId": "orton-maxim-strawberry"
+      },
+      {
+        "query": "клубника максим описание сорта фото",
+        "demand": 18,
+        "articleSlug": "strawberry-gigantella-maxim-tail",
+        "sourceId": "orton-maxim-strawberry"
+      },
+      {
+        "query": "земляника сорт максим",
+        "demand": 4,
+        "articleSlug": "strawberry-gigantella-maxim-tail",
+        "sourceId": "orton-maxim-strawberry"
+      },
+      {
+        "query": "клубника черный лебедь описание сорта",
+        "demand": 152,
+        "articleSlug": "strawberry-black-swan",
+        "sourceId": "vashnil-black-swan-strawberry"
+      },
+      {
+        "query": "клубника черный лебедь описание сорта и отзывы",
+        "demand": 109,
+        "articleSlug": "strawberry-black-swan",
+        "sourceId": "vashnil-black-swan-strawberry"
+      },
+      {
+        "query": "клубника черный лебедь описание сорта фото отзывы садоводов",
+        "demand": 91,
+        "articleSlug": "strawberry-black-swan",
+        "sourceId": "vashnil-black-swan-strawberry"
+      },
+      {
+        "query": "клубника черный лебедь описание",
+        "demand": 62,
+        "articleSlug": "strawberry-black-swan",
+        "sourceId": "vashnil-black-swan-strawberry"
+      },
+      {
+        "query": "черный лебедь клубника описание сорта и отзывы",
+        "demand": 26,
+        "articleSlug": "strawberry-black-swan",
+        "sourceId": "vashnil-black-swan-strawberry"
+      },
+      {
+        "query": "отзывы о клубнике черный лебедь",
+        "demand": 1,
+        "articleSlug": "strawberry-black-swan",
+        "sourceId": "vashnil-black-swan-strawberry"
+      },
+      {
+        "query": "клубника александра описание сорта",
+        "demand": 106,
+        "articleSlug": "strawberry-aleksandra-yakutia",
+        "sourceId": "yakutia-aleksandra-hybrid-strawberry"
+      },
+      {
+        "query": "клубника александра описание сорта фото",
+        "demand": 20,
+        "articleSlug": "strawberry-aleksandra-yakutia",
+        "sourceId": "yakutia-aleksandra-hybrid-strawberry"
+      },
+      {
+        "query": "клубника александра описание сорта фото отзывы садоводов",
+        "demand": 10,
+        "articleSlug": "strawberry-aleksandra-yakutia",
+        "sourceId": "yakutia-aleksandra-hybrid-strawberry"
+      },
+      {
+        "query": "клубника александра описание сорта фото отзывы садоводов урожайность",
+        "demand": 7,
+        "articleSlug": "strawberry-aleksandra-yakutia",
+        "sourceId": "yakutia-aleksandra-hybrid-strawberry"
+      },
+      {
+        "query": "клубника александра описание сорта фото отзывы садоводов урожайность характеристика и описание сорта",
+        "demand": 7,
+        "articleSlug": "strawberry-aleksandra-yakutia",
+        "sourceId": "yakutia-aleksandra-hybrid-strawberry"
+      },
+      {
+        "query": "клубника королева елизавета описание сорта",
+        "demand": 73,
+        "articleSlug": "strawberry-queen-elizabeth",
+        "sourceId": "sfnca-elizaveta2-queen-elizabeth"
+      },
+      {
+        "query": "клубника елизавета описание сорта",
+        "demand": 55,
+        "articleSlug": "strawberry-queen-elizabeth",
+        "sourceId": "sfnca-elizaveta2-queen-elizabeth"
+      },
+      {
+        "query": "клубника королева елизавета описание сорта фото отзывы садоводов",
+        "demand": 26,
+        "articleSlug": "strawberry-queen-elizabeth",
+        "sourceId": "sfnca-elizaveta2-queen-elizabeth"
+      },
+      {
+        "query": "клубника бычье сердце описание сорта",
+        "demand": 192,
+        "slug": "strawberry-oxheart-trade-name"
+      },
+      {
+        "query": "клубника бычье сердце описание сорта фото отзывы садоводов урожайность",
+        "demand": 24,
+        "slug": "strawberry-oxheart-trade-name"
+      },
+      {
+        "query": "бычье сердце клубника описание сорта",
+        "demand": 21,
+        "slug": "strawberry-oxheart-trade-name"
+      },
+      {
+        "query": "клубника бычье сердце описание сорта фото",
+        "demand": 7,
+        "slug": "strawberry-oxheart-trade-name"
+      },
+      {
+        "query": "клубника кармен описание сорта",
+        "demand": 53,
+        "slug": "strawberry-carmen-czech"
+      },
+      {
+        "query": "клубника кармен описание сорта фото отзывы",
+        "demand": 14,
+        "slug": "strawberry-carmen-czech"
+      },
+      {
+        "query": "клубника кармен описание сорта фото отзывы садоводов урожайность",
+        "demand": 11,
+        "slug": "strawberry-carmen-czech"
+      },
+      {
+        "query": "кармен клубника описание отзывы",
+        "demand": 1,
+        "slug": "strawberry-carmen-czech"
+      },
+      {
+        "query": "клубника гирлянда описание сорта",
+        "demand": 53,
+        "slug": "strawberry-garland-trade-name"
+      },
+      {
+        "query": "клубника гирлянда описание сорта фото отзывы садоводов урожайность",
+        "demand": 29,
+        "slug": "strawberry-garland-trade-name"
+      },
+      {
+        "query": "клубника гирлянда описание сорта фото отзывы",
+        "demand": 9,
+        "slug": "strawberry-garland-trade-name"
+      },
+      {
+        "query": "фламинго клубника описание сорта фото отзывы",
+        "demand": 75,
+        "slug": "strawberry-flamingo-trade-name"
+      },
+      {
+        "query": "клубника чили описание сорта",
+        "demand": 68,
+        "slug": "strawberry-chile-species"
+      },
+      {
+        "query": "клубника чили описание сорта фото отзывы",
+        "demand": 34,
+        "slug": "strawberry-chile-species"
+      },
+      {
+        "query": "клубника чили описание сорта фото отзывы садоводов",
+        "demand": 11,
+        "slug": "strawberry-chile-species"
+      },
+      {
+        "query": "клубника розария описание сорта",
+        "demand": 15,
+        "slug": "strawberry-rosaria-kraege"
+      },
+      {
+        "query": "клубника золушка описание сорта",
+        "demand": 11,
+        "slug": "strawberry-zolushka-vstisp"
+      },
+      {
+        "query": "клубника москова описание сорта",
+        "demand": 19,
+        "slug": "strawberry-moskova-trade"
+      },
+      {
+        "query": "клубника генри описание сорта",
+        "demand": 22,
+        "slug": "strawberry-henry-hamburger-trade"
+      },
+      {
+        "query": "клубника ами описание сорта",
+        "demand": 22,
+        "slug": "strawberry-henry-hamburger-trade"
+      },
+      {
+        "query": "клубника гребешок описание сорта фото отзывы садоводов урожайность",
+        "demand": 15,
+        "slug": "strawberry-grebeshok-trade"
+      },
+      {
+        "query": "клубника гребешок отзывы",
+        "demand": 4,
+        "slug": "strawberry-grebeshok-trade"
+      },
+      {
+        "query": "клубника сладкий колосс описание сорта фото",
+        "demand": 15,
+        "slug": "strawberry-sweet-colossus-trade"
+      },
+      {
+        "query": "клубника сладкий колосс описание",
+        "demand": 1,
+        "slug": "strawberry-sweet-colossus-trade"
+      },
+      {
+        "query": "клубника олимпия описание сорта",
+        "demand": 11,
+        "articleSlug": "strawberry-olympia-nf638",
+        "sourceId": "geoplant-olympia-nf638"
+      },
+      {
+        "query": "клубника дали описание сорта",
+        "demand": 13,
+        "articleSlug": "strawberry-dahli-flevo",
+        "sourceId": "flevoberry-dahli"
+      },
+      {
+        "query": "клубника дахли",
+        "demand": 1,
+        "articleSlug": "strawberry-dahli-flevo",
+        "sourceId": "flevoberry-dahli"
+      },
+      {
+        "query": "клубника фея описание сорта",
+        "demand": 16,
+        "articleSlug": "strawberry-feya-samara",
+        "sourceId": "gossortrf-strawberry-feya"
+      },
+      {
+        "query": "клубника русский размер описание сорта",
+        "demand": 17,
+        "articleSlug": "strawberry-russian-size-trade",
+        "sourceId": "ncsemena-russian-size"
+      },
+      {
+        "query": "русский размер клубника описание",
+        "demand": 5,
+        "articleSlug": "strawberry-russian-size-trade",
+        "sourceId": "ncsemena-russian-size"
+      },
+      {
+        "query": "земляника русский размер описание сорта",
+        "demand": 4,
+        "articleSlug": "strawberry-russian-size-trade",
+        "sourceId": "ncsemena-russian-size"
+      },
+      {
+        "query": "клубника орлец описание сорта",
+        "demand": 13,
+        "articleSlug": "strawberry-orlets-vniispk",
+        "sourceId": "vniispk-orlets-orenburg"
+      },
+      {
+        "query": "клубника федерика описание сорта",
+        "demand": 14,
+        "articleSlug": "strawberry-federica-berrylab",
+        "sourceId": "berrylab-federica"
+      },
+      {
+        "query": "федерика клубника описание",
+        "demand": 7,
+        "articleSlug": "strawberry-federica-berrylab",
+        "sourceId": "berrylab-federica"
+      },
+      {
+        "query": "клубника федерика описание",
+        "demand": 2,
+        "articleSlug": "strawberry-federica-berrylab",
+        "sourceId": "berrylab-federica"
+      },
+      {
+        "query": "клубника кисс неллис описание сорта",
+        "demand": 14,
+        "articleSlug": "strawberry-kiss-nellis-trade",
+        "sourceId": "yagodnoe-kiss-nellis"
+      },
+      {
+        "query": "клубника кисс неллис описание сорта фото отзывы садоводов урожайность",
+        "demand": 6,
+        "articleSlug": "strawberry-kiss-nellis-trade",
+        "sourceId": "yagodnoe-kiss-nellis"
+      },
+      {
+        "query": "клубника белый швед описание сорта",
+        "demand": 12,
+        "articleSlug": "strawberry-white-swede-trade",
+        "sourceId": "nikogarden-white-swede"
+      },
+      {
+        "query": "клубника федерико описание сорта",
+        "demand": 13,
+        "articleSlug": "strawberry-federica-berrylab",
+        "sourceId": "berrylab-federica"
+      },
+      {
+        "query": "клубника флорис описание сорта",
+        "demand": 5,
+        "articleSlug": "strawberry-florice-flevo",
+        "sourceId": "flevoberry-florice"
+      },
+      {
+        "query": "клубника флорис",
+        "demand": 1,
+        "articleSlug": "strawberry-florice-flevo",
+        "sourceId": "flevoberry-florice"
+      },
+      {
+        "query": "клубника медовая описание сорта",
+        "demand": 16,
+        "articleSlug": "strawberry-honeoye-cornell",
+        "sourceId": "cornell-honeoye-pedigree"
+      },
+      {
+        "query": "земляника садовая медовая",
+        "demand": 1,
+        "articleSlug": "strawberry-honeoye-cornell",
+        "sourceId": "sad-i-ogorod-medovaya-honeoye"
+      },
+      {
+        "query": "клубника эстафета описание сорта",
+        "demand": 6,
+        "articleSlug": "strawberry-estafeta-vstisp",
+        "sourceId": "vstisp-estafeta-breeding"
+      },
+      {
+        "query": "клубника эстафета описание",
+        "demand": 2,
+        "articleSlug": "strawberry-estafeta-vstisp",
+        "sourceId": "vstisp-estafeta-breeding"
+      },
+      {
+        "query": "клубника клодия описание сорта",
+        "demand": 18,
+        "articleSlug": "strawberry-klodia-civ",
+        "sourceId": "civ-klodia-civh725"
+      },
+      {
+        "query": "клубника верона описание сорта",
+        "demand": 16,
+        "articleSlug": "strawberry-verona-samara-study",
+        "sourceId": "samara-verona-amino-study"
+      },
+      {
+        "query": "клубника сладкоежка описание сорта",
+        "demand": 15,
+        "articleSlug": "strawberry-sweettooth-amur-trial",
+        "sourceId": "dalgau-2019-strawberry-trial"
+      },
+      {
+        "query": "клубника мамочка описание сорта",
+        "demand": 10,
+        "articleSlug": "strawberry-mamochka-vniispk-study",
+        "sourceId": "mamochka-heavy-metals-study"
+      },
+      {
+        "query": "земляника вкуснятина",
+        "demand": 1,
+        "articleSlug": "strawberry-vkusnyatina-amur-trial",
+        "sourceId": "dalgau-2019-strawberry-trial"
+      },
+      {
+        "query": "клубника вкуснятина описание",
+        "demand": 1,
+        "articleSlug": "strawberry-vkusnyatina-amur-trial",
+        "sourceId": "dalgau-2019-strawberry-trial"
+      },
+      {
+        "query": "клубника великобритания описание сорта",
+        "demand": 14,
+        "articleSlug": "strawberry-velikobritaniya-trade",
+        "sourceId": "rostok-velikobritaniya"
+      },
+      {
+        "query": "клубника легран описание сорта",
+        "demand": 13,
+        "articleSlug": "strawberry-legran-frigolabs-trade",
+        "sourceId": "frigolab-legran"
+      },
+      {
+        "query": "легран клубника описание сорта",
+        "demand": 7,
+        "articleSlug": "strawberry-legran-frigolabs-trade",
+        "sourceId": "frigolab-legran"
+      },
+      {
+        "query": "клубника чешская красавица описание сорта фото отзывы садоводов урожайность",
+        "demand": 8,
+        "articleSlug": "strawberry-czech-beauty-trade",
+        "sourceId": "klubnichny-salut-czech-beauty"
+      },
+      {
+        "query": "клубника дженто описание сорта",
+        "demand": 3,
+        "articleSlug": "strawberry-gento-ogorodik-trade",
+        "sourceId": "ogorodik-gento"
+      },
+      {
+        "query": "клубника фенг сянг описание сорта отзывы садоводов урожайность",
+        "demand": 3,
+        "articleSlug": "strawberry-feng-xiang-nursery",
+        "sourceId": "klubnichny-hutorok-feng-xiang"
+      },
+      {
+        "query": "клубника русский гигант f1 описание сорта фото отзывы",
+        "demand": 7,
+        "articleSlug": "strawberry-giant-russian-f1-gavrish",
+        "sourceId": "gavrish-giant-russian-f1-catalog"
+      },
+      {
+        "query": "клубника антей описание сорта",
+        "demand": 9,
+        "articleSlug": "strawberry-antei-arifova-study",
+        "sourceId": "arifova-dissertation-antei-strawberry"
+      },
+      {
+        "query": "антей клубника описание",
+        "demand": 2,
+        "articleSlug": "strawberry-antei-arifova-study",
+        "sourceId": "arifova-dissertation-antei-strawberry"
+      },
+      {
+        "query": "клубника антей описание",
+        "demand": 2,
+        "articleSlug": "strawberry-antei-arifova-study",
+        "sourceId": "arifova-dissertation-antei-strawberry"
+      },
+      {
+        "query": "клубника виноградный бум описание сорта отзывы",
+        "demand": 16,
+        "articleSlug": "strawberry-vinogradny-bum-trade",
+        "sourceId": "agga-vinogradny-bum-seller-listing"
+      },
+      {
+        "query": "прима клубника описание",
+        "demand": 1,
+        "articleSlug": "strawberry-premy",
+        "sourceId": "civ-official-premy-monograph"
+      },
+      {
+        "query": "антеа клубника описание",
+        "demand": 1,
+        "articleSlug": "strawberry-antea",
+        "sourceId": "civ-strawberry-variety-list-antea"
+      }
+    ],
+    "supplementalProfiles": {
+      "basis": "Точное сопоставление по query из coverage-gaps.tsv; наличие профиля закрывает только идентификационный/источниковый интент в пределах явно описанных сведений.",
+      "verifiedStatusMeaning": "Проверяемые сведения о самом имени/селекционном материале доступны из указанного источника; не означает, что торговое имя доказано как синоним полного кода или что есть подтверждённые сортовые показатели.",
+      "profileSlugs": [
+        "strawberry-tsunaki",
+        "strawberry-mashenka",
+        "strawberry-chamora-turusi",
+        "strawberry-lord",
+        "zephyr",
+        "black-prince-strawberry",
+        "strawberry-krapo-10",
+        "strawberry-lucia",
+        "strawberry-marmolada",
+        "strawberry-victoria",
+        "strawberry-premy",
+        "strawberry-gariguette",
+        "strawberry-limalexia",
+        "strawberry-gigantella-maxim-tail",
+        "strawberry-elianny",
+        "strawberry-black-swan",
+        "strawberry-aleksandra-yakutia",
+        "strawberry-queen-elizabeth",
+        "strawberry-oxheart-trade-name",
+        "strawberry-carmen-czech",
+        "strawberry-garland-trade-name",
+        "strawberry-flamingo-trade-name",
+        "strawberry-chile-species",
+        "strawberry-cabrillo-uc",
+        "strawberry-monterey-uc",
+        "strawberry-ostara-trade",
+        "strawberry-elvira-trade",
+        "strawberry-lakomka-vir",
+        "strawberry-belrubi-skfnc",
+        "strawberry-ananasnaya-name-check",
+        "strawberry-solnechnaya-polyanka-krasnoyarsk",
+        "strawberry-nadja-bl29",
+        "strawberry-elody-bernardini",
+        "strawberry-alturas-bernardini",
+        "strawberry-cardinal-arkansas",
+        "strawberry-garda-crea",
+        "strawberry-big-dipper-trade",
+        "strawberry-giant-delicacy-trade",
+        "strawberry-cory-p241102",
+        "strawberry-rosaria-kraege",
+        "strawberry-zolushka-vstisp",
+        "strawberry-moskova-trade",
+        "strawberry-henry-hamburger-trade",
+        "strawberry-grebeshok-trade",
+        "strawberry-sweet-colossus-trade",
+        "strawberry-olympia-nf638",
+        "strawberry-dahli-flevo",
+        "strawberry-feya-samara",
+        "strawberry-russian-size-trade",
+        "strawberry-orlets-vniispk",
+        "strawberry-federica-berrylab",
+        "strawberry-kiss-nellis-trade",
+        "strawberry-white-swede-trade",
+        "strawberry-florice-flevo",
+        "strawberry-honeoye-cornell",
+        "strawberry-estafeta-vstisp",
+        "strawberry-daroyal-planasa",
+        "strawberry-zenga-zengana-trial",
+        "strawberry-madlen-skopje-trial",
+        "strawberry-kamrad-pobeditel-breeding",
+        "strawberry-moscow-delicacy-trade",
+        "strawberry-klodia-civ",
+        "strawberry-verona-samara-study",
+        "strawberry-mamochka-vniispk-study",
+        "strawberry-sweettooth-amur-trial",
+        "strawberry-vkusnyatina-amur-trial",
+        "strawberry-velikobritaniya-trade",
+        "strawberry-legran-frigolabs-trade",
+        "strawberry-feng-xiang-nursery",
+        "strawberry-gento-ogorodik-trade",
+        "strawberry-czech-beauty-trade",
+        "strawberry-giant-russian-f1-gavrish",
+        "strawberry-antei-arifova-study",
+        "strawberry-vinogradny-bum-trade"
+      ]
+    }
+  },
+  "queryCoverage": [
+    {
+      "query": "дероял клубника описание",
+      "demand": 7,
+      "articleSlug": "strawberry-daroyal-planasa",
+      "sourceId": "planasa-daroyal"
+    },
+    {
+      "query": "клубника дероял описание сорта",
+      "demand": 7,
+      "articleSlug": "strawberry-daroyal-planasa",
+      "sourceId": "planasa-daroyal"
+    },
+    {
+      "query": "клубника зинга зенгана фото описание и отзывы",
+      "demand": 9,
+      "articleSlug": "strawberry-zenga-zengana-trial",
+      "sourceId": "vniispk-zenga-zengana-orenburg"
+    },
+    {
+      "query": "клубника зинга зинга фото описание и отзывы",
+      "demand": 9,
+      "articleSlug": "strawberry-zenga-zengana-trial",
+      "sourceId": "vniispk-zenga-zengana-orenburg"
+    },
+    {
+      "query": "клубника мадлен описание сорта фото отзывы",
+      "demand": 5,
+      "articleSlug": "strawberry-madlen-skopje-trial",
+      "sourceId": "scindeks-madlen-skopje"
+    },
+    {
+      "query": "клубника московский деликатес описание сорта",
+      "demand": 10,
+      "articleSlug": "strawberry-moscow-delicacy-trade",
+      "sourceId": "uzhniy-kamrad-moscow-delicacy"
+    },
+    {
+      "query": "камрад победитель клубника описание сорта",
+      "demand": 8,
+      "articleSlug": "strawberry-kamrad-pobeditel-breeding",
+      "sourceId": "ssaa-kamrad-2025"
+    },
+    {
+      "query": "клубника клодия описание сорта",
+      "demand": 18,
+      "articleSlug": "strawberry-klodia-civ",
+      "sourceId": "civ-klodia-civh725"
+    },
+    {
+      "query": "клубника верона описание сорта",
+      "demand": 16,
+      "articleSlug": "strawberry-verona-samara-study",
+      "sourceId": "samara-verona-amino-study"
+    },
+    {
+      "query": "клубника сладкоежка описание сорта",
+      "demand": 15,
+      "articleSlug": "strawberry-sweettooth-amur-trial",
+      "sourceId": "dalgau-2019-strawberry-trial"
+    },
+    {
+      "query": "клубника мамочка описание сорта",
+      "demand": 10,
+      "articleSlug": "strawberry-mamochka-vniispk-study",
+      "sourceId": "mamochka-heavy-metals-study"
+    },
+    {
+      "query": "земляника вкуснятина",
+      "demand": 1,
+      "articleSlug": "strawberry-vkusnyatina-amur-trial",
+      "sourceId": "dalgau-2019-strawberry-trial"
+    },
+    {
+      "query": "клубника вкуснятина описание",
+      "demand": 1,
+      "articleSlug": "strawberry-vkusnyatina-amur-trial",
+      "sourceId": "dalgau-2019-strawberry-trial"
+    },
+    {
+      "query": "клубника великобритания описание сорта",
+      "demand": 14,
+      "articleSlug": "strawberry-velikobritaniya-trade",
+      "sourceId": "rostok-velikobritaniya"
+    },
+    {
+      "query": "клубника легран описание сорта",
+      "demand": 13,
+      "articleSlug": "strawberry-legran-frigolabs-trade",
+      "sourceId": "frigolab-legran"
+    },
+    {
+      "query": "легран клубника описание сорта",
+      "demand": 7,
+      "articleSlug": "strawberry-legran-frigolabs-trade",
+      "sourceId": "frigolab-legran"
+    },
+    {
+      "query": "клубника чешская красавица описание сорта фото отзывы садоводов урожайность",
+      "demand": 8,
+      "articleSlug": "strawberry-czech-beauty-trade",
+      "sourceId": "klubnichny-salut-czech-beauty"
+    },
+    {
+      "query": "клубника дженто описание сорта",
+      "demand": 3,
+      "articleSlug": "strawberry-gento-ogorodik-trade",
+      "sourceId": "ogorodik-gento"
+    },
+    {
+      "query": "клубника фенг сянг описание сорта отзывы садоводов урожайность",
+      "demand": 3,
+      "articleSlug": "strawberry-feng-xiang-nursery",
+      "sourceId": "klubnichny-hutorok-feng-xiang"
+    },
+    {
+      "query": "клубника русский гигант f1 описание сорта фото отзывы",
+      "demand": 7,
+      "articleSlug": "strawberry-giant-russian-f1-gavrish",
+      "sourceId": "gavrish-giant-russian-f1-catalog"
+    },
+    {
+      "query": "клубника антей описание сорта",
+      "demand": 9,
+      "articleSlug": "strawberry-antei-arifova-study",
+      "sourceId": "arifova-dissertation-antei-strawberry"
+    },
+    {
+      "query": "антей клубника описание",
+      "demand": 2,
+      "articleSlug": "strawberry-antei-arifova-study",
+      "sourceId": "arifova-dissertation-antei-strawberry"
+    },
+    {
+      "query": "клубника антей описание",
+      "demand": 2,
+      "articleSlug": "strawberry-antei-arifova-study",
+      "sourceId": "arifova-dissertation-antei-strawberry"
+    },
+    {
+      "query": "клубника виноградный бум описание сорта отзывы",
+      "demand": 16,
+      "articleSlug": "strawberry-vinogradny-bum-trade",
+      "sourceId": "agga-vinogradny-bum-seller-listing"
+    }
+  ]
+}

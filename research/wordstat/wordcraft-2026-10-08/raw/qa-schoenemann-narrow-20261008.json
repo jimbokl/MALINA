@@ -1,0 +1,62 @@
+{
+  "url": "http://127.0.0.1:5181/sorta/raspberry-schoenemann/",
+  "title": "Малина Schönemann: описание сорта · МАЛИНА — КЛУБНИКА",
+  "h1": "Малина Schönemann: описание сорта",
+  "canonical": "https://malinaklubnika.ru/sorta/raspberry-schoenemann/",
+  "viewport": {
+    "width": 500,
+    "height": 733
+  },
+  "documentWidth": 500,
+  "horizontalOverflow": false,
+  "sections": [
+    {
+      "id": "seo-opisanie",
+      "heading": "Характеристики Schönemann"
+    },
+    {
+      "id": "seo-photo",
+      "heading": "Фото Schönemann"
+    },
+    {
+      "id": "seo-reviews",
+      "heading": "Отзывы о сорте Schönemann"
+    },
+    {
+      "id": "seo-care",
+      "heading": "Посадка и уход"
+    },
+    {
+      "id": "seo-sources",
+      "heading": "Источники"
+    }
+  ],
+  "brokenVisibleImages": [],
+  "duplicateIds": [],
+  "links": [
+    {
+      "text": "Главная",
+      "href": "/"
+    },
+    {
+      "text": "Сорта малины",
+      "href": "/sorta/malina/"
+    },
+    {
+      "text": "Как устроены отзывы садоводов",
+      "href": "/otzyvy/"
+    },
+    {
+      "text": "Посадка малины",
+      "href": "/zhurnal/posadka-maliny/"
+    },
+    {
+      "text": "Тип плодоношения",
+      "href": "/zhurnal/letnyaya-ili-remontantnaya-malina/"
+    },
+    {
+      "text": "ВНИИСПК · происхождение и образец Schönemann в коллекции малины",
+      "href": "https://journal-vniispk.ru/2312-6701/article/view/411790"
+    }
+  ]
+}

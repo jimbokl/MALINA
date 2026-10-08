@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "utf8Bom": true,
+  "coveredRows": 3844,
+  "exactFormsAndMetricsPreserved": true,
+  "uniqueQueries": true,
+  "rankedLowThenModerateDescendingDemand": true,
+  "resourceRows": 340,
+  "outOfScopeRows": 1169,
+  "resourceUrlsMatchVerifiedMapping": true,
+  "csvSha256": "00018aebeb15a6ff88605716cfb75dcdaaa8a054bd12fc04945e4f80151d675b"
+}

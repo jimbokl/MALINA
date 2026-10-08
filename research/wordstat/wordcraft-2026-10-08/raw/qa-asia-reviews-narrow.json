@@ -1,0 +1,158 @@
+{
+  "url": "http://127.0.0.1:5181/sorta/aziya/",
+  "title": "Клубника Азия: описание сорта, фото, урожайность, отзывы садоводов · МАЛИНА — КЛУБНИКА",
+  "h1": "Азия.",
+  "canonical": "https://malinaklubnika.ru/sorta/aziya/",
+  "viewport": {
+    "width": 500,
+    "height": 733
+  },
+  "documentWidth": 500,
+  "horizontalOverflow": false,
+  "sections": [
+    {
+      "id": "otzyvy",
+      "heading": "Отзывы о сорте Азия"
+    },
+    {
+      "id": "seo-opisanie",
+      "heading": "Описание сорта Азия: что сравнить"
+    },
+    {
+      "id": "seo-care",
+      "heading": "Посадка и уход за Азия"
+    },
+    {
+      "id": "seo-photo",
+      "heading": "Фото сорта Азия"
+    }
+  ],
+  "brokenVisibleImages": [],
+  "duplicateIds": [],
+  "links": [
+    {
+      "text": "Главная",
+      "href": "/"
+    },
+    {
+      "text": "Каталог",
+      "href": "/sorta/"
+    },
+    {
+      "text": "Сравнить с условиями",
+      "href": "/podbor/"
+    },
+    {
+      "text": "Почитать опыт садоводов ↗",
+      "href": "#otzyvy"
+    },
+    {
+      "text": "Весь каталог ↗",
+      "href": "/sorta/"
+    },
+    {
+      "text": "Клубника\nАльба",
+      "href": "/sorta/alba/"
+    },
+    {
+      "text": "Клубника\nАльбион",
+      "href": "/sorta/albion/"
+    },
+    {
+      "text": "Клубника\nАльфа",
+      "href": "/sorta/alfa/"
+    },
+    {
+      "text": "Опыт садоводов и отзывы",
+      "href": "#otzyvy"
+    },
+    {
+      "text": "Записать свой сезон ↗",
+      "href": "/instrumenty/zhurnal-uchastka/?crop=strawberry&cultivar=%D0%90%D0%B7%D0%B8%D1%8F"
+    },
+    {
+      "text": "Все материалы ↗",
+      "href": "/zhurnal/klubnika/"
+    },
+    {
+      "text": "",
+      "href": "/zhurnal/nazvaniya-klubniki-elizaveta-aprika-i-oshibki/"
+    },
+    {
+      "text": "Названия клубники: Елизавета, Априка и похожие написания",
+      "href": "/zhurnal/nazvaniya-klubniki-elizaveta-aprika-i-oshibki/"
+    },
+    {
+      "text": "Читать материал",
+      "href": "/zhurnal/nazvaniya-klubniki-elizaveta-aprika-i-oshibki/"
+    },
+    {
+      "text": "",
+      "href": "/zhurnal/bakterialnaya-pyatnistost-klubniki-chto-proverit/"
+    },
+    {
+      "text": "Бактериальный ожог клубники: какие признаки проверить",
+      "href": "/zhurnal/bakterialnaya-pyatnistost-klubniki-chto-proverit/"
+    },
+    {
+      "text": "Читать материал",
+      "href": "/zhurnal/bakterialnaya-pyatnistost-klubniki-chto-proverit/"
+    },
+    {
+      "text": "",
+      "href": "/zhurnal/tripsy-na-klubnike-priznaki/"
+    },
+    {
+      "text": "Трипсы на клубнике: признаки, фото и выбор действий",
+      "href": "/zhurnal/tripsy-na-klubnike-priznaki/"
+    },
+    {
+      "text": "Читать материал",
+      "href": "/zhurnal/tripsy-na-klubnike-priznaki/"
+    },
+    {
+      "text": "Клубника «Азия». Мои впечатления, первый опыт",
+      "href": "https://7dach.ru/Roselin/klubnika-aziya-moi-vpechatleniya-pervyy-opyt-302706.html"
+    },
+    {
+      "text": "Сравнить другие сорта ↗",
+      "href": "/podbor/"
+    },
+    {
+      "text": "Посмотреть товар",
+      "href": "/magazin/aziya-sazhenec/"
+    },
+    {
+      "text": "Stefka Atanassova et al.",
+      "href": "https://horticulturejournal.usamv.ro/pdf/2024/issue_1/Art2.pdf#page=3"
+    },
+    {
+      "text": "CC BY 4.0",
+      "href": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "text": "Geoplant Vivai · Asia NF421 ↗",
+      "href": "https://geoplantvivai.com/fragola-asia-nf421/"
+    },
+    {
+      "text": "Подробно о посадке",
+      "href": "/zhurnal/posadka-klubniki/"
+    },
+    {
+      "text": "Уход в течение сезона",
+      "href": "/zhurnal/uhod-za-klubnikoi-v-techenie-sezona/"
+    },
+    {
+      "text": "Фото Азия: Ирина Топчий (Roselin)",
+      "href": "https://7dach.ru/Roselin/klubnika-aziya-moi-vpechatleniya-pervyy-opyt-302706.html"
+    },
+    {
+      "text": "Сравнить с другими сортами клубники",
+      "href": "/sorta/klubnika/"
+    },
+    {
+      "text": "Проверить регион допуска",
+      "href": "/sorta/klubnika/regiony/"
+    }
+  ]
+}

@@ -1,0 +1,417 @@
+{
+  "checkedAt": "2026-10-08T14:19:54.534666+00:00",
+  "status": "passed_local_mapping",
+  "head": "696cf07726c1a454ec1ffe7c9e40f62da6d731fb",
+  "queryObservations": 8341,
+  "uniqueQueries": 7973,
+  "exports": [
+    {
+      "file": "bolezni-klubniki.xlsx",
+      "query": "болезни клубники",
+      "sha256": "b9490d5500656605a78038f49322c9ce5d033a505cd6f2cd9e3a943d4022ed5b"
+    },
+    {
+      "file": "bolezni-maliny.xlsx",
+      "query": "болезни малины",
+      "sha256": "6bac88d40d78da82c01fb7ebb81322fd7e2b4659c4847d50649a49622857cb8f"
+    },
+    {
+      "file": "klubnika.xlsx",
+      "query": "клубника",
+      "sha256": "f4980961a6af674d1a1780a107ea63847752086460f6c8dbeb9adea0f3084d73"
+    },
+    {
+      "file": "malina.xlsx",
+      "query": "малина",
+      "sha256": "3de15789d2d2e08ab66cf4dba621e54657c695a4acd6cc6aea88e2545b877efa"
+    },
+    {
+      "file": "posadka-maliny.xlsx",
+      "query": "посадка малины",
+      "sha256": "e5a5e9f9267cb773b618e2dce6b2b7f0a5346f05de10aed1df36b95c78ad810e"
+    },
+    {
+      "file": "sorta-klubniki.xlsx",
+      "query": "сорта клубники",
+      "sha256": "340c93c4079dcf0ad966f02a320ea94dbf3622589d576ccc0f8456c5a9d25d78"
+    },
+    {
+      "file": "sorta-maliny.xlsx",
+      "query": "сорта малины",
+      "sha256": "5002c98ea0c2f11fe5daf12392cb8d424eedef20f55f07a58efc87f71826f616"
+    },
+    {
+      "file": "tibetskaya-malina.xlsx",
+      "query": "тибетская малина",
+      "sha256": "5b1b9ad2f86de0548634b72267290333e7e100ef48eade991eea832c50d2ac17"
+    }
+  ],
+  "uiXlsComparisons": 1940,
+  "uiXlsMismatches": 0,
+  "metricConflicts": 0,
+  "coverage": {
+    "checkedAt": "2026-10-08",
+    "input": 5013,
+    "counts": {
+      "covered": 3844,
+      "gap": 0,
+      "out_of_scope": 1169
+    },
+    "complete": true,
+    "mappingComplete": true,
+    "completionScope": "canonical_routes_and_answer_anchors",
+    "resourceComplete": false,
+    "queriesWithMissingResources": 340,
+    "missingResourceCounts": {
+      "photo": 221,
+      "gardener_reviews": 287
+    },
+    "canonicalPages": 431
+  },
+  "addedCultivars": {
+    "total": 291,
+    "raspberry": 148,
+    "strawberry": 143,
+    "verifiedIdentity": 238,
+    "tradeDescription": 53
+  },
+  "addedArticles": 57,
+  "addedCropAndRegionCatalogs": 4,
+  "build": {
+    "command": "SITE_URL=https://malinaklubnika.ru SITE_BASE=/ npm run build",
+    "exit": 0,
+    "html": 1073,
+    "log": "build-seo.log"
+  },
+  "tests": {
+    "command": "npm test",
+    "exit": 0,
+    "passed": 322,
+    "skipped": 0,
+    "failed": 0,
+    "log": "tests-full-seo.log",
+    "seoRegression": {
+      "command": "node --test --test-concurrency=1 site/tests/seo-expansion.test.mjs",
+      "exit": 0,
+      "passed": 11,
+      "log": "tests-seo-resources.log"
+    }
+  },
+  "htmlCoverageVerifier": {
+    "command": "npm run seo:verify -- --require-complete",
+    "exit": 0,
+    "result": "coverage-verification.json",
+    "log": "verify.log"
+  },
+  "csvAndReferences": {
+    "status": "passed",
+    "utf8Bom": true,
+    "coveredRows": 3844,
+    "exactFormsAndMetricsPreserved": true,
+    "uniqueQueries": true,
+    "rankedLowThenModerateDescendingDemand": true,
+    "resourceRows": 340,
+    "outOfScopeRows": 1169,
+    "resourceUrlsMatchVerifiedMapping": true,
+    "csvSha256": "00018aebeb15a6ff88605716cfb75dcdaaa8a054bd12fc04945e4f80151d675b",
+    "editorialArticlesWithValidSectionReferences": 57
+  },
+  "browserQa": [
+    {
+      "url": "http://127.0.0.1:5181/sorta/strawberry-antea/",
+      "viewport": {
+        "width": 1440,
+        "height": 773
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-antea-desktop-20261008.json",
+      "screenshot": "screenshots/qa-antea-desktop-20261008.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/sorta/aziya/",
+      "viewport": {
+        "width": 1440,
+        "height": 776
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-asia-reviews-desktop.json",
+      "screenshot": "screenshots/qa-asia-reviews-desktop.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/sorta/aziya/",
+      "viewport": {
+        "width": 500,
+        "height": 733
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-asia-reviews-narrow.json",
+      "screenshot": "screenshots/qa-asia-reviews-narrow.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/sorta/aziya/",
+      "viewport": {
+        "width": 1440,
+        "height": 776
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-asia-sources-desktop.json",
+      "screenshot": "screenshots/qa-asia-sources-desktop.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/sorta/cabrillo/#otzyvy",
+      "viewport": {
+        "width": 530,
+        "height": 736
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-cabrillo-reviews-narrow.json",
+      "screenshot": "screenshots/qa-cabrillo-reviews-narrow.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/sorta/strawberry-chamora-turusi/",
+      "viewport": {
+        "width": 530,
+        "height": 736
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-chamora-reviews-narrow.json",
+      "screenshot": "screenshots/qa-chamora-reviews-narrow.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/sorta/malina-krepysh/#seo-reviews",
+      "viewport": {
+        "width": 500,
+        "height": 733
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-krepysh-sources-narrow.json",
+      "screenshot": "screenshots/qa-krepysh-sources-narrow.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/sorta/malga/#seo-photo",
+      "viewport": {
+        "width": 530,
+        "height": 736
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-malga-photo-gallery-narrow.json",
+      "screenshot": "screenshots/qa-malga-photo-gallery-narrow.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/sorta/malga/#seo-photo",
+      "viewport": {
+        "width": 530,
+        "height": 736
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-malga-photo-narrow.json",
+      "screenshot": "screenshots/qa-malga-photo-narrow.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/sorta/malina/regiony/#region-3",
+      "viewport": {
+        "width": 1440,
+        "height": 773
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-raspberry-regions-desktop-20261008.json",
+      "screenshot": "screenshots/qa-raspberry-regions-desktop-20261008.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/sorta/raspberry-schoenemann/",
+      "viewport": {
+        "width": 500,
+        "height": 733
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-schoenemann-narrow-20261008.json",
+      "screenshot": "screenshots/qa-schoenemann-narrow-20261008.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/zhurnal/tibetskaya-malina-kakoe-rastenie/",
+      "viewport": {
+        "width": 1440,
+        "height": 773
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-tibet-desktop-20261008.json",
+      "screenshot": "screenshots/qa-tibet-desktop-20261008.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/zhurnal/tibetskaya-malina-kakoe-rastenie/",
+      "viewport": {
+        "width": 500,
+        "height": 733
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-tibet-narrow-20261008.json",
+      "screenshot": "screenshots/qa-tibet-narrow-20261008.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/zhurnal/tibetskaya-malina-kakoe-rastenie/#section-2",
+      "viewport": {
+        "width": 500,
+        "height": 733
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-tibet-photos-narrow-20261008.json",
+      "screenshot": "screenshots/qa-tibet-photos-narrow-20261008.png",
+      "screenshotInspected": true
+    },
+    {
+      "url": "http://127.0.0.1:5181/zhurnal/tibetskaya-malina-kakoe-rastenie/#section-4",
+      "viewport": {
+        "width": 530,
+        "height": 736
+      },
+      "horizontalOverflow": false,
+      "brokenVisibleImages": [],
+      "duplicateIds": [],
+      "dom": "raw/qa-tibet-readers-narrow.json",
+      "screenshot": "screenshots/qa-tibet-readers-narrow.png",
+      "screenshotInspected": true
+    }
+  ],
+  "chromeUserWindowRestored": true,
+  "intentResourcesStatus": "incomplete: 340 exact forms request missing real photos and/or gardener reviews",
+  "publication": "not performed; local changes only",
+  "initialStage": {
+    "status": "passed",
+    "capture_date": "2026-10-08",
+    "head": "696cf07726c1a454ec1ffe7c9e40f62da6d731fb",
+    "query_observations": 8084,
+    "unique_queries": 7761,
+    "low_candidates": 597,
+    "additional_low_candidates": 113,
+    "manually_reviewed_intents": 58,
+    "ui_xls_comparisons": 1782,
+    "metric_conflicts": 0,
+    "export_checksums": [
+      {
+        "file": "bolezni-klubniki.xlsx",
+        "seed": "болезни клубники",
+        "sha256": "b9490d5500656605a78038f49322c9ce5d033a505cd6f2cd9e3a943d4022ed5b"
+      },
+      {
+        "file": "bolezni-maliny.xlsx",
+        "seed": "болезни малины",
+        "sha256": "6bac88d40d78da82c01fb7ebb81322fd7e2b4659c4847d50649a49622857cb8f"
+      },
+      {
+        "file": "klubnika.xlsx",
+        "seed": "клубника",
+        "sha256": "f4980961a6af674d1a1780a107ea63847752086460f6c8dbeb9adea0f3084d73"
+      },
+      {
+        "file": "malina.xlsx",
+        "seed": "малина",
+        "sha256": "3de15789d2d2e08ab66cf4dba621e54657c695a4acd6cc6aea88e2545b877efa"
+      },
+      {
+        "file": "posadka-maliny.xlsx",
+        "seed": "посадка малины",
+        "sha256": "e5a5e9f9267cb773b618e2dce6b2b7f0a5346f05de10aed1df36b95c78ad810e"
+      },
+      {
+        "file": "sorta-klubniki.xlsx",
+        "seed": "сорта клубники",
+        "sha256": "340c93c4079dcf0ad966f02a320ea94dbf3622589d576ccc0f8456c5a9d25d78"
+      },
+      {
+        "file": "sorta-maliny.xlsx",
+        "seed": "сорта малины",
+        "sha256": "5002c98ea0c2f11fe5daf12392cb8d424eedef20f55f07a58efc87f71826f616"
+      }
+    ],
+    "competitor_query_maps": 4,
+    "public_competitor_heading_reads": 3,
+    "mail_article_read": "ERR_CONNECTION_CLOSED; query map preserved",
+    "metadata_checks": [
+      {
+        "slug": "sorta-maliny-dlya-podmoskovya-kak-vybrat",
+        "title_h1_description_canonical": "passed"
+      },
+      {
+        "slug": "zhelteyut-listya-maliny-chto-proverit",
+        "title_h1_description_canonical": "passed"
+      },
+      {
+        "slug": "tlya-na-maline-chto-delat",
+        "title_h1_description_canonical": "passed"
+      }
+    ],
+    "body_sources_review_dates_preserved": true,
+    "build": {
+      "command": "SITE_URL=https://malinaklubnika.ru SITE_BASE=/ npm run build",
+      "exit": 0,
+      "html": 721,
+      "log": "/tmp/malina-seo01-production-build.log"
+    },
+    "tests": {
+      "command": "npm test",
+      "exit": 0,
+      "total": 311,
+      "passed": 310,
+      "skipped": 1,
+      "failed": 0,
+      "log": "/tmp/malina-seo01-test.log"
+    },
+    "public_check": {
+      "command": "npm run check:public",
+      "exit": 0,
+      "html": 470,
+      "scope": "existing public release; local metadata changes unpublished",
+      "log": "/tmp/malina-seo01-public.log"
+    },
+    "publication": "not performed"
+  },
+  "resourceEvidence": {
+    "growerAndPhotoMaterials": 24,
+    "publishedReaderSourcePages": 122,
+    "publisherLabelledPhotoPages": 112,
+    "photoSupplementSources": 20,
+    "localCultivarPhotosIncluded": true,
+    "externalSourcesAreLinksNotCopiedReviews": true
+  }
+}

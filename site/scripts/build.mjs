@@ -27,8 +27,10 @@ import { sourceFor } from './admitad-sources.mjs';
 import { relatedShopProducts, outOfStockNextProducts } from '../shop-related.mjs';
 import { seasonActivities, seasonMonths } from '../assets/season-planner-model.mjs';
 import { calendarSources } from '../assets/calendar-model.mjs';
+import { addProgrammaticPages, programmaticCultivars } from '../seo-programmatic.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+const editorialCultivars = new Map([...varieties, ...programmaticCultivars(varieties)].map(item => [item.slug, item]));
 const out = process.env.MALINA_BUILD_OUT || join(root, 'dist');
 const shopImagesDir = process.env.MALINA_SHOP_IMAGES_DIR || join(root, 'db', 'public', 'shop-images');
 const catalogDb = process.env.MALINA_CATALOG_DB || join(root, 'db', 'local', 'catalog.sqlite3');
@@ -134,10 +136,10 @@ function articlePage(article) {
   const imageHeight = article.heroImage?.height ?? 800;
   const familyPath = article.crop === 'raspberry' ? '/zhurnal/malina/' : article.crop === 'strawberry' ? '/zhurnal/klubnika/' : '/zhurnal/';
   const relatedArticles = article.relatedArticles.map(slug => articles.find(item => item.slug === slug)).filter(Boolean);
-  const relatedVarieties = article.relatedVarieties.map(slug => varieties.find(item => item.slug === slug)).filter(Boolean);
+  const relatedVarieties = article.relatedVarieties.map(slug => editorialCultivars.get(slug)).filter(Boolean);
   const contents = article.sections.map((section, index) => `<a href="#section-${index + 1}"><span>${String(index + 1).padStart(2, '0')}</span>${e(section.heading)}</a>`).join('');
   const sections = article.sections.map((section, index) => `<section class="media-story-section" id="section-${index + 1}"><span class="media-section-count">${String(index + 1).padStart(2, '0')} / ${String(article.sections.length).padStart(2, '0')}</span><h2>${e(section.heading)}</h2>${section.paragraphs.map(paragraph => `<p>${e(paragraph)}</p>`).join('')}${section.image ? `<figure class="media-section-image"><img src="/assets/${e(section.image.file)}" alt="${e(section.image.alt)}" width="${section.image.width}" height="${section.image.height}" loading="lazy" decoding="async"><figcaption>${e(section.image.caption)}</figcaption></figure>` : ''}</section>`).join('');
-  const related = relatedVarieties.length ? `<section class="media-related-varieties"><span class="eyebrow">СВЯЗАННЫЕ СОРТА</span><h2>Посмотреть карточки</h2><p>Откройте карточки и сравните сорта между собой.</p><div class="media-variety-links">${relatedVarieties.map(variety => `<a href="/sorta/${variety.slug}/" data-article-to-cultivar="${e(article.slug)}"><span>${e(variety.crop)}</span><strong>${e(variety.name)}</strong>${arrow}</a>`).join('')}</div></section>` : '';
+  const related = relatedVarieties.length ? `<section class="media-related-varieties"><span class="eyebrow">СВЯЗАННЫЕ СОРТА</span><h2>Посмотреть карточки</h2><p>Откройте карточки и сравните сорта между собой.</p><div class="media-variety-links">${relatedVarieties.map(variety => `<a href="/sorta/${variety.slug}/" data-article-to-cultivar="${e(article.slug)}"><span>${e(variety.crop || cropTitle(variety.cropKey))}</span><strong>${e(variety.name)}</strong>${arrow}</a>`).join('')}</div></section>` : '';
   const relatedReading = relatedArticles.length ? `<section class="section wrap media-related-reading">${sectionHead('ЧИТАТЬ ДАЛЬШЕ', 'Продолжить разбираться', '', '<a class="text-link" href="/zhurnal/">Весь журнал ↗</a>')}<div class="media-grid">${relatedArticles.map(item => articleCard(item)).join('')}</div></section>` : '';
   const articleUrl = siteUrl ? `${siteUrl}${articlePath(article)}` : '';
   const schema = siteUrl ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'Article', headline: article.title, description: article.description, datePublished: articlePublishedIso, dateModified: articleReviewedIso, author: { '@type': 'Organization', name: editorialAuthor, url: `${siteUrl}/about/` }, publisher: { '@type': 'Organization', name: 'МАЛИНА — КЛУБНИКА', url: siteUrl }, mainEntityOfPage: articleUrl, image: `${siteUrl}${siteBase}/assets/${image}` }, { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Главная', item: `${siteUrl}/` }, { '@type': 'ListItem', position: 2, name: 'Журнал', item: `${siteUrl}/zhurnal/` }, { '@type': 'ListItem', position: 3, name: article.title, item: articleUrl }] }] })}</script>` : '';
@@ -856,6 +858,7 @@ pages.set('/instrumenty/kogda-sazhat-klubniku-v-podmoskove/', moscowStrawberryPl
 for (const product of shopProducts.filter(item => item.canonicalSlug !== item.slug)) {
   pages.set(shopProductPath(product), shopVariantRedirect(product));
 }
+const seoExpansion = addProgrammaticPages({ pages, paths, layout, varieties, catalog: publicCatalog });
 for (const [path, html] of pages) { const dir = join(out, path); await mkdir(dir, { recursive: true }); await writeFile(join(dir, 'index.html'), withSiteBase(html)); }
 await mkdir(join(out, 'assets'), { recursive: true });
 await writeFile(join(out, 'assets', 'site.css'), withCssBase(await readFile(join(root, 'site', 'assets', 'site.css'), 'utf8')));

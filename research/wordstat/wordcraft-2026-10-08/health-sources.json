@@ -1,0 +1,864 @@
+{
+  "checkedAt": "2026-10-08",
+  "batch": "SEO-08 health and pest editorial",
+  "scope": "Source passport for five new strawberry/raspberry editorial guides. Russian sources are preferred for local context and regulation; Extension/research sources support recognition and diagnostic reasoning only.",
+  "sources": [
+    {
+      "id": "ru-strawberry-rosselkhozcenter-leningrad",
+      "url": "https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/severo-zapadnyy/leningradskaya-oblast/zemlyanika-sadovaya-vrediteli-i-bolezni/",
+      "title": "Земляника садовая: вредители и болезни",
+      "organization": "ФГБУ «Россельхозцентр», филиал по Ленинградской области",
+      "type": "regional government agricultural advisory",
+      "checkedAt": "2026-10-08",
+      "applicability": "Russian strawberry cultivation; regional context",
+      "usedFor": [
+        "strawberry disease/pest recognition",
+        "garden hygiene and monitoring context"
+      ],
+      "limitations": "Regional advice; pesticide recommendations and calendar dates are not generalized."
+    },
+    {
+      "id": "umn-strawberry-diseases",
+      "url": "https://extension.umn.edu/agriculture/specialty-crops/commercial-fruit-production/strawberry-farming/strawberry-diseases-in-minnesota",
+      "title": "Strawberry diseases in Minnesota",
+      "organization": "University of Minnesota Extension",
+      "type": "university extension diagnostic guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Symptom recognition and general disease biology; Minnesota conditions",
+      "usedFor": [
+        "similarity of leaf-spot symptoms",
+        "gray mold infection/signs",
+        "airflow and sanitation principles"
+      ],
+      "limitations": "Minnesota-specific diseases, product registrations, timings, and treatment schedules are not transferred to Russia."
+    },
+    {
+      "id": "ru-strawberry-gray-mold-khakassia",
+      "url": "https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/sibirskiy/respublika-khakasiya/kak-ne-dopustit-seroy-gnili-na-klubnichnoy-gryadke/",
+      "title": "Как не допустить серой гнили на клубничной грядке",
+      "organization": "ФГБУ «Россельхозцентр», филиал по Республике Хакасия",
+      "type": "regional government agricultural advisory",
+      "checkedAt": "2026-10-08",
+      "applicability": "Strawberry gray mold signs and local prevention context",
+      "usedFor": [
+        "Botrytis/gray mold on strawberry",
+        "moisture and sanitation context"
+      ],
+      "limitations": "Regional prevention guidance; no specific product or dose is reproduced."
+    },
+    {
+      "id": "umn-strawberry-home",
+      "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/growing-strawberries-in-the-home-garden",
+      "title": "Growing strawberries in the home garden",
+      "organization": "University of Minnesota Extension",
+      "type": "university extension guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Symptom comparison and cultivation principles; Minnesota",
+      "usedFor": [
+        "leaf spot/scorch/blight comparison",
+        "symptoms by leaf age",
+        "airflow and sanitation"
+      ],
+      "limitations": "Local climate and pesticide advice are not imported into Russian seasonal instructions."
+    },
+    {
+      "id": "pennstate-strawberry-roots",
+      "url": "https://extension.psu.edu/crown-and-root-issues-in-strawberries",
+      "title": "Crown and Root Issues in Strawberries",
+      "organization": "Penn State Extension",
+      "type": "university extension diagnostic guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Root/crown examination and differential causes",
+      "usedFor": [
+        "wilt and collapse require crown/root inspection",
+        "disease can resemble abiotic injury"
+      ],
+      "limitations": "Regional pathogens are not treated as evidence of Russian prevalence; laboratory diagnosis remains necessary for specific cause."
+    },
+    {
+      "id": "ncstate-phytophthora-strawberry",
+      "url": "https://content.ces.ncsu.edu/phytophthora-crown-rot-of-strawberry",
+      "title": "Phytophthora Crown Rot of Strawberry",
+      "organization": "North Carolina State Extension",
+      "type": "university extension disease guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Example crown/root disease signs",
+      "usedFor": [
+        "crown discoloration and plant collapse as signs warranting closer examination"
+      ],
+      "limitations": "Used for symptom recognition only; does not establish local occurrence or treatment."
+    },
+    {
+      "id": "ru-catalog-2025",
+      "url": "https://minapk.zo.gov.ru/news/show/gosudarstvennyj_katalog_pesticidov_i_agroximikatov_i_gosudarstvennyj_reestr_sortov_selskoxozyajstven",
+      "title": "Государственный каталог пестицидов и агрохимикатов и Государственный реестр сортов сельскохозяйственных растений (издание 2025 года)",
+      "organization": "Минсельхоз России",
+      "type": "official state catalog locator",
+      "checkedAt": "2026-10-08",
+      "applicability": "Russian product-registration lookup; the catalog edition linked is 2025",
+      "usedFor": [
+        "instruction to verify registration for crop, target and application before use"
+      ],
+      "limitations": "The source located is the 2025 edition; users are expressly directed to check the current edition and current product label at time of treatment. No product recommendation is made."
+    },
+    {
+      "id": "ru-rosselkhoz-didymella-irkutsk",
+      "url": "https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/sibirskiy/irkutskaya-oblast/kak-zashchitit-malinu-ot-vrediteley-i-bolezney-sovety-agronomov-rosselkhoztsentra-po-irkutskoy-oblas/",
+      "title": "Как защитить малину от вредителей и болезней: советы агрономов Россельхозцентра по Иркутской области",
+      "organization": "ФГБУ «Россельхозцентр», филиал по Иркутской области",
+      "type": "regional government agricultural advisory",
+      "checkedAt": "2026-10-08",
+      "applicability": "Russian raspberry cane disease signs and regional context",
+      "usedFor": [
+        "didymella/purple blotch signs",
+        "contrast with anthracnose",
+        "raspberry pest overview",
+        "witches'-broom-like proliferation description"
+      ],
+      "limitations": "Some recommendations are regional and/or product-specific; article uses recognition and nonchemical inspection concepts only."
+    },
+    {
+      "id": "umn-raspberry-cane-disease",
+      "url": "https://extension.umn.edu/plant-diseases/cane-blight-and-spur-blight-raspberry",
+      "title": "Cane blight and spur blight of raspberry",
+      "organization": "University of Minnesota Extension",
+      "type": "university extension disease guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Cane symptom comparison; Minnesota",
+      "usedFor": [
+        "differentiate cane lesions and dieback from didymella-like purple spotting"
+      ],
+      "limitations": "Regional disease pressure and treatment timing are not imported."
+    },
+    {
+      "id": "ru-raspberry-gall-midge-bryansk",
+      "url": "https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/tsentralnyy-okrug/bryanskaya-oblast/informatsionnyy-listok-13-steblevaya-gallitsa-na-maline/",
+      "title": "Информационный листок № 13: Стеблевая галлица на малине",
+      "organization": "ФГБУ «Россельхозцентр», филиал по Брянской области",
+      "type": "regional government pest advisory",
+      "checkedAt": "2026-10-08",
+      "applicability": "Raspberry cane gall signs",
+      "usedFor": [
+        "galls/cane damage as an alternative explanation to fungal cane disease"
+      ],
+      "limitations": "Regional timing and treatment measures are not generalized."
+    },
+    {
+      "id": "umn-raspberry-pruning",
+      "url": "https://extension.umn.edu/planting-and-growing-guides/pruning-raspberries-and-blackberries",
+      "title": "Pruning raspberries and blackberries",
+      "organization": "University of Minnesota Extension",
+      "type": "university extension cultivation guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "General pruning and cane removal principles",
+      "usedFor": [
+        "remove fruited/dead/diseased canes and maintain airflow"
+      ],
+      "limitations": "Pruning timing depends on raspberry type and local climate; Russian gardeners should account for their cultivar and region."
+    },
+    {
+      "id": "umn-aphids",
+      "url": "https://extension.umn.edu/yard-and-garden-insects/aphids",
+      "title": "Aphids in home yards and gardens",
+      "organization": "University of Minnesota Extension",
+      "type": "university extension pest guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Aphid recognition and nonchemical monitoring principles",
+      "usedFor": [
+        "clusters beneath young leaves, curled/yellowed leaves, honeydew"
+      ],
+      "limitations": "Not raspberry-specific and not local Russian treatment guidance."
+    },
+    {
+      "id": "umn-raspberry-insects",
+      "url": "https://extension.umn.edu/yard-and-garden-insects/raspberry-and-blackberry-insect-pests",
+      "title": "Raspberry and blackberry insect pests",
+      "organization": "University of Minnesota Extension",
+      "type": "university extension pest guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Pest sign recognition; Minnesota",
+      "usedFor": [
+        "insect damage to cane, foliage and fruit; need to inspect the damaged plant part"
+      ],
+      "limitations": "Local pest presence, product registration and calendar are not inferred."
+    },
+    {
+      "id": "ru-raspberry-beetle-kaluga",
+      "url": "https://rosselhoscenter.ru/ob-uchrezhdenii/filialy/tsentralnyy-okrug/kaluzhskaya-oblast/malinnyy-zhuk-rekomendatsii-spetsialista-kaluzhskogo-rosselkhoztsentra/",
+      "title": "Малинный жук: рекомендации специалиста Калужского Россельхозцентра",
+      "organization": "ФГБУ «Россельхозцентр», филиал по Калужской области",
+      "type": "regional government pest advisory",
+      "checkedAt": "2026-10-08",
+      "applicability": "Raspberry fruit damage recognition",
+      "usedFor": [
+        "soft/deformed fruit, damaged drupelets and pale larva inside berry"
+      ],
+      "limitations": "Regional advice; no treatment recipe or dose is copied."
+    },
+    {
+      "id": "aps-witches-broom-black-raspberry",
+      "url": "https://www.apsnet.org/publications/plantdisease/2001/October/Pages/85_10_1121.1.aspx",
+      "title": "Molecular Identification of a Phytoplasma Associated with Witches’-Broom Disease of Black Raspberry in Oregon",
+      "organization": "Plant Disease / American Phytopathological Society",
+      "type": "peer-reviewed primary research",
+      "checkedAt": "2026-10-08",
+      "applicability": "Specific reported black raspberry phytoplasma case in Oregon",
+      "usedFor": [
+        "witches'-broom is a phytoplasma-associated syndrome documented in black raspberry"
+      ],
+      "limitations": "A single region/species study; does not establish red raspberry or Russian garden incidence."
+    },
+    {
+      "id": "umn-raspberry-growing",
+      "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/growing-raspberries-in-the-home-garden",
+      "title": "Growing raspberries in the home garden",
+      "organization": "University of Minnesota Extension",
+      "type": "university extension growing guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Raspberry growth habit, symptom observation and general care; Minnesota",
+      "usedFor": [
+        "distinguish floricanes from primocanes",
+        "normal post-fruiting cane death",
+        "airflow and removal of weak/diseased canes"
+      ],
+      "limitations": "Minnesota-specific schedule is not transferred; growth habit distinctions are described generically."
+    },
+    {
+      "id": "umn-raspberry-nutrients",
+      "url": "https://extension.umn.edu/fruit/growing-raspberries-home-garden",
+      "title": "Growing raspberries in the home garden",
+      "organization": "University of Minnesota Extension",
+      "type": "university extension guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Raspberry nutrient symptom context; Minnesota",
+      "usedFor": [
+        "nutrient imbalance is among potential explanations for yellowing"
+      ],
+      "limitations": "No fertilizer prescriptions are transferred; test/site context is needed."
+    },
+    {
+      "id": "strawberry-diagnostic-umn",
+      "url": "https://apps.extension.umn.edu/garden/diagnose/plant/fruit/strawberry/",
+      "title": "Strawberry disease identification",
+      "organization": "University of Minnesota Extension",
+      "type": "university extension diagnostic key",
+      "checkedAt": "2026-10-08",
+      "applicability": "Symptom-led comparison for strawberry",
+      "usedFor": [
+        "leaf discoloration and lesions should be compared by pattern and plant part"
+      ],
+      "limitations": "Minnesota disease context; a visual key narrows possibilities but does not confirm pathogen."
+    },
+    {
+      "id": "umn-herbicide-injury",
+      "url": "https://extension.umn.edu/gardening-minnesota/herbicide-injury-garden-plants",
+      "title": "Herbicide injury on garden plants",
+      "organization": "University of Minnesota Extension",
+      "type": "university extension diagnostic guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Differential diagnosis of foliar discoloration/deformation",
+      "usedFor": [
+        "consider spray drift or other chemical injury where symptom distribution/history fits"
+      ],
+      "limitations": "General garden guide for Minnesota; not a strawberry-specific diagnosis."
+    },
+    {
+      "id": "strawberry-witches-broom-italy-2025",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12473155/",
+      "title": "A Witches’-Broom Disease of Cultivated Strawberry Associated with ‘Candidatus Phytoplasma Rubi’-Related Strains in Southern Italy",
+      "organization": "Plants (MDPI), primary research indexed in PubMed Central",
+      "type": "peer-reviewed primary research",
+      "checkedAt": "2026-10-08",
+      "applicability": "Reported phytoplasma-associated strawberry syndrome in three commercial fields in southern Italy",
+      "usedFor": [
+        "rare witches'-broom-like strawberry syndrome requires laboratory confirmation"
+      ],
+      "limitations": "Evidence from southern Italy only; no inference of occurrence in Russia."
+    },
+    {
+      "id": "umn-plant-clinic-submit",
+      "url": "https://pdc.umn.edu/submit-sample",
+      "title": "Submit a sample to the Plant Disease Clinic",
+      "organization": "University of Minnesota Plant Disease Clinic",
+      "type": "university diagnostic service instructions",
+      "checkedAt": "2026-10-08",
+      "applicability": "Example of preserving and submitting plant samples",
+      "usedFor": [
+        "document symptoms and preserve fresh tissue for specialist/lab review"
+      ],
+      "limitations": "Submission route is specific to Minnesota; Russian readers should contact their regional plant protection service."
+    },
+    {
+      "id": "law-109fz-registration",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_15221/906669d8e8e315bc7d229a2c9458d3bc5b27e4d9/",
+      "title": "Федеральный закон № 109-ФЗ, статья 8: государственная регистрация пестицидов и агрохимикатов",
+      "organization": "Российская Федерация; text hosted by ConsultantPlus",
+      "type": "federal law text",
+      "checkedAt": "2026-10-08",
+      "applicability": "Registration status of pesticides/agrochemicals in Russia",
+      "usedFor": [
+        "use only a registered product and verify its authorized application"
+      ],
+      "limitations": "Law is cited for registration principle; current label/catalog remains necessary for crop, target, dose and waiting period."
+    },
+    {
+      "id": "ucipm-strawberry-nematodes",
+      "url": "https://ipm.ucanr.edu/agriculture/strawberry/nematodes/",
+      "title": "Nematodes / Strawberry / Agriculture: Pest Management Guidelines",
+      "organization": "University of California Statewide IPM Program (UC IPM)",
+      "type": "university integrated pest management diagnostic guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Recognition and sample-based confirmation of strawberry nematodes; California crop context",
+      "usedFor": [
+        "foliar nematode and root-knot symptoms",
+        "confirmed-case photographs linked for comparison",
+        "need for species-specific diagnosis"
+      ],
+      "limitations": "California prevalence and management are not transferred to Russia; photographs are examples, not stand-alone diagnosis."
+    },
+    {
+      "id": "gnb-strawberry-nematodes",
+      "url": "https://www2.gnb.ca/content/gnb/en/departments/10/agriculture/content/crops/small_fruits/nematodes.html",
+      "title": "Nematodes in strawberry and raspberry",
+      "organization": "Government of New Brunswick, Department of Agriculture",
+      "type": "government agricultural diagnostic guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Nematode symptoms and sample identification in small fruit crops; New Brunswick context",
+      "usedFor": [
+        "root-knot galls and root lesion symptoms",
+        "photographs and symptom comparison",
+        "laboratory confirmation"
+      ],
+      "limitations": "Regional sampling calendar and control recommendations are not transferred to Russia."
+    },
+    {
+      "id": "ucipm-strawberry-transplants",
+      "url": "https://ipm.ucanr.edu/agriculture/strawberry/handling-strawberry-transplants/",
+      "title": "Handling Strawberry Transplants",
+      "organization": "University of California Statewide IPM Program (UC IPM)",
+      "type": "university integrated pest management guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Strawberry transplant pest/pathogen inspection; California nursery context",
+      "usedFor": [
+        "importance of phytosanitary inspection of planting stock"
+      ],
+      "limitations": "California certification details are not presented as Russian certification rules."
+    },
+    {
+      "id": "osu-strawberry-nutrient-management",
+      "url": "https://extension.oregonstate.edu/catalog/em-9234-strawberry-nutrient-management-guide-oregon-washington",
+      "title": "Strawberry nutrient management guide for Oregon and Washington",
+      "organization": "Oregon State University Extension Service",
+      "type": "university extension nutrient management guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Strawberry boron physiology, toxicity, symptom recognition and soil/tissue testing; Pacific Northwest",
+      "usedFor": [
+        "boron deficiency clues",
+        "narrow sufficiency/toxicity margin",
+        "soil and tissue tests before treatment"
+      ],
+      "limitations": "Regional critical values and rates are not transferred to Russian gardens."
+    },
+    {
+      "id": "ncstate-strawberry-boron-toxicity",
+      "url": "https://diagnosis.ces.ncsu.edu/strawberry/disorder/detail/boron-toxicity",
+      "title": "Strawberry Diagnostic Key: Boron Toxicity",
+      "organization": "North Carolina State University Extension",
+      "type": "university diagnostic key",
+      "checkedAt": "2026-10-08",
+      "applicability": "Visual symptoms associated with boron toxicity in strawberry; North Carolina",
+      "usedFor": [
+        "marginal/complete necrosis and stunting as toxicity clues"
+      ],
+      "limitations": "Symptoms are not unique to boron toxicity and do not establish the cause in Russia."
+    },
+    {
+      "id": "udel-strawberry-boron-toxicity",
+      "url": "https://sites.udel.edu/weeklycropupdate/?p=22775",
+      "title": "Boron toxicity in strawberries",
+      "organization": "University of Delaware Cooperative Extension",
+      "type": "university extension field note",
+      "checkedAt": "2026-10-08",
+      "applicability": "Boron toxicity risk in strawberries; Delaware production context",
+      "usedFor": [
+        "foliar boron overapplication can cause irreversible injury"
+      ],
+      "limitations": "Regional observation; not a Russian diagnosis or treatment schedule."
+    },
+    {
+      "id": "avz-2025-catalog-fitosporin",
+      "url": "https://www.bashinkom.ru/upload/tmp/iblock/feb/qvme8t5c0thcfmktg5yr7w9n0yroybkx/KATALOG-AVZ-2025_compressed.pdf",
+      "title": "Каталог АВЗ 2025: Фитоспорин-М, Ж",
+      "organization": "АВЗ / БашИнком",
+      "type": "manufacturer product catalog",
+      "checkedAt": "2026-10-08",
+      "applicability": "Manufacturer-listed uses for exact liquid formulation Fitosporin-M, Ж on strawberry/other berry crops",
+      "usedFor": [
+        "strawberry listed as crop for Fitosporin-M, Ж",
+        "named target groups and application methods for this exact formulation"
+      ],
+      "limitations": "Manufacturer catalog is not the current legal product label; do not transfer directions to other formulations or claim efficacy beyond listed targets."
+    },
+    {
+      "id": "syngenta-chorus-russia",
+      "url": "https://www.syngenta.ru/products/chorus/",
+      "title": "ХОРУС, ВДГ: описание и культуры применения",
+      "organization": "Syngenta Россия",
+      "type": "manufacturer product page",
+      "checkedAt": "2026-10-08",
+      "applicability": "Russian manufacturer description of Chorus WDG",
+      "usedFor": [
+        "named target crops in current Russian product page"
+      ],
+      "limitations": "Page describes pome fruit, stone fruit and grape; it names neither strawberry nor raspberry. This applies to this formulation and Russian page, not foreign products with a similar brand name."
+    },
+    {
+      "id": "syngenta-catalog-2025",
+      "url": "https://www.syngenta.ru/sites/g/files/kgtney371/files/media/document/2024/11/11/catalog_2025.pdf",
+      "title": "Каталог продукции Syngenta 2025",
+      "organization": "Syngenta Россия",
+      "type": "manufacturer catalog",
+      "checkedAt": "2026-10-08",
+      "applicability": "Russian manufacturer crop listings for Chorus in its 2025 catalog",
+      "usedFor": [
+        "cross-check of Chorus listed crop uses"
+      ],
+      "limitations": "2025 catalog is not a substitute for current registration and exact package label."
+    },
+    {
+      "id": "psu-home-remedies",
+      "url": "https://extension.psu.edu/are-home-remedies-a-good-solution-penn-state-extension-says-no",
+      "title": "Are Home Remedies a Good Solution?",
+      "organization": "Penn State Extension",
+      "type": "university extension pesticide safety note",
+      "checkedAt": "2026-10-08",
+      "applicability": "Risks and evidentiary limits of homemade pesticide recipes",
+      "usedFor": [
+        "home recipes often lack validated label information and can be unsuitable for food crops"
+      ],
+      "limitations": "General advice; not a strawberry-specific efficacy trial."
+    },
+    {
+      "id": "wsu-organic-fruit-ipm",
+      "url": "https://pubs.extension.wsu.edu/product/organic-pest-management-in-backyard-fruit-trees-and-berry-patches/",
+      "title": "Organic Pest and Disease Management in Home Fruit Trees and Berry Bushes",
+      "organization": "Washington State University Extension",
+      "type": "university extension IPM guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Integrated pest management and identification before pesticide use in fruit/berry gardens",
+      "usedFor": [
+        "identify the problem before application; use cultural/physical practices"
+      ],
+      "limitations": "US regional product registrations are not transferred to Russia."
+    },
+    {
+      "id": "unl-tank-mix-compatibility",
+      "url": "https://extensionpubs.unl.edu/publication/g2350/2023/html/view",
+      "title": "Testing Pesticide Mixtures for Compatibility (G2350)",
+      "organization": "University of Nebraska–Lincoln Extension",
+      "type": "university extension pesticide safety guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Physical and chemical incompatibility in pesticide tank mixes",
+      "usedFor": [
+        "labels first; tank mixes can change efficacy",
+        "jar test is a limited compatibility check"
+      ],
+      "limitations": "US label practices are not Russian registration advice."
+    },
+    {
+      "id": "ufifas-tank-mix-compatibility",
+      "url": "https://ask.ifas.ufl.edu/publication/PI301",
+      "title": "Ensuring Pesticide Compatibility in Tank Mixes (PI301)",
+      "organization": "University of Florida IFAS Extension",
+      "type": "university extension pesticide safety publication",
+      "checkedAt": "2026-10-08",
+      "applicability": "Limits of jar testing and physical/chemical/legal compatibility",
+      "usedFor": [
+        "jar test identifies physical incompatibility only",
+        "possible antagonism, reduced selectivity and crop injury"
+      ],
+      "limitations": "Regional use recommendations are not transferred to Russia."
+    },
+    {
+      "id": "psu-strawberry-disease-identification-gallery",
+      "url": "https://extension.psu.edu/strawberry-disease-identification",
+      "title": "Strawberry Disease Identification",
+      "organization": "Penn State Extension",
+      "type": "university extension photo-based diagnostic guide",
+      "checkedAt": "2026-10-08",
+      "applicability": "Photographic comparison of strawberry leaf, fruit, crown and root symptoms; Pennsylvania/Mid-Atlantic and US disease context",
+      "usedFor": [
+        "captioned real photographs of leaf spots, gray mold, root and crown problems",
+        "comparing visible symptom patterns across plant parts"
+      ],
+      "limitations": "Photos support visual comparison only, not diagnosis or prevalence in Russia; each photo retains its original Penn State/credited contributor caption and context."
+    }
+  ],
+  "claims": [
+    {
+      "articleSlug": "bolezni-klubniki-priznaki-i-proverka",
+      "section": "С чего начать осмотр грядки",
+      "claim": "При похожих пятнах осматривают несколько листьев и частей растения; визуальные сходства не позволяют надежно определить возбудителя без дальнейшей проверки.",
+      "sourceIds": [
+        "ru-strawberry-rosselkhozcenter-leningrad",
+        "umn-strawberry-diseases"
+      ],
+      "status": "checked",
+      "limitations": "The article recommends structured observation, not remote diagnosis."
+    },
+    {
+      "articleSlug": "bolezni-klubniki-priznaki-i-proverka",
+      "section": "Пятна на листьях: смотрите на центр и край",
+      "claim": "Центр и край пятна, возраст листа, нижняя сторона и pattern help narrow leaf spot/scorch/blight possibilities; they are not a standalone diagnosis.",
+      "sourceIds": [
+        "umn-strawberry-diseases",
+        "umn-strawberry-home"
+      ],
+      "status": "checked",
+      "limitations": "Recognition references describe Minnesota disease context."
+    },
+    {
+      "articleSlug": "bolezni-klubniki-priznaki-i-proverka",
+      "section": "Серая гниль и другие повреждения ягод",
+      "claim": "Softened fruit with gray fuzzy growth is consistent with gray mold; moisture/flower infection and sanitation/airflow are relevant checks.",
+      "sourceIds": [
+        "ru-strawberry-gray-mold-khakassia",
+        "umn-strawberry-diseases",
+        "umn-strawberry-home"
+      ],
+      "status": "checked",
+      "limitations": "The wording is symptom-oriented; lookalike fruit damage is not attributed to Botrytis without confirmation."
+    },
+    {
+      "articleSlug": "bolezni-klubniki-priznaki-i-proverka",
+      "section": "Куст вянет или засыхает целиком",
+      "claim": "Wilt/collapse merits inspection of moisture, drainage, crown and roots; multiple infectious and abiotic causes can look similar.",
+      "sourceIds": [
+        "pennstate-strawberry-roots",
+        "ncstate-phytophthora-strawberry"
+      ],
+      "status": "checked",
+      "limitations": "Specific pathogen identity requires diagnosis; color alone is not presented as proof."
+    },
+    {
+      "articleSlug": "bolezni-klubniki-priznaki-i-proverka",
+      "section": "Что можно сделать до выбора средства",
+      "claim": "Sanitation, moisture management and airflow are general prevention measures; any pesticide must be checked for current Russian registration and label conditions for crop and target.",
+      "sourceIds": [
+        "ru-strawberry-rosselkhozcenter-leningrad",
+        "ru-catalog-2025",
+        "law-109fz-registration"
+      ],
+      "status": "checked",
+      "limitations": "The cited catalog page locates the 2025 edition; article explicitly instructs readers to verify the current edition. No product or dose is recommended."
+    },
+    {
+      "articleSlug": "didimella-maliny-priznaki-i-proverka",
+      "section": "Как распознать пурпуровую пятнистость",
+      "claim": "Didymella/purple blotch is associated with diffuse purple lesions on raspberry canes; the Russian source contrasts it with anthracnose lesions.",
+      "sourceIds": [
+        "ru-rosselkhoz-didymella-irkutsk",
+        "umn-raspberry-cane-disease"
+      ],
+      "status": "checked",
+      "limitations": "Appearance can overlap with other cane injury; the guide asks readers to inspect location, cane age and lesion development."
+    },
+    {
+      "articleSlug": "didimella-maliny-priznaki-i-proverka",
+      "section": "Отличите пятна от галлицы и других повреждений",
+      "claim": "A cane swelling/gall or localized injury may indicate an insect-related problem, so inspect for galleries, galls and pest evidence before attributing cane decline to fungus.",
+      "sourceIds": [
+        "ru-raspberry-gall-midge-bryansk",
+        "umn-raspberry-cane-disease"
+      ],
+      "status": "checked",
+      "limitations": "Regional advisory; exact pest identification can require a sample."
+    },
+    {
+      "articleSlug": "didimella-maliny-priznaki-i-proverka",
+      "section": "Как снизить риск и когда рассматривать обработку",
+      "claim": "Healthy planting stock, removal of affected canes and airflow are sound prevention checks; products/doses require current authorized registration and label.",
+      "sourceIds": [
+        "ru-rosselkhoz-didymella-irkutsk",
+        "umn-raspberry-pruning",
+        "ru-catalog-2025",
+        "law-109fz-registration"
+      ],
+      "status": "checked",
+      "limitations": "No foreign treatment schedule or unverified dose is reproduced."
+    },
+    {
+      "articleSlug": "bolezni-i-vrediteli-maliny-priznaki",
+      "section": "Сначала определите, какая часть куста страдает",
+      "claim": "Compare primocanes and floricanes; yellowing/dieback on a fruited second-year cane can be normal after fruiting, unlike the same signs on new growth.",
+      "sourceIds": [
+        "umn-raspberry-growing"
+      ],
+      "status": "checked",
+      "limitations": "Growth pattern differs by cultivar and primocane-fruiting habit; user is directed to identify cane type."
+    },
+    {
+      "articleSlug": "bolezni-i-vrediteli-maliny-priznaki",
+      "section": "Пятна и отмирание побегов",
+      "claim": "Purple cane spots suggest a cane disease such as didymella, whereas galls, paired punctures, galleries or sharply localized damage merit pest/injury checks.",
+      "sourceIds": [
+        "ru-rosselkhoz-didymella-irkutsk",
+        "ru-raspberry-gall-midge-bryansk",
+        "umn-raspberry-insects"
+      ],
+      "status": "checked",
+      "limitations": "These are differential clues, not an exhaustive diagnosis key."
+    },
+    {
+      "articleSlug": "bolezni-i-vrediteli-maliny-priznaki",
+      "section": "Листья желтеют, скручиваются или покрываются липким налётом",
+      "claim": "Aphids may cluster on young tissue and severe feeding can be associated with curling/yellowing and honeydew; nutrient/water or root problems remain alternatives.",
+      "sourceIds": [
+        "umn-aphids",
+        "umn-raspberry-nutrients"
+      ],
+      "status": "checked",
+      "limitations": "Aphid guide is general rather than raspberry-specific; do not infer nutrient deficiency from color alone."
+    },
+    {
+      "articleSlug": "bolezni-i-vrediteli-maliny-priznaki",
+      "section": "Черви и повреждённые ягоды",
+      "claim": "Soft/deformed raspberry fruit with damaged drupelets and a pale curved larva inside is consistent with raspberry beetle larval damage; inspect berry directly.",
+      "sourceIds": [
+        "ru-raspberry-beetle-kaluga",
+        "umn-raspberry-insects"
+      ],
+      "status": "checked",
+      "limitations": "The source identifies characteristic signs; a larva should not be identified by color alone."
+    },
+    {
+      "articleSlug": "bolezni-i-vrediteli-maliny-priznaki",
+      "section": "Много тонких побегов: что называют ведьминой метлой",
+      "claim": "A proliferation syndrome associated with phytoplasma has been reported in black raspberry in Oregon; similar-looking symptoms call for specialist/lab verification and do not establish pathogen presence locally.",
+      "sourceIds": [
+        "ru-rosselkhoz-didymella-irkutsk",
+        "aps-witches-broom-black-raspberry"
+      ],
+      "status": "checked",
+      "limitations": "Primary research specifically concerns black raspberry in Oregon; Russian regional incidence is not claimed."
+    },
+    {
+      "articleSlug": "bolezni-i-vrediteli-maliny-priznaki",
+      "section": "Профилактика и выбор зарегистрированного средства",
+      "claim": "Monitoring, pruning and removal of diseased/fruiting canes improve observation and airflow; product choice must be based on current Russian registration and label.",
+      "sourceIds": [
+        "umn-raspberry-growing",
+        "ru-rosselkhoz-didymella-irkutsk",
+        "ru-catalog-2025",
+        "law-109fz-registration"
+      ],
+      "status": "checked",
+      "limitations": "Foreign timing is not used as a Russian schedule; no unverified doses."
+    },
+    {
+      "articleSlug": "zhelteet-krasneet-i-sohnet-klubnika",
+      "section": "Пожелтели только старые листья",
+      "claim": "Leaf age and whether yellowing is uniform or interveinal are useful checks; drought, waterlogging, roots and nutrient availability can produce overlapping color symptoms.",
+      "sourceIds": [
+        "umn-strawberry-home",
+        "strawberry-diagnostic-umn",
+        "pennstate-strawberry-roots"
+      ],
+      "status": "checked",
+      "limitations": "The article avoids prescribing fertilizer from leaf color alone."
+    },
+    {
+      "articleSlug": "zhelteet-krasneet-i-sohnet-klubnika",
+      "section": "Листья краснеют или приобретают бронзовый оттенок",
+      "claim": "Red/purple/bronze discoloration should be interpreted with lesion pattern, environmental history and spray exposure; color alone is insufficient.",
+      "sourceIds": [
+        "umn-strawberry-home",
+        "strawberry-diagnostic-umn",
+        "umn-herbicide-injury"
+      ],
+      "status": "checked",
+      "limitations": "General diagnostic principle; not a claim that any particular cause is present."
+    },
+    {
+      "articleSlug": "zhelteet-krasneet-i-sohnet-klubnika",
+      "section": "Сохнут листья, вянут кусты или ягоды",
+      "claim": "Check root-zone moisture, drainage, crown and roots; crown/root disease and abiotic injury can look similar.",
+      "sourceIds": [
+        "pennstate-strawberry-roots",
+        "ncstate-phytophthora-strawberry"
+      ],
+      "status": "checked",
+      "limitations": "Visual clues prompt a sample/diagnostic check rather than confirm pathogen."
+    },
+    {
+      "articleSlug": "zhelteet-krasneet-i-sohnet-klubnika",
+      "section": "Необычно много тонких побегов и мелких листьев",
+      "claim": "Witches'-broom-like phytoplasma-associated strawberry symptoms have been reported in southern Italy; retain the whole plant and seek laboratory verification rather than infer Russian incidence.",
+      "sourceIds": [
+        "strawberry-witches-broom-italy-2025",
+        "aps-witches-broom-black-raspberry"
+      ],
+      "status": "checked",
+      "limitations": "The Italian study is primary research in a separate region; the raspberry study concerns another crop/species."
+    },
+    {
+      "articleSlug": "zhelteet-krasneet-i-sohnet-klubnika",
+      "section": "Что приложить к запросу специалисту",
+      "claim": "Photographs of whole plant and symptomatic parts, timing and care history, plus fresh tissue, support a diagnostic consultation.",
+      "sourceIds": [
+        "umn-plant-clinic-submit",
+        "pennstate-strawberry-roots"
+      ],
+      "status": "checked",
+      "limitations": "UMN clinic submission details are Minnesota-specific; readers should use their local Russian plant protection service."
+    },
+    {
+      "articleSlug": "obrabotka-klubniki-i-maliny-po-sezonu",
+      "section": "После зимы: осмотр, а не автоматическое опрыскивание",
+      "claim": "At the start of growth, inspect overwintered leaves/canes and remove damaged material; treatment should follow observed risk and applicable registration, not a date-only routine.",
+      "sourceIds": [
+        "ru-strawberry-rosselkhozcenter-leningrad",
+        "ru-rosselkhoz-didymella-irkutsk",
+        "umn-strawberry-home"
+      ],
+      "status": "checked",
+      "limitations": "Crop stage and local climate vary; no fixed product schedule is prescribed."
+    },
+    {
+      "articleSlug": "obrabotka-klubniki-i-maliny-po-sezonu",
+      "section": "До цветения и во время цветения",
+      "claim": "Inspect flowers and young fruit for disease/pest signs; flowering-stage use is allowed only if the current product registration/label expressly permits it and safeguards pollinators.",
+      "sourceIds": [
+        "ru-strawberry-gray-mold-khakassia",
+        "ru-raspberry-beetle-kaluga",
+        "ru-catalog-2025",
+        "law-109fz-registration"
+      ],
+      "status": "checked",
+      "limitations": "No foreign spray timings or product applications are recommended."
+    },
+    {
+      "articleSlug": "obrabotka-klubniki-i-maliny-po-sezonu",
+      "section": "Во время плодоношения и сбора ягод",
+      "claim": "Remove affected fruit, harvest regularly and verify any product's crop/target and pre-harvest interval on the current label before use.",
+      "sourceIds": [
+        "ru-raspberry-beetle-kaluga",
+        "umn-raspberry-insects",
+        "ru-catalog-2025"
+      ],
+      "status": "checked",
+      "limitations": "Specific wait intervals vary by registered product; none are invented or listed."
+    },
+    {
+      "articleSlug": "obrabotka-klubniki-i-maliny-po-sezonu",
+      "section": "После сбора и осенью",
+      "claim": "Remove spent/diseased canes and crop debris where appropriate, thin for airflow, and plan next season from observed symptoms/history.",
+      "sourceIds": [
+        "umn-strawberry-home",
+        "umn-raspberry-pruning",
+        "ru-rosselkhoz-didymella-irkutsk"
+      ],
+      "status": "checked",
+      "limitations": "Pruning differs by fruiting type; no universal calendar date is claimed."
+    },
+    {
+      "articleSlug": "obrabotka-klubniki-i-maliny-po-sezonu",
+      "section": "Как выбрать средство без случайных рецептов",
+      "claim": "Use only a product registered for the exact crop and target, and follow its current label for dose, frequency, flowering restrictions and harvest interval.",
+      "sourceIds": [
+        "ru-catalog-2025",
+        "law-109fz-registration"
+      ],
+      "status": "checked",
+      "limitations": "The catalog listing is an index/edition reference; current registration and label must be rechecked when applied."
+    },
+    {
+      "articleSlug": "zhelteet-krasneet-i-sohnet-klubnika",
+      "section": "Может ли это быть нематода",
+      "claim": "Strawberry foliar and root nematodes can produce distinct but overlapping stunting, leaf deformation, wilt and root signs; symptoms and photos are clues, while species confirmation requires examination/lab identification.",
+      "sourceIds": [
+        "ucipm-strawberry-nematodes",
+        "gnb-strawberry-nematodes"
+      ],
+      "status": "checked",
+      "limitations": "Sources are North American and used for recognition only; they do not establish Russian prevalence. Linked photos are identified regional cases, not a remote diagnosis."
+    },
+    {
+      "articleSlug": "bornaia-kislota-dlya-klubniki-nuzhna-li",
+      "section": "Что может указывать на нехватку бора",
+      "claim": "Asymmetric young leaf growth and deformed berries can be associated with boron deficiency, but soil/tissue test and alternate causes must be considered.",
+      "sourceIds": [
+        "osu-strawberry-nutrient-management"
+      ],
+      "status": "checked",
+      "limitations": "Oregon and Washington thresholds/rates are not transferred to Russian gardens."
+    },
+    {
+      "articleSlug": "bornaia-kislota-dlya-klubniki-nuzhna-li",
+      "section": "Почему не стоит опрыскивать борной кислотой «для завязи»",
+      "claim": "Strawberry has a narrow boron sufficiency/toxicity margin; overapplication can cause leaf necrosis and injury, so no universal internet recipe is safe to prescribe.",
+      "sourceIds": [
+        "osu-strawberry-nutrient-management",
+        "ncstate-strawberry-boron-toxicity",
+        "udel-strawberry-boron-toxicity"
+      ],
+      "status": "checked",
+      "limitations": "Sources are regional US extension publications; no regional application rates are included."
+    },
+    {
+      "articleSlug": "fitosporin-horus-narodnye-sredstva-i-smesi",
+      "section": "Фитоспорин-М, Ж: что указано именно для земляники",
+      "claim": "The AVZ 2025 manufacturer catalog lists strawberry/other berry uses for the exact liquid formulation Fitosporin-M, Ж and identifies target disease groups; this does not apply to every Fitosporin product or replace the exact current package label.",
+      "sourceIds": [
+        "avz-2025-catalog-fitosporin",
+        "ru-catalog-2025"
+      ],
+      "status": "checked",
+      "limitations": "Manufacturer catalog inspected; exact current registration for a retail package/formulation must still match. No dose is presented."
+    },
+    {
+      "articleSlug": "fitosporin-horus-narodnye-sredstva-i-smesi",
+      "section": "Хорус: подходит ли он для клубники",
+      "claim": "Syngenta Russia identifies Chorus WDG for pome fruit, stone fruit and grape; neither strawberry nor raspberry is named in its Russian product page, so those directions must not be transferred to either berry crop.",
+      "sourceIds": [
+        "syngenta-chorus-russia",
+        "syngenta-catalog-2025"
+      ],
+      "status": "checked",
+      "limitations": "Limited to the named Russian product/formulation and manufacturer materials; foreign same-brand formulations are outside scope."
+    },
+    {
+      "articleSlug": "fitosporin-horus-narodnye-sredstva-i-smesi",
+      "section": "Помогают ли народные средства",
+      "claim": "A household recipe without validated target, dose and label directions is not established as a reliable universal strawberry disease treatment; prefer identification and cultural/physical IPM steps.",
+      "sourceIds": [
+        "psu-home-remedies",
+        "wsu-organic-fruit-ipm"
+      ],
+      "status": "checked",
+      "limitations": "General extension guidance; no strawberry-specific trial is claimed."
+    },
+    {
+      "articleSlug": "fitosporin-horus-narodnye-sredstva-i-smesi",
+      "section": "Баковая смесь: почему тест в банке не доказывает безопасность",
+      "claim": "Tank mixes may alter efficacy or injure crops; a jar test detects some physical incompatibilities but does not establish legal compatibility, efficacy or crop safety.",
+      "sourceIds": [
+        "unl-tank-mix-compatibility",
+        "ufifas-tank-mix-compatibility",
+        "law-109fz-registration"
+      ],
+      "status": "checked",
+      "limitations": "Extension references describe technical principles; use in Russia remains subject to current Russian registration and exact product labels."
+    },
+    {
+      "articleSlug": "bolezni-klubniki-priznaki-i-proverka",
+      "section": "Фото болезней клубники: сравните листья, ягоды и корни",
+      "claim": "Penn State Extension provides a captioned photo gallery comparing strawberry foliar symptoms, fruit rot, plant decline, crowns and roots; visible similarities guide inspection but do not by themselves establish a pathogen or local prevalence.",
+      "sourceIds": [
+        "psu-strawberry-disease-identification-gallery"
+      ],
+      "status": "checked",
+      "limitations": "The gallery documents symptoms in its US regional context; it is used only for visual comparison, not Russian disease prevalence or diagnosis."
+    }
+  ]
+}
