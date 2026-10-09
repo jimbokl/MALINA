@@ -101,7 +101,12 @@ export const newBotanicalArticles = [
     relatedArticles: ['zhelteyut-listya-maliny-chto-proverit', 'bolezni-i-vrediteli-maliny-priznaki', 'chernaya-malina-kumberlend-ili-ezhevika', 'tibetskaya-malina-kakoe-rastenie', 'yaponskaya-malina-rubus-phoenicolasius'], relatedVarieties: []
   },
   {
-    ...dates, slug: 'tibetskaya-malina-kakoe-rastenie', crop: 'raspberry', category: 'Ботаника',
+    ...dates, slug: 'tibetskaya-malina-kakoe-rastenie',
+    entryLinks: [
+      { section: 1, label: 'Что за растение' }, { section: 2, label: 'Настоящие фото' },
+      { section: 3, label: 'Посадка и уход' }, { section: 4, label: 'Вкус и отзывы' },
+      { section: 5, label: 'Проверить саженец' }
+    ], crop: 'raspberry', category: 'Ботаника',
     title: 'Тибетская малина: описание, настоящие фото и уход',
     description: 'Rubus rosifolius и Rubus illecebrosus: фотографии, место посадки, разрастание и зимовка. Как проверить норвежскую, гималайскую малину и отзывы.',
     lead: 'Начните с латинского названия на этикетке. Оно поможет сопоставить растение с ботаническим описанием и выбрать подходящий опыт выращивания.',

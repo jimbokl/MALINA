@@ -6,7 +6,7 @@ import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
 
 const siteSource = await readFile(new URL('../assets/site.js', import.meta.url), 'utf8');
-const freshnessSource = siteSource.slice(siteSource.indexOf('function refreshShopFreshness()'), siteSource.indexOf("if (document.querySelector('[data-shop-live-price]"));
+const freshnessSource = siteSource.slice(siteSource.indexOf('function freshDeadline('), siteSource.indexOf("if (document.querySelector('[data-shop-live-price]"));
 
 const cities = [
   { slug: 'moscow', name: 'Москва', region: 'Москва', selectionRegion: 'Московская область' },

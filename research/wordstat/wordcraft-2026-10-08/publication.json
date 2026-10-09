@@ -1,0 +1,93 @@
+{
+  "checkedAt": "2026-10-08T14:48:39.644845+00:00",
+  "status": "published_verified_resources_pending",
+  "authorization": "User explicitly requested: публикуй",
+  "site": "https://malinaklubnika.ru/",
+  "releaseSha": "768fe645bbd705cfcd8f2e0e73c25bbf8d44cb82",
+  "releaseBase": "e0036a0fd196c30fd4ddc8de06096028e96b850e",
+  "commitUrl": "https://github.com/jimbokl/MALINA/commit/768fe645bbd705cfcd8f2e0e73c25bbf8d44cb82",
+  "checks": {
+    "headSha": "768fe645bbd705cfcd8f2e0e73c25bbf8d44cb82",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/jimbokl/MALINA/actions/runs/37793649726"
+  },
+  "pages": {
+    "headSha": "768fe645bbd705cfcd8f2e0e73c25bbf8d44cb82",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/jimbokl/MALINA/actions/runs/37793649760",
+    "deploymentId": 6938411493,
+    "deploymentState": "success",
+    "deployedAt": "2026-10-08T14:38:56Z"
+  },
+  "local": {
+    "buildHtmlPagesIncludingRedirects": 1073,
+    "testsPassed": 322,
+    "testsFailed": 0,
+    "testsSkipped": 0,
+    "seoRegressionPassed": 11,
+    "stagedWhitespaceCheck": "passed"
+  },
+  "production": {
+    "report": "production-verification.json",
+    "sitemapCanonicalPagesChecked": 822,
+    "mappedCanonicalPages": 431,
+    "exactHtmlHashesMatchedAgainstGithubArtifact": 431,
+    "queryAnchorsChecked": 3844,
+    "assetsComparedAgainstGithubArtifact": 7,
+    "passed": true,
+    "httpsRedirects": {
+      "httpApex": "301 to HTTPS apex",
+      "httpsWww": "301 to HTTPS apex"
+    }
+  },
+  "chrome": {
+    "report": "production-browser-verification.json",
+    "passed": true,
+    "capturesVisuallyInspected": 3,
+    "viewportWidths": [
+      1440,
+      500
+    ],
+    "userWindowRestored": true
+  },
+  "releaseCsvNormalization": {
+    "changes": "LF line endings; query fields/metrics unchanged; whitespace-only normalization in 136 competitor title fields",
+    "filesCompared": [
+      "adjacent-low.csv",
+      "competitor-hosts.csv",
+      "competitor-pages.csv",
+      "covered-queries-low-moderate.csv",
+      "observations.csv",
+      "priority-queries.csv",
+      "queries-all.csv",
+      "queries-missing-resources.csv",
+      "queries-out-of-scope.csv",
+      "reserve-moderate.csv",
+      "shortlist-additional-low.csv",
+      "shortlist-low.csv"
+    ],
+    "competitorTitleWhitespaceFields": 136,
+    "coveredQueriesCsvSha256": "00018aebeb15a6ff88605716cfb75dcdaaa8a054bd12fc04945e4f80151d675b"
+  },
+  "remainingResources": {
+    "queryForms": 340,
+    "photo": 221,
+    "gardenerReviews": 287,
+    "groupsIntersect": true,
+    "queue": "queries-missing-resources.csv"
+  },
+  "releaseWorktree": "/Volumes/DevSim/Projects/MALINA-seo-release-20261008",
+  "originalWorktree": "/Volumes/DevSim/Projects/MALINA",
+  "originalWorktreeHead": "696cf07726c1a454ec1ffe7c9e40f62da6d731fb",
+  "unrelatedOriginalChangesPreserved": true,
+  "postReleaseEvidence": "Saved locally after deployment; published SHA remains the code release",
+  "sharedSkillRegistryCheck": {
+    "command": "solaros_skill_harness_manager.sh check --strict",
+    "scope": "global capability registry",
+    "passed": false,
+    "hasDrift": true,
+    "releaseChangedCapabilityPaths": false
+  }
+}

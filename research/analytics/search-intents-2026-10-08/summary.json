@@ -1,0 +1,568 @@
+{
+  "period": {
+    "from": "2026-09-27",
+    "to": "2026-10-06",
+    "filter": "Web, last 3 months, all countries/devices"
+  },
+  "site": {
+    "clicks": 6,
+    "impressions": 380,
+    "ctr_percent": 1.5789473684210527,
+    "position_ui": 12.7,
+    "position_from_rounded_daily": 12.701842105263157
+  },
+  "visible_queries": {
+    "rows": 82,
+    "clicks": 2,
+    "impressions": 205
+  },
+  "unknown_query_gap": {
+    "clicks": 4,
+    "impressions": 175
+  },
+  "query_coverage_impressions_percent": 53.94736842105263,
+  "intents": [
+    {
+      "intent": "Описание и выбор конкретного сорта",
+      "queries": 44,
+      "impressions": 147,
+      "clicks": 2,
+      "share_visible_impressions_percent": 71.70731707317073
+    },
+    {
+      "intent": "Фото, отзывы и оценка сорта",
+      "queries": 13,
+      "impressions": 23,
+      "clicks": 0,
+      "share_visible_impressions_percent": 11.219512195121952
+    },
+    {
+      "intent": "Выбор сортов для региона / общий каталог",
+      "queries": 6,
+      "impressions": 10,
+      "clicks": 0,
+      "share_visible_impressions_percent": 4.878048780487805
+    },
+    {
+      "intent": "Уход, сроки и проблемы растений",
+      "queries": 7,
+      "impressions": 10,
+      "clicks": 0,
+      "share_visible_impressions_percent": 4.878048780487805
+    },
+    {
+      "intent": "Неоднозначные, определения и чужая навигация",
+      "queries": 7,
+      "impressions": 9,
+      "clicks": 0,
+      "share_visible_impressions_percent": 4.390243902439024
+    },
+    {
+      "intent": "Размножение и технологии посадочного материала",
+      "queries": 5,
+      "impressions": 6,
+      "clicks": 0,
+      "share_visible_impressions_percent": 2.9268292682926833
+    }
+  ],
+  "selection_related": {
+    "clicks": 2,
+    "impressions": 180,
+    "queries": 63
+  },
+  "explicit_purchase": {
+    "queries": 0,
+    "impressions": 0
+  },
+  "tibetan_queries_visible": [],
+  "cultivar_query_groups": {
+    "атлант": {
+      "clicks": 1,
+      "impressions": 52
+    },
+    "краса россии": {
+      "clicks": 0,
+      "impressions": 43
+    },
+    "альбион": {
+      "clicks": 0,
+      "impressions": 12
+    },
+    "румба": {
+      "clicks": 0,
+      "impressions": 12
+    }
+  },
+  "daily": [
+    {
+      "date": "2026-09-27",
+      "clicks": 0,
+      "impressions": 0,
+      "position": null
+    },
+    {
+      "date": "2026-09-28",
+      "clicks": 0,
+      "impressions": 0,
+      "position": null
+    },
+    {
+      "date": "2026-09-29",
+      "clicks": 0,
+      "impressions": 1,
+      "position": 9.0
+    },
+    {
+      "date": "2026-09-30",
+      "clicks": 0,
+      "impressions": 12,
+      "position": 15.2
+    },
+    {
+      "date": "2026-10-01",
+      "clicks": 1,
+      "impressions": 21,
+      "position": 9.9
+    },
+    {
+      "date": "2026-10-02",
+      "clicks": 1,
+      "impressions": 52,
+      "position": 16.9
+    },
+    {
+      "date": "2026-10-03",
+      "clicks": 0,
+      "impressions": 48,
+      "position": 12.1
+    },
+    {
+      "date": "2026-10-04",
+      "clicks": 0,
+      "impressions": 53,
+      "position": 10.0
+    },
+    {
+      "date": "2026-10-05",
+      "clicks": 2,
+      "impressions": 99,
+      "position": 13.8
+    },
+    {
+      "date": "2026-10-06",
+      "clicks": 2,
+      "impressions": 94,
+      "position": 11.4
+    }
+  ],
+  "page_totals": {
+    "clicks": 6,
+    "impressions": 472
+  },
+  "pages_raw_rows": 97,
+  "pages_normalized_paths": 87,
+  "clicked_cultivar_pages": 5,
+  "top_pages": [
+    {
+      "path": "/sorta/atlant/",
+      "clicks": 1,
+      "impressions": 68,
+      "ctr_percent": 1.4705882352941175,
+      "weighted_position": 9.25,
+      "source_urls": "http://malinaklubnika.ru/sorta/atlant/"
+    },
+    {
+      "path": "/sorta/krasa-rossii/",
+      "clicks": 0,
+      "impressions": 52,
+      "ctr_percent": 0.0,
+      "weighted_position": 9.714615384615383,
+      "source_urls": "https://malinaklubnika.ru/sorta/krasa-rossii/ | https://malinaklubnika.ru/sorta/krasa-rossii/?city=%D0%A1%D0%B0%D0%BC%D0%B0%D1%80%D0%B0&region=%D0%A1%D0%B0%D0%BC%D0%B0%D1%80%D1%81%D0%BA%D0%B0%D1%8F \n%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C"
+    },
+    {
+      "path": "/sorta/albion/",
+      "clicks": 0,
+      "impressions": 20,
+      "ctr_percent": 0.0,
+      "weighted_position": 15.6,
+      "source_urls": "https://malinaklubnika.ru/sorta/albion/"
+    },
+    {
+      "path": "/sorta/rumba/",
+      "clicks": 0,
+      "impressions": 19,
+      "ctr_percent": 0.0,
+      "weighted_position": 10.79,
+      "source_urls": "http://malinaklubnika.ru/sorta/rumba/"
+    },
+    {
+      "path": "/sorta/magnus/",
+      "clicks": 0,
+      "impressions": 17,
+      "ctr_percent": 0.0,
+      "weighted_position": 12.12,
+      "source_urls": "https://malinaklubnika.ru/sorta/magnus/ | http://malinaklubnika.ru/sorta/magnus/"
+    },
+    {
+      "path": "/zhurnal/remontantnaya-malina-ural-sibir-sezon/",
+      "clicks": 1,
+      "impressions": 13,
+      "ctr_percent": 7.6923076923076925,
+      "weighted_position": 15.461538461538462,
+      "source_urls": "http://malinaklubnika.ru/zhurnal/remontantnaya-malina-ural-sibir-sezon/ | https://malinaklubnika.ru/zhurnal/remontantnaya-malina-ural-sibir-sezon/"
+    },
+    {
+      "path": "/sorta/kleri/",
+      "clicks": 0,
+      "impressions": 13,
+      "ctr_percent": 0.0,
+      "weighted_position": 28.46,
+      "source_urls": "http://malinaklubnika.ru/sorta/kleri/ | https://malinaklubnika.ru/sorta/kleri/?city=%D0%A1%D0%B0%D0%BC%D0%B0%D1%80%D0%B0&region=%D0%A1%D0%B0%D0%BC%D0%B0%D1%80%D1%81%D0%BA%D0%B0%D1%8F \n%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C"
+    },
+    {
+      "path": "/in-vitro/",
+      "clicks": 0,
+      "impressions": 11,
+      "ctr_percent": 0.0,
+      "weighted_position": 13.359999999999998,
+      "source_urls": "http://malinaklubnika.ru/in-vitro/"
+    },
+    {
+      "path": "/sorta/salyut/",
+      "clicks": 2,
+      "impressions": 9,
+      "ctr_percent": 22.22222222222222,
+      "weighted_position": 9.22,
+      "source_urls": "http://malinaklubnika.ru/sorta/salyut/"
+    },
+    {
+      "path": "/zhurnal/sorta-maliny-dlya-podmoskovya-kak-vybrat/",
+      "clicks": 0,
+      "impressions": 9,
+      "ctr_percent": 0.0,
+      "weighted_position": 41.78,
+      "source_urls": "https://malinaklubnika.ru/zhurnal/sorta-maliny-dlya-podmoskovya-kak-vybrat/"
+    },
+    {
+      "path": "/sorta/joan-j/",
+      "clicks": 0,
+      "impressions": 8,
+      "ctr_percent": 0.0,
+      "weighted_position": 8.75,
+      "source_urls": "http://malinaklubnika.ru/sorta/joan-j/"
+    },
+    {
+      "path": "/sorta/siriya/",
+      "clicks": 0,
+      "impressions": 8,
+      "ctr_percent": 0.0,
+      "weighted_position": 18.62,
+      "source_urls": "https://malinaklubnika.ru/sorta/siriya/"
+    },
+    {
+      "path": "/zhurnal/pervye-cvetki-klubniki-posle-posadki/",
+      "clicks": 0,
+      "impressions": 8,
+      "ctr_percent": 0.0,
+      "weighted_position": 14.62875,
+      "source_urls": "https://malinaklubnika.ru/zhurnal/pervye-cvetki-klubniki-posle-posadki/ | http://malinaklubnika.ru/zhurnal/pervye-cvetki-klubniki-posle-posadki/"
+    },
+    {
+      "path": "/sorta/zhuravlik/",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr_percent": 0.0,
+      "weighted_position": 8.29,
+      "source_urls": "http://malinaklubnika.ru/sorta/zhuravlik/"
+    },
+    {
+      "path": "/sorta/lyachka/",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr_percent": 0.0,
+      "weighted_position": 9.14,
+      "source_urls": "https://malinaklubnika.ru/sorta/lyachka/"
+    }
+  ],
+  "clicked_pages": [
+    {
+      "path": "/sorta/atlant/",
+      "clicks": 1,
+      "impressions": 68,
+      "ctr_percent": 1.4705882352941175,
+      "weighted_position": 9.25,
+      "source_urls": "http://malinaklubnika.ru/sorta/atlant/"
+    },
+    {
+      "path": "/zhurnal/remontantnaya-malina-ural-sibir-sezon/",
+      "clicks": 1,
+      "impressions": 13,
+      "ctr_percent": 7.6923076923076925,
+      "weighted_position": 15.461538461538462,
+      "source_urls": "http://malinaklubnika.ru/zhurnal/remontantnaya-malina-ural-sibir-sezon/ | https://malinaklubnika.ru/zhurnal/remontantnaya-malina-ural-sibir-sezon/"
+    },
+    {
+      "path": "/sorta/salyut/",
+      "clicks": 2,
+      "impressions": 9,
+      "ctr_percent": 22.22222222222222,
+      "weighted_position": 9.22,
+      "source_urls": "http://malinaklubnika.ru/sorta/salyut/"
+    },
+    {
+      "path": "/sorta/cambridge-favourite/",
+      "clicks": 1,
+      "impressions": 6,
+      "ctr_percent": 16.666666666666664,
+      "weighted_position": 15.5,
+      "source_urls": "https://malinaklubnika.ru/sorta/cambridge-favourite/"
+    },
+    {
+      "path": "/sorta/desnyanka-kokinskaya/",
+      "clicks": 1,
+      "impressions": 3,
+      "ctr_percent": 33.33333333333333,
+      "weighted_position": 16.33,
+      "source_urls": "https://malinaklubnika.ru/sorta/desnyanka-kokinskaya/"
+    }
+  ],
+  "devices": [
+    {
+      "device": "Мобильный",
+      "clicks": 6,
+      "impressions": 306,
+      "position": 11.44
+    },
+    {
+      "device": "ПК",
+      "clicks": 0,
+      "impressions": 70,
+      "position": 18.71
+    },
+    {
+      "device": "Планшет",
+      "clicks": 0,
+      "impressions": 4,
+      "position": 6.0
+    }
+  ],
+  "countries": [
+    {
+      "country": "Россия",
+      "clicks": 6,
+      "impressions": 310,
+      "position": 12.27
+    },
+    {
+      "country": "Казахстан",
+      "clicks": 0,
+      "impressions": 13,
+      "position": 6.77
+    },
+    {
+      "country": "Беларусь",
+      "clicks": 0,
+      "impressions": 11,
+      "position": 7.55
+    },
+    {
+      "country": "Украина",
+      "clicks": 0,
+      "impressions": 7,
+      "position": 6.0
+    },
+    {
+      "country": "Бразилия",
+      "clicks": 0,
+      "impressions": 6,
+      "position": 28.67
+    },
+    {
+      "country": "Германия",
+      "clicks": 0,
+      "impressions": 4,
+      "position": 27.75
+    },
+    {
+      "country": "Индия",
+      "clicks": 0,
+      "impressions": 4,
+      "position": 31.75
+    },
+    {
+      "country": "Узбекистан",
+      "clicks": 0,
+      "impressions": 3,
+      "position": 7.0
+    },
+    {
+      "country": "США",
+      "clicks": 0,
+      "impressions": 3,
+      "position": 10.0
+    },
+    {
+      "country": "Кыргызстан",
+      "clicks": 0,
+      "impressions": 2,
+      "position": 6.5
+    },
+    {
+      "country": "Франция",
+      "clicks": 0,
+      "impressions": 2,
+      "position": 7.5
+    },
+    {
+      "country": "Великобритания",
+      "clicks": 0,
+      "impressions": 2,
+      "position": 7.5
+    },
+    {
+      "country": "Сирия",
+      "clicks": 0,
+      "impressions": 2,
+      "position": 41.0
+    },
+    {
+      "country": "Чили",
+      "clicks": 0,
+      "impressions": 2,
+      "position": 49.5
+    },
+    {
+      "country": "Нидерланды",
+      "clicks": 0,
+      "impressions": 1,
+      "position": 6.0
+    },
+    {
+      "country": "Гонконг",
+      "clicks": 0,
+      "impressions": 1,
+      "position": 7.0
+    },
+    {
+      "country": "Латвия",
+      "clicks": 0,
+      "impressions": 1,
+      "position": 7.0
+    },
+    {
+      "country": "Неизвестный регион",
+      "clicks": 0,
+      "impressions": 1,
+      "position": 7.0
+    },
+    {
+      "country": "Молдова",
+      "clicks": 0,
+      "impressions": 1,
+      "position": 8.0
+    },
+    {
+      "country": "Польша",
+      "clicks": 0,
+      "impressions": 1,
+      "position": 8.0
+    },
+    {
+      "country": "Аландские о-ва",
+      "clicks": 0,
+      "impressions": 1,
+      "position": 10.0
+    },
+    {
+      "country": "Венесуэла",
+      "clicks": 0,
+      "impressions": 1,
+      "position": 35.0
+    },
+    {
+      "country": "Турция",
+      "clicks": 0,
+      "impressions": 1,
+      "position": 46.0
+    }
+  ],
+  "metrika_aligned": {
+    "from": "2026-09-27",
+    "to": "2026-10-06",
+    "views": 126,
+    "visits": 72,
+    "visitors": 50,
+    "internal_visits": 68,
+    "search_visits": 3,
+    "referral_visits": 1,
+    "affiliate_events": 2,
+    "affiliate_visits": 2,
+    "selector_complete_events": 16,
+    "selector_complete_visits": 7,
+    "cultivar_view_events": 20,
+    "cultivar_view_visits": 14,
+    "source": "raw/metrika-overview-custom.json + raw/metrika-conversions-custom-period.json"
+  },
+  "metrika_affiliate_sources": {
+    "from_ui": "10 сентября — 9 октября 2026",
+    "goal": "Переход к продавцу",
+    "attribution": "Последний значимый переход, кросс-девайс",
+    "events": 2,
+    "target_visits": 2,
+    "target_visitors": 1,
+    "source_internal_target_visits": 2,
+    "source_search_target_visits_shown": 0,
+    "source": "raw/metrika-affiliate-sources-month.json",
+    "caveat": "Internal-source visits cannot be identified as owner/test visits from this report; target revenue 0 is not affiliate-account earnings."
+  },
+  "yandex": {
+    "property": "http://malinaklubnika.ru:80",
+    "ui_period": "3 сентября — 3 октября 2026",
+    "impressions": 0,
+    "clicks": 0,
+    "scope": "HTTP property only; HTTPS property not found in confirmed-property selector. Migration page did not finish loading, so its status is unknown."
+  },
+  "revenue": {
+    "approved_orders": null,
+    "approved_commissions_rub": null,
+    "status": "No affiliate order/commission ledger was read; revenue is unverified."
+  },
+  "money_scenarios_assumptions_only": [
+    {
+      "scenario": "Низкий",
+      "outbound_share_assumed": 0.05,
+      "approved_orders_per_outbound_assumed": 0.01,
+      "commission_per_approved_order_rub_assumed": 100,
+      "rub_per_search_visit": 0.05,
+      "rub_at_10000_search_visits": 500.0,
+      "visits_for_30000_rub": 600000.0
+    },
+    {
+      "scenario": "Средний",
+      "outbound_share_assumed": 0.1,
+      "approved_orders_per_outbound_assumed": 0.03,
+      "commission_per_approved_order_rub_assumed": 200,
+      "rub_per_search_visit": 0.6,
+      "rub_at_10000_search_visits": 6000.0,
+      "visits_for_30000_rub": 50000.0
+    },
+    {
+      "scenario": "Высокий",
+      "outbound_share_assumed": 0.15,
+      "approved_orders_per_outbound_assumed": 0.05,
+      "commission_per_approved_order_rub_assumed": 300,
+      "rub_per_search_visit": 2.25,
+      "rub_at_10000_search_visits": 22500.0,
+      "visits_for_30000_rub": 13333.333333333334
+    }
+  ],
+  "limitations": [
+    "82 visible queries cover 205 of 380 impressions and 2 of 6 clicks; hidden/other omitted query intents remain unknown.",
+    "Page impressions use page aggregation and need not equal site impressions.",
+    "Normalized page paths merge HTTP/HTTPS for editorial prioritization, not proof of search canonicalization.",
+    "GSC data ends before the 8 October SEO release.",
+    "GSC clicks and Metrika visits differ in definition, time zone, consent and measurement; they are not a conversion denominator for each other.",
+    "No competition metrics or annual seasonality are present in this performance export.",
+    "Money scenarios are sensitivity assumptions, not merchant rates or a forecast."
+  ]
+}

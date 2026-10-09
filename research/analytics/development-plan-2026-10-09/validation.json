@@ -1,0 +1,119 @@
+{
+  "checked_at_local_date": "2026-10-09",
+  "source_collection_date": "2026-10-08",
+  "status": "passed",
+  "checks": [
+    {
+      "check": "Full coverage: 3844 queries / 431 canonical pages",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Competition: 643 LOW / 3201 AVERAGE",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Resource gaps: 340 forms",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Resource detail: 221 photos / 287 reviews; unfinished",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "All 115 Tibetan query forms retain the published guide",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Page table retains every canonical path exactly once",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Page table retains every query/resource count",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Demand is maximum of an exact form, never summed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "GSC page metrics preserved; absent rows remain blank",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Baseline 380 impressions / 6 clicks; selection 180/205",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Two affiliate goal visits are internal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "All highlighted exact-form demand values match source",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Revenue illustration is arithmetic, not observed result",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Referenced current task IDs exist in canonical backlog",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "Ongoing tasks are not falsely closed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "SEO-10 retains its active task and acceptance criteria",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "All current plan documents retain full coverage and Tibetan focus",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Obsolete browser restriction removed from current queue",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Local Markdown links resolve",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "No new document trailing whitespace",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "source_sha256": "00018aebeb15a6ff88605716cfb75dcdaaa8a054bd12fc04945e4f80151d675b",
+  "file_sha256": {
+    "BACKLOG.md": "dcc09c5c932f74bce3d1c0fb01c549c666ebcb14db48401264993dbfc569ff50",
+    "PRD.md": "783cc74476d184e3a4a4bb4325a8e320d08ec3ec86031408e5052db5a1c17050",
+    "docs/STRATEGY.md": "e6553d220dd1a8e710dd574fe9742a4dfd557a2b5bba2f130aec163c137445d9",
+    "docs/ROADMAP_2026_2027.md": "ea4fa6c461ea10f90f733a3f5fe3a76e52dd56fde51ad84214dbdcf35cde57c6",
+    "docs/MONETIZATION_PLAN.md": "c435d32ffb715a9216999573cad6a072dfd762c4b4ce02854dd44852bfafa4a0",
+    "docs/MEASUREMENT.md": "a61896829f17086ed0dd5e1c839bdd19c0199a26a919e8135050071e9430d233",
+    "handoff.md": "e91bd3cbd1fe7e29e9283466a42c710c171112bb149abca4d08aab1b4440af92",
+    "research/analytics/development-plan-2026-10-09/page-priorities.csv": "ae82e1e782b4a3fd2100674db50bfa8ea55b50050e9bb238936c4ad32b057ed7"
+  },
+  "failures": []
+}

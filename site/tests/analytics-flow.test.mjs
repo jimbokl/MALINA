@@ -36,7 +36,7 @@ function harness({ path, counter = '', base = '', nodes = new Map(), referrer = 
   let reloads = 0;
   window.localStorage = { getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value) };
   window.location = { reload: () => { reloads += 1; } };
-  document.documentElement = { dataset: { ymCounter: counter, siteBase: base } };
+  document.documentElement = { dataset: { ymCounter: counter, siteBase: base, shopOffersExpires: '2999-01-01T00:00:00Z' } };
   document.referrer = referrer;
   document.head = { append: element => appended.push(element) };
   document.createElement = () => new Element();
@@ -216,18 +216,57 @@ test('article and affiliate goals reject raw URLs and uncontrolled IDs', async (
 });
 
 test('expired offer click refreshes the page state without navigation or conversion', async () => {
+  for (const expiry of ['2020-01-01T00:00:00Z', undefined, '', 'invalid']) {
   for (const type of ['click', 'auxclick']) {
     const state = harness({ path: '/magazin/malina-gusar/', counter: '12345' });
-    state.document.documentElement.dataset.shopOffersExpires = '2020-01-01T00:00:00Z';
+    state.document.documentElement.dataset.shopOffersExpires = expiry;
     let prevented = false;
     await state.document.dispatchEvent({
-      type,
+      type, button: type === 'auxclick' ? 1 : 0,
       target: target(new Set(['[data-affiliate-offer]']), { dataset: { affiliateOffer: '67762', cultivar: 'gusar' } }),
       preventDefault() { prevented = true; }
     });
     assert.equal(prevented, true);
     assert.deepEqual(state.goals(), []);
   }
+  }
+});
+
+test('affiliate clicks record canonical page, seller, product and placement once for left or middle click', async () => {
+  const canonical = new Element({ getAttribute: () => 'https://example.test/magazin/malina-gusar/' });
+  const state = harness({ path: '/magazin/malina-gusar/?city=PRIVATE_CITY#PRIVATE_HASH', counter: '12345', nodes: new Map([['link[rel="canonical"]', canonical]]) });
+  const offer = target(new Set(['[data-affiliate-offer]']), { dataset: {
+    affiliateOffer: 'g-67762', cultivar: 'gusar', sellerId: 'garshinka', productId: 'malina-gusar', ctaPlacement: 'shop_offer'
+  }, href: 'https://seller.test/?token=PRIVATE_TOKEN' });
+  await state.document.dispatchEvent({ type: 'click', button: 0, target: offer });
+  await state.document.dispatchEvent({ type: 'auxclick', button: 1, target: offer });
+  await state.document.dispatchEvent({ type: 'auxclick', button: 2, target: offer });
+  await state.document.dispatchEvent({ type: 'click', button: 1, target: offer });
+  await state.document.dispatchEvent({ type: 'click', button: 0, defaultPrevented: true, target: offer });
+  assert.equal(state.goals().length, 2);
+  for (const goal of state.goals()) assert.deepEqual(goal, { name: 'affiliate_click', params: {
+    page_type: 'other', offer_id: 'g-67762', cultivar: 'gusar', seller_id: 'garshinka', product_id: 'malina-gusar',
+    page_path: '/magazin/malina-gusar/', cta_placement: 'shop_offer'
+  } });
+  assert.doesNotMatch(JSON.stringify(state.calls), /PRIVATE_/);
+});
+
+test('untrusted event context is omitted and a cultivar shop step has its own goal', async () => {
+  const state = harness({ path: '/sorta/polka/?PRIVATE_QUERY', counter: '12345', nodes: new Map([
+    ['link[rel="canonical"]', new Element({ getAttribute: () => 'https://other.test/PRIVATE_PATH/' })]
+  ]) });
+  await state.document.dispatchEvent({ type: 'click', target: target(new Set(['[data-affiliate-offer]']), { dataset: {
+    affiliateOffer: '67762', sellerId: 'PRIVATE_SELLER', productId: 'PRIVATE_PRODUCT', ctaPlacement: 'PRIVATE_PLACEMENT'
+  } }) });
+  await state.document.dispatchEvent({ type: 'click', target: target(new Set(['[data-cultivar-to-shop]']), { dataset: {
+    cultivarToShop: 'polka', ctaPlacement: 'cultivar_intro'
+  } }) });
+  const goals = state.goals().filter(goal => goal.name !== 'cultivar_view');
+  assert.deepEqual(goals, [
+    { name: 'affiliate_click', params: { page_type: 'cultivar', offer_id: '67762' } },
+    { name: 'cultivar_to_shop', params: { page_type: 'cultivar', cultivar: 'polka', cta_placement: 'cultivar_intro' } }
+  ]);
+  assert.doesNotMatch(JSON.stringify(goals), /PRIVATE_/);
 });
 
 test('selector start, regional rule outcomes, error and completion send no form text', async () => {
@@ -273,4 +312,26 @@ test('selector start, regional rule outcomes, error and completion send no form 
     { name: 'selector_complete', params: { page_type: 'selector', crop: 'raspberry', result: 'empty', matches: 0 } }
   ]);
   assert.doesNotMatch(JSON.stringify(state.calls), /PRIVATE_/);
+});
+
+
+test('feed offers cannot bypass snapshot expiry; catalog observations use their own deadline', async () => {
+  const cases = [
+    { feed: '2020-01-01T00:00:00Z', own: '2999-01-01T00:00:00Z', allowed: false },
+    { feed: '2999-01-01T00:00:00Z', own: 'invalid', allowed: false },
+    { feed: undefined, own: '2999-01-01T00:00:00Z', source: 'catalog', allowed: true },
+    { feed: '2999-01-01T00:00:00Z', own: undefined, source: 'catalog', allowed: false }
+  ];
+  for (const item of cases) {
+    const state = harness({ path: '/sorta/gusar/', counter: '12345' });
+    state.document.documentElement.dataset.shopOffersExpires = item.feed;
+    let prevented = false;
+    await state.document.dispatchEvent({ type: 'click', button: 0,
+      target: target(new Set(['[data-affiliate-offer]']), { dataset: {
+        affiliateOffer: 'offer-1', offerExpires: item.own, offerSource: item.source
+      } }), preventDefault() { prevented = true; }
+    });
+    assert.equal(prevented, !item.allowed);
+    assert.equal(state.goals().filter(goal => goal.name === 'affiliate_click').length, item.allowed ? 1 : 0);
+  }
 });

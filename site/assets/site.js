@@ -1,8 +1,17 @@
 // Pages is static: remove expired prices and promotions even if the next deploy fails.
+function freshDeadline(value) {
+  const expires = Date.parse(value || '');
+  return Number.isFinite(expires) && expires > Date.now();
+}
+function currentOffer(link) {
+  // Catalog observations have their own deadline; feed offers also require a fresh feed snapshot.
+  if (link.dataset.offerSource === 'catalog') return freshDeadline(link.dataset.offerExpires);
+  return freshDeadline(document.documentElement.dataset.shopOffersExpires) &&
+    (link.dataset.offerExpires === undefined || freshDeadline(link.dataset.offerExpires));
+}
 function refreshShopFreshness() {
   const now = Date.now();
-  const offersExpire = Date.parse(document.documentElement.dataset.shopOffersExpires || '');
-  if (Number.isFinite(offersExpire) && offersExpire <= now) {
+  if (!freshDeadline(document.documentElement.dataset.shopOffersExpires)) {
     for (const price of document.querySelectorAll('[data-shop-stock-label], [data-shop-live-price]')) {
       price.textContent = 'Наличие уточняется';
       price.removeAttribute('data-shop-live-price');
@@ -30,6 +39,16 @@ function refreshShopFreshness() {
       if (filter.value === 'in_stock' || filter.value === 'out_of_stock') filter.value = 'all';
       filter.dispatchEvent(new Event('change'));
     }
+  }
+  for (const card of document.querySelectorAll('[data-catalog-offer]')) {
+    if (freshDeadline(card.dataset.offerExpires)) continue;
+    card.querySelectorAll('[data-catalog-offer-price]').forEach(price => price.remove());
+  }
+  for (const link of document.querySelectorAll('[data-affiliate-offer]')) {
+    if (currentOffer(link)) continue;
+    link.removeAttribute('href');
+    link.setAttribute('aria-disabled', 'true');
+    link.textContent = 'Наличие уточняется';
   }
 
   const couponsExpire = Date.parse(document.documentElement.dataset.shopCouponsExpires || '');
@@ -70,7 +89,7 @@ function refreshShopFreshness() {
     }
   }
 }
-if (document.querySelector('[data-shop-live-price], [data-shop-live-order], [data-shop-stock-label], [data-shop-order-stock-label], [data-shop-coupon], [data-shop-coupon-banner], [data-shop-coupon-source]')) {
+if (document.querySelector('[data-shop-live-price], [data-shop-live-order], [data-shop-stock-label], [data-shop-order-stock-label], [data-shop-coupon], [data-shop-coupon-banner], [data-shop-coupon-source], [data-affiliate-offer]')) {
   refreshShopFreshness();
   window.setInterval(refreshShopFreshness, 60_000);
   document.addEventListener('visibilitychange', () => {
@@ -81,14 +100,12 @@ if (document.querySelector('[data-shop-live-price], [data-shop-live-order], [dat
 
 const menuButton = document.querySelector('.menu-toggle');
 function refreshExpiredOfferClick(event) {
-  if (!event.target.closest('[data-affiliate-offer]')) return false;
-  const expires = Date.parse(document.documentElement.dataset.shopOffersExpires || '');
-  if (!Number.isFinite(expires) || expires > Date.now()) return false;
+  const link = event.target.closest('[data-affiliate-offer]');
+  if (!link || currentOffer(link)) return false;
   event.preventDefault();
   refreshShopFreshness();
   return true;
 }
-document.addEventListener('auxclick', refreshExpiredOfferClick);
 const analyticsChoiceKey = 'malina:analytics-choice';
 const cookieNoticeKey = 'malina:cookie-notice';
 function readSitePreference(key) {
@@ -138,6 +155,16 @@ const pageCrop = routePath === '/sravnenie/malina/' ? 'raspberry'
   : routePath === '/sravnenie/klubnika/' ? 'strawberry' : undefined;
 const cropValue = value => ['raspberry', 'strawberry', 'all'].includes(value) ? value : 'unknown';
 const safeId = value => /^[a-z0-9-]{1,80}$/.test(value || '') ? value : undefined;
+// Only a build-authored canonical path can become event context, never URL parameters.
+const canonicalPath = (() => {
+  try {
+    const canonical = new URL(document.querySelector('link[rel="canonical"]')?.getAttribute('href'));
+    return canonical.origin === location.origin && canonical.pathname === pagePath &&
+      /^\/(?:[a-z0-9-]+\/)*$/.test(canonical.pathname) && !canonical.search && !canonical.hash
+      ? canonical.pathname : undefined;
+  } catch { return undefined; }
+})();
+const ctaPlacement = value => ['shop_offer', 'cultivar_offer', 'cultivar_intro'].includes(value) ? value : undefined;
 // Form values, query strings, fragments, referrers, error messages and stacks never enter goals.
 const cleanReferrer = (() => {
   try {
@@ -159,6 +186,20 @@ function trackGoal(goal, params = {}) {
     window.ym(ymCounter, 'reachGoal', goal, { page_type: pageType, ...params });
   }
 }
+function trackAffiliateClick(event) {
+  if (event.defaultPrevented || (event.type === 'auxclick' ? event.button !== 1 : event.button > 0)) return false;
+  const link = event.target.closest('[data-affiliate-offer]');
+  if (!link) return false;
+  if (refreshExpiredOfferClick(event)) return true;
+  trackGoal('affiliate_click', {
+    offer_id: safeId(link.dataset.affiliateOffer), cultivar: safeId(link.dataset.cultivar),
+    seller_id: ['agrosemfond', 'garshinka'].includes(link.dataset.sellerId) ? link.dataset.sellerId : undefined,
+    product_id: safeId(link.dataset.productId), page_path: canonicalPath,
+    cta_placement: ctaPlacement(link.dataset.ctaPlacement)
+  });
+  return false;
+}
+document.addEventListener('auxclick', trackAffiliateClick);
 window.malinaTrackReviewSubmitted = (status, isReply) => {
   if (status !== 'published' && status !== 'pending_human_review') return;
   trackGoal('review_submitted', {
@@ -206,18 +247,17 @@ window.addEventListener('unhandledrejection', () => {
 });
 
 document.addEventListener('click', async event => {
+  const shopLink = event.target.closest('[data-cultivar-to-shop]');
+  if (shopLink) trackGoal('cultivar_to_shop', {
+    cultivar: safeId(shopLink.dataset.cultivarToShop), page_path: canonicalPath,
+    cta_placement: ctaPlacement(shopLink.dataset.ctaPlacement)
+  });
   const cultivarLink = event.target.closest('[data-article-to-cultivar]');
   if (cultivarLink) trackGoal('article_to_cultivar', {
     article: safeId(cultivarLink.dataset.articleToCultivar),
     cultivar: safeId(/\/sorta\/([a-z0-9-]+)\//.exec(cultivarLink.getAttribute('href') || '')?.[1])
   });
-  const offerLink = event.target.closest('[data-affiliate-offer]');
-  if (offerLink) {
-    if (refreshExpiredOfferClick(event)) return;
-    trackGoal('affiliate_click', {
-      offer_id: safeId(offerLink.dataset.affiliateOffer), cultivar: safeId(offerLink.dataset.cultivar)
-    });
-  }
+  if (trackAffiliateClick(event)) return;
 
   const comparisonLink = event.target.closest('#picker-compare-link');
   if (comparisonLink && !comparisonLink.hidden) trackGoal('comparison_open', {

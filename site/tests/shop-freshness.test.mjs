@@ -85,3 +85,60 @@ test('returning from a seller clears both old stock states, preserves search and
   state.show();
   assert.equal(state.stock.value, 'unknown');
 });
+
+test('missing or malformed snapshot expiry clears stock just like an elapsed snapshot', () => {
+  for (const expiry of [undefined, '', 'not-a-date']) {
+    const state = harness();
+    state.stock.value = 'in_stock';
+    state.document.documentElement.dataset.shopOffersExpires = expiry;
+    state.show();
+    assert.equal(state.stock.value, 'all');
+    assert.ok(state.cards.every(card => card.dataset.stock === 'unknown'));
+    assert.ok(state.labels.every(label => label.textContent === 'Наличие уточняется'));
+  }
+});
+
+test('invalid expiry removes stale prices, seller href and offer schema while preserving navigation', () => {
+  const navigation = { kind: 'internal links' };
+  const link = { dataset: {}, href: 'https://seller.test/', removeAttribute(name) { delete this[name]; }, setAttribute(name, value) { this[name] = value; } };
+  const schema = { remove() { this.removed = true; } };
+  const price = { textContent: '100 ₽', removeAttribute() {} };
+  const order = {
+    querySelector: () => navigation, replaceChildren(...children) { this.children = children; },
+    classList: { add() {} }, removeAttribute() {}
+  };
+  const nodes = new Map([
+    ['[data-shop-live-price], [data-shop-live-order], [data-shop-stock-label], [data-shop-order-stock-label], [data-shop-coupon], [data-shop-coupon-banner], [data-shop-coupon-source], [data-affiliate-offer]', price],
+    ['[data-shop-stock-label], [data-shop-live-price]', [price]],
+    ['[data-shop-live-order]', [order]], ['[data-shop-offer-schema]', [schema]], ['[data-affiliate-offer]', [link]]
+  ]);
+  runInNewContext(freshness, {
+    Date, document: {
+      documentElement: { dataset: {} }, querySelector: selector => nodes.get(selector) || null,
+      querySelectorAll: selector => nodes.get(selector) || [], createElement: () => ({}), addEventListener() {}
+    }, window: { setInterval() {}, addEventListener() {} }
+  });
+  assert.equal(link.href, undefined);
+  assert.equal(link['aria-disabled'], 'true');
+  assert.equal(price.textContent, 'Наличие уточняется');
+  assert.equal(schema.removed, true);
+  assert.equal(order.children.at(-1), navigation);
+});
+
+
+test('catalog price and seller link expire independently of the feed snapshot', () => {
+  for (const expiry of [undefined, '', 'invalid', '2020-01-01T00:00:00Z', '2999-01-01T00:00:00Z']) {
+    const price = { remove() { this.removed = true; } };
+    const card = { dataset: { offerExpires: expiry }, querySelectorAll: () => [price] };
+    const link = { dataset: { offerSource: 'catalog', offerExpires: expiry }, href: 'https://seller.test/',
+      removeAttribute(name) { delete this[name]; }, setAttribute(name, value) { this[name] = value; } };
+    runInNewContext(freshness + '\nrefreshShopFreshness();', {
+      Date, document: { documentElement: { dataset: {} }, querySelector: () => null,
+        querySelectorAll: selector => selector === '[data-catalog-offer]' ? [card] : selector === '[data-affiliate-offer]' ? [link] : [] },
+      window: {}
+    });
+    const active = expiry === '2999-01-01T00:00:00Z';
+    assert.equal(Boolean(price.removed), !active);
+    assert.equal(Boolean(link.href), active);
+  }
+});
