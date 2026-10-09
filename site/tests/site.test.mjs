@@ -567,8 +567,8 @@ test('журнал содержит проверяемые статьи, авт�
       const socialImage = article.heroImage?.file ?? 'berries-hero.webp';
       assert.ok(html.includes(`<meta property="og:image" content="${process.env.SITE_URL}${siteBase}/assets/${socialImage}">`));
       assert.ok(html.includes(`<meta name="twitter:image" content="${process.env.SITE_URL}${siteBase}/assets/${socialImage}">`));
-      assert.match(html, /<meta property="og:image:width" content="1536">/);
-      assert.match(html, /<meta property="og:image:height" content="1024">/);
+      assert.ok(html.includes(`<meta property="og:image:width" content="${article.heroImage?.width ?? 1536}">`), article.slug);
+      assert.ok(html.includes(`<meta property="og:image:height" content="${article.heroImage?.height ?? 1024}">`), article.slug);
     }
     assert.match(html, /Подготовили: <a href="\/about\/">Редакция МАЛИНА — КЛУБНИКА<\/a>/);
     assert.ok(html.includes(`<time datetime="${publishedIso}">`));

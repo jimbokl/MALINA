@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { shopProducts } from '../shop-products.mjs';
+import { varieties } from '../data.mjs';
 import { currentShopOffers, shopStockState } from '../shop-model.mjs';
 import { shopNameKey } from '../scripts/generate-shop-catalog.mjs';
 
@@ -191,18 +192,24 @@ test('два продавца одного растения показывают
 test('страница сорта показывает наличие связанного товара', async () => {
   const snapshot = await shopSnapshot();
   const current = currentShopOffers(snapshot, shopProducts);
-  const seenCultivars = new Set();
-  const linked = publicProducts.filter(product => product.cultivarSlug && !seenCultivars.has(product.cultivarSlug) && seenCultivars.add(product.cultivarSlug));
+  const linked = varieties.filter(variety => publicProducts.some(product => product.cultivarSlug === variety.slug && product.crop === variety.cropKey));
   assert.ok(linked.length > 0);
-  for (const product of linked) {
+  for (const variety of linked) {
+    const html = await readFile(join(dist, 'sorta', variety.slug, 'index.html'), 'utf8');
+    const section = html.match(/<section class="section wrap shop-variety-link">[\s\S]*?<\/section>/)?.[0];
+    assert.ok(section, `missing offer on variety: ${variety.slug}`);
+    const href = section.match(/href="(\/magazin\/[^\"]+)"/)?.[1];
+    const product = publicProducts.find(item => `/magazin/${item.slug}/` === href);
+    assert.equal(product?.cultivarSlug, variety.slug, `wrong cultivar: ${variety.slug}`);
+    assert.equal(product?.crop, variety.cropKey, `wrong crop: ${variety.slug}`);
     const variants = shopProducts.filter(item => (item.canonicalSlug || item.slug) === product.slug);
     const offer = variants.map(item => current.get(String(item.id))).find(Boolean);
     const stock = shopStockState(snapshot, variants, current);
-    const html = await readFile(join(dist, 'sorta', product.cultivarSlug, 'index.html'), 'utf8');
-    const section = html.match(/<section class="section wrap shop-variety-link">[\s\S]*?<\/section>/)?.[0];
-    assert.ok(section, `missing offer on variety: ${product.cultivarSlug}`);
-    assert.ok(section.includes(`href="/magazin/${product.slug}/"`), `wrong product: ${product.cultivarSlug}`);
-    assert.match(section, offer ? /Есть в наличии/ : stock === 'out_of_stock' ? /Нет в наличии/ : /Наличие уточняется/, product.cultivarSlug);
+    const hasAvailableSeedling = shopProducts.some(item => item.cultivarSlug === variety.slug && item.crop === variety.cropKey && current.has(String(item.id)));
+    if (hasAvailableSeedling) assert.ok(offer, `available seedling was skipped: ${variety.slug}`);
+    const nav = html.match(/<nav class="search-entry-nav"[^>]*>[\s\S]*?<\/nav>/)?.[0];
+    assert.ok(nav?.includes(`href="${href}"`), `intro and bottom offers differ: ${variety.slug}`);
+    assert.match(section, offer ? /Есть в наличии/ : stock === 'out_of_stock' ? /Нет в наличии/ : /Наличие уточняется/, variety.slug);
   }
 });
 
@@ -297,6 +304,12 @@ test('распроданный товар ведёт к тому же сорту
     const readPage = slug => readFile(join(output, 'magazin', slug, 'index.html'), 'utf8');
     assert.match(await readFile(join(output, 'assets', 'shop-navigation.mjs'), 'utf8'), /export function shopNavigationContext/);
     const sameCultivar = await readPage('gerakl-sazhenec');
+    const variety = await readFile(join(output, 'sorta', 'gerakl', 'index.html'), 'utf8');
+    const intro = variety.match(/<nav class="search-entry-nav"[^>]*>[\s\S]*?<\/nav>/)?.[0];
+    const bottom = variety.match(/<section class="section wrap shop-variety-link">[\s\S]*?<\/section>/)?.[0];
+    assert.match(intro, /href="\/magazin\/tovar-g-300164\/"/);
+    assert.match(bottom, /href="\/magazin\/tovar-g-300164\/"/);
+    assert.match(bottom, /Есть в наличии/);
     assert.match(sameCultivar, /data-shop-next-step="same_cultivar"/);
     assert.match(sameCultivar, /href="\/magazin\/tovar-g-300164\/"/);
     assert.match(sameCultivar, /data-shop-order-navigation><a[^>]*href="\/magazin\/tovar-g-300164\/">Посмотреть другое предложение/);
