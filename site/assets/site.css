@@ -746,6 +746,10 @@
 .variety-description-text{max-width:720px}
 .variety-description-text p{font-size:17px;line-height:1.8;margin:0 0 1.2em;color:var(--ink)}
 .variety-description-text .text-link{display:inline-block;margin-top:12px}
+.cultivar-search-answers article+article{border-top:1px solid var(--line);margin-top:30px;padding-top:30px}
+.cultivar-search-answers h3{font-size:clamp(21px,2.5vw,26px);line-height:1.3;margin:0 0 16px}
+.cultivar-search-answers .text-link{margin:0 0 14px}
+.cultivar-search-answers .answer-source,.answer-review{font-size:14px;line-height:1.6;color:var(--muted);overflow-wrap:anywhere}
 @media(max-width:700px){.variety-description{grid-template-columns:1fr;gap:26px}.variety-description-heading h2{font-size:39px}.variety-description-text p{font-size:16px;line-height:1.72}}
 
 .shop-stock-note{flex-basis:100%;margin:0;color:var(--muted);font-size:14px}

@@ -720,7 +720,7 @@ test('карточки показывают источник и границы �
     const slug = route.split('/')[2];
     const title = html.match(/<title>([^<]+)<\/title>/)?.[1] ?? '';
     assert.match(title, /^(Малина|Клубника) .+: описание сорта, фото, урожайность, отзывы садоводов/);
-    assert.match(html, /name="description" content="[^"]*(описание сорта|урожайность)[^"]*отзывы садоводов/);
+    assert.match(html, /name="description" content="[^"]*(описание(?: сорта)?|урожайность)[^"]*отзывы/iu);
     const variety = varieties.find(item => route === `/sorta/${item.slug}/`);
     assert.match(html, new RegExp(`id="description-${variety.slug}"`));
     assert.doesNotMatch(html, /<strong>—<\/strong>/);

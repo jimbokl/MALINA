@@ -1,0 +1,307 @@
+{
+  "source": {
+    "property": "sc-domain:malinaklubnika.ru",
+    "search_type": "Web",
+    "filters": "all countries and devices; no query/page filters",
+    "period": "2026-09-27 through 2026-10-10",
+    "captured_at": "2026-10-12",
+    "private_snapshot_not_in_repository": true
+  },
+  "totals": {
+    "clicks": 10,
+    "impressions": 720,
+    "ctr_percent": 1.3888888888888888,
+    "average_position": 12.4,
+    "disclosed_query_clicks": 4,
+    "disclosed_query_impressions": 369,
+    "undisclosed_difference_clicks": 6,
+    "undisclosed_difference_impressions": 351,
+    "query_rows": 123,
+    "page_rows": 98,
+    "daily_rows": 14,
+    "device_rows": 3,
+    "page_dimension_sum": {
+      "clicks": 10,
+      "impressions": 812
+    },
+    "page_dimension_note": "The sum of URL-row impressions can exceed the property total because page rows are a separate URL aggregation with variants; it is not an additive property share or hidden-query difference."
+  },
+  "equal_week_comparison": {
+    "2026-09-27_to_2026-10-03": {
+      "clicks": 2,
+      "impressions": 134,
+      "ctr_percent": 1.492537313432836
+    },
+    "2026-10-04_to_2026-10-10": {
+      "clicks": 8,
+      "impressions": 586,
+      "ctr_percent": 1.3651877133105803
+    },
+    "impression_change_percent": 337.31343283582095,
+    "clicks_multiple": 4
+  },
+  "query_mapping_status_counts": {
+    "mapped_cultivar_alias": 83,
+    "topic_candidate_review": 30,
+    "mapped_topic_by_question": 5,
+    "unconfirmed_no_canonical": 5
+  },
+  "intents": {
+    "описание и выбор сорта клубники": {
+      "queries": 48,
+      "clicks": 1,
+      "impressions": 103
+    },
+    "описание и выбор сорта малины": {
+      "queries": 35,
+      "clicks": 3,
+      "impressions": 192
+    },
+    "общий запрос о малине": {
+      "queries": 3,
+      "clicks": 0,
+      "impressions": 9
+    },
+    "общий запрос о клубнике": {
+      "queries": 20,
+      "clicks": 0,
+      "impressions": 33
+    },
+    "региональный выбор сорта": {
+      "queries": 4,
+      "clicks": 0,
+      "impressions": 13
+    },
+    "размножение клубники усами": {
+      "queries": 1,
+      "clicks": 0,
+      "impressions": 3
+    },
+    "полив малины": {
+      "queries": 2,
+      "clicks": 0,
+      "impressions": 5
+    },
+    "пересадка клубники": {
+      "queries": 2,
+      "clicks": 0,
+      "impressions": 3
+    },
+    "чужой бренд, другой объект или неясный вопрос": {
+      "queries": 5,
+      "clicks": 0,
+      "impressions": 5
+    },
+    "значение термина in vitro": {
+      "queries": 1,
+      "clicks": 0,
+      "impressions": 1
+    },
+    "симптомы или защита растений": {
+      "queries": 2,
+      "clicks": 0,
+      "impressions": 2
+    }
+  },
+  "old_snapshot": {
+    "path": "research/analytics/search-intents-2026-10-08/query-intents.csv",
+    "period": "2026-09-27 through 2026-10-06",
+    "rows": 82,
+    "comparison": "normalized exact form; current GSC rows new to this export are not proof of new market demand"
+  },
+  "new_current_forms": {
+    "count": 41,
+    "clicks": 0,
+    "impressions": 53,
+    "examples": [
+      {
+        "query": "поклон казакову малина",
+        "clicks": 0,
+        "impressions": 5,
+        "position": 10.6,
+        "intent": "описание и выбор сорта малины",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "малина поклон казакову описание сорта",
+        "clicks": 0,
+        "impressions": 3,
+        "position": 11,
+        "intent": "описание и выбор сорта малины",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "малина краса россии фото",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 6,
+        "intent": "описание и выбор сорта малины",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "малина жар птица описание сорта",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 7,
+        "intent": "описание и выбор сорта малины",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "клубника даренка описание",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 10,
+        "intent": "описание и выбор сорта клубники",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "сорт клубники альбион",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 10,
+        "intent": "описание и выбор сорта клубники",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "клубника альба описание сорта фото отзывы",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 11,
+        "intent": "описание и выбор сорта клубники",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "пересадка клубники осенью",
+        "clicks": 0,
+        "impressions": 2,
+        "position": 61,
+        "intent": "пересадка клубники",
+        "mapping_status": "mapped_topic_by_question"
+      },
+      {
+        "query": "клубника азия описание сорта",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 5,
+        "intent": "описание и выбор сорта клубники",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "клери клубника фото",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 7,
+        "intent": "описание и выбор сорта клубники",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "клубника альба фото",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 7,
+        "intent": "описание и выбор сорта клубники",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "клубника румба фото",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 7,
+        "intent": "описание и выбор сорта клубники",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "клубника финская",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 7,
+        "intent": "общий запрос о клубнике",
+        "mapping_status": "topic_candidate_review"
+      },
+      {
+        "query": "малина поклон казакову отзывы",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 7,
+        "intent": "описание и выбор сорта малины",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "клубника азия описание сорта фото",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 8,
+        "intent": "описание и выбор сорта клубники",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "клубника клери фото",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 8,
+        "intent": "описание и выбор сорта клубники",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "оранжевое чудо малина описание",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 8,
+        "intent": "описание и выбор сорта малины",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "клубника дарёнка",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 9,
+        "intent": "описание и выбор сорта клубники",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "краса россии",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 9,
+        "intent": "описание и выбор сорта малины",
+        "mapping_status": "mapped_cultivar_alias"
+      },
+      {
+        "query": "малина похвалинка",
+        "clicks": 0,
+        "impressions": 1,
+        "position": 9,
+        "intent": "описание и выбор сорта малины",
+        "mapping_status": "mapped_cultivar_alias"
+      }
+    ]
+  },
+  "interpretation_limits": [
+    "GSC impressions are reported search-result appearances for this property, not Wordstat query volume or market demand.",
+    "Growth compares equal seven-day windows and does not establish an effect from the 2026-10-08 release.",
+    "Queries omitted by Google are an aggregate difference; their intent cannot be assigned.",
+    "Observed HTTP and query-string page URLs are historical report rows; this dataset does not test current redirects or canonicals.",
+    "Prior Admitad audit for 2026-09-01 through 2026-10-12 recorded 0 orders and 0 commission across all three sellers; GSC impressions and clicks do not establish income."
+  ],
+  "content_coverage": {
+    "all_query_rows": {
+      "partial": 100,
+      "research": 20,
+      "resourcegap": 1,
+      "full": 2
+    },
+    "topic_candidate_rows": {
+      "research": 15,
+      "partial": 12,
+      "resourcegap": 1,
+      "full": 2
+    },
+    "topic_candidates": 30,
+    "dist_check": "route and fragment presence only; dist may be stale and was not used to substantiate answer content",
+    "notes": [
+      "coverage_state reflects whether the current source material answers the observed intent; URL presence alone is not coverage",
+      "research means exact name/intent needs validation; resourcegap means no suitable current source answer identified",
+      "no new URLs prescribed; prioritize existing pages and source-backed additions"
+    ]
+  }
+}

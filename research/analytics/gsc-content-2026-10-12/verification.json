@@ -1,0 +1,48 @@
+{
+  "task": "SEO-11",
+  "checked_at": "2026-10-12",
+  "local_status": "passed",
+  "gsc": {
+    "period": "2026-09-27 through 2026-10-10",
+    "property_impressions": 720,
+    "property_clicks": 10,
+    "query_rows": 123,
+    "page_rows": 98,
+    "daily_rows": 14,
+    "new_exact_forms_vs_old_export": 41,
+    "edited_card_query_forms": 45,
+    "edited_card_query_impressions": 240,
+    "edited_card_query_clicks": 3
+  },
+  "content": {
+    "revised_cards": 8,
+    "source_backed_answers": 16,
+    "new_canonical_urls": 0,
+    "fact_review": "SPRINT.md and site/cultivar-search-answers.mjs",
+    "resource_gaps_not_claimed_complete": true
+  },
+  "checks": {
+    "build": { "exit_code": 0, "html_files": 1180 },
+    "npm_test": { "exit_code": 0, "passed": 350, "failed": 0 },
+    "seo_coverage": { "exit_code": 0, "mapped_relevant_forms": 3844, "gaps": 0 },
+    "seo_verify": { "exit_code": 0, "mapped_pages": 431, "gaps": 0, "resource_gaps": 340 },
+    "shared_registry_strict": { "exit_code": 0, "has_drift": false },
+    "diff_check": { "exit_code": 0 },
+    "pre_release_public_check": { "exit_code": 0, "html_pages": 844, "scope": "previous live release; not this deployment" }
+  },
+  "external_chrome": {
+    "atlant_viewport_width": 430,
+    "albion_viewport_width": 500,
+    "horizontal_overflow": false,
+    "answers_visible": true,
+    "comparison_link_selected_albion": true,
+    "keyboard_tab_focus_visible": true,
+    "keyboard_enter_photo_anchor": true,
+    "private_screenshots": "db/local/gsc-sprint-20261012/ in canonical checkout; not committed"
+  },
+  "publication": {
+    "status_at_commit": "pending",
+    "required": "successful Site checks and Deploy to GitHub Pages for exact pushed SHA, then live HTML and external Chrome",
+    "receipt": "db/local/gsc-sprint-20261012/state.json in canonical checkout; handoff records this receipt"
+  }
+}
