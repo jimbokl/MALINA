@@ -193,7 +193,7 @@ function trackAffiliateClick(event) {
   if (refreshExpiredOfferClick(event)) return true;
   trackGoal('affiliate_click', {
     offer_id: safeId(link.dataset.affiliateOffer), cultivar: safeId(link.dataset.cultivar),
-    seller_id: ['agrosemfond', 'garshinka'].includes(link.dataset.sellerId) ? link.dataset.sellerId : undefined,
+    seller_id: ['agrosemfond', 'garshinka', 'onlinesemena'].includes(link.dataset.sellerId) ? link.dataset.sellerId : undefined,
     product_id: safeId(link.dataset.productId), page_path: canonicalPath,
     cta_placement: ctaPlacement(link.dataset.ctaPlacement)
   });

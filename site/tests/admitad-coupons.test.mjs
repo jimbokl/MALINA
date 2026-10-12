@@ -68,5 +68,5 @@ test('coupon route is generated and linked only while promotions are current', a
   } else {
     assert.match(catalog, /href="\/magazin\/akcii\/"/);
   }
-  assert.doesNotMatch(page, /ctg453a3q0|export\.admitad\.com/);
+  assert.doesNotMatch(page, /export\.admitad\.com|export_adv_products|export_adv_coupons/);
 });

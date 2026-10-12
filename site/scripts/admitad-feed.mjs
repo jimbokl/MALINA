@@ -2,7 +2,7 @@ import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promise
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseCsv } from './admitad-csv.mjs';
-import { admitadSources, sourceProductId } from './admitad-sources.mjs';
+import { admitadSources, admitadFeedEnv, sourceProductId } from './admitad-sources.mjs';
 import { buildCatalogManifest, curatedCatalogProducts, writeCatalogManifest } from './generate-shop-catalog.mjs';
 import { matchesExpectedName } from '../shop-identity.mjs';
 
@@ -47,7 +47,7 @@ function publicProduct(row, curated, source) {
   if (!merchant) return null;
   const price = Number(row.price.replace(',', '.'));
   if (!Number.isFinite(price) || price <= 0 || price > 10_000_000 ||
-      !/^\d+(?:[.,]\d{1,2})?$/.test(row.price) || row.currencyId !== 'RUR') return null;
+      !/^\d+(?:[.,]\d{1,2})?$/.test(row.price) || !source.currencies.includes(row.currencyId)) return null;
   const priceMinor = Math.round(price * 100);
   return {
     ...identity,
@@ -181,7 +181,7 @@ export async function cacheImages(products, directory, fetcher = fetch) {
   }
   await Promise.all(Array.from({ length: Math.min(12, entries.length) }, worker));
   for (const filename of await readdir(directory)) {
-    if (/^(?:g-)?\d+\.(?:jpg|png|webp)$/.test(filename) && !current.has(filename)) {
+    if (/^(?:[go]-)?\d+\.(?:jpg|png|webp)$/.test(filename) && !current.has(filename)) {
       await rm(join(directory, filename));
     }
   }
@@ -192,7 +192,7 @@ async function main() {
   const output = process.env.SHOP_OFFERS_PATH || join(root, 'db', 'public', 'shop-offers.json');
   try {
     const feeds = [];
-    for (const [source, envName] of [['agrosemfond', 'ADMITAD_FEED_URL'], ['garshinka', 'ADMITAD_FEED_URL_GARSHINKA']]) {
+    for (const [source, envName] of Object.entries(admitadFeedEnv)) {
       try {
         if (!process.env[envName]) throw new Error(`${envName} is unset`);
         const csv = await fetchFeed(process.env[envName]);

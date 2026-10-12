@@ -1,7 +1,7 @@
 import { sourceFor } from './scripts/admitad-sources.mjs';
 import { matchesExpectedName } from './shop-identity.mjs';
 
-const productImagePattern = /^\/assets\/shop\/(?:g-)?\d+\.(?:jpg|png|webp)$/;
+const productImagePattern = /^\/assets\/shop\/(?:[go]-)?\d+\.(?:jpg|png|webp)$/;
 
 function secureUrl(value, host) {
   try {

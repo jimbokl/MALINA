@@ -41,6 +41,10 @@ function merchantUrl(row, source) {
 // Keep every SKU in the manifest, but publish one landing page per plant name.
 export function shopNameKey(name, sourceId = 'agrosemfond') {
   let key = name.trim().normalize('NFKC').toLocaleLowerCase('ru').replaceAll('ё', 'е').replace(/\s+/g, ' ');
+  if (sourceId === 'onlinesemena') {
+    key = key.replace(/\s*\(\d+\s*шт\.?(?:\s+в кашпо v\d+л)?\)\s*$/u, '')
+      .replace(/\s*\((?:штамбовая(?:, без шипов)?|черноплодный сорт|без шипов|серия патио)\)\s*$/u, '').trim();
+  }
   let previous;
   do {
     previous = key;

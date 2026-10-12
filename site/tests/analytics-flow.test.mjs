@@ -335,3 +335,15 @@ test('feed offers cannot bypass snapshot expiry; catalog observations use their 
     assert.equal(state.goals().filter(goal => goal.name === 'affiliate_click').length, item.allowed ? 1 : 0);
   }
 });
+
+test('third seller affiliate goal preserves controlled identity without exposing the destination', async () => {
+  const state = harness({ path: '/magazin/gusar-sazhenec/', counter: '12345' });
+  const offer = target(new Set(['[data-affiliate-offer]']), { dataset: {
+    affiliateOffer: 'o-101', cultivar: 'gusar', sellerId: 'onlinesemena', productId: 'gusar-sazhenec', ctaPlacement: 'shop_offer'
+  }, href: 'https://dkfrh.com/g/test/?token=PRIVATE_TOKEN' });
+  await state.document.dispatchEvent({ type: 'click', button: 0, target: offer });
+  assert.equal(state.goals().length, 1);
+  assert.equal(state.goals()[0].params.seller_id, 'onlinesemena');
+  assert.equal(state.goals()[0].params.offer_id, 'o-101');
+  assert.doesNotMatch(JSON.stringify(state.calls), /PRIVATE_TOKEN|dkfrh/);
+});

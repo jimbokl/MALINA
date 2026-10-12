@@ -183,8 +183,8 @@ export function matchShopCultivar(product) {
   const name = normalizeCultivarName(product.name);
   let cultivarName;
   let qualifier;
-  if (product.source === 'garshinka') {
-    const key = shopNameKey(product.name, 'garshinka');
+  if (['garshinka', 'onlinesemena'].includes(product.source)) {
+    const key = shopNameKey(product.name, product.source);
     cultivarName = key.replace(/^(?:малина|клубника) /u, '');
     qualifier = product.crop === 'raspberry' && /(?:^|\s)ремонтантная(?:\s|$)/iu.test(product.name)
       ? 'ремонтантная' : null;

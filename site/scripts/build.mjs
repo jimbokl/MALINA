@@ -484,7 +484,7 @@ function shopImage(product) {
   const feedItem = shopFeedItems.get(String(shopOfferFor(product)?.id || product.id));
   const fallback = shopIllustration(product);
   const local = feedItem?.imagePath || product.imagePath;
-  if (/^\/assets\/shop\/(?:g-)?\d+\.(?:jpg|png|webp)$/.test(local || '')) {
+  if (/^\/assets\/shop\/(?:[go]-)?\d+\.(?:jpg|png|webp)$/.test(local || '')) {
     return { src: local, alt: `Фото товара продавца: ${shopDisplayName(product)}`, caption: 'Фото товара из каталога продавца.' };
   }
   try {
@@ -601,7 +601,7 @@ function shopLanding(product) {
     { '@type': 'WebPage', '@id': `${pageId}#webpage`, name: title, description, url: pageId,
       ...(offer ? { mainEntity: { '@id': `${pageId}#product` } } : {}) },
     ...(offer ? [{ '@type': 'Product', '@id': `${pageId}#product`, name, description,
-      ...(/^\/assets\/shop\/(?:g-)?\d+\.(?:jpg|png|webp)$/.test(image.src) ? { image: productImage } : {}),
+      ...(/^\/assets\/shop\/(?:[go]-)?\d+\.(?:jpg|png|webp)$/.test(image.src) ? { image: productImage } : {}),
       url: pageId, offers: availableOffers.map(item => ({ '@type': 'Offer', url: item.affiliateUrl,
         price: (item.priceMinor / 100).toFixed(2), priceCurrency: 'RUB',
         availability: 'https://schema.org/InStock', seller: { '@type': 'Organization', name: sourceFor(item).seller } })) }] : []),
@@ -638,7 +638,7 @@ function withShopLink(html, variety) {
   const photoProduct = shopProducts.find(item => item.id === shopVarietyPhotoIds[variety.slug] && item.cultivarSlug === variety.slug);
   const photoFeedItem = photoProduct && shopFeedItems.get(String(photoProduct.id));
   const photoPath = photoFeedItem?.imagePath;
-  const photo = /^\/assets\/shop\/(?:g-)?\d+\.(?:jpg|png|webp)$/.test(photoPath || '')
+  const photo = /^\/assets\/shop\/(?:[go]-)?\d+\.(?:jpg|png|webp)$/.test(photoPath || '')
     ? `<figure class="shop-variety-photo"><img src="${e(photoPath)}" alt="Саженец «${e(variety.name)}» в каталоге магазина «${e(sourceFor(photoProduct).seller)}»" width="400" height="400" loading="lazy"><figcaption>Фото саженца из магазина «${e(sourceFor(photoProduct).seller)}».</figcaption></figure>` : '';
   const section = `<section class="section wrap shop-variety-link">${photo}<div><span class="eyebrow">${shopPlantLabel(product)} СОРТА</span><h2>${e(variety.name)}: предложение и посадка</h2><p>Мы собрали в карточке саженца советы по посадке и свежие сведения о наличии.</p><p class="shop-variety-availability" data-shop-stock-label${offer ? ' data-shop-live-price' : ''}>${availability}</p></div><a class="btn btn-dark" href="${shopProductPath(product)}">Посмотреть товар ${arrow}</a></section>`;
   return withVarietySourcesAtEnd(html.replace('</main>', `${section}</main>`));
