@@ -9,12 +9,23 @@ import { shopProducts } from '../shop-products.mjs';
 import { varieties } from '../data.mjs';
 import { currentShopOffers, shopStockState } from '../shop-model.mjs';
 import { shopNameKey } from '../scripts/generate-shop-catalog.mjs';
+import { sourceFor } from '../scripts/admitad-sources.mjs';
 
 const dist = process.env.MALINA_TEST_DIST || fileURLToPath(new URL('../../dist/', import.meta.url));
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const publicProducts = shopProducts.filter(product => !product.canonicalSlug || product.canonicalSlug === product.slug);
 const productHtml = product => readFile(join(dist, 'magazin', product.slug, 'index.html'), 'utf8');
 const escapeHtml = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+
+function assertSellerOffers(html, offers, slug) {
+  assert.match(html, /ПРЕДЛОЖЕНИЯ ПРОДАВЦОВ/, slug);
+  assert.equal((html.match(/data-affiliate-offer=/g) || []).length, offers.length, slug);
+  for (const offer of offers) {
+    assert.ok(html.includes(`<h2>${escapeHtml(sourceFor(offer).seller)}</h2>`), `seller ${offer.source}: ${slug}`);
+    assert.ok(html.includes(`data-affiliate-offer="${offer.id}"`), `offer ${offer.id}: ${slug}`);
+    assert.ok(html.includes(`href="${escapeHtml(offer.affiliateUrl)}"`), `tracking link ${offer.id}: ${slug}`);
+  }
+}
 
 async function shopSnapshot() {
   try {
@@ -172,20 +183,14 @@ test('заказ доступен только для товаров в нали
   }
 });
 
-test('два продавца одного растения показываются на общей странице с разными ссылками', async () => {
+test('несколько продавцов одного растения показываются на общей странице с разными ссылками', async () => {
   const offers = currentShopOffers(await shopSnapshot(), shopProducts);
   for (const product of publicProducts) {
     const variants = shopProducts.filter(item => (item.canonicalSlug || item.slug) === product.slug);
     const active = variants.map(item => offers.get(String(item.id))).filter(Boolean);
     if (new Set(active.map(item => item.source)).size < 2) continue;
     const html = await productHtml(product);
-    assert.match(html, /ПРЕДЛОЖЕНИЯ ПРОДАВЦОВ/, product.slug);
-    assert.match(html, /<h2>Агросемфонд<\/h2>/, product.slug);
-    assert.match(html, /<h2>Гаршинка<\/h2>/, product.slug);
-    for (const offer of active) {
-      assert.ok(html.includes(`data-affiliate-offer="${offer.id}"`), `offer ${offer.id}: ${product.slug}`);
-      assert.ok(html.includes(`href="${escapeHtml(offer.affiliateUrl)}"`), `tracking link ${offer.id}: ${product.slug}`);
-    }
+    assertSellerOffers(html, active, product.slug);
   }
 });
 
@@ -252,10 +257,19 @@ test('свежие цены и акции несут срок действия �
     const offer = { id: String(product.id), source: 'agrosemfond', name: 'Саженец малины Гусар',
       availability: 'in_stock', priceMinor: 44950, currency: 'RUB', merchantUrl,
       affiliateUrl: `https://rzekl.com/g/abc/?ulp=${encodeURIComponent(merchantUrl)}` };
+    const additional = ['g-300148', 'o-1491', 'g-295522', 'o-4745'].map((id, index) => {
+      const item = shopProducts.find(candidate => String(candidate.id) === id);
+      assert.ok(item, id);
+      const source = sourceFor(item);
+      const merchantUrl = item.merchantUrl || `https://${source.merchantHost}/product/${id}`;
+      return { id, source: source.id, name: item.name, availability: 'in_stock',
+        priceMinor: 50000 + index * 1000, currency: 'RUB', merchantUrl,
+        affiliateUrl: `https://${source.affiliateHost}/g/abc/?ulp=${encodeURIComponent(merchantUrl)}` };
+    });
     const offerPath = join(temp, 'offers.json');
     const couponPath = join(temp, 'coupons.json');
     const output = join(temp, 'dist');
-    await writeFile(offerPath, JSON.stringify({ checkedAt: checkedAt.toISOString(), expiresAt: expiresAt.toISOString(), products: [offer] }));
+    await writeFile(offerPath, JSON.stringify({ checkedAt: checkedAt.toISOString(), expiresAt: expiresAt.toISOString(), products: [offer, ...additional] }));
     await writeFile(couponPath, JSON.stringify({ checkedAt: checkedAt.toISOString(), expiresAt: expiresAt.toISOString(), coupons: [
       { id: 'garshinka-851479', source: 'garshinka', seller: 'Гаршинка', title: '5000 бонусов за подписку на рассылку',
         description: 'Бонусы за подписку на рассылку магазина.', affiliateUrl: 'https://codeaven.com/g/offer?i=123', dateEnd: expiresAt.toISOString() }
@@ -271,6 +285,10 @@ test('свежие цены и акции несут срок действия �
     assert.match(page, /data-shop-order-navigation/);
     assert.match(catalog, /data-shop-coupon-dates="[^"]+"/);
     assert.match(catalog, /data-shop-coupon-banner/);
+    assertSellerOffers(page, [offer, ...additional.slice(0, 2)], product.canonicalSlug || product.slug);
+    const twoSellers = await readFile(join(output, 'magazin', 'tovar-g-295522', 'index.html'), 'utf8');
+    assertSellerOffers(twoSellers, additional.slice(2), 'tovar-g-295522');
+    assert.doesNotMatch(twoSellers, /<h2>Агросемфонд<\/h2>/);
   } finally {
     await rm(temp, { recursive: true, force: true });
   }
