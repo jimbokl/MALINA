@@ -166,7 +166,7 @@ test('заказ доступен только для товаров в нали
     if (offer) {
       assert.ok(html.includes(`data-affiliate-offer="${offer.id}"`), product.slug);
       assert.ok(html.includes(escapeHtml(offer.name.replace(/^Земляника садовая\s+/iu, 'Клубника '))), `active offer name: ${product.slug}`);
-      assert.match(html, /Заказать у продавца/, product.slug);
+      assert.match(html, /Заказать: /, product.slug);
       assert.match(html, /rel="sponsored nofollow noopener noreferrer"/, product.slug);
       if (process.env.SITE_URL) {
         assert.match(html, /"@type":"Product"/, product.slug);
@@ -174,7 +174,7 @@ test('заказ доступен только для товаров в нали
       }
     } else {
       assert.doesNotMatch(html, /data-affiliate-offer=/, product.slug);
-      assert.doesNotMatch(html, /Заказать у продавца/, product.slug);
+      assert.doesNotMatch(html, /Заказать: /, product.slug);
       assert.match(html, stock === 'out_of_stock' ? /Нет в наличии/i : /Наличие уточняется/i, product.slug);
       const card = cards.find(item => item.includes(`href="/magazin/${product.slug}/"`));
       assert.ok(card, `missing card: ${product.slug}`);
@@ -280,8 +280,30 @@ test('свежие цены и акции несут срок действия �
     const catalog = await readFile(join(output, 'magazin', 'index.html'), 'utf8');
     const page = await readFile(join(output, 'magazin', product.canonicalSlug || product.slug, 'index.html'), 'utf8');
     assert.match(catalog, /data-shop-offers-expires="[^"]+"/);
-    assert.match(catalog, /data-shop-live-price[^>]*>449,50/);
+    assert.match(catalog, /data-shop-live-price[^>]*>от 449,50/);
     assert.match(page, /data-shop-live-order/);
+    assert.match(page, /id="predlozheniya"/);
+    assert.match(page, /id="offer-67762"/);
+    assert.match(page, /Количество уточните у продавца/);
+    assert.match(page, /за предложение/);
+    assert.match(page, /id="pered-zakazom"/);
+    const card = catalog.match(/<article class="shop-card"[^>]*data-sellers="[^"]*agrosemfond[^"]*"[\s\S]*?<\/article>/)?.[0];
+    assert.ok(card, 'one canonical card includes all three sellers');
+    for (const seller of ['agrosemfond', 'garshinka', 'onlinesemena']) assert.match(card, new RegExp('data-sellers="[^"]*' + seller));
+    const cultivar = await readFile(join(output, 'sorta', 'gusar', 'index.html'), 'utf8');
+    const purchase = cultivar.match(/<div class="cultivar-purchase"[\s\S]*?<\/div><\/div>/)?.[0];
+    assert.ok(purchase, 'early purchase panel for the selected cultivar');
+    for (const item of [offer, ...additional.slice(0, 2)]) {
+      assert.ok(purchase.includes('/magazin/' + (product.canonicalSlug || product.slug) + '/#offer-' + item.id));
+      assert.ok(purchase.includes(sourceFor(item).seller));
+    }
+    assert.match(purchase, /data-cta-placement="cultivar_sellers"/);
+    const guide = await readFile(join(output, 'zhurnal', 'pochemu-malina-kislaya-vkus-i-zrelost', 'index.html'), 'utf8');
+    const guidePurchase = guide.match(/<section class="media-related-varieties article-purchase-links"[\s\S]*?<\/section>/)?.[0];
+    assert.ok(guidePurchase, 'related cultivar guide leads directly to its shop product');
+    assert.ok(guidePurchase.includes('/magazin/' + (product.canonicalSlug || product.slug) + '/#predlozheniya'));
+    assert.match(guidePurchase, /data-cultivar-to-shop="gusar" data-cta-placement="guide_shop"/);
+    for (const item of [offer, ...additional.slice(0, 2)]) assert.ok(guidePurchase.includes(sourceFor(item).seller));
     assert.match(page, /data-shop-order-navigation/);
     assert.match(catalog, /data-shop-coupon-dates="[^"]+"/);
     assert.match(catalog, /data-shop-coupon-banner/);

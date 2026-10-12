@@ -9,11 +9,14 @@ const filterSource = await readFile(new URL('../assets/shop-filter.js', import.m
 
 function harness() {
   const cards = ['in_stock', 'out_of_stock', 'unknown'].map((stock, index) => ({
-    dataset: { stock, search: index === 1 ? 'клубника азия' : 'малина гусар' }, hidden: false
+    dataset: { stock, sellers: ['agrosemfond garshinka onlinesemena', '', 'garshinka'][index], search: index === 1 ? 'клубника азия' : 'малина гусар' }, hidden: false
   }));
   const labels = cards.map(() => ({ textContent: 'Старый статус', removeAttribute() {} }));
   const count = { textContent: '' };
-  const query = { value: '', addEventListener(type, fn) { this[type] = fn; } };
+  const query = { value: '', addEventListener(type, fn) { this[type] = fn; }, focus() { this.focused = true; } };
+  const summaries = cards.map(() => ({ hidden: false }));
+  const seller = { value: 'all', options: ['all', 'agrosemfond', 'garshinka', 'onlinesemena'].map(value => ({ value, dataset: {}, textContent: value })), addEventListener(type, fn) { this[type] = fn; } };
+  const reset = { hidden: true, addEventListener(type, fn) { this[type] = fn; } };
   const stock = {
     value: 'all', options: ['all', 'in_stock', 'out_of_stock', 'unknown'].map(value => ({ value })),
     addEventListener(type, fn) { this[type] = fn; }, dispatchEvent(event) { this[event.type]?.(); }
@@ -34,12 +37,15 @@ function harness() {
     querySelector(selector) {
       if (selector === '[data-shop-query]') return query;
       if (selector === '[data-shop-stock]') return stock;
+      if (selector === '[data-shop-seller]') return seller;
+      if (selector === '[data-shop-reset]') return reset;
       if (selector === '[data-shop-count]') return count;
       if (selector.startsWith('[data-shop-live-price],')) return labels[0];
       return null;
     },
     querySelectorAll(selector) {
       if (selector === '[data-shop-card]') return cards;
+      if (selector === '[data-shop-live-summary]') return summaries;
       if (selector === '[data-shop-section]') return [section];
       if (selector === '[data-shop-stock-label], [data-shop-live-price]') return labels;
       return [];
@@ -48,7 +54,7 @@ function harness() {
   const context = { document, window, Date, Event: class { constructor(type) { this.type = type; } } };
   runInNewContext(freshness + filterSource, context);
   const show = () => { for (const fn of listeners.get('pageshow') || []) fn(); };
-  return { cards, labels, count, query, stock, sectionCount, show, document };
+  return { cards, labels, count, query, stock, seller, reset, summaries, sectionCount, show, document };
 }
 
 test('counts represent unique visible cards, and stock options retain total counts', () => {
@@ -141,4 +147,32 @@ test('catalog price and seller link expire independently of the feed snapshot', 
     assert.equal(Boolean(price.removed), !active);
     assert.equal(Boolean(link.href), active);
   }
+});
+
+test('seller filters count canonical products once, combine with search and reset empty results', () => {
+  const state = harness();
+  assert.deepEqual(state.seller.options.map(option => option.textContent), ['all', 'agrosemfond (1)', 'garshinka (2)', 'onlinesemena (1)']);
+  state.seller.value = 'onlinesemena';
+  state.seller.change();
+  assert.equal(state.count.textContent, 'Показано 1 товар из 3');
+  assert.equal(state.reset.hidden, false);
+  state.query.value = 'азия'; state.query.input();
+  assert.match(state.count.textContent, /Показано 0 товаров/);
+  state.reset.click();
+  assert.equal(state.count.textContent, 'Показано 3 товара');
+  assert.equal(state.seller.value, 'all');
+  assert.equal(state.query.value, '');
+  assert.equal(state.reset.hidden, true);
+  assert.equal(state.query.focused, true);
+});
+
+test('expiry clears seller claims and restores the all-seller catalog', () => {
+  const state = harness();
+  state.seller.value = 'agrosemfond'; state.seller.change();
+  state.document.documentElement.dataset.shopOffersExpires = '2020-01-01T00:00:00Z';
+  state.show();
+  assert.equal(state.seller.value, 'all');
+  assert.ok(state.cards.every(card => card.dataset.sellers === '' && !card.hidden));
+  assert.ok(state.summaries.every(summary => summary.hidden));
+  assert.ok(state.seller.options.slice(1).every(option => option.disabled));
 });

@@ -18,6 +18,10 @@ function refreshShopFreshness() {
     }
     for (const card of document.querySelectorAll('[data-shop-card]')) {
       card.dataset.stock = 'unknown';
+      card.dataset.sellers = '';
+    }
+    for (const summary of document.querySelectorAll('[data-shop-live-summary]')) {
+      summary.hidden = true;
     }
     for (const heading of document.querySelectorAll('[data-shop-order-stock-label]')) {
       heading.textContent = 'Наличие уточняется';
@@ -164,7 +168,7 @@ const canonicalPath = (() => {
       ? canonical.pathname : undefined;
   } catch { return undefined; }
 })();
-const ctaPlacement = value => ['shop_offer', 'cultivar_offer', 'cultivar_intro'].includes(value) ? value : undefined;
+const ctaPlacement = value => ['shop_offer', 'cultivar_offer', 'cultivar_intro', 'cultivar_sellers', 'guide_shop'].includes(value) ? value : undefined;
 // Form values, query strings, fragments, referrers, error messages and stacks never enter goals.
 const cleanReferrer = (() => {
   try {

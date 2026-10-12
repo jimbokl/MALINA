@@ -347,3 +347,15 @@ test('third seller affiliate goal preserves controlled identity without exposing
   assert.equal(state.goals()[0].params.offer_id, 'o-101');
   assert.doesNotMatch(JSON.stringify(state.calls), /PRIVATE_TOKEN|dkfrh/);
 });
+
+test('seller comparison and guide links preserve controlled purchase placements', async () => {
+  const state = harness({ path: '/sorta/gusar/', counter: '12345' });
+  for (const placement of ['cultivar_sellers', 'guide_shop']) {
+    await state.document.dispatchEvent({ type: 'click', target: target(new Set(['[data-cultivar-to-shop]']), { dataset: {
+      cultivarToShop: 'gusar', ctaPlacement: placement
+    } }) });
+  }
+  const goals = state.goals().filter(goal => goal.name === 'cultivar_to_shop');
+  assert.deepEqual(goals.map(goal => goal.params.cta_placement), ['cultivar_sellers', 'guide_shop']);
+  assert.ok(goals.every(goal => goal.params.cultivar === 'gusar'));
+});
