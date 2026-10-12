@@ -1,0 +1,78 @@
+{
+  "checked_at_utc": "2026-10-12T11:39:24Z",
+  "website_id": 3005376,
+  "counter_id": 113131045,
+  "closed_window": [
+    "2026-09-01",
+    "2026-10-11"
+  ],
+  "partial_window": [
+    "2026-09-01",
+    "2026-10-12"
+  ],
+  "sellers": [
+    {
+      "seller_id": "agrosemfond",
+      "program_id": 19919,
+      "seller": "АгроСемФонд",
+      "clicks_closed_0901_1011": 5,
+      "clicks_partial_0901_1012": 5,
+      "registered_sales": 0,
+      "pending_commission": "0",
+      "approved_commission": "0",
+      "declined_commission": "0",
+      "report_currency": "USD"
+    },
+    {
+      "seller_id": "garshinka",
+      "program_id": 21527,
+      "seller": "Гаршинка",
+      "clicks_closed_0901_1011": 180,
+      "clicks_partial_0901_1012": 261,
+      "registered_sales": 0,
+      "pending_commission": "0",
+      "approved_commission": "0",
+      "declined_commission": "0",
+      "report_currency": "USD"
+    },
+    {
+      "seller_id": "onlinesemena",
+      "program_id": 26467,
+      "seller": "Onlinesemena",
+      "clicks_closed_0901_1011": 0,
+      "clicks_partial_0901_1012": 1,
+      "registered_sales": 0,
+      "pending_commission": "0",
+      "approved_commission": "0",
+      "declined_commission": "0",
+      "report_currency": "USD"
+    }
+  ],
+  "closed_click_totals": {
+    "programs": 185,
+    "dates": 185,
+    "subids": 185
+  },
+  "partial_click_totals": {
+    "programs": 267,
+    "dates": 279,
+    "subids": 270
+  },
+  "actions_report": {
+    "rows": 0,
+    "filter": "all programs, all statuses, MALINA, 2026-09-01 through 2026-10-12"
+  },
+  "cpc_report": {
+    "closed_window": "no data",
+    "current_day": "no data"
+  },
+  "metrika": {
+    "status": "service_unavailable",
+    "visits": null,
+    "organic_visits": null,
+    "affiliate_goal_clicks": null
+  },
+  "historical_subid": "blank",
+  "organic_order_attribution": "unknown",
+  "paid_out_money": "not independently verified by platform payout ledger"
+}

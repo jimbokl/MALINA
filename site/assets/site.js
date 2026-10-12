@@ -190,20 +190,60 @@ function trackGoal(goal, params = {}) {
     window.ym(ymCounter, 'reachGoal', goal, { page_type: pageType, ...params });
   }
 }
+function newAffiliateClickId() {
+  try {
+    const bytes = new Uint8Array(16);
+    window.crypto.getRandomValues(bytes);
+    return `c1_${Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('')}`;
+  } catch { return undefined; }
+}
+const affiliateFallbackHrefs = new WeakMap();
+function restoreAffiliateFallback(link) {
+  const fallbackHref = affiliateFallbackHrefs.get(link);
+  if (fallbackHref && link.href !== fallbackHref) link.href = fallbackHref;
+}
 function trackAffiliateClick(event) {
   if (event.defaultPrevented || (event.type === 'auxclick' ? event.button !== 1 : event.button > 0)) return false;
   const link = event.target.closest('[data-affiliate-offer]');
   if (!link) return false;
   if (refreshExpiredOfferClick(event)) return true;
+  const attributionId = /^p1_[a-f0-9]{32}$/.test(link.dataset.attributionId || '') ? link.dataset.attributionId : undefined;
+  let affiliateClickId;
+  const sellerOfferId = /^[a-z0-9_-]{1,50}$/.test(link.dataset.sellerOfferId || '') ? link.dataset.sellerOfferId : undefined;
+  const attributionPlacement = ['shop_offer', 'cultivar_offer'].includes(link.dataset.attributionPlacement) ? link.dataset.attributionPlacement : undefined;
+  if (analyticsEnabled && attributionId && sellerOfferId && attributionPlacement) {
+    if (!affiliateFallbackHrefs.has(link)) affiliateFallbackHrefs.set(link, link.href);
+    affiliateClickId = newAffiliateClickId();
+    if (affiliateClickId) {
+      try {
+        const url = new URL(link.href, location.href);
+        if (url.protocol === 'https:') {
+          url.searchParams.set('subid', affiliateClickId);
+          url.searchParams.set('subid1', sellerOfferId);
+          url.searchParams.set('subid2', attributionPlacement);
+          link.href = url.toString();
+          // Let the browser consume this one-click URL, then restore the SSR p1 fallback.
+          // This avoids leaking a previous click ID into later untracked navigation.
+          window.setTimeout(() => restoreAffiliateFallback(link), 0);
+        } else affiliateClickId = undefined;
+      } catch { affiliateClickId = undefined; }
+    }
+  }
   trackGoal('affiliate_click', {
     offer_id: safeId(link.dataset.affiliateOffer), cultivar: safeId(link.dataset.cultivar),
     seller_id: ['agrosemfond', 'garshinka', 'onlinesemena'].includes(link.dataset.sellerId) ? link.dataset.sellerId : undefined,
     product_id: safeId(link.dataset.productId), page_path: canonicalPath,
-    cta_placement: ctaPlacement(link.dataset.ctaPlacement)
+    cta_placement: ctaPlacement(link.dataset.ctaPlacement),
+    attribution_id: attributionId,
+    affiliate_click_id: affiliateClickId
   });
   return false;
 }
 document.addEventListener('auxclick', trackAffiliateClick);
+document.addEventListener('contextmenu', event => {
+  const link = event.target.closest('[data-affiliate-offer]');
+  if (link) restoreAffiliateFallback(link);
+});
 window.malinaTrackReviewSubmitted = (status, isReply) => {
   if (status !== 'published' && status !== 'pending_human_review') return;
   trackGoal('review_submitted', {

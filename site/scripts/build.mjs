@@ -24,6 +24,7 @@ import { currentShopOffers, shopStockState } from '../shop-model.mjs';
 import { currentCoupons } from '../shop-coupons.mjs';
 import { buildShopArticle, buildShopLead } from '../shop-copy.mjs';
 import { sourceFor, admitadSources } from './admitad-sources.mjs';
+import { addAffiliateSubIds, buildAffiliateAttribution, buildAffiliateAttributionManifest } from './affiliate-attribution.mjs';
 import { purchaseFacts, sellerSummary } from '../shop-purchase.mjs';
 import { relatedShopProducts, outOfStockNextProducts } from '../shop-related.mjs';
 import { seasonActivities, seasonMonths } from '../assets/season-planner-model.mjs';
@@ -600,7 +601,11 @@ function shopLanding(product) {
     : next?.kind === 'other_cultivars' ? 'Посмотреть похожие сорта' : 'Подобрать для своего города';
   const orderNavigation = `<div class="shop-order-navigation" data-shop-order-navigation><a class="btn ${offer ? 'btn-outline' : 'btn-dark'}" href="${e(primaryHref)}">${primaryLabel} ${arrow}</a>${primaryHref !== pickerHref ? `<a class="text-link" href="${e(pickerHref)}">Подобрать для своего города →</a>` : ''}<a class="text-link" href="/sorta/?crop=${e(product.crop)}">Каталог сортов ${cropGenitive} →</a></div>`;
   const order = offer
-    ? `<div class="shop-order" id="predlozheniya" data-shop-live-order><span class="eyebrow">${availableOffers.length > 1 ? 'ПРЕДЛОЖЕНИЯ ПРОДАВЦОВ' : 'ПРЕДЛОЖЕНИЕ ПРОДАВЦА'}</span>${availableOffers.map(item => `<div class="shop-offer-choice" id="offer-${e(item.id)}"><h2>${e(sourceFor(item).seller)}</h2><p class="shop-sku">${e(item.name.replace(/^Земляника садовая\s+/iu, 'Клубника '))} · артикул ${e(item.id)}</p>${purchaseDetails(item)}<p class="shop-order-price">${e(shopPrice(item))}<small>за предложение</small></p><a class="btn btn-dark" href="${e(item.affiliateUrl)}" target="_blank" rel="sponsored nofollow noopener noreferrer" data-affiliate-offer="${e(item.id)}" data-seller-id="${e(sourceFor(item).id)}" data-product-id="${e(product.slug)}" data-cta-placement="shop_offer"${product.cultivarSlug ? ` data-cultivar="${e(product.cultivarSlug)}"` : ''}>Заказать: ${e(sourceFor(item).seller)} ${arrow}</a>${shopCoupons.some(coupon => coupon.source === item.source) ? `<a class="shop-coupon-link" data-shop-coupon-source="${e(item.source)}" href="/magazin/akcii/#${e(item.source)}">Акции магазина ↗</a>` : ''}</div>`).join('')}<p class="shop-order-terms">Доставку в ваш город, срок отправки и итоговую сумму проверьте на сайте выбранного продавца.</p><a class="text-link" href="#pered-zakazom">Что проверить перед оплатой →</a><small>Партнёрские ссылки · обновлено ${e(shopSnapshot.checkedAt.slice(0, 10).split('-').reverse().join('.'))} · заказ на сайте продавца.</small>${orderNavigation}</div>`
+    ? `<div class="shop-order" id="predlozheniya" data-shop-live-order><span class="eyebrow">${availableOffers.length > 1 ? 'ПРЕДЛОЖЕНИЯ ПРОДАВЦОВ' : 'ПРЕДЛОЖЕНИЕ ПРОДАВЦА'}</span>${availableOffers.map(item => {
+      const attribution = buildAffiliateAttribution({ pagePath: `${siteBase}${path}`, sellerId: sourceFor(item).id, offerId: item.id, productId: product.slug, placement: 'shop_offer', cultivar: product.cultivarSlug });
+      const href = addAffiliateSubIds(item.affiliateUrl, attribution);
+      return `<div class="shop-offer-choice" id="offer-${e(item.id)}"><h2>${e(sourceFor(item).seller)}</h2><p class="shop-sku">${e(item.name.replace(/^Земляника садовая\s+/iu, 'Клубника '))} · артикул ${e(item.id)}</p>${purchaseDetails(item)}<p class="shop-order-price">${e(shopPrice(item))}<small>за предложение</small></p><a class="btn btn-dark" href="${e(href)}" target="_blank" rel="sponsored nofollow noopener noreferrer" data-affiliate-offer="${e(item.id)}" data-seller-id="${e(sourceFor(item).id)}" data-product-id="${e(product.slug)}" data-attribution-id="${attribution.attributionId}" data-seller-offer-id="${attribution.sellerOfferId}" data-attribution-placement="${attribution.placement}" data-cta-placement="shop_offer"${product.cultivarSlug ? ` data-cultivar="${e(product.cultivarSlug)}"` : ''}>Заказать: ${e(sourceFor(item).seller)} ${arrow}</a>${shopCoupons.some(coupon => coupon.source === item.source) ? `<a class="shop-coupon-link" data-shop-coupon-source="${e(item.source)}" href="/magazin/akcii/#${e(item.source)}">Акции магазина ↗</a>` : ''}</div>`;
+    }).join('')}<p class="shop-order-terms">Доставку в ваш город, срок отправки и итоговую сумму проверьте на сайте выбранного продавца.</p><a class="text-link" href="#pered-zakazom">Что проверить перед оплатой →</a><small>Партнёрские ссылки · обновлено ${e(shopSnapshot.checkedAt.slice(0, 10).split('-').reverse().join('.'))} · заказ на сайте продавца.</small>${orderNavigation}</div>`
     : `<div class="shop-order shop-order-empty" id="predlozheniya"><span class="eyebrow">ПРЕДЛОЖЕНИЕ ПРОДАВЦА</span><h2 data-shop-order-stock-label>${shopStockLabel(stock)}</h2><p>Мы поможем выбрать другой вариант для вашего сада.</p>${orderNavigation}</div>`;
   const varietyFacts = variety
     ? [['Культура', shopCropLabel(product)], ['Плодоношение', variety.fruitingLabel === shopCropLabel(product) ? '' : variety.fruitingLabel], ['Срок', variety.period], ['Место', variety.place]]
@@ -913,6 +918,11 @@ for (const item of shopFeedItems.values()) {
 await copyFile(join(root, 'db', 'public', 'reviews.json'), join(out, 'data', 'reviews.json'));
 await writeFile(join(out, 'data', 'cities.json'), JSON.stringify(cities) + '\n');
 await writeFile(join(out, 'data', 'votes.json'), JSON.stringify(voteSnapshot) + '\n');
+const attributionEntries = publicShopProducts.flatMap(product => shopOffersFor(product).map(item => ({
+  pagePath: `${siteBase}${shopProductPath(product)}`, sellerId: sourceFor(item).id, offerId: item.id,
+  productId: product.slug, placement: 'shop_offer', ...(product.cultivarSlug ? { cultivar: product.cultivarSlug } : {})
+})));
+await writeFile(join(out, 'data', 'affiliate-attribution.json'), JSON.stringify(buildAffiliateAttributionManifest(attributionEntries)) + '\n');
 run('wasm-pack', ['build', 'crates/selector', '--target', 'web', '--release', '--out-dir', 'pkg']);
 await mkdir(join(out, 'assets', 'selector'), { recursive: true });
 for (const asset of ['malina_selector.js', 'malina_selector_bg.wasm']) await copyFile(join(root, 'crates', 'selector', 'pkg', asset), join(out, 'assets', 'selector', asset));

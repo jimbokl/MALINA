@@ -1,0 +1,21 @@
+{
+  "goalCount": 1,
+  "goalMatchesHref": true,
+  "freshId": true,
+  "stableId": true,
+  "restored": true,
+  "ulpPreserved": true,
+  "eridPreserved": true,
+  "overflow": false,
+  "site_tests": {
+    "passed": 349,
+    "skipped": 0
+  },
+  "db_tests": {
+    "passed": 92
+  },
+  "build_pages": 1180,
+  "registry_strict": "passed",
+  "cabinet_receipt": "not_verified_yandex_outage",
+  "partner_navigation_prevented": true
+}

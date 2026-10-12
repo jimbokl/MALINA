@@ -23,7 +23,8 @@ function assertSellerOffers(html, offers, slug) {
   for (const offer of offers) {
     assert.ok(html.includes(`<h2>${escapeHtml(sourceFor(offer).seller)}</h2>`), `seller ${offer.source}: ${slug}`);
     assert.ok(html.includes(`data-affiliate-offer="${offer.id}"`), `offer ${offer.id}: ${slug}`);
-    assert.ok(html.includes(`href="${escapeHtml(offer.affiliateUrl)}"`), `tracking link ${offer.id}: ${slug}`);
+    assert.ok(html.includes(`href="${escapeHtml(offer.affiliateUrl)}&amp;subid=p1_`), `tracking link with placement SubID ${offer.id}: ${slug}`);
+    assert.ok(html.includes(`data-seller-offer-id="${sourceFor(offer).id}_${offer.id}"`), `seller/offer SubID ${offer.id}: ${slug}`);
   }
 }
 

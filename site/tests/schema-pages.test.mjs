@@ -62,7 +62,8 @@ test('разметка различает справку о сорте, види
     assert.equal(product.offers[0].priceCurrency, 'RUB');
     assert.equal(product.offers[0].availability, 'https://schema.org/InStock');
     assert.equal(product.offers[0].seller.name, 'Агросемфонд');
-    assert.ok(availableHtml.includes(`href="${escapeHtml(affiliateUrl)}"`));
+    assert.ok(availableHtml.includes(`href="${escapeHtml(affiliateUrl)}&amp;subid=p1_`));
+    assert.match(availableHtml, /data-seller-offer-id="agrosemfond_67762" data-attribution-placement="shop_offer"/);
     assert.match(availableHtml, /449,50/);
     assert.ok(availableGraph.every(node => !['Review', 'AggregateRating'].includes(node['@type'])));
 

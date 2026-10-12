@@ -32,7 +32,9 @@ function harness({ path, counter = '', base = '', nodes = new Map(), referrer = 
   const appended = [];
   const location = new URL(`https://example.test${path}`);
   const document = new Element();
-  const window = new Element({ ym: (...args) => calls.push(args) });
+  const window = new Element({ ym: (...args) => calls.push(args), setTimeout: (callback, delay) => setTimeout(callback, delay) });
+  let randomSequence = 0;
+  window.crypto = { getRandomValues(bytes) { for (let i = 0; i < bytes.length; i += 1) bytes[i] = (randomSequence + i) & 255; randomSequence += 1; return bytes; } };
   let reloads = 0;
   window.localStorage = { getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value) };
   window.location = { reload: () => { reloads += 1; } };
@@ -249,6 +251,46 @@ test('affiliate clicks record canonical page, seller, product and placement once
     page_path: '/magazin/malina-gusar/', cta_placement: 'shop_offer'
   } });
   assert.doesNotMatch(JSON.stringify(state.calls), /PRIVATE_/);
+});
+
+test('attributed offers restore fallback after click, on context menu, and preserve optout fallback', async () => {
+  const attrs = { affiliateOffer: 'g-67762', cultivar: 'gusar', sellerId: 'garshinka', productId: 'malina-gusar', ctaPlacement: 'shop_offer',
+    attributionId: 'p1_0123456789abcdef0123456789abcdef', sellerOfferId: 'garshinka_0123456789abcdef0123456789abcdef', attributionPlacement: 'shop_offer' };
+  const offer = target(new Set(['[data-affiliate-offer]']), { dataset: { ...attrs }, href: 'https://admitad.test/goto?ulp=%2Fberries&erid=abc&keep=x&subid=p1_0123456789abcdef0123456789abcdef&subid1=old&subid2=old' });
+  const fallback = offer.href;
+  const state = harness({ path: '/magazin/malina-gusar/', counter: '12345' });
+  await state.document.dispatchEvent({ type: 'click', button: 0, target: offer });
+  const first = new URL(offer.href);
+  assert.match(first.searchParams.get('subid'), /^c1_[a-f0-9]{32}$/);
+  assert.equal(first.searchParams.get('subid1'), attrs.sellerOfferId);
+  assert.equal(first.searchParams.get('subid2'), 'shop_offer');
+  assert.equal(first.searchParams.get('ulp'), '/berries');
+  assert.equal(first.searchParams.get('erid'), 'abc');
+  assert.equal(first.searchParams.get('keep'), 'x');
+  assert.equal(state.goals()[0].params.affiliate_click_id, first.searchParams.get('subid'));
+  assert.equal(state.goals()[0].params.attribution_id, attrs.attributionId);
+  await state.document.dispatchEvent({ type: 'contextmenu', target: offer });
+  assert.equal(offer.href, fallback);
+  await state.document.dispatchEvent({ type: 'click', button: 0, target: offer });
+  const second = new URL(offer.href).searchParams.get('subid');
+  assert.match(second, /^c1_[a-f0-9]{32}$/);
+  assert.notEqual(first.searchParams.get('subid'), second);
+  await new Promise(resolve => setTimeout(resolve, 5));
+  assert.equal(offer.href, fallback);
+  assert.equal(state.goals()[1].params.affiliate_click_id, second);
+
+  await state.document.dispatchEvent({ type: 'auxclick', button: 1, target: offer });
+  const third = new URL(offer.href).searchParams.get('subid');
+  assert.match(third, /^c1_[a-f0-9]{32}$/);
+  assert.notEqual(second, third);
+  await new Promise(resolve => setTimeout(resolve, 5));
+  assert.equal(offer.href, fallback);
+
+  const optedOutOffer = target(new Set(['[data-affiliate-offer]']), { dataset: { ...attrs }, href: fallback });
+  const optedOut = harness({ path: '/magazin/malina-gusar/', counter: '12345', storage: new Map([['malina:analytics-choice', 'disabled']]) });
+  await optedOut.document.dispatchEvent({ type: 'click', button: 0, target: optedOutOffer });
+  assert.equal(optedOutOffer.href, fallback);
+  assert.deepEqual(optedOut.goals(), []);
 });
 
 test('untrusted event context is omitted and a cultivar shop step has its own goal', async () => {
