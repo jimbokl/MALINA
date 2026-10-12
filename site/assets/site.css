@@ -520,6 +520,9 @@
 .variety-related-card img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
 .variety-related-card span{padding:4px 6px 0;color:var(--muted);font-size:12px}
 .variety-related-card strong{padding:0 6px;font:400 clamp(24px,2.8vw,34px)/1.2 var(--serif);overflow-wrap:anywhere}
+.article-purchase-links .media-variety-links a{grid-template-columns:minmax(0,1fr) 20px;gap:8px 16px}
+.article-purchase-links .media-variety-links a>span,.article-purchase-links .media-variety-links a>strong{grid-column:1;min-width:0;overflow-wrap:anywhere}
+.article-purchase-links .media-variety-links a>svg{grid-column:2;grid-row:1/4}
 .variety-related-reading{margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
 .variety-related-reading h3{font:400 27px/1.2 var(--serif);margin:0 0 14px}
 .variety-related-reading ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
