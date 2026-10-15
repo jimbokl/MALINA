@@ -30,6 +30,21 @@
     "cultivarSlug": null
   },
   {
+    "id": "g-365244",
+    "source": "garshinka",
+    "slug": "tovar-g-365244",
+    "name": "Малина Айдиана поздняя урожайная крупная сладкая",
+    "expectedName": "Малина Айдиана поздняя урожайная крупная сладкая",
+    "crop": "raspberry",
+    "categoryId": "Плодовые растения/Малина",
+    "merchantUrl": null,
+    "description": "",
+    "duplicateName": false,
+    "canonicalSlug": "tovar-g-365244",
+    "variantLabel": null,
+    "cultivarSlug": null
+  },
+  {
     "id": "g-326569",
     "source": "garshinka",
     "slug": "tovar-g-326569",
