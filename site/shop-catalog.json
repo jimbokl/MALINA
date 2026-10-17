@@ -960,6 +960,21 @@
     "cultivarSlug": null
   },
   {
+    "id": "g-63873",
+    "source": "garshinka",
+    "slug": "tovar-g-63873",
+    "name": "Малина Золотые Купола ремонтантная",
+    "expectedName": "Малина Золотые Купола ремонтантная",
+    "crop": "raspberry",
+    "categoryId": "Плодовые растения/Малина",
+    "merchantUrl": null,
+    "description": "",
+    "duplicateName": true,
+    "canonicalSlug": "malina-remontantnaya-zolotye-kupola-73625",
+    "variantLabel": "Артикул g-63873",
+    "cultivarSlug": null
+  },
+  {
     "id": "g-230737",
     "source": "garshinka",
     "slug": "tovar-g-230737",
@@ -3444,9 +3459,9 @@
     "categoryId": "Каталог/Саженцы Питомник/Плодовые деревья и кустарники/Малина/Красная малина",
     "merchantUrl": "https://onlinesemena.ru/catalog/seedling/plodovie/sazhency-krasnoj-maliny/malina-solnyshko.html",
     "description": "",
-    "duplicateName": false,
+    "duplicateName": true,
     "canonicalSlug": "tovar-o-1506",
-    "variantLabel": null,
+    "variantLabel": "Артикул o-1506",
     "cultivarSlug": null
   },
   {
@@ -3540,6 +3555,21 @@
     "cultivarSlug": null
   },
   {
+    "id": "g-304505",
+    "source": "garshinka",
+    "slug": "tovar-g-304505",
+    "name": "Малина Турмалин",
+    "expectedName": "Малина Турмалин",
+    "crop": "raspberry",
+    "categoryId": "Плодовые растения/Малина",
+    "merchantUrl": null,
+    "description": "",
+    "duplicateName": false,
+    "canonicalSlug": "tovar-g-304505",
+    "variantLabel": null,
+    "cultivarSlug": null
+  },
+  {
     "id": "g-315677",
     "source": "garshinka",
     "slug": "tovar-g-315677",
@@ -3597,6 +3627,21 @@
     "duplicateName": true,
     "canonicalSlug": "tovar-g-303239",
     "variantLabel": "Артикул g-303239",
+    "cultivarSlug": null
+  },
+  {
+    "id": "g-304502",
+    "source": "garshinka",
+    "slug": "tovar-g-304502",
+    "name": "Малина Челябинская желтая",
+    "expectedName": "Малина Челябинская желтая",
+    "crop": "raspberry",
+    "categoryId": "Плодовые растения/Малина",
+    "merchantUrl": null,
+    "description": "",
+    "duplicateName": false,
+    "canonicalSlug": "tovar-g-304502",
+    "variantLabel": null,
     "cultivarSlug": null
   },
   {
@@ -3792,6 +3837,21 @@
     "duplicateName": false,
     "canonicalSlug": "tovar-g-63876",
     "variantLabel": null,
+    "cultivarSlug": null
+  },
+  {
+    "id": "g-337520",
+    "source": "garshinka",
+    "slug": "tovar-g-337520",
+    "name": "Малиновое дерево (Малина штамбовая) Солнышко",
+    "expectedName": "Малиновое дерево (Малина штамбовая) Солнышко",
+    "crop": "raspberry",
+    "categoryId": "Плодовые растения/Малина",
+    "merchantUrl": null,
+    "description": "",
+    "duplicateName": true,
+    "canonicalSlug": "tovar-o-1506",
+    "variantLabel": "Артикул g-337520",
     "cultivarSlug": null
   },
   {
