@@ -1,5 +1,20 @@
 [
   {
+    "id": "g-369009",
+    "source": "garshinka",
+    "slug": "tovar-g-369009",
+    "name": "Малина Абрикосовая желтая (лицензионная)",
+    "expectedName": "Малина Абрикосовая желтая (лицензионная)",
+    "crop": "raspberry",
+    "categoryId": "Плодовые растения/Малина",
+    "merchantUrl": null,
+    "description": "",
+    "duplicateName": true,
+    "canonicalSlug": "tovar-o-32279",
+    "variantLabel": "Артикул g-369009",
+    "cultivarSlug": null
+  },
+  {
     "id": "g-295522",
     "source": "garshinka",
     "slug": "tovar-g-295522",
@@ -2154,9 +2169,9 @@
     "categoryId": "Каталог/Саженцы Питомник/Плодовые деревья и кустарники/Малина ремонтантная/Саженцы жёлтой ремонтантной малины",
     "merchantUrl": "https://onlinesemena.ru/catalog/seedling/plodovie/sazhentsy-zheltoi-remontantnoi-maliny/malina-remontantnaya-abrikosovaya.html",
     "description": "",
-    "duplicateName": false,
+    "duplicateName": true,
     "canonicalSlug": "tovar-o-32279",
-    "variantLabel": null,
+    "variantLabel": "Артикул o-32279",
     "cultivarSlug": null
   },
   {
